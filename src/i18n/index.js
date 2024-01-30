@@ -1,3 +1,3 @@
 export const I18N = {
-  example: 'Example test'
+  example: 'I18N example'
 }
