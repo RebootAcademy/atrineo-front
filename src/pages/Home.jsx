@@ -1,6 +1,11 @@
+import { useQuery } from "react-query"
 import { Button } from "@/components/ui/button"
 
+import { getPublicCollections } from "../services/collectionService"
+
 function Home () {
+  const { data } = useQuery('public', getPublicCollections)
+  console.log(data)
   return (
     <>
       Home
