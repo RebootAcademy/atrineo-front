@@ -6,6 +6,7 @@ import { CollectionContext } from "../context/collection"
 import { getPublicCollections } from "../services/collectionService"
 
 import { I18N } from "../i18n"
+import MapComponent from "../components/MapComponent/MapComponent"
 
 function Home () {
   const { example } = I18N
@@ -27,8 +28,8 @@ function Home () {
 
   return (
     <>
-      Home
-      <div>
+      <MapComponent/>
+      {/* <div>
         { example }
       </div>
       <div>
@@ -56,7 +57,7 @@ function Home () {
         >
           Ghost Button
         </Button>
-      </div>
+      </div> */}
     </>
   )
 }
