@@ -1,11 +1,14 @@
 .leaflet-container {
   position: relative;
   width: 100vw !important;
-  height: 100vh;
-  min-width: 600px;
-  min-height: 500px;
+  height: 100vh !important;
+  overflow: hidden;
 }
 
 .custom-edit-control .leaflet-draw-edit-edit {
   display: none;
+}
+
+.leaflet-tile, .leaflet-tile-loaded {
+  position: absolute;
 }

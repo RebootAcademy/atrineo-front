@@ -11,7 +11,7 @@ export default function MapComponent() {
   const [mapCenter, setMapCenter] = useState([48.6, 9])
 
   return (
-    <>
+    <main>
       <MapContainer
         center={mapCenter}
         zoom={2}
@@ -20,16 +20,12 @@ export default function MapComponent() {
         style={{ height: "100vh", width: "100vw" }}
         ref={mapRef}
       >
-        <TileLayer
-          attribution='© OpenStreetMap, © CartoDB'
-          url="https://tiles.stadiamaps.com/tiles/stamen_toner_lite/{z}/{x}/{y}{r}.png"
-        />
 
         <MapUpdater center={mapCenter} />
 
         <LayersControlComponent />
         
       </MapContainer>
-    </>
+    </main>
   )
 }
