@@ -9,9 +9,11 @@ const LayersControlComponent = () => {
   const displayMarkers = () => {
     const coords = collection.flatMap((item) =>
       item.data.map(dataItem => [dataItem.latitude, dataItem.longitude])
-    )
+      )
+      console.log(coords)
     return coords
   }
+
 
   console.log(collection)
 
