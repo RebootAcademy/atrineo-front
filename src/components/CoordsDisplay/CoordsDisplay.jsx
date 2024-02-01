@@ -17,8 +17,6 @@ const CoordsDisplay = () => {
     }
   }, [map])
 
-  console.log(coordinates)
-
   return  (
     <section>
       <div className= 'w-fixed z-[9999] absolute bottom-0 left-0 text-base font-bold px-2 bg-blue-300 opacity-80'>
