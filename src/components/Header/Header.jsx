@@ -1,6 +1,8 @@
 const Header = () => {
   return (
-    <h1>Atrineo</h1>
+    <main className="h-20">
+      <h1>Atribase</h1>
+    </main>
   )
 }
 

@@ -4,7 +4,7 @@ import { useGeoJsonData } from "../../hooks/useGeoJsonData"
 const style = {
   opacity: .8,
   fillOpacity: .2,
-  color: 'green',
+  color: 'RoyalBlue',
   weight: 2
 }
 

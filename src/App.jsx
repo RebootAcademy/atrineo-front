@@ -7,8 +7,6 @@ import { CollectionContext } from './context/collection'
 
 const queryClient = new QueryClient()
 
-import './App.css'
-
 function App() {
   const [ collection, setCollection ] = useState([])
 

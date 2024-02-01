@@ -3,10 +3,10 @@ import Header from "../components/Header/Header";
 
 function Layout(){
   return (
-    <div>
+    <main className="h-screen">
       <Header/>
       <Outlet/>
-    </div>
+    </main>
   )
 }
 
