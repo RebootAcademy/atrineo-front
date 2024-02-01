@@ -7,6 +7,7 @@ import { getPublicCollections } from "../services/collectionService"
 
 import { I18N } from "../i18n"
 import MapComponent from "../components/MapComponent/MapComponent"
+import Header from "../components/Header/Header"
 
 function Home () {
   const { example } = I18N
@@ -29,35 +30,6 @@ function Home () {
   return (
     <>
       <MapComponent/>
-      {/* <div>
-        { example }
-      </div>
-      <div>
-        <Button 
-          onClick={()=> console.log('click')}
-        >
-          Default Button
-        </Button>
-        <Button 
-          variant="outline"
-          onClick={()=> console.log('click')}
-        >
-          Outline Button
-        </Button>
-        <Button 
-          variant="destructive"
-          size="lg"
-          onClick={()=> console.log('click')}
-        >
-          Destructive Large Button
-        </Button>
-        <Button 
-          variant="ghost"
-          onClick={()=> console.log('click')}
-        >
-          Ghost Button
-        </Button>
-      </div> */}
     </>
   )
 }
