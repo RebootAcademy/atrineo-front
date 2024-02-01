@@ -1,24 +1,8 @@
 import { LayersControl, TileLayer, LayerGroup } from "react-leaflet"
-import { CollectionContext } from "../../context/collection"
-import { useContext } from "react"
+import {MarkersDisplay} from "../MarkersDisplay/MarkersDisplay"
 import MarkerClusterGroup from "react-leaflet-cluster"
 
-import MarkerComponent from "../ui/MarkerComponent/MarkerComponent"
-
 const LayersControlComponent = () => {
-  const { collection, setCollection } = useContext(CollectionContext)
-
-  const displayMarkers = () => {
-    return collection.flatMap((item) =>
-      item.data.map((dataItem, index) => (
-        <MarkerComponent
-          key={index}
-          coords={{ latitude: dataItem.latitude, longitude: dataItem.longitude }}
-        />
-      ))
-    )
-  }
-
   return (
     <LayersControl position="topleft">
       {/*       <TileLayer
@@ -33,12 +17,17 @@ const LayersControlComponent = () => {
 
       <LayersControl.Overlay name='Startups' checked>
         <LayerGroup>
-          <MarkerClusterGroup chunkedLoading>
-            {displayMarkers()}
-
+          <MarkerClusterGroup 
+            chunkedLoading
+            polygonOptions={{
+              weight: 0
+            }}
+          >
+            <MarkersDisplay />
           </MarkerClusterGroup>
         </LayerGroup>
       </LayersControl.Overlay>
+
     </LayersControl>
   )
 }

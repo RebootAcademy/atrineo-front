@@ -23,9 +23,7 @@ function Home () {
     }
   })
 
-  if (!isLoading) {
-    console.log(collection)
-  }
+  if (isLoading) return 'Loading...'
 
   return (
     <>

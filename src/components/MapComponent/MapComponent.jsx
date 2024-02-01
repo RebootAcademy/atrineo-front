@@ -3,7 +3,6 @@ import { useState, useRef,  } from "react"
 import MapUpdater from "../MapUpdater/MapUpdaterComponent"
 import ContourLayer from "../MapContour/MapContour"
 
-
 import LayersControlComponent from "../LayersControlComponent/LayersControl"
 import CoordsDisplay from "../CoordsDisplay/CoordsDisplay"
 
@@ -33,7 +32,7 @@ export default function MapComponent() {
         <MapUpdater center={mapCenter} />
 
         <LayersControlComponent />
-        
+
       </MapContainer>
     </section>
   )
