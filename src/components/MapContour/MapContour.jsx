@@ -3,9 +3,9 @@ import { useGeoJsonData } from "../../hooks/useGeoJsonData"
 
 const style = {
   opacity: .8,
-  fillOpacity: .1,
-  color: 'dimGray',
-  weight: 1.5
+  fillOpacity: .2,
+  color: 'green',
+  weight: 2
 }
 
 const ContourLayer = ({ mapDivision }) => {
@@ -20,7 +20,7 @@ const ContourLayer = ({ mapDivision }) => {
     return (
       <section>
         <GeoJSON
-        data={filteredData}
+        data={(mapDivision === 'country' || mapDivision === 'division1') ? data : filteredData}
         style={style}
         />
       </section>

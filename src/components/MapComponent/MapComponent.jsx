@@ -17,7 +17,7 @@ export default function MapComponent() {
       <MapContainer
         center={mapCenter}
         zoom={2}
-        minZoom={8.5}
+        minZoom={8}
         doubleClickZoom={false}
         style={{ height: "100vh", width: "100vw", zIndex: 0 }}
         ref={mapRef}
