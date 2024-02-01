@@ -2,9 +2,9 @@ import { Marker } from "react-leaflet"
 import { Icon } from "leaflet"
 import PropTypes from 'prop-types'
 
-export default function MarkerComponent({ info, onClick }){
-  const lat = parseFloat(info.latitud)
-  const lng = parseFloat(info.longitude)
+export default function MarkerComponent({ coords, onClick }){
+  const lat = parseFloat(coords.latitude)
+  const lng = parseFloat(coords.longitude)
 
   const icon = new Icon({
     iconUrl: '/marker.svg',
@@ -22,6 +22,6 @@ export default function MarkerComponent({ info, onClick }){
 // eventHandlers = {{ click: onClick }} - añadir entre position y el icon de la linea 16
 
 MarkerComponent.propTypes = { 
-  info: PropTypes.object,
+  coords: PropTypes.object,
   onClick: PropTypes.func
 }

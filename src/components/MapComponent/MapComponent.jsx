@@ -27,11 +27,13 @@ export default function MapComponent() {
         >
 
         <CoordsDisplay/>
+
         <ContourLayer mapDivision={mapDivision}/>
 
         <MapUpdater center={mapCenter} />
 
         <LayersControlComponent />
+        
       </MapContainer>
     </section>
   )
