@@ -34,7 +34,7 @@ export default function MapComponent() {
         <ContourLayer mapDivision={mapDivision}/>
 
         <MapUpdater center={mapCenter} />
-        <FilterData/>
+        <FilterData attribute="name"/>
         <LayersControlComponent />
         
         <FeatureGroup>
