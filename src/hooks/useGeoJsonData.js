@@ -2,10 +2,10 @@ import { useState, useEffect } from "react"
 import axios from "axios"
 
 const urls = {
-  country: "https://raw.githubusercontent.com/isellsoap/deutschlandGeoJSON/main/1_deutschland/1_sehr_hoch.geo.json",
-  division1: "https://raw.githubusercontent.com/isellsoap/deutschlandGeoJSON/main/2_bundeslaender/1_sehr_hoch.geo.json",
-  division2: "https://raw.githubusercontent.com/isellsoap/deutschlandGeoJSON/main/3_regierungsbezirke/1_sehr_hoch.geo.json",
-  division3: "https://raw.githubusercontent.com/isellsoap/deutschlandGeoJSON/main/4_kreise/1_sehr_hoch.geo.json",
+  country: import.meta.env.VITE_APP_COUNTRY_URL,
+  division1: import.meta.env.VITE_APP_DIVISION1_URL,
+  division2: import.meta.env.VITE_APP_DIVISION2_URL,
+  division3: import.meta.env.VITE_APP_DIVISION3_URL,
 }
 
 export const useGeoJsonData = (type) => {
