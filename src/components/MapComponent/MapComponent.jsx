@@ -6,6 +6,7 @@ import ContourLayer from "../MapContour/MapContour"
 import LayersControlComponent from "../LayersControlComponent/LayersControl"
 import CoordsDisplay from "../CoordsDisplay/CoordsDisplay"
 import DrawComponent from "../DrawComponent/DrawComponent"
+import { FilterData } from "../FilterDataComponent/FilterData"
 
 import "leaflet/dist/leaflet.css"
 
@@ -33,6 +34,7 @@ export default function MapComponent() {
         <ContourLayer mapDivision={mapDivision}/>
 
         <MapUpdater center={mapCenter} />
+        <FilterData/>
         <LayersControlComponent />
         
         <FeatureGroup>
