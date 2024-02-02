@@ -1,6 +1,5 @@
 import { useContext } from "react"
 import { useQuery } from "react-query"
-import { Button } from "@/components/ui/button"
 
 import { CollectionContext } from "../context/collection"
 import { getPublicCollections } from "../services/collectionService"
