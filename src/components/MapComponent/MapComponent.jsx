@@ -2,10 +2,9 @@ import { MapContainer } from "react-leaflet"
 import { useState, useRef,  } from "react"
 import MapUpdater from "../MapUpdater/MapUpdaterComponent"
 import ContourLayer from "../MapContour/MapContour"
-
-
 import LayersControlComponent from "../LayersControlComponent/LayersControl"
 import CoordsDisplay from "../CoordsDisplay/CoordsDisplay"
+// import FilterDataComponent from "../FilterData/FilterData"
 
 import "leaflet/dist/leaflet.css"
 
@@ -31,7 +30,6 @@ export default function MapComponent() {
         <ContourLayer mapDivision={mapDivision}/>
 
         <MapUpdater center={mapCenter} />
-
         <LayersControlComponent />
         
       </MapContainer>

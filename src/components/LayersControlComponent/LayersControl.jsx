@@ -2,8 +2,9 @@ import { LayersControl, TileLayer, LayerGroup } from "react-leaflet"
 import { CollectionContext } from "../../context/collection"
 import { useContext } from "react"
 import MarkerClusterGroup from "react-leaflet-cluster"
-
 import MarkerComponent from "../ui/MarkerComponent/MarkerComponent"
+
+
 
 const LayersControlComponent = () => {
   const { collection, setCollection } = useContext(CollectionContext)
@@ -21,24 +22,27 @@ const LayersControlComponent = () => {
 
   return (
     <LayersControl position="topleft">
-      {/*       <TileLayer
-        attribution='© OpenStreetMap, © CartoDB'
-        url="https://tiles.stadiamaps.com/tiles/stamen_toner_lite/{z}/{x}/{y}{r}.png"
-        
-      /> */}
       <TileLayer
         attribution='© OpenStreetMap, © CartoDB'
-        url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
-      />
+        url="https://tiles.stadiamaps.com/tiles/stamen_toner_lite/{z}/{x}/{y}{r}.png"
 
+      />
+      {/* <TileLayer
+        attribution='© OpenStreetMap, © CartoDB'
+        url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
+      /> */}
       <LayersControl.Overlay name='Startups' checked>
         <LayerGroup>
-          <MarkerClusterGroup chunkedLoading>
+          <MarkerClusterGroup chunkedLoading polygonOptions={{
+            weight: 0,
+            //color: "transparent" si quieremos que no se vea sombra al pasar por encima
+          }}>
             {displayMarkers()}
 
           </MarkerClusterGroup>
         </LayerGroup>
       </LayersControl.Overlay>
+
     </LayersControl>
   )
 }
