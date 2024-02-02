@@ -4,6 +4,7 @@ import MarkerComponent from "../ui/MarkerComponent/MarkerComponent"
 
 export const MarkersDisplay = () => {
   const { collection } = useContext(CollectionContext)
+  
   return collection.flatMap((item) =>
     item.data.map((dataItem, index) => (
       <MarkerComponent

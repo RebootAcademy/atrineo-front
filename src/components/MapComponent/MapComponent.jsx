@@ -34,7 +34,7 @@ export default function MapComponent() {
 
         <MapUpdater center={mapCenter} />
 
-        <LayersControlComponent searchPolygon=/>
+        <LayersControlComponent />
         
         <FeatureGroup>
           <DrawComponent searchPolygon={searchPolygon} setSearchPolygon={setSearchPolygon} />
