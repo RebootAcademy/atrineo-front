@@ -1,10 +1,11 @@
-import { MapContainer } from "react-leaflet"
+import { FeatureGroup, MapContainer } from "react-leaflet"
 import { useState, useRef,  } from "react"
 import MapUpdater from "../MapUpdater/MapUpdaterComponent"
 import ContourLayer from "../MapContour/MapContour"
+
 import LayersControlComponent from "../LayersControlComponent/LayersControl"
 import CoordsDisplay from "../CoordsDisplay/CoordsDisplay"
-// import FilterDataComponent from "../FilterData/FilterData"
+import DrawComponent from "../DrawComponent/DrawComponent"
 
 import "leaflet/dist/leaflet.css"
 
@@ -13,6 +14,8 @@ export default function MapComponent() {
 
   const [mapCenter, setMapCenter] = useState([48.6, 9])
   const [mapDivision, setMapDivision] = useState("division3")
+
+  const [searchPolygon, setSearchPolygon] = useState(null)
 
   return (
     <section>
@@ -32,6 +35,10 @@ export default function MapComponent() {
         <MapUpdater center={mapCenter} />
         <LayersControlComponent />
         
+        <FeatureGroup>
+          <DrawComponent searchPolygon={searchPolygon} setSearchPolygon={setSearchPolygon} />
+        </FeatureGroup>
+
       </MapContainer>
     </section>
   )

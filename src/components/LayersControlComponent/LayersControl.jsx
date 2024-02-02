@@ -1,44 +1,26 @@
 import { LayersControl, TileLayer, LayerGroup } from "react-leaflet"
-import { CollectionContext } from "../../context/collection"
-import { useContext } from "react"
+import { MarkersDisplay } from "../MarkersDisplay/MarkersDisplay"
 import MarkerClusterGroup from "react-leaflet-cluster"
-import MarkerComponent from "../ui/MarkerComponent/MarkerComponent"
-
-
 
 const LayersControlComponent = () => {
-  const { collection, setCollection } = useContext(CollectionContext)
-
-  const displayMarkers = () => {
-    return collection.flatMap((item) =>
-      item.data.map((dataItem, index) => (
-        <MarkerComponent
-          key={index}
-          coords={{ latitude: dataItem.latitude, longitude: dataItem.longitude }}
-        />
-      ))
-    )
-  }
-
   return (
     <LayersControl position="topleft">
       <TileLayer
         attribution='© OpenStreetMap, © CartoDB'
         url="https://tiles.stadiamaps.com/tiles/stamen_toner_lite/{z}/{x}/{y}{r}.png"
-
       />
+
       {/* <TileLayer
         attribution='© OpenStreetMap, © CartoDB'
         url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
       /> */}
       <LayersControl.Overlay name='Startups' checked>
         <LayerGroup>
-          <MarkerClusterGroup chunkedLoading polygonOptions={{
-            weight: 0,
-            //color: "transparent" si quieremos que no se vea sombra al pasar por encima
-          }}>
-            {displayMarkers()}
-
+          <MarkerClusterGroup
+            chunkedLoading
+            polygonOptions={{ weight: 0 }}
+          >
+            <MarkersDisplay />
           </MarkerClusterGroup>
         </LayerGroup>
       </LayersControl.Overlay>
@@ -48,3 +30,8 @@ const LayersControlComponent = () => {
 }
 
 export default LayersControlComponent
+
+{/*       <TileLayer
+  attribution='© OpenStreetMap, © CartoDB'
+  url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
+/> */}
