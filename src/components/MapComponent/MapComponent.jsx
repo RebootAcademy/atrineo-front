@@ -36,6 +36,8 @@ export default function MapComponent() {
         <MapUpdater center={mapCenter} />
         <FilterData attribute="districtName"/>
         <LayersControlComponent />
+
+        <LayersControlComponent searchPolygon={searchPolygon} />
         
         <FeatureGroup>
           <DrawComponent searchPolygon={searchPolygon} setSearchPolygon={setSearchPolygon} />
