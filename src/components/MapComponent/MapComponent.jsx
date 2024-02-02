@@ -34,8 +34,8 @@ export default function MapComponent() {
         <ContourLayer mapDivision={mapDivision}/>
 
         <MapUpdater center={mapCenter} />
-        <FilterData attribute="name"/>
-        <LayersControlComponent />
+
+        <LayersControlComponent searchPolygon={searchPolygon} />
         
         <FeatureGroup>
           <DrawComponent searchPolygon={searchPolygon} setSearchPolygon={setSearchPolygon} />
