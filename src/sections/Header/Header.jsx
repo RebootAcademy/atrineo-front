@@ -14,9 +14,9 @@ import CustomButton from "../../components/CustomButton/CustomButton"
 import { I18N } from "../../i18n"
 
 function Header () {
-  const [ selected, setSelected ] = useState('Map')
-
   const { headerOptions } = I18N.english
+
+  const [ selected, setSelected ] = useState('Map')
 
   const selectOption = (text) => {
     setSelected(text)
@@ -38,7 +38,6 @@ function Header () {
             variant="ghost"
             fn={() => selectOption(option.text)}
             img={option.img}
-            isSelected={option.text === selected}
           />
         </div>
       )
