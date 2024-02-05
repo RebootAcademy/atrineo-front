@@ -1,10 +1,13 @@
-import { CollectionContext } from "../../context/collection"
+import { CollectionContext } from "../../../context/collection"
 import { useContext } from "react"
-import MarkerComponent from "../ui/MarkerComponent/MarkerComponent"
+import MarkerComponent from "../MarkerComponent/MarkerComponent"
+
 import { point, polygon } from "@turf/helpers";
 import booleanPointInPolygon from "@turf/boolean-point-in-polygon";
 
-export const MarkersDisplay = ({ searchPolygon }) => {
+import PropTypes from 'prop-types'
+
+function MarkersDisplay({ searchPolygon }) {
   const { collection } = useContext(CollectionContext)
 
   const displayMarkers = () => {
@@ -34,3 +37,9 @@ export const MarkersDisplay = ({ searchPolygon }) => {
 
   return displayMarkers()
 }
+
+MarkersDisplay.propTypes = {
+  searchPolygon: PropTypes.object
+}
+
+export default MarkersDisplay

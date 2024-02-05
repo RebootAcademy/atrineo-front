@@ -2,7 +2,9 @@ import { EditControl } from 'react-leaflet-draw';
 import 'leaflet/dist/leaflet.css';
 import 'leaflet-draw/dist/leaflet.draw.css';
 
-const DrawComponent = ({ searchPolygon, setSearchPolygon }) => {
+import PropTypes from 'prop-types'
+
+function DrawComponent({ searchPolygon, setSearchPolygon }) {
   const onDrawCreate = (e) => {
     // Obtén la capa del evento
     const layer = e.layer;
@@ -33,6 +35,11 @@ const DrawComponent = ({ searchPolygon, setSearchPolygon }) => {
       }}
     />
   )
+}
+
+DrawComponent.propTypes = {
+  searchPolygon: PropTypes.object,
+  setSearchPolygon: PropTypes.func
 }
 
 export default DrawComponent

@@ -1,4 +1,6 @@
-const RangeFilter = ({ onChange }) => {
+import PropTypes from 'prop-types'
+
+function RangeFilter({ onChange }) {
   const handleChange = (e) => {
     onChange(parseInt(e.target.value, 10))
   }
@@ -18,6 +20,10 @@ const RangeFilter = ({ onChange }) => {
       />
     </section>
   )
+}
+
+RangeFilter.propTypes = {
+  onChange: PropTypes.func
 }
 
 export default RangeFilter

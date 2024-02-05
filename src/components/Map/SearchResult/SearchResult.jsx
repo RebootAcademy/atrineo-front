@@ -1,11 +1,11 @@
 import PropTypes from 'prop-types'
 import { useContext } from 'react'
 
-import searchContext from '../../context/searchContext'
+import searchContext from '../../../context/searchContext'
 
 import './SearchResult.css'
 
-export default function SearchResult({ data }) {
+function SearchResult({ data }) {
   const { setSearchQuery } = useContext(searchContext)
 
   const handleClick = () => {
@@ -24,3 +24,5 @@ export default function SearchResult({ data }) {
 SearchResult.propTypes = {
   data: PropTypes.object
 }
+
+export default SearchResult

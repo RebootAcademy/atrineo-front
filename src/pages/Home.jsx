@@ -5,7 +5,7 @@ import { CollectionContext } from "../context/collection"
 import { getPublicCollections } from "../services/collectionService"
 
 import { I18N } from "../i18n"
-import MapComponent from "../components/MapComponent/MapComponent"
+import MapComponent from "../components/Map/MapComponent/MapComponent"
 
 function Home () {
   const { example } = I18N

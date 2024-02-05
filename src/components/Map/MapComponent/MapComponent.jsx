@@ -11,7 +11,7 @@ import "leaflet/dist/leaflet.css"
 import CustomZoomControl from "../CustomZoomControl/CustomZoomControl"
 import SearchBar from "../SearchBar/SearchBar"
 
-export default function MapComponent() {
+function MapComponent() {
   const mapRef = useRef()
 
   const [mapCenter, setMapCenter] = useState([48.6, 9])
@@ -29,13 +29,7 @@ export default function MapComponent() {
         style={{ height: `calc(100vh - 80px)`, width: "100vw", zIndex: 0 }}
         ref={mapRef}
       >
-
-        <CustomZoomControl />
-
-        <CoordsDisplay />
-
         <ContourLayer mapDivision={mapDivision} />
-
         <MapUpdater center={mapCenter} />
 
         <div className="flex flex-col items-start">
@@ -43,6 +37,9 @@ export default function MapComponent() {
           <LayersControlComponent searchPolygon={searchPolygon} />
         </div>
 
+        <CustomZoomControl />
+
+        <CoordsDisplay />
         <FeatureGroup>
           <DrawComponent searchPolygon={searchPolygon} setSearchPolygon={setSearchPolygon} />
         </FeatureGroup>
@@ -51,3 +48,5 @@ export default function MapComponent() {
     </section>
   )
 }
+
+export default MapComponent

@@ -2,7 +2,7 @@ import { useState } from 'react'
 
 import SearchResult from '../SearchResult/SearchResult'
 
-export default function SearchBar() {
+function SearchBar() {
   const [searchResults, setSearchResults] = useState([])
 
   const handleChange = (e) => {
@@ -38,3 +38,5 @@ export default function SearchBar() {
     </div>
   );
 }
+
+export default SearchBar

@@ -1,9 +1,9 @@
-import { CollectionContext } from "../../context/collection"
+import { CollectionContext } from "../../../context/collection"
 import { useContext } from "react"
 
 import { Circle } from "react-leaflet"
 
-const PatentsLayer = () => {
+function PatentsLayer() {
   const { collection } = useContext(CollectionContext)
 
   const result = collection.flatMap((item) =>

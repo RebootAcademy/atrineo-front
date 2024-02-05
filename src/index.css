@@ -8,14 +8,14 @@
 
 /* Primero, resetea cualquier margen que Leaflet pueda aplicar por defecto */
 .leaflet-control-zoom {
-  left: auto !important;
-  top: auto !important;
+  position: fixed;
+  right: 0;
 }
 
 .leaflet-control-layers {
   position: relative !important;
   left: calc(-100vw + 100%) !important;
-  top: -1rem !important;
+  top: 3rem !important;
   margin-left: 1rem;
 }
 
@@ -30,7 +30,7 @@
     --popover: 0 0% 100%;
     --popover-foreground: 0 0% 3.9%;
 
-    --primary: 0 0% 9%;
+    --primary: hsla(205, 100%, 36%, 1);
     --primary-foreground: 0 0% 98%;
 
     --secondary: 0 0% 96.1%;

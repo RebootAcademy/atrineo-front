@@ -2,7 +2,7 @@ import PropTypes from "prop-types"
 import { useEffect } from "react"
 import { useMap } from "react-leaflet"
 
-export default function MapUpdater({ center }) {
+function MapUpdater({ center }) {
   const map = useMap()
   useEffect(() => {
     map.setView(center)
@@ -14,3 +14,5 @@ export default function MapUpdater({ center }) {
 MapUpdater.propTypes = {
   center: PropTypes.array
 }
+
+export default MapUpdater

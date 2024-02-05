@@ -1,7 +1,8 @@
 import { Circle } from "react-leaflet"
-import { useDistrictsCoords } from "../../hooks/useDistrictCoords"
+import { useDistrictsCoords } from "../../../hooks/useDistrictCoords"
+import PropTypes from 'prop-types'
 
-const PopulationLayer = ({ filterValue }) => {
+function PopulationLayer({ filterValue }) {
   const data = useDistrictsCoords({})
 
   const filteredData = data && data.filter(item => item.districtPopulation <= filterValue)
@@ -18,6 +19,10 @@ const PopulationLayer = ({ filterValue }) => {
       ))}
     </section>
   )
+}
+
+PopulationLayer.propTypes = {
+  filterValue: PropTypes.number
 }
 
 export default PopulationLayer

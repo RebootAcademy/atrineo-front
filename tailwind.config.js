@@ -24,6 +24,8 @@ module.exports = {
         background: "#FFFFFF",
         foreground: "hsl(var(--foreground))",
         black: "#020817",
+        customBlue: '#006AB6',
+        customLightblue: '#00D4FF',
         primary: {
           DEFAULT: "#006AB6",
           foreground: "hsl(var(--primary-foreground))",
@@ -57,6 +59,9 @@ module.exports = {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
+      },
+      backgroundImage: {
+        'radial-custom': 'radial-gradient(circle, rgba(0,106,182,1) 0%, rgba(0,106,182,1) 20%, rgba(0,212,255,0) 100%)',
       },
       keyframes: {
         "accordion-down": {

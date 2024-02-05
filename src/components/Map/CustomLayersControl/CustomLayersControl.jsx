@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react'
 import { useMap } from 'react-leaflet'
+import PropTypes from 'prop-types'
 import L from 'leaflet'
 
-const CustomLayersControl = ({ baseLayers, overlays }) => {
+function CustomLayersControl({ baseLayers, overlays }) {
   const map = useMap();
   const [control, setControl] = useState(null);
 
@@ -20,6 +21,11 @@ const CustomLayersControl = ({ baseLayers, overlays }) => {
   // Aquí puedes añadir lógica adicional para manejar eventos o interacciones
 
   return null; // Este componente no necesita renderizar nada por sí mismo
+}
+
+CustomLayersControl.propTypes = {
+  baseLayers: PropTypes.string,
+  overlays: PropTypes.string
 }
 
 export default CustomLayersControl
