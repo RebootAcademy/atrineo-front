@@ -10,6 +10,7 @@ import DrawComponent from "../DrawComponent/DrawComponent"
 import "leaflet/dist/leaflet.css"
 import CustomZoomControl from "../CustomZoomControl/CustomZoomControl"
 import SearchBar from "../SearchBar/SearchBar"
+import LayersContainer from "../LayersContainer/LayersContainer"
 
 function MapComponent() {
   const mapRef = useRef()
@@ -35,7 +36,9 @@ function MapComponent() {
         <div className="flex flex-col items-start">
           <SearchBar />
           <LayersControlComponent searchPolygon={searchPolygon} />
+          <LayersContainer />
         </div>
+
 
         <CustomZoomControl />
 
