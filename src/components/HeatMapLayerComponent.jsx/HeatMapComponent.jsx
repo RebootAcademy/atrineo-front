@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { GeoJSON } from "react-leaflet";
 import { useGeoJsonData } from "../../hooks/useGeoJsonData";
-import { selectedStyle } from './Style'
+import { selectedStyle, defaultStyle } from './Style'
 
 
 // eslint-disable-next-line react/prop-types
@@ -18,12 +18,15 @@ const HeatMapLayer = ({ mapDivision }) => {
         // const selectedClass = 'bg-red-400'
         // const default = ''
 
-        if (selectRegion && selectRegion.feature.properties.ID_3 === currentGroupId)
+        if (selectRegion && selectRegion.feature.properties.ID_3 === currentGroupId){
             return selectedStyle
+        } else {
+            return defaultStyle
+        }
     }
 
     const onEachFeature = (feature, layer) => {
-        console.log({feature, layer})
+        //console.log({feature, layer})
         layer.on('click', () => {
             console.log(feature)
             if (mapDivision == 'country') {
@@ -35,11 +38,15 @@ const HeatMapLayer = ({ mapDivision }) => {
             } else if (mapDivision == 'division1') {
                 setSelectRegion((prevSelectedRegion) => {
                     return prevSelectedRegion && prevSelectedRegion.feature.properties.id === feature.properties.id
+                        ? null
+                        : layer
                 })
 
             } else if (mapDivision == 'division2') {
                 setSelectRegion((prevSelectedRegion) => {
                     return prevSelectedRegion && prevSelectedRegion.feature.properties.ID_2 === feature.properties.ID_2
+                        ? null
+                        : layer
                 })
             } else {
                 setSelectRegion((prevSelectedRegion) => {
@@ -52,7 +59,7 @@ const HeatMapLayer = ({ mapDivision }) => {
     }
 
     const filteredRegions = (regionName) => {
-            return data?.features.filter((region) => region.properties.NAME_1 === regionName)
+        return data?.features.filter((region) => region.properties.NAME_1 === regionName)
     }
 
     if (data) {
