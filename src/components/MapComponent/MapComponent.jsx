@@ -11,6 +11,7 @@ import DrawComponent from "../DrawComponent/DrawComponent"
 import { FilterData } from "../FilterDataComponent/FilterData"
 
 import "leaflet/dist/leaflet.css"
+import { Filter } from "lucide-react"
 
 export default function MapComponent() {
   const mapRef = useRef()
@@ -39,8 +40,9 @@ export default function MapComponent() {
         <FilterData attribute="districtName"/>
         <HeatMapLayer mapDivision={mapDivision}/>
         <LayersControlComponent />
-
-        <LayersControlComponent searchPolygon={searchPolygon} />
+  
+        {/* esto hace que se repita de nuevo el filterbyrange */}
+        {/* <LayersControlComponent searchPolygon={searchPolygon} /> */}
         
         <FeatureGroup>
           <DrawComponent searchPolygon={searchPolygon} setSearchPolygon={setSearchPolygon} />

@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { GeoJSON } from "react-leaflet";
 import { useGeoJsonData } from "../../hooks/useGeoJsonData";
 import { selectedStyle, defaultStyle } from './Style'
-
+import { getPublicCollections } from "../../services/collectionService";
 
 // eslint-disable-next-line react/prop-types
 const HeatMapLayer = ({ mapDivision }) => {
@@ -13,6 +13,9 @@ const HeatMapLayer = ({ mapDivision }) => {
         setSelectRegion(null)
     }, [mapDivision])
 
+
+
+    
     const setStyle = (feature) => {
         const currentGroupId = feature.properties.ID_3
         // const selectedClass = 'bg-red-400'

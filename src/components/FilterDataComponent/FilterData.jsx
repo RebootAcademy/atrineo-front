@@ -1,16 +1,14 @@
 import { CollectionContext } from "../../context/collection"
 import { useContext } from "react"
+import { getPublicCollections } from "../../services/collectionService"
 
-export const FilterData = ({attribute}) => {
+export const FilterData = ({ attribute }) => {
     const { collection } = useContext(CollectionContext)
-    //console.log(collection)
+    console.log(collection)
 
-    const result = collection.map((item) =>
-        item.data.map((dataItem) => dataItem[attribute])
-        )
-    
-
-    console.log(result)
-    return result
+    const districtNames = collection && collection[0]?.data 
+    ? collection[0].data.map(item => ({districtName: item.districtName}))
+    : []
+    console.log(districtNames)
 }
 
