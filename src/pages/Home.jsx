@@ -21,8 +21,8 @@ function Home () {
     }
   })
 
-  if (!isLoading) {
-    // console.log("aqui va collection sin quotes")
+  if (isLoading) {
+    return 'Loading...'
   }
 
   return (
