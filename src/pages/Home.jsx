@@ -6,7 +6,6 @@ import { getPublicCollections } from "../services/collectionService"
 
 import { I18N } from "../i18n"
 import MapComponent from "../components/MapComponent/MapComponent"
-import Header from "../sections/Header/Header"
 
 function Home () {
   const { example } = I18N
@@ -23,7 +22,7 @@ function Home () {
   })
 
   if (!isLoading) {
-    console.log("aqui va collection sin quotes")
+    // console.log("aqui va collection sin quotes")
   }
 
   return (

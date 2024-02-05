@@ -1,14 +1,15 @@
 import { FeatureGroup, MapContainer } from "react-leaflet"
-import { useState, useRef,  } from "react"
+import { useState, useRef, } from "react"
 import MapUpdater from "../MapUpdater/MapUpdaterComponent"
 import ContourLayer from "../MapContour/MapContour"
 
 import LayersControlComponent from "../LayersControlComponent/LayersControl"
 import CoordsDisplay from "../CoordsDisplay/CoordsDisplay"
 import DrawComponent from "../DrawComponent/DrawComponent"
-import { FilterData } from "../FilterDataComponent/FilterData"
 
 import "leaflet/dist/leaflet.css"
+import CustomZoomControl from "../CustomZoomControl/CustomZoomControl"
+import SearchBar from "../SearchBar/SearchBar"
 
 export default function MapComponent() {
   const mapRef = useRef()
@@ -27,16 +28,21 @@ export default function MapComponent() {
         doubleClickZoom={false}
         style={{ height: `calc(100vh - 80px)`, width: "100vw", zIndex: 0 }}
         ref={mapRef}
-        >
+      >
 
-        <CoordsDisplay/>
+        <CustomZoomControl />
 
-        <ContourLayer mapDivision={mapDivision}/>
+        <CoordsDisplay />
+
+        <ContourLayer mapDivision={mapDivision} />
 
         <MapUpdater center={mapCenter} />
 
-        <LayersControlComponent searchPolygon={searchPolygon} />
-        
+        <div className="flex flex-col items-start">
+          <SearchBar />
+          <LayersControlComponent searchPolygon={searchPolygon} />
+        </div>
+
         <FeatureGroup>
           <DrawComponent searchPolygon={searchPolygon} setSearchPolygon={setSearchPolygon} />
         </FeatureGroup>

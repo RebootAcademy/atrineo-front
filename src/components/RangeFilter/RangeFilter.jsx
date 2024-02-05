@@ -4,7 +4,7 @@ const RangeFilter = ({ onChange }) => {
   }
 
   return (
-    <section className='p-4 z-[9999] relative text-base font-bold bg-blue-300'>
+    <section className='p-4 z-[9999] relative text-base font-bold bg-blue-300 hidden'>
       <label htmlFor="rangeFilter">Filter by range: </label>
       <input 
         type="range"

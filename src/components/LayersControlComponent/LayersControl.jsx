@@ -14,14 +14,21 @@ const LayersControlComponent = ({ searchPolygon }) => {
   const handleFilterChange = (newValue) => {
     setFilterValue(newValue)
   }
+
   return (
-    <>
-      <RangeFilter onChange={handleFilterChange}/>
-      <LayersControl position="topleft">
+    <section>
+      <RangeFilter onChange={handleFilterChange} />
+      <LayersControl>
+
         <TileLayer
           attribution='© OpenStreetMap, © CartoDB'
           url="https://tiles.stadiamaps.com/tiles/stamen_toner_lite/{z}/{x}/{y}{r}.png"
         />
+
+{/*         <TileLayer
+          attribution='© OpenStreetMap, © CartoDB'
+          url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
+        /> */}
 
         <LayersControl.Overlay name='Startups' checked>
           <LayerGroup>
@@ -36,7 +43,7 @@ const LayersControlComponent = ({ searchPolygon }) => {
 
         <LayersControl.Overlay name="Populations" checked>
           <LayerGroup>
-            <PopulationLayer filterValue={filterValue}/>
+            <PopulationLayer filterValue={filterValue} />
           </LayerGroup>
         </LayersControl.Overlay>
 
@@ -47,13 +54,10 @@ const LayersControlComponent = ({ searchPolygon }) => {
         </LayersControl.Overlay>
 
       </LayersControl>
-    </>
+
+    </section>
   )
 }
 
 export default LayersControlComponent
 
-{/*       <TileLayer
-  attribution='© OpenStreetMap, © CartoDB'
-  url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
-/> */}

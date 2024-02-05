@@ -3,9 +3,9 @@ import { useGeoJsonData } from "../../hooks/useGeoJsonData"
 
 const style = {
   opacity: .8,
-  fillOpacity: .2,
-  color: 'RoyalBlue',
-  weight: 2
+  fillOpacity: .1,
+  color: 'black',
+  weight: 1
 }
 
 const ContourLayer = ({ mapDivision }) => {
