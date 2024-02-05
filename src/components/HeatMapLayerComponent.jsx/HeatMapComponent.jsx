@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
+import { GeoJSON } from "react-leaflet";
 import { useGeoJsonData } from "../../hooks/useGeoJsonData";
-import { selectedStyle, below10, between10and20, between20and35, over35, defaultStyle } from './Styles'
+import { selectedStyle } from './Style'
 
 
-const HeatMapLayer = () => {
+// eslint-disable-next-line react/prop-types
+const HeatMapLayer = ({ mapDivision }) => {
     const data = useGeoJsonData(mapDivision)
     const [selectRegion, setSelectRegion] = useState(null)
 
@@ -21,6 +23,7 @@ const HeatMapLayer = () => {
     }
 
     const onEachFeature = (feature, layer) => {
+        console.log({feature, layer})
         layer.on('click', () => {
             console.log(feature)
             if (mapDivision == 'country') {
@@ -48,12 +51,12 @@ const HeatMapLayer = () => {
         })
     }
 
-    const filteredRegions = () => {
-        return data?.feature.filter((region) => region.properties.NAME_1 === 'Baden-Württemberg')
+    const filteredRegions = (regionName) => {
+            return data?.features.filter((region) => region.properties.NAME_1 === regionName)
     }
 
     if (data) {
-        const filteredData = { ...data, features: filteredRegions() }
+        const filteredData = { ...data, features: filteredRegions('Baden-Württemberg') }
 
         return (
             <GeoJSON
@@ -62,6 +65,8 @@ const HeatMapLayer = () => {
                 style={(feature) => setStyle(feature)}
             />
         )
+    } else {
+        return null
     }
 }
 

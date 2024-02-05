@@ -1,7 +1,9 @@
+/* eslint-disable no-unused-vars */
 import { FeatureGroup, MapContainer } from "react-leaflet"
 import { useState, useRef,  } from "react"
 import MapUpdater from "../MapUpdater/MapUpdaterComponent"
 import ContourLayer from "../MapContour/MapContour"
+import HeatMapLayer from "../HeatMapLayerComponent.jsx/HeatMapComponent"
 
 import LayersControlComponent from "../LayersControlComponent/LayersControl"
 import CoordsDisplay from "../CoordsDisplay/CoordsDisplay"
@@ -35,6 +37,7 @@ export default function MapComponent() {
 
         <MapUpdater center={mapCenter} />
         <FilterData attribute="districtName"/>
+        <HeatMapLayer mapDivision={mapDivision}/>
         <LayersControlComponent />
 
         <LayersControlComponent searchPolygon={searchPolygon} />
