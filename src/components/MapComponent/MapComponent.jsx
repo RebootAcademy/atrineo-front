@@ -8,10 +8,10 @@ import HeatMapLayer from "../HeatMapLayerComponent.jsx/HeatMapComponent"
 import LayersControlComponent from "../LayersControlComponent/LayersControl"
 import CoordsDisplay from "../CoordsDisplay/CoordsDisplay"
 import DrawComponent from "../DrawComponent/DrawComponent"
-import { FilterData } from "../FilterDataComponent/FilterData"
+import FilterData from "../FilterDataComponent/FilterData"
 
 import "leaflet/dist/leaflet.css"
-import { Filter } from "lucide-react"
+// import { Filter } from "lucide-react"
 
 export default function MapComponent() {
   const mapRef = useRef()
@@ -37,7 +37,7 @@ export default function MapComponent() {
         <ContourLayer mapDivision={mapDivision}/>
 
         <MapUpdater center={mapCenter} />
-        <FilterData attribute="districtName"/>
+        <FilterData mapDisivion={mapDivision}/>
         <HeatMapLayer mapDivision={mapDivision}/>
         <LayersControlComponent />
   

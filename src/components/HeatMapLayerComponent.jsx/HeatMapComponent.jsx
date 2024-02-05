@@ -7,6 +7,7 @@ import { getPublicCollections } from "../../services/collectionService";
 // eslint-disable-next-line react/prop-types
 const HeatMapLayer = ({ mapDivision }) => {
     const data = useGeoJsonData(mapDivision)
+    //console.log(data)
     const [selectRegion, setSelectRegion] = useState(null)
 
     useEffect(() => {
@@ -14,14 +15,12 @@ const HeatMapLayer = ({ mapDivision }) => {
     }, [mapDivision])
 
 
-
-    
     const setStyle = (feature) => {
         const currentGroupId = feature.properties.ID_3
         // const selectedClass = 'bg-red-400'
         // const default = ''
 
-        if (selectRegion && selectRegion.feature.properties.ID_3 === currentGroupId){
+        if (selectRegion && selectRegion.feature.properties.ID_3 === currentGroupId) {
             return selectedStyle
         } else {
             return defaultStyle
@@ -31,7 +30,7 @@ const HeatMapLayer = ({ mapDivision }) => {
     const onEachFeature = (feature, layer) => {
         //console.log({feature, layer})
         layer.on('click', () => {
-            console.log(feature)
+            //console.log(feature)
             if (mapDivision == 'country') {
                 setSelectRegion((prevSelectedRegion) => {
                     return prevSelectedRegion && prevSelectedRegion.feature.properties.ID_0 === feature.properties.ID_0
