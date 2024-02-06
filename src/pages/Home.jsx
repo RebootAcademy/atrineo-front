@@ -1,13 +1,11 @@
 import { useContext } from "react"
 import { useQuery } from "react-query"
-import { Button } from "@/components/ui/button"
 
 import { CollectionContext } from "../context/collection"
 import { getPublicCollections } from "../services/collectionService"
 
 import { I18N } from "../i18n"
-import MapComponent from "../components/MapComponent/MapComponent"
-import Header from "../components/Header/Header"
+import MapComponent from "../components/Map/MapComponent/MapComponent"
 
 function Home () {
   const { example } = I18N

@@ -1,9 +1,9 @@
 import { Marker } from "react-leaflet"
 import { Icon } from "leaflet"
 import PropTypes from 'prop-types'
-import PopupComponent from "../../PopupComponent/PopupComponent"
+import PopupComponent from "../PopupComponent/PopupComponent"
 
-export default function MarkerComponent({ coords, onClick, info }){
+function MarkerComponent({ coords, onClick }){
   const lat = parseFloat(coords.latitude)
   const lng = parseFloat(coords.longitude)
 
@@ -15,7 +15,7 @@ export default function MarkerComponent({ coords, onClick, info }){
 
   return (
     <Marker position={[ lat, lng ]}  icon={icon}>
-      <PopupComponent name={info} data={coords} eventHandlers={{ click: onClick }} />
+      <PopupComponent data={coords} eventHandlers={{ click: onClick }} />
     </Marker>
   )
 }
