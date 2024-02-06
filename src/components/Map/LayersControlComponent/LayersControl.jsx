@@ -32,8 +32,8 @@ function LayersControlComponent({ searchPolygon }) {
           url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
 
-        <LayersControl.Overlay name='Startups' checked>
-          <LayerGroup>
+{/*         <LayersControl.Overlay name='Startups' checked>
+
             <MarkerClusterGroup
               chunkedLoading
               polygonOptions={{ weight: 0 }}
@@ -47,8 +47,8 @@ function LayersControlComponent({ searchPolygon }) {
             >
               <MarkersDisplay searchPolygon={searchPolygon} />
             </MarkerClusterGroup>
-          </LayerGroup>
-        </LayersControl.Overlay>
+
+        </LayersControl.Overlay> */}
 
         <LayersControl.Overlay name="Populations" checked>
           <LayerGroup>

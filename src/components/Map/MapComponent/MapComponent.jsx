@@ -12,6 +12,8 @@ import CustomZoomControl from "../CustomZoomControl/CustomZoomControl"
 import SearchBar from "../SearchBar/SearchBar"
 import LayersContainer from "../LayersContainer/LayersContainer"
 
+import { useMarkers } from "../../../context/MarkersContext"
+
 function MapComponent() {
   const mapRef = useRef()
 
@@ -19,6 +21,10 @@ function MapComponent() {
   const [mapDivision, setMapDivision] = useState("division3")
 
   const [searchPolygon, setSearchPolygon] = useState(null)
+
+  const { showMarkers } = useMarkers()
+
+  console.log('Map: ', showMarkers)
 
   return (
     <section>
