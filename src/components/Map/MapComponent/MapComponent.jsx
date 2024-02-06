@@ -8,11 +8,12 @@ import CoordsDisplay from "../CoordsDisplay/CoordsDisplay"
 import DrawComponent from "../DrawComponent/DrawComponent"
 
 import "leaflet/dist/leaflet.css"
+
 import CustomZoomControl from "../CustomZoomControl/CustomZoomControl"
 import SearchBar from "../SearchBar/SearchBar"
 import LayersContainer from "../LayersContainer/LayersContainer"
-
-import { useMarkers } from "../../../context/MarkersContext"
+import StartupsComponent from "../StartupsComponent/StartupsComponent"
+import PopulationLayer from "../PopulationLayer/PopulationLayer"
 
 function MapComponent() {
   const mapRef = useRef()
@@ -22,9 +23,11 @@ function MapComponent() {
 
   const [searchPolygon, setSearchPolygon] = useState(null)
 
-  const { showMarkers } = useMarkers()
+  const [filterValue, setFilterValue] = useState(null)
 
-  console.log('Map: ', showMarkers)
+  const handleFilterChange = (newValue) => {
+    setFilterValue(newValue)
+  }
 
   return (
     <section>
@@ -41,12 +44,14 @@ function MapComponent() {
 
         <div className="flex flex-col items-start">
           <SearchBar />
-          <LayersControlComponent searchPolygon={searchPolygon} />
+          <LayersControlComponent />
           <LayersContainer />
         </div>
 
-
         <CustomZoomControl />
+
+        <StartupsComponent searchPolygon={searchPolygon} />
+        <PopulationLayer filterValue={filterValue} />
 
         <CoordsDisplay />
         <FeatureGroup>

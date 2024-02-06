@@ -38,7 +38,7 @@ function DrawComponent({ searchPolygon, setSearchPolygon }) {
 }
 
 DrawComponent.propTypes = {
-  searchPolygon: PropTypes.object,
+  searchPolygon: PropTypes.array,
   setSearchPolygon: PropTypes.func
 }
 

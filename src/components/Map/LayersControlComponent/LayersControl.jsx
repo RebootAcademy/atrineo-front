@@ -1,16 +1,10 @@
 import { useState } from "react"
 
 import { LayersControl, TileLayer, LayerGroup } from "react-leaflet"
-import MarkerClusterGroup from "react-leaflet-cluster"
-
-import MarkersDisplay from "../MarkersDisplay/MarkersDisplay"
-import PopulationLayer from "../PopulationLayer/PopulationLayer"
 import PatentsLayer from "../PatentsLayer/PatentsLayer"
 import RangeFilter from "../RangeFilter/RangeFilter"
 
-import PropTypes from 'prop-types'
-
-function LayersControlComponent({ searchPolygon }) {
+function LayersControlComponent() {
   const [filterValue, setFilterValue] = useState(null)
 
   const handleFilterChange = (newValue) => {
@@ -32,30 +26,6 @@ function LayersControlComponent({ searchPolygon }) {
           url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
 
-{/*         <LayersControl.Overlay name='Startups' checked>
-
-            <MarkerClusterGroup
-              chunkedLoading
-              polygonOptions={{ weight: 0 }}
-              iconCreateFunction={function (cluster) {
-                return L.divIcon({
-                  html: `<span>${cluster.getChildCount()}</span>`,
-                  className: 'rounded-full text-white text-sm font-bold text-center bg-radial-custom', // Clase personalizada
-                  iconSize: L.point(40, 40, true),
-                })
-              }}
-            >
-              <MarkersDisplay searchPolygon={searchPolygon} />
-            </MarkerClusterGroup>
-
-        </LayersControl.Overlay> */}
-
-        <LayersControl.Overlay name="Populations" checked>
-          <LayerGroup>
-            <PopulationLayer filterValue={filterValue} />
-          </LayerGroup>
-        </LayersControl.Overlay>
-
         <LayersControl.Overlay name="Patents" >
           <LayerGroup>
             <PatentsLayer filterValue={filterValue} />
@@ -68,9 +38,7 @@ function LayersControlComponent({ searchPolygon }) {
   )
 }
 
-LayersControlComponent.propTypes = {
-  searchPolygon: PropTypes.object
-}
+
 
 export default LayersControlComponent
 

@@ -1,7 +1,6 @@
 import {
   Card,
   CardContent,
-  CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
@@ -9,7 +8,7 @@ import {
 
 import FilterGroup from "../FilterGroup/Filtergroup"
 
-function LayerCard({ layerId=1, searchPolygon }) {
+function LayerCard({ layerId=1 }) {
   return (
     <Card className='w-[250px] '>
       <CardHeader>
@@ -17,8 +16,7 @@ function LayerCard({ layerId=1, searchPolygon }) {
       </CardHeader>
 
       <CardContent>
-        <FilterGroup searchPolygon={searchPolygon} />
-{/*         <FilterGroup /> */}
+        <FilterGroup />
       </CardContent>
 
       <CardFooter>
