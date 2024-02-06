@@ -3,23 +3,30 @@ import { QueryClient, QueryClientProvider } from 'react-query'
 import { RouterProvider } from 'react-router-dom'
 
 import { router } from './router'
+
 import { CollectionContext } from './context/collection'
-import { MarkersProvider } from './context/MarkersContext'
+import { LayerContext } from './context/layerContext'
 
 const queryClient = new QueryClient()
 
 function App() {
   const [collection, setCollection] = useState([])
+  const [showMarkers, setShowMarkers] = useState(false)
+
   const collectionValue = {collection, setCollection}
+
+  const toggleMarkersDisplay = () => {
+    setShowMarkers(!showMarkers)
+  }
 
   return (
     <>
       <QueryClientProvider client={queryClient}>
-        <MarkersProvider>
+        <LayerContext.Provider value={{ showMarkers, toggleMarkersDisplay }}>
           <CollectionContext.Provider value={collectionValue}>
             <RouterProvider router={router} />
           </CollectionContext.Provider>
-        </MarkersProvider>
+        </LayerContext.Provider>
       </QueryClientProvider>
     </>
   )

@@ -1,11 +1,12 @@
 import MarkersDisplay from "../MarkersDisplay/MarkersDisplay"
 import MarkerClusterGroup from "react-leaflet-cluster"
-import { useMarkers } from "../../../context/MarkersContext"
 
 import PropTypes from 'prop-types'
+import { LayerContext } from "../../../context/layerContext"
+import { useContext } from "react"
 
 function StartupsComponent({ searchPolygon }) {
-  const { showMarkers } = useMarkers()
+  const { showMarkers } = useContext(LayerContext)
   
   return (
     <>
@@ -29,7 +30,7 @@ function StartupsComponent({ searchPolygon }) {
 }
 
 StartupsComponent.propTypes = {
-  searchPolygon: PropTypes.object
+  searchPolygon: PropTypes.array
 }
 
 export default StartupsComponent
