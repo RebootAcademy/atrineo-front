@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { FeatureGroup, MapContainer } from "react-leaflet"
-import { useState, useRef,  } from "react"
+import { useState, useRef, } from "react"
 import MapUpdater from "../MapUpdater/MapUpdaterComponent"
 import ContourLayer from "../MapContour/MapContour"
 import HeatMapLayer from "../HeatMapLayerComponent.jsx/HeatMapComponent"
@@ -9,9 +9,9 @@ import LayersControlComponent from "../LayersControlComponent/LayersControl"
 import CoordsDisplay from "../CoordsDisplay/CoordsDisplay"
 import DrawComponent from "../DrawComponent/DrawComponent"
 import FilterData from "../FilterDataComponent/FilterData"
-import MarkerComponent from "../ui/MarkerComponent/MarkerComponent"
 
 import "leaflet/dist/leaflet.css"
+import PopupComponent from "../ui/PopupComponent/PopupComponent"
 // import { Filter } from "lucide-react"
 
 export default function MapComponent() {
@@ -31,20 +31,20 @@ export default function MapComponent() {
         doubleClickZoom={false}
         style={{ height: `calc(100vh - 80px)`, width: "100vw", zIndex: 0 }}
         ref={mapRef}
-        >
+      >
 
-        <CoordsDisplay/>
+        <CoordsDisplay />
 
-        <ContourLayer mapDivision={mapDivision}/>
+        <ContourLayer mapDivision={mapDivision} />
 
         <MapUpdater center={mapCenter} />
-        <FilterData mapDivision={mapDivision} selectedRegion={selectedRegion}/>
-        <HeatMapLayer mapDivision={mapDivision}/>
+        <FilterData mapDivision={mapDivision} selectedRegion={selectedRegion} />
+        <HeatMapLayer mapDivision={mapDivision} />
         <LayersControlComponent />
-  
+
         {/* esto hace que se repita de nuevo el filterbyrange */}
         {/* <LayersControlComponent searchPolygon={searchPolygon} /> */}
-        
+
         <FeatureGroup>
           <DrawComponent searchPolygon={searchPolygon} setSearchPolygon={setSearchPolygon} />
         </FeatureGroup>

@@ -14,6 +14,7 @@ function FilterData({ mapDivision, selectedRegion }) {
       if (!selectedRegion || company.locationId[mapDivision]?.name === selectedRegion) {
         companyMarkers.push(<MarkerComponent
           key={company._id}
+          info={company.name}
           coords={{ latitude: company.latitude, longitude: company.longitude }}
         />)
       }
@@ -22,6 +23,8 @@ function FilterData({ mapDivision, selectedRegion }) {
   }
   return renderCompanyMarkers()
 }
+
+const connectCompanyMap = 
 
 
 
