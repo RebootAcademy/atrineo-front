@@ -20,7 +20,7 @@ export default function MapComponent() {
   const [mapDivision, setMapDivision] = useState("division3")
   const [searchPolygon, setSearchPolygon] = useState(null)
   const [selectedRegion, setSelectedRegion] = useState('')
-  //Enz, Calw, Ortenaukreis
+  //Enz, Calw, Ortenaukreis, Freudenstadt
 
   return (
     <section>

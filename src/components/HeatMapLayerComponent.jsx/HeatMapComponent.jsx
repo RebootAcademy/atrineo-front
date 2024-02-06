@@ -4,10 +4,9 @@ import { useGeoJsonData } from "../../hooks/useGeoJsonData";
 import { selectedStyle, defaultStyle } from './Style'
 import { getPublicCollections } from "../../services/collectionService";
 
-// eslint-disable-next-line react/prop-types
 const HeatMapLayer = ({ mapDivision }) => {
     const data = useGeoJsonData(mapDivision)
-    //console.log(data)
+  
     const [selectRegion, setSelectRegion] = useState(null)
 
     useEffect(() => {

@@ -3,10 +3,14 @@ import { useContext } from "react"
 import { useGeoJsonData } from "../../hooks/useGeoJsonData";
 import MarkerComponent from "../ui/MarkerComponent/MarkerComponent"
 import PropTypes from 'prop-types'
+import { useState } from "react";
+import HeatMapLayer from "../HeatMapLayerComponent.jsx/HeatMapComponent";
 
 function FilterData({ mapDivision, selectedRegion }) {
   const { collection } = useContext(CollectionContext)
   const data = useGeoJsonData(mapDivision)
+
+  const [clickedZone, setClickedZone] = useState()
 
   const renderCompanyMarkers = () => {
     const companyMarkers = []
@@ -24,7 +28,11 @@ function FilterData({ mapDivision, selectedRegion }) {
   return renderCompanyMarkers()
 }
 
-const connectCompanyMap = 
+const connectCompanyMap = (mapDivision, clickedZone, feature, layer) => {
+  layer.on('click', () => {
+    
+  })
+}
 
 
 
