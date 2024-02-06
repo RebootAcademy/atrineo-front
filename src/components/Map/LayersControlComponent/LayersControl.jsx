@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { useState } from "react"
 
 import { LayersControl, TileLayer, LayerGroup } from "react-leaflet"

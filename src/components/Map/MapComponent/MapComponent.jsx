@@ -1,16 +1,17 @@
+/* eslint-disable no-unused-vars */
 import { FeatureGroup, MapContainer } from "react-leaflet"
 import { useState, useRef, } from "react"
 import MapUpdater from "../MapUpdater/MapUpdaterComponent"
 import ContourLayer from "../MapContour/MapContour"
+import HeatMapLayer from "../../HeatMapLayerComponent.jsx/HeatMapComponent"
 
 import LayersControlComponent from "../LayersControlComponent/LayersControl"
 import CoordsDisplay from "../CoordsDisplay/CoordsDisplay"
 import DrawComponent from "../DrawComponent/DrawComponent"
+import FilterData from "../../FilterDataComponent/FilterData"
 
 import "leaflet/dist/leaflet.css"
-import CustomZoomControl from "../CustomZoomControl/CustomZoomControl"
-import SearchBar from "../SearchBar/SearchBar"
-import LayersContainer from "../LayersContainer/LayersContainer"
+// import { Filter } from "lucide-react"
 
 function MapComponent() {
   const mapRef = useRef()
@@ -32,17 +33,13 @@ function MapComponent() {
       >
         <ContourLayer mapDivision={mapDivision} />
         <MapUpdater center={mapCenter} />
-
-        <div className="flex flex-col items-start">
-          <SearchBar />
-          <LayersControlComponent searchPolygon={searchPolygon} />
-          <LayersContainer />
-        </div>
-
-
-        <CustomZoomControl />
-
-        <CoordsDisplay />
+        <FilterData mapDisivion={mapDivision}/>
+        <HeatMapLayer mapDivision={mapDivision}/>
+        <LayersControlComponent />
+  
+        {/* esto hace que se repita de nuevo el filterbyrange */}
+        {/* <LayersControlComponent searchPolygon={searchPolygon} /> */}
+        
         <FeatureGroup>
           <DrawComponent searchPolygon={searchPolygon} setSearchPolygon={setSearchPolygon} />
         </FeatureGroup>
