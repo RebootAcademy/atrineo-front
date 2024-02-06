@@ -11,7 +11,7 @@ import DrawComponent from "../DrawComponent/DrawComponent"
 import FilterData from "../../FilterDataComponent/FilterData"
 
 import "leaflet/dist/leaflet.css"
-import PopupComponent from "../ui/PopupComponent/PopupComponent"
+import PopupComponent from "../../ui/PopupComponent/PopupComponent"
 // import { Filter } from "lucide-react"
 
 function MapComponent() {
