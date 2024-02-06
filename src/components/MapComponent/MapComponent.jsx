@@ -9,17 +9,18 @@ import LayersControlComponent from "../LayersControlComponent/LayersControl"
 import CoordsDisplay from "../CoordsDisplay/CoordsDisplay"
 import DrawComponent from "../DrawComponent/DrawComponent"
 import FilterData from "../FilterDataComponent/FilterData"
+import MarkerComponent from "../ui/MarkerComponent/MarkerComponent"
 
 import "leaflet/dist/leaflet.css"
 // import { Filter } from "lucide-react"
 
 export default function MapComponent() {
   const mapRef = useRef()
-
   const [mapCenter, setMapCenter] = useState([48.6, 9])
   const [mapDivision, setMapDivision] = useState("division3")
-
   const [searchPolygon, setSearchPolygon] = useState(null)
+  const [selectedRegion, setSelectedRegion] = useState('')
+  //Enz, Calw, Ortenaukreis
 
   return (
     <section>
@@ -37,7 +38,7 @@ export default function MapComponent() {
         <ContourLayer mapDivision={mapDivision}/>
 
         <MapUpdater center={mapCenter} />
-        <FilterData mapDisivion={mapDivision}/>
+        <FilterData mapDivision={mapDivision} selectedRegion={selectedRegion}/>
         <HeatMapLayer mapDivision={mapDivision}/>
         <LayersControlComponent />
   

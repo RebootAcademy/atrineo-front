@@ -23,8 +23,7 @@ const LayersControlComponent = ({ searchPolygon }) => {
           attribution='© OpenStreetMap, © CartoDB'
           url="https://tiles.stadiamaps.com/tiles/stamen_toner_lite/{z}/{x}/{y}{r}.png"
         />
-
-        <LayersControl.Overlay name='Startups' checked>
+        <LayersControl.Overlay name='Startups'>
           <LayerGroup>
             <MarkerClusterGroup
               chunkedLoading
@@ -35,13 +34,13 @@ const LayersControlComponent = ({ searchPolygon }) => {
           </LayerGroup>
         </LayersControl.Overlay>
 
-        <LayersControl.Overlay name="Populations" checked>
+        <LayersControl.Overlay name="Populations">
           <LayerGroup>
             <PopulationLayer filterValue={filterValue}/>
           </LayerGroup>
         </LayersControl.Overlay>
 
-        <LayersControl.Overlay name="Patents" checked>
+        <LayersControl.Overlay name="Patents">
           <LayerGroup>
             <PatentsLayer filterValue={filterValue} />
           </LayerGroup>

@@ -1,42 +1,34 @@
 import { CollectionContext } from "../../context/collection"
 import { useContext } from "react"
-//import { getPublicCollections } from "../../services/collectionService"
-import { useGeoJsonData } from "../../hooks/useGeoJsonData"
+import { useGeoJsonData } from "../../hooks/useGeoJsonData";
+import MarkerComponent from "../ui/MarkerComponent/MarkerComponent"
+import PropTypes from 'prop-types'
 
-function FilterData({ mapDisivion }) {
+function FilterData({ mapDivision, selectedRegion }) {
   const { collection } = useContext(CollectionContext)
-  const geoJson = useGeoJsonData(mapDisivion)
-  //console.log(geoJson)
+  const data = useGeoJsonData(mapDivision)
 
-  //Verifica si geoJson es válido
-  if (!geoJson || !geoJson.features) {
-    //console.error(error)
-    return null
+  const renderCompanyMarkers = () => {
+    const companyMarkers = []
+    collection[0]?.data?.forEach((company) => {
+      if (!selectedRegion || company.locationId[mapDivision]?.name === selectedRegion) {
+        companyMarkers.push(<MarkerComponent
+          key={company._id}
+          coords={{ latitude: company.latitude, longitude: company.longitude }}
+        />)
+      }
+    })
+    return companyMarkers
   }
-
-  const division3Names = collection && collection[0]?.data
-    ? collection[0].data.map(item => ({ location: item.locationId && item.locationId.division3 && item.locationId.division3.name }))
-    : []
-  console.log("Division3:", division3Names)
-
-
-  //Verifica si name3Data.feature es válido
-
-  const name3Data = geoJson
-  if (!name3Data || !name3Data.features) {
-    //console.error(error)
-    return null
-  }
-
-  //Recorre el geoJson a través de name3Data y almacena cada NAME_3 
-  const name3Objets = []
-  name3Data.features.forEach(feature => {
-    const name = feature.properties.NAME_3
-    name3Objets.push( name )
-  })
-  //console.log("NAME_· es:", name3Objets)
+  return renderCompanyMarkers()
 }
 
 
+
+//es string por ahora, el objetivo es que sea un valor dinámico 
+FilterData.propTypes = {
+  mapDivision: PropTypes.string.isRequired,
+  selectedRegion: PropTypes.string.isRequired,
+};
 
 export default FilterData

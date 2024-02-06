@@ -24,7 +24,7 @@ function Home () {
   })
 
   if (!isLoading) {
-    console.log("aqui va collection sin quotes")
+    console.log(collection)
   }
 
   return (
