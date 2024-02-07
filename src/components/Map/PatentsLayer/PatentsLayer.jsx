@@ -3,7 +3,7 @@ import { useContext } from "react";
 
 import { Circle } from "react-leaflet";
 
-function PatentsLayer() {
+function PatentsLayer({ layerId }) {
   const { collection } = useContext(CollectionContext)
 
   const result = collection.flatMap((item) =>

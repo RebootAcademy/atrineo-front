@@ -1,5 +1,6 @@
 import MarkersDisplay from "../MarkersDisplay/MarkersDisplay"
 import MarkerClusterGroup from "react-leaflet-cluster"
+import PatentsLayer from "../PatentsLayer/PatentsLayer"
 
 import PropTypes from 'prop-types'
 import { LayerContext } from "../../../context/layerContext"
@@ -25,6 +26,7 @@ function StartupsComponent({ searchPolygon }) {
           <MarkersDisplay searchPolygon={searchPolygon} />
         </MarkerClusterGroup>
       )}
+      <PatentsLayer />
     </>
   )
 }

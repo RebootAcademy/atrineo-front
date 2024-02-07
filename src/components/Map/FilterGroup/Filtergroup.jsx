@@ -16,8 +16,6 @@ import { Slider } from "../../ui/Slider/Slider"
 function FilterGroup({ title, layers }) {
   const { showMarkers, toggleMarkersDisplay } = useContext(LayerContext)
 
-  console.log(showMarkers)
-
   return (
     <Card className='mb-2'>
       <CardHeader>
@@ -27,7 +25,7 @@ function FilterGroup({ title, layers }) {
       <CardContent>
         <Collapsible>
           {layers && layers.map((layer, id) => (
-            <div className="mb-8" key={id}>
+            <div key={id}>
               <div key={layer.id} className="flex gap-2 mb-2">
                 <input
                   type="checkbox"
@@ -46,24 +44,24 @@ function FilterGroup({ title, layers }) {
                 <CollapsibleContent className="flex flex-col gap-4">
                   <div className="flex items-center space-x-2">
                     <Switch
-                      id="airplane-mode"
+                      id="financing"
                       className="w-11 h-6"
                     />
-                    <Label htmlFor="airplane-mode">Financing Access</Label>
+                    <Label htmlFor="financing">Financing Access</Label>
                   </div>
                   <div className="flex items-center space-x-2">
                     <Switch
-                      id="airplane-mode"
+                      id="govFunds"
                       className="w-11 h-6"
                     />
-                    <Label htmlFor="airplane-mode">Receive Gov Funds</Label>
+                    <Label htmlFor="govFunds">Receive Gov Funds</Label>
                   </div>
                   <div className="flex flex-col items-center space-x-2 gap-2">
-                    <Label htmlFor="airplane-mode">Employees Nº</Label>
+                    <Label htmlFor="employees">Employees Nº</Label>
                     <Slider />
                   </div>
                   <div className="flex flex-col items-center space-x-2 gap-2">
-                    <Label htmlFor="airplane-mode">Patents Nº</Label>
+                    <Label htmlFor="patents">Patents Nº</Label>
                     <Slider />
                   </div>
                 </CollapsibleContent>

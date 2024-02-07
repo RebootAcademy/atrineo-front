@@ -63,6 +63,7 @@ function MapComponent() {
 
         {shouldShowStartups && <StartupsComponent searchPolygon={searchPolygon} />}
 
+
         <PopulationLayer filterValue={filterValue} />
 
         <CoordsDisplay />
