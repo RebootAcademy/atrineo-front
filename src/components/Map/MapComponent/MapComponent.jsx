@@ -1,11 +1,14 @@
+/* eslint-disable no-unused-vars */
 import { FeatureGroup, MapContainer } from "react-leaflet"
 import { useState, useRef, useContext } from "react"
 import { LayerContext } from "../../../context/layerContext"
 import MapUpdater from "../MapUpdater/MapUpdaterComponent"
 import ContourLayer from "../MapContour/MapContour"
+import HeatMapLayer from "../../HeatMapLayerComponent.jsx/HeatMapComponent"
 
 import CoordsDisplay from "../CoordsDisplay/CoordsDisplay"
 import DrawComponent from "../DrawComponent/DrawComponent"
+import FilterData from "../../FilterDataComponent/FilterData"
 
 import "leaflet/dist/leaflet.css"
 
@@ -16,6 +19,7 @@ import StartupsComponent from "../StartupsComponent/StartupsComponent"
 import PopulationLayer from "../PopulationLayer/PopulationLayer"
 import RangeFilter from "../RangeFilter/RangeFilter"
 import TileLayerComponent from "../TileLayerComponent/TileLayerComponent"
+// import { Filter } from "lucide-react"
 
 function MapComponent() {
   const mapRef = useRef()
