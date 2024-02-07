@@ -6,13 +6,20 @@ import { point, polygon } from "@turf/helpers";
 import booleanPointInPolygon from "@turf/boolean-point-in-polygon";
 
 import PropTypes from 'prop-types'
+import { LayerContext } from "../../../context/layerContext";
 
 function MarkersDisplay({ searchPolygon }) {
   const { collection } = useContext(CollectionContext)
+  const { financingAccess } = useContext(LayerContext)
 
   const displayMarkers = () => {
     return collection.flatMap((item) =>
-      item.data.filter((dataItem) => {
+      item.data
+      .filter((dataItem) => {
+        if (financingAccess && !dataItem.financingAccess) {
+          return false
+        }
+
         const markerCoords = [parseFloat(dataItem.latitude), parseFloat(dataItem.longitude)]
         const markerPoint = point(markerCoords)
 

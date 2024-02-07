@@ -14,7 +14,16 @@ import { Label } from "../../ui/Label/Label"
 import { Slider } from "../../ui/Slider/Slider"
 
 function FilterGroup({ title, layers }) {
-  const { showMarkers, toggleMarkersDisplay } = useContext(LayerContext)
+  const { showMarkers, toggleMarkersDisplay, setPatentsFilter, financingAccess, setFinancingAccess } = useContext(LayerContext)
+
+  const handlePatentsSliderChange = (value) => {
+    setPatentsFilter(value)
+  }
+
+  const handleFinancingAccessChange = (newState) => {
+    setFinancingAccess(newState)
+    console.log(newState)
+  }
 
   return (
     <Card className='mb-2'>
@@ -38,33 +47,32 @@ function FilterGroup({ title, layers }) {
                   className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                 >
                   <CollapsibleTrigger className="text-lg font-bold mb-2">{layer.name}</CollapsibleTrigger>
-                  
+
                 </label>
               </div>
-                <CollapsibleContent className="flex flex-col gap-4">
-                  <div className="flex items-center space-x-2">
-                    <Switch
-                      id="financing"
-                      className="w-11 h-6"
-                    />
-                    <Label htmlFor="financing">Financing Access</Label>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <Switch
-                      id="govFunds"
-                      className="w-11 h-6"
-                    />
-                    <Label htmlFor="govFunds">Receive Gov Funds</Label>
-                  </div>
-                  <div className="flex flex-col items-center space-x-2 gap-2">
-                    <Label htmlFor="employees">Employees Nº</Label>
-                    <Slider />
-                  </div>
-                  <div className="flex flex-col items-center space-x-2 gap-2">
-                    <Label htmlFor="patents">Patents Nº</Label>
-                    <Slider />
-                  </div>
-                </CollapsibleContent>
+              <CollapsibleContent className="flex flex-col gap-4">
+                <div className="flex items-center space-x-2">
+                  <Switch
+                    id="financing"
+                    className="w-11 h-6"
+                    checked={financingAccess}
+                    onCheckedChange={handleFinancingAccessChange}
+                  />
+                  <Label htmlFor="financing">Financing Access</Label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <Switch
+                    id="govFunds"
+                    className="w-11 h-6"
+                    
+                  />
+                  <Label htmlFor="govFunds">Receive Gov Funds</Label>
+                </div>
+                <div className="flex flex-col items-center space-x-2 gap-2">
+                  <Label htmlFor="patents">Patents Nº</Label>
+                  <Slider onValueChange={handlePatentsSliderChange} />
+                </div>
+              </CollapsibleContent>
             </div>
           ))}
         </Collapsible>

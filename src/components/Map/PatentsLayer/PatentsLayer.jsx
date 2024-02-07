@@ -1,27 +1,29 @@
-import { CollectionContext } from "../../../context/collection";
-import { useContext } from "react";
+import { useContext } from "react"
+import { CollectionContext } from "../../../context/collection"
+import { LayerContext } from "../../../context/layerContext"
+import { Circle } from "react-leaflet"
 
-import { Circle } from "react-leaflet";
-
-function PatentsLayer({ layerId }) {
+function PatentsLayer() {
   const { collection } = useContext(CollectionContext)
+  const { patentsFilter } = useContext(LayerContext)
 
-  const result = collection.flatMap((item) =>
-    item.data.map((dataItem) => {
-      const radius = !isNaN(dataItem.patents) ? dataItem.patents * 50 : 0;
+  const filteredItems = collection.flatMap(item =>
+    item.data.filter(dataItem =>
+      !isNaN(dataItem.patents) && dataItem.patents <= patentsFilter &&
+      dataItem.latitude != null && dataItem.longitude != null
+    )
+  )
 
-      return (
-        <Circle
-          key={dataItem._id}
-          center={[dataItem.latitude, dataItem.longitude]}
-          pathOptions={{ fillColor: "red", stroke: false, fillOpacity: 0.3 }}
-          radius={radius}
-        />
-      );
-    })
-  );
+  const circles = filteredItems.map(filteredItem => (
+    <Circle
+      key={filteredItem._id}
+      center={[filteredItem.latitude, filteredItem.longitude]}
+      pathOptions={{ fillColor: "red", stroke: false, fillOpacity: 0.3 }}
+      radius={filteredItem.patents * 100}
+    />
+  ))
 
-  return result;
-};
+  return <>{circles}</>;
+}
 
 export default PatentsLayer;

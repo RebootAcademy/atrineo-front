@@ -7,11 +7,11 @@ import { LayerContext } from "../../../context/layerContext"
 import { useContext } from "react"
 
 function StartupsComponent({ searchPolygon }) {
-  const { showMarkers } = useContext(LayerContext)
+  const { showMarkers, showPatents, financingAccess } = useContext(LayerContext)
   
   return (
     <>
-      {showMarkers && (
+      {financingAccess && (
         <MarkerClusterGroup
           chunkedLoading
           polygonOptions={{ weight: 0 }}
@@ -26,7 +26,7 @@ function StartupsComponent({ searchPolygon }) {
           <MarkersDisplay searchPolygon={searchPolygon} />
         </MarkerClusterGroup>
       )}
-      <PatentsLayer />
+      {showPatents && <PatentsLayer />}
     </>
   )
 }
