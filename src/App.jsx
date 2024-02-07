@@ -15,7 +15,7 @@ function App() {
   const [showPatents, setShowPatents] = useState({})
   const [showPopulation, setShowPopulation] = useState({})
 
-  const collectionValue = {collection, setCollection}
+  const collectionValue = { collection, setCollection }
 
   const toggleMarkersDisplay = (layerId) => {
     setShowMarkers(prevState => ({
@@ -31,10 +31,21 @@ function App() {
     }))
   }
 
+  const togglePopulationDisplay = () => {
+    setShowPopulation((prev) => !prev)
+  }
+
   return (
     <>
       <QueryClientProvider client={queryClient}>
-        <LayerContext.Provider value={{ showMarkers, toggleMarkersDisplay, showPatents, setShowPatents, showPopulation, setShowPopulation }}>
+        <LayerContext.Provider value={{ 
+          showMarkers, 
+          toggleMarkersDisplay, 
+          showPatents, 
+          setShowPatents, 
+          showPopulation, 
+          setShowPopulation,
+          togglePopulationDisplay }}>
           <CollectionContext.Provider value={collectionValue}>
             <RouterProvider router={router} />
           </CollectionContext.Provider>

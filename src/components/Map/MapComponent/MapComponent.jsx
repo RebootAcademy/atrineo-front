@@ -35,10 +35,10 @@ function MapComponent() {
   const onRegionSelected = (region) => {
     setSelectedRegion(region)
   }
-  
-  const { showMarkers } = useContext(LayerContext)
 
+  const { showMarkers, showPopulation, toggleMarkersDisplay, togglePopulationDisplay } = useContext(LayerContext)
 
+  const shouldShowPopulation = showPopulation
   const shouldShowStartups = showMarkers['startups']
 
   const handleFilterChange = (newValue) => {
@@ -60,6 +60,7 @@ function MapComponent() {
         <ContourLayer mapDivision={mapDivision} />
         <MapUpdater center={mapCenter} />
 
+        {shouldShowPopulation && <PopulationLayer togglePopulationDisplay={togglePopulationDisplay} />}
         <RangeFilter onChange={handleFilterChange} />
 
         <div className="flex flex-col items-start">
@@ -68,15 +69,12 @@ function MapComponent() {
         </div>
 
         <CustomZoomControl />
-
         {shouldShowStartups && <StartupsComponent searchPolygon={searchPolygon} />}
-
-        <PopulationLayer filterValue={filterValue} />
 
 
         <MapUpdater center={mapCenter} />
-        <FilterData mapDivision={mapDivision} selectedRegion={selectedRegion} gnp={true}/>
-        <HeatMapLayer mapDivision={mapDivision} onRegionSelected={onRegionSelected}/>
+        <FilterData mapDivision={mapDivision} selectedRegion={selectedRegion} gnp={true} />
+        <HeatMapLayer mapDivision={mapDivision} onRegionSelected={onRegionSelected} />
 
         <CoordsDisplay />
         <FeatureGroup>

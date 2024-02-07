@@ -31,13 +31,16 @@
 
 import { Circle } from "react-leaflet"
 import { useDistrictsCoords } from "../../../hooks/useDistrictCoords"
+import { useContext } from "react"
+import { LayerContext } from "../../../context/layerContext"
 
 const PopulationLayer = () => {
+    const { showPopulation } = useContext(LayerContext)
     const data = useDistrictsCoords({})
 
     return (
         <section>
-            {data && data.map((item, index) => (
+            {showPopulation && data && data.map((item, index) => (
                 <Circle
                     key={index}
                     center={[item.latitude, item.longitude]}

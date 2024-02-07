@@ -1,22 +1,14 @@
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "../../ui/Card/Card"
-
+import { Card, CardContent, CardHeader, CardTitle } from "../../ui/Card/Card"
 import { useContext } from "react"
 import { LayerContext } from "../../../context/layerContext"
-
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "../../ui/Collapsible/Collapsible"
 import { Label } from "../../ui/Label/Label"
-
 import { Checkbox } from "../../ui/Checkbox/Checkbox"
 import { RadioGroup, RadioGroupItem } from "../../ui/RadioGroup/radio-group"
+import PopulationLayer from "../PopulationLayer/PopulationLayer"
 
 function RegionGroup({ title, layers }) {
-  const { showMarkers, toggleMarkersDisplay } = useContext(LayerContext)
-  console.log(showMarkers)
+  const { showMarkers, toggleMarkersDisplay, showPopulation, togglePopulationDisplay } = useContext(LayerContext)
 
   return (
     <Card className='mb-2'>
@@ -55,6 +47,7 @@ function RegionGroup({ title, layers }) {
                   <Checkbox
                     id="population"
                     className="w-4 h-4"
+                    onChange={togglePopulationDisplay}
                   />
                   <Label htmlFor="population">Population</Label>
                 </div>
@@ -79,7 +72,6 @@ function RegionGroup({ title, layers }) {
             </div>
           ))}
         </Collapsible>
-
       </CardContent>
     </Card>
   )
