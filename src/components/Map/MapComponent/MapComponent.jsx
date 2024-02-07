@@ -5,7 +5,6 @@ import { LayerContext } from "../../../context/layerContext"
 import MapUpdater from "../MapUpdater/MapUpdaterComponent"
 import ContourLayer from "../MapContour/MapContour"
 import HeatMapLayer from "../../HeatMapLayerComponent.jsx/HeatMapComponent"
-
 import CoordsDisplay from "../CoordsDisplay/CoordsDisplay"
 import DrawComponent from "../DrawComponent/DrawComponent"
 import FilterData from "../../FilterDataComponent/FilterData"

@@ -10,12 +10,13 @@ import { LayerContext } from "../../../context/layerContext"
 
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "../../ui/Collapsible/Collapsible"
 import { Label } from "../../ui/Label/Label"
-import { Slider } from "../../ui/Slider/Slider"
+
 import { Checkbox } from "../../ui/Checkbox/Checkbox"
 import { RadioGroup, RadioGroupItem } from "../../ui/RadioGroup/radio-group"
 
 function RegionGroup({ title, layers }) {
   const { showMarkers, toggleMarkersDisplay } = useContext(LayerContext)
+  console.log(showMarkers)
 
   return (
     <Card className='mb-2'>

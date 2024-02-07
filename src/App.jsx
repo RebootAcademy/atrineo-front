@@ -13,6 +13,7 @@ function App() {
   const [collection, setCollection] = useState([])
   const [showMarkers, setShowMarkers] = useState({})
   const [showPatents, setShowPatents] = useState({})
+  const [showPopulation, setShowPopulation] = useState({})
 
   const collectionValue = {collection, setCollection}
 
@@ -33,7 +34,7 @@ function App() {
   return (
     <>
       <QueryClientProvider client={queryClient}>
-        <LayerContext.Provider value={{ showMarkers, toggleMarkersDisplay, showPatents, setShowPatents }}>
+        <LayerContext.Provider value={{ showMarkers, toggleMarkersDisplay, showPatents, setShowPatents, showPopulation, setShowPopulation }}>
           <CollectionContext.Provider value={collectionValue}>
             <RouterProvider router={router} />
           </CollectionContext.Provider>
