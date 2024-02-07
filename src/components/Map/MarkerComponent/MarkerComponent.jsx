@@ -4,8 +4,8 @@ import PropTypes from 'prop-types'
 import PopupComponent from "../PopupComponent/PopupComponent"
 
 function MarkerComponent({ coords, onClick }){
-  const lat = parseFloat(coords.latitude)
-  const lng = parseFloat(coords.longitude)
+  const lat = parseFloat(coords?.latitude)
+  const lng = parseFloat(coords?.longitude)
 
   const icon = new Icon({
     iconUrl: '/marker.svg',

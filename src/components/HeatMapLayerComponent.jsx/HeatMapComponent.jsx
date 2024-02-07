@@ -4,7 +4,7 @@ import { useGeoJsonData } from "../../hooks/useGeoJsonData";
 import { selectedStyle, defaultStyle } from './Style'
 import { getPublicCollections } from "../../services/collectionService";
 
-const HeatMapLayer = ({ mapDivision }) => {
+const HeatMapLayer = ({ mapDivision, onRegionSelected }) => {
     const data = useGeoJsonData(mapDivision)
   
     const [selectRegion, setSelectRegion] = useState(null)
@@ -36,25 +36,28 @@ const HeatMapLayer = ({ mapDivision }) => {
                         ? null
                         : layer
                 })
+                onRegionSelected(feature.properties.NAME_0)
             } else if (mapDivision == 'division1') {
                 setSelectRegion((prevSelectedRegion) => {
                     return prevSelectedRegion && prevSelectedRegion.feature.properties.id === feature.properties.id
                         ? null
                         : layer
                 })
-
+                onRegionSelected(feature.properties.NAME_1)
             } else if (mapDivision == 'division2') {
                 setSelectRegion((prevSelectedRegion) => {
                     return prevSelectedRegion && prevSelectedRegion.feature.properties.ID_2 === feature.properties.ID_2
                         ? null
                         : layer
                 })
+                onRegionSelected(feature.properties.NAME_2)
             } else {
                 setSelectRegion((prevSelectedRegion) => {
                     return prevSelectedRegion && prevSelectedRegion.feature.properties.ID_3 === feature.properties.ID_3
                         ? null
                         : layer
                 })
+                onRegionSelected(feature.properties.NAME_3)
             }
         })
     }

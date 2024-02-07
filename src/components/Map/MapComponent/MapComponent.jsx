@@ -12,7 +12,6 @@ import FilterData from "../../FilterDataComponent/FilterData"
 
 import "leaflet/dist/leaflet.css"
 import PopupComponent from "../../ui/PopupComponent/PopupComponent"
-// import { Filter } from "lucide-react"
 
 function MapComponent() {
   const mapRef = useRef()
@@ -22,6 +21,13 @@ function MapComponent() {
   const [selectedRegion, setSelectedRegion] = useState('')
   //Enz, Calw, Ortenaukreis, Freudenstadt
 
+  //Function para pasarle por props la región y que una vez se elija la región se rederiza por la región que le hemos pasado en HeatMap 54
+  //Cuando usamos el set del useState todo lo que haya en el return se renderiza de nuevo pero los estados se guardan
+  //Por lo que en FilterData al tener como prop la selectedRegion se pinta los marcadores de la nueva region
+  const onRegionSelected = (region) => {
+    setSelectedRegion(region)
+  }
+  
   return (
     <section>
       <MapContainer
@@ -38,8 +44,8 @@ function MapComponent() {
         <ContourLayer mapDivision={mapDivision} />
 
         <MapUpdater center={mapCenter} />
-        <FilterData mapDivision={mapDivision} selectedRegion={selectedRegion} />
-        <HeatMapLayer mapDivision={mapDivision} />
+        <FilterData mapDivision={mapDivision} selectedRegion={selectedRegion} gnp={true}/>
+        <HeatMapLayer mapDivision={mapDivision} onRegionSelected={onRegionSelected}/>
         <LayersControlComponent />
 
         {/* esto hace que se repita de nuevo el filterbyrange */}

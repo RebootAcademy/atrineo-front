@@ -6,35 +6,34 @@ import PropTypes from 'prop-types'
 import { useState } from "react";
 import HeatMapLayer from "../HeatMapLayerComponent.jsx/HeatMapComponent";
 
-function FilterData({ mapDivision, selectedRegion }) {
+
+//pasar por props el filtro que queremos que se vea 
+function FilterData({ mapDivision, selectedRegion, gnp }) {
   const { collection } = useContext(CollectionContext)
+  console.log(collection)
   const data = useGeoJsonData(mapDivision)
 
-  const [clickedZone, setClickedZone] = useState()
-
+  //esto se hace asi para poder ir filtrandotodos los datos que queremos ya sean cuantitativos o cualitativos
   const renderCompanyMarkers = () => {
-    const companyMarkers = []
-    collection[0]?.data?.forEach((company) => {
-      if (!selectedRegion || company.locationId[mapDivision]?.name === selectedRegion) {
-        companyMarkers.push(<MarkerComponent
-          key={company._id}
-          info={company.name}
-          coords={{ latitude: company.latitude, longitude: company.longitude }}
-        />)
-      }
+    let filteredCompanies = collection[0]?.data?.filter((company) => {
+      return !selectedRegion || company.locationId[mapDivision]?.name === selectedRegion
     })
-    return companyMarkers
+    filteredCompanies = filteredCompanies?.filter((company) => {
+      return (gnp && company.hasOwnProperty('gnp')) || !gnp
+    })
+
+    const markers = filteredCompanies?.map((company) => {
+      return <MarkerComponent
+        key={company._id}
+        info={company.name}
+        coords={{ latitude: company.latitude, longitude: company.longitude }}
+      />
+    })
+
+    return markers
   }
   return renderCompanyMarkers()
 }
-
-const connectCompanyMap = (mapDivision, clickedZone, feature, layer) => {
-  layer.on('click', () => {
-    
-  })
-}
-
-
 
 //es string por ahora, el objetivo es que sea un valor dinámico 
 FilterData.propTypes = {
