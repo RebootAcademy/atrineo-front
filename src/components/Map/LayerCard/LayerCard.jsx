@@ -7,8 +7,9 @@ import {
 } from "../../ui/Card/Card"
 
 import FilterGroup from "../FilterGroup/Filtergroup"
+import RegionGroup from "../FilterGroup/RegionFilter"
 
-function LayerCard({ layerId=1 }) {
+function LayerCard({ layerId = 1 }) {
   return (
     <Card className='w-[250px] '>
       <CardHeader>
@@ -16,10 +17,15 @@ function LayerCard({ layerId=1 }) {
       </CardHeader>
 
       <CardContent>
-        <FilterGroup 
+        <FilterGroup
           layers={[
             { id: 'startups', name: 'Startups' },
             // { id: 'population', name: 'Region' }
+          ]}
+        />
+        <RegionGroup
+          layers={[
+            { id: 'region', name: 'Region' }
           ]}
         />
       </CardContent>
