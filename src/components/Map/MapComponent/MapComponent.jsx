@@ -11,9 +11,6 @@ import DrawComponent from "../DrawComponent/DrawComponent"
 import FilterData from "../../FilterDataComponent/FilterData"
 
 import "leaflet/dist/leaflet.css"
-<<<<<<< HEAD
-import PopupComponent from "../../ui/PopupComponent/PopupComponent"
-=======
 
 import CustomZoomControl from "../CustomZoomControl/CustomZoomControl"
 import SearchBar from "../SearchBar/SearchBar"
@@ -23,7 +20,6 @@ import PopulationLayer from "../PopulationLayer/PopulationLayer"
 import RangeFilter from "../RangeFilter/RangeFilter"
 import TileLayerComponent from "../TileLayerComponent/TileLayerComponent"
 // import { Filter } from "lucide-react"
->>>>>>> c44903c7f3edbd586d2e8e5d2c109f186f671d30
 
 function MapComponent() {
   const mapRef = useRef()
@@ -61,18 +57,29 @@ function MapComponent() {
         ref={mapRef}
       >
 
-        <CoordsDisplay />
-
+        <TileLayerComponent />
         <ContourLayer mapDivision={mapDivision} />
+        <MapUpdater center={mapCenter} />
+
+        <RangeFilter onChange={handleFilterChange} />
+
+        <div className="flex flex-col items-start">
+          <SearchBar />
+          <LayersContainer />
+        </div>
+
+        <CustomZoomControl />
+
+        {shouldShowStartups && <StartupsComponent searchPolygon={searchPolygon} />}
+
+        <PopulationLayer filterValue={filterValue} />
+
 
         <MapUpdater center={mapCenter} />
         <FilterData mapDivision={mapDivision} selectedRegion={selectedRegion} gnp={true}/>
         <HeatMapLayer mapDivision={mapDivision} onRegionSelected={onRegionSelected}/>
-        <LayersControlComponent />
 
-        {/* esto hace que se repita de nuevo el filterbyrange */}
-        {/* <LayersControlComponent searchPolygon={searchPolygon} /> */}
-
+        <CoordsDisplay />
         <FeatureGroup>
           <DrawComponent searchPolygon={searchPolygon} setSearchPolygon={setSearchPolygon} />
         </FeatureGroup>
