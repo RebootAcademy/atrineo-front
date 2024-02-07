@@ -1,22 +1,43 @@
-import { useState, useContext } from 'react'
+import { useState } from 'react'
 import { QueryClient, QueryClientProvider } from 'react-query'
 import { RouterProvider } from 'react-router-dom'
 
 import { router } from './router'
+
 import { CollectionContext } from './context/collection'
+import { LayerContext } from './context/layerContext'
 
 const queryClient = new QueryClient()
 
 function App() {
-  const [ collection, setCollection ] = useState([])
+  const [collection, setCollection] = useState([])
+  const [showMarkers, setShowMarkers] = useState({})
+  const [showPatents, setShowPatents] = useState({})
 
   const collectionValue = {collection, setCollection}
+
+  const toggleMarkersDisplay = (layerId) => {
+    setShowMarkers(prevState => ({
+      ...prevState,
+      [layerId]: !prevState[layerId]
+    }))
+  }
+
+  const togglePatentsDisplay = (layerId) => {
+    setShowPatents(prevState => ({
+      ...prevState,
+      [layerId]: !prevState[layerId]
+    }))
+  }
+
   return (
     <>
       <QueryClientProvider client={queryClient}>
-        <CollectionContext.Provider value={collectionValue}>
-          <RouterProvider router={router} />
-        </CollectionContext.Provider>
+        <LayerContext.Provider value={{ showMarkers, toggleMarkersDisplay, showPatents, setShowPatents }}>
+          <CollectionContext.Provider value={collectionValue}>
+            <RouterProvider router={router} />
+          </CollectionContext.Provider>
+        </LayerContext.Provider>
       </QueryClientProvider>
     </>
   )

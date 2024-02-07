@@ -2,52 +2,34 @@ import { Button } from "../../ui/Button/Button"
 import {
   Sheet,
   SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
   SheetTrigger,
-  SheetFooter,
-  SheetClose
 } from "../../ui/Sheet/sheet"
+
+import LayerCard from "../LayerCard/LayerCard"
 
 function LayersContainer() {
   return (
-    <div className="grid grid-cols-2 gap-2 z-[9999999] relative top-20 left-4">
+    <aside className="grid grid-cols-2 gap-2 z-[9999999] relative top-8 left-4">
         <Sheet key='left'>
+
           <SheetTrigger asChild>
-            <Button variant="outline">left</Button>
+            <Button variant="outline">
+              <div className="font-bold text-xl text-gray-600">+</div>
+            </Button>
           </SheetTrigger>
-          <SheetContent side='left' className="w-[300px] h-[500px]">
-            <SheetHeader>
-              <SheetTitle>Edit profile</SheetTitle>
-              <SheetDescription>
-                Make changes to your profile here. Click save when you're done.
-              </SheetDescription>
-            </SheetHeader>
+
+          <SheetContent side='left' className="w-[300px] h-screen">
             <div className="grid gap-4 py-4">
               <div className="grid grid-cols-4 items-center gap-4">
-{/*                 <Label htmlFor="name" className="text-right">
-                  Name
-                </Label> */}
-{/*                 <Input id="name" value="Pedro Duarte" className="col-span-3" /> */}
-              </div>
-              <div className="grid grid-cols-4 items-center gap-4">
-{/*                 <Label htmlFor="username" className="text-right">
-                  Username
-                </Label> */}
-{/*                 <Input id="username" value="@peduarte" className="col-span-3" /> */}
+
+                <LayerCard />
+
               </div>
             </div>
-            <SheetFooter>
-              <SheetClose asChild>
-                <Button type="submit">Save changes</Button>
-              </SheetClose>
-            </SheetFooter>
           </SheetContent>
         </Sheet>
-    </div>
+    </aside>
   )
-
 }
 
 export default LayersContainer

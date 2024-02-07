@@ -1,21 +1,34 @@
 /* eslint-disable no-unused-vars */
 import { FeatureGroup, MapContainer } from "react-leaflet"
-import { useState, useRef, } from "react"
+import { useState, useRef, useContext } from "react"
+import { LayerContext } from "../../../context/layerContext"
 import MapUpdater from "../MapUpdater/MapUpdaterComponent"
 import ContourLayer from "../MapContour/MapContour"
 import HeatMapLayer from "../../HeatMapLayerComponent.jsx/HeatMapComponent"
 
-import LayersControlComponent from "../LayersControlComponent/LayersControl"
 import CoordsDisplay from "../CoordsDisplay/CoordsDisplay"
 import DrawComponent from "../DrawComponent/DrawComponent"
 import FilterData from "../../FilterDataComponent/FilterData"
 
 import "leaflet/dist/leaflet.css"
+<<<<<<< HEAD
 import PopupComponent from "../../ui/PopupComponent/PopupComponent"
+=======
+
+import CustomZoomControl from "../CustomZoomControl/CustomZoomControl"
+import SearchBar from "../SearchBar/SearchBar"
+import LayersContainer from "../LayersContainer/LayersContainer"
+import StartupsComponent from "../StartupsComponent/StartupsComponent"
+import PopulationLayer from "../PopulationLayer/PopulationLayer"
+import RangeFilter from "../RangeFilter/RangeFilter"
+import TileLayerComponent from "../TileLayerComponent/TileLayerComponent"
+// import { Filter } from "lucide-react"
+>>>>>>> c44903c7f3edbd586d2e8e5d2c109f186f671d30
 
 function MapComponent() {
   const mapRef = useRef()
   const [mapCenter, setMapCenter] = useState([48.6, 9])
+  const [filterValue, setFilterValue] = useState(null)
   const [mapDivision, setMapDivision] = useState("division3")
   const [searchPolygon, setSearchPolygon] = useState(null)
   const [selectedRegion, setSelectedRegion] = useState('')
@@ -28,6 +41,15 @@ function MapComponent() {
     setSelectedRegion(region)
   }
   
+  const { showMarkers } = useContext(LayerContext)
+
+
+  const shouldShowStartups = showMarkers['startups']
+
+  const handleFilterChange = (newValue) => {
+    setFilterValue(newValue)
+  }
+
   return (
     <section>
       <MapContainer

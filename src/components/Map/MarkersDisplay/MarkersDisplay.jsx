@@ -39,7 +39,7 @@ function MarkersDisplay({ searchPolygon }) {
 }
 
 MarkersDisplay.propTypes = {
-  searchPolygon: PropTypes.object
+  searchPolygon: PropTypes.array
 }
 
 export default MarkersDisplay
