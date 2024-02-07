@@ -9,7 +9,7 @@ import LayerCard from "../LayerCard/LayerCard"
 
 function LayersContainer() {
   return (
-    <aside className="grid grid-cols-2 gap-2 z-[9999999] relative top-20 left-4">
+    <aside className="grid grid-cols-2 gap-2 z-[9999999] relative top-8 left-4">
         <Sheet key='left'>
 
           <SheetTrigger asChild>

@@ -1,9 +1,9 @@
 import { FeatureGroup, MapContainer } from "react-leaflet"
-import { useState, useRef, } from "react"
+import { useState, useRef, useContext } from "react"
+import { LayerContext } from "../../../context/layerContext"
 import MapUpdater from "../MapUpdater/MapUpdaterComponent"
 import ContourLayer from "../MapContour/MapContour"
 
-import LayersControlComponent from "../LayersControlComponent/LayersControl"
 import CoordsDisplay from "../CoordsDisplay/CoordsDisplay"
 import DrawComponent from "../DrawComponent/DrawComponent"
 
@@ -14,16 +14,21 @@ import SearchBar from "../SearchBar/SearchBar"
 import LayersContainer from "../LayersContainer/LayersContainer"
 import StartupsComponent from "../StartupsComponent/StartupsComponent"
 import PopulationLayer from "../PopulationLayer/PopulationLayer"
+import RangeFilter from "../RangeFilter/RangeFilter"
+import TileLayerComponent from "../TileLayerComponent/TileLayerComponent"
 
 function MapComponent() {
   const mapRef = useRef()
 
   const [mapCenter, setMapCenter] = useState([48.6, 9])
+  const [filterValue, setFilterValue] = useState(null)
   const [mapDivision, setMapDivision] = useState("division3")
-
   const [searchPolygon, setSearchPolygon] = useState(null)
 
-  const [filterValue, setFilterValue] = useState(null)
+  const { showMarkers } = useContext(LayerContext)
+
+
+  const shouldShowStartups = showMarkers['startups']
 
   const handleFilterChange = (newValue) => {
     setFilterValue(newValue)
@@ -39,18 +44,21 @@ function MapComponent() {
         style={{ height: `calc(100vh - 80px)`, width: "100vw", zIndex: 0 }}
         ref={mapRef}
       >
+        <TileLayerComponent />
         <ContourLayer mapDivision={mapDivision} />
         <MapUpdater center={mapCenter} />
 
+        <RangeFilter onChange={handleFilterChange} />
+
         <div className="flex flex-col items-start">
           <SearchBar />
-          <LayersControlComponent />
           <LayersContainer />
         </div>
 
         <CustomZoomControl />
 
-        <StartupsComponent searchPolygon={searchPolygon} />
+        {shouldShowStartups && <StartupsComponent searchPolygon={searchPolygon} />}
+
         <PopulationLayer filterValue={filterValue} />
 
         <CoordsDisplay />

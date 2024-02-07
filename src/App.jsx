@@ -15,8 +15,11 @@ function App() {
 
   const collectionValue = {collection, setCollection}
 
-  const toggleMarkersDisplay = () => {
-    setShowMarkers(!showMarkers)
+  const toggleMarkersDisplay = (layerId) => {
+    setShowMarkers(prevState => ({
+      ...prevState,
+      [layerId]: !prevState[layerId]
+    }))
   }
 
   return (

@@ -16,13 +16,11 @@ function LayerCard({ layerId=1 }) {
       </CardHeader>
 
       <CardContent>
-        
         <FilterGroup 
           title="Layers"
           layers={[
             { id: 'startups', name: 'Startups' },
-            { id: 'patents', name: 'Patents' },
-            { id: 'population', name: 'Population' }
+            { id: 'population', name: 'Region' }
           ]}
         />
       </CardContent>
