@@ -31,7 +31,6 @@ function MapComponent() {
 
   const { showMarkers } = useContext(LayerContext)
 
-
   const shouldShowStartups = showMarkers['startups']
 
   const handleFilterChange = (newValue) => {

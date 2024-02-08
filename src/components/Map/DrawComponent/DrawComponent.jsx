@@ -29,7 +29,8 @@ function DrawComponent({ searchPolygon, setSearchPolygon }) {
         circlemarker: false,
         polygon: !searchPolygon ? {
           shapeOptions: {
-            color: 'blue', // Color de los polígonos
+            color: 'var(--primary)',
+            weight: 1
           },
         } : false,
       }}
