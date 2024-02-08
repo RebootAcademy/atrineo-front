@@ -5,10 +5,10 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "../../ui/Co
 import { Label } from "../../ui/Label/Label"
 import { Checkbox } from "../../ui/Checkbox/Checkbox"
 import { RadioGroup, RadioGroupItem } from "../../ui/RadioGroup/radio-group"
-import PopulationLayer from "../PopulationLayer/PopulationLayer"
 
-function RegionGroup({ title, layers }) {
-  const { showMarkers, toggleMarkersDisplay, showPopulation, togglePopulationDisplay } = useContext(LayerContext)
+
+function RegionGroup({ title, layers, onPopulationClicked }) {
+  const { showMarkers, toggleMarkersDisplay } = useContext(LayerContext)
 
   return (
     <Card className='mb-2'>
@@ -38,16 +38,9 @@ function RegionGroup({ title, layers }) {
               <CollapsibleContent className="flex flex-col gap-4">
                 <div className="flex items-center space-x-2">
                   <Checkbox
-                    id="employees"
-                    className="w-4 h-4"
-                  />
-                  <Label htmlFor="employees">Employees</Label>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <Checkbox
                     id="population"
                     className="w-4 h-4"
-                    onChange={togglePopulationDisplay}
+                    onChange={() => onPopulationClicked}
                   />
                   <Label htmlFor="population">Population</Label>
                 </div>

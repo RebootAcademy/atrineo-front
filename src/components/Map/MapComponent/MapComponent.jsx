@@ -18,6 +18,7 @@ import StartupsComponent from "../StartupsComponent/StartupsComponent"
 import PopulationLayer from "../PopulationLayer/PopulationLayer"
 import RangeFilter from "../RangeFilter/RangeFilter"
 import TileLayerComponent from "../TileLayerComponent/TileLayerComponent"
+import RegionFilter from "../FilterGroup/RegionFilter"
 // import { Filter } from "lucide-react"
 
 function MapComponent() {
@@ -28,12 +29,18 @@ function MapComponent() {
   const [searchPolygon, setSearchPolygon] = useState(null)
   const [selectedRegion, setSelectedRegion] = useState('')
   //Enz, Calw, Ortenaukreis, Freudenstadt
+  const [selectPopulation, setSelectPopulation] = useState()
+  const [showPopulation, setShowPopulation] = useState()
 
   //Function para pasarle por props la región y que una vez se elija la región se rederiza por la región que le hemos pasado en HeatMap 54
   //Cuando usamos el set del useState todo lo que haya en el return se renderiza de nuevo pero los estados se guardan
   //Por lo que en FilterData al tener como prop la selectedRegion se pinta los marcadores de la nueva region
   const onRegionSelected = (region) => {
     setSelectedRegion(region)
+  }
+
+  const onPopulationClicked = () => {
+    setShowPopulation(!showPopulation)
   }
 
   const { showMarkers, toggleMarkersDisplay } = useContext(LayerContext)
@@ -69,11 +76,12 @@ function MapComponent() {
         <CustomZoomControl />
         {shouldShowStartups && <StartupsComponent searchPolygon={searchPolygon} />}
 
+        <PopulationLayer filterValue={{showPopulation}} />
 
         <MapUpdater center={mapCenter} />
-        <FilterData mapDivision={mapDivision} selectedRegion={selectedRegion} gnp={true} />
+        <FilterData mapDivision={mapDivision} selectedRegion={selectedRegion} gnp={true} showPopulation={showPopulation} />
         <HeatMapLayer mapDivision={mapDivision} onRegionSelected={onRegionSelected} />
-
+        <RegionFilter onPopulationClicked={onPopulationClicked}/>
         <CoordsDisplay />
         <FeatureGroup>
           <DrawComponent searchPolygon={searchPolygon} setSearchPolygon={setSearchPolygon} />
