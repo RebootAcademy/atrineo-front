@@ -7,51 +7,10 @@ import { selectedStyle, defaultStyle, between10and20, between20and35 } from './S
 
 // import { getPublicCollections } from "../../services/collectionService";
 
-const HeatMapLayer = ({ mapDivision, onRegionSelected }) => {
+const HeatMapLayer = ({ mapDivision, onRegionSelected, showPopulation }) => {
   const data = useGeoJsonData(mapDivision)
 
   const [selectedRegion, setSelectedRegion] = useState(null)
-
-  // const { groupDataWithDivision3, groupDataWithoutDivision3 } = usePopulationData({})
-
-  // const getPopulationByDivision3 = () => {
-  //   //creamos un objeto vacío llamado populationByDivision3
-  //   const populationByDivision3 = {}
-  //   //aquí se itera por las claves (keys) del objeto groupDataWithDivision3
-  //   for (const key in groupDataWithDivision3) {
-  //     //para cada clave (key) obtenemos un valor asociado a esa clave
-  //     const id = key
-  //     //aquí se accede a la propiedad totalPopulation del objeto asociado a la clave por la que se está iterando
-  //     const totalPopulation = groupDataWithDivision3[key].totalPopulation
-  //     //da el valor de totalPopulation al objeto populationByDivision3 usando la clave id
-  //     populationByDivision3[id] = totalPopulation
-  //   }
-  //   return populationByDivision3
-  // }
-
-  // const setStyle = (feature) => {
-  //   //Obtenemos la población del estado actual
-  //   const populationByDivision3 = getPopulationByDivision3()
-  //   const currentGroupId = feature.properties.ID_3
-  //   const population = populationByDivision3[currentGroupId]
-
-  //   //asignar colores en base a los tramos de población
-  //   if (selectedRegion && selectedRegion.feature.properties.ID_3 === currentGroupId) {
-  //     return selectedStyle
-  //   } else {
-  //     if (population < 10000000) {
-  //       return below10
-  //     } else if (population >= 10000000 & population < 20000000) {
-  //       return between10and20
-  //     } else if (population >= 20000000 & population < 35000000) {
-  //       return between20and35
-  //     } else if (population > 35000000) {
-  //       return over35
-  //     } else {
-  //       return defaultStyle
-  //     }
-  //   }
-  // }
 
   useEffect(() => {
     setSelectedRegion(null)
@@ -76,7 +35,7 @@ const HeatMapLayer = ({ mapDivision, onRegionSelected }) => {
         })
         onRegionSelected(feature.properties.NAME_1)
       } else if (mapDivision == 'division2') {
-        setSelectRegion((prevSelectedRegion) => {
+        setSelectedRegion((prevSelectedRegion) => {
           return prevSelectedRegion && prevSelectedRegion.feature.properties.ID_2 === feature.properties.ID_2
             ? null
             : layer

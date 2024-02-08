@@ -13,7 +13,6 @@ function App() {
   const [collection, setCollection] = useState([])
   const [showMarkers, setShowMarkers] = useState({})
   const [showPatents, setShowPatents] = useState({})
-  const [showPopulation, setShowPopulation] = useState({})
 
   const collectionValue = { collection, setCollection }
 
@@ -31,10 +30,6 @@ function App() {
     }))
   }
 
-  const togglePopulationDisplay = () => {
-    setShowPopulation((prev) => !prev)
-  }
-
   return (
     <>
       <QueryClientProvider client={queryClient}>
@@ -42,10 +37,7 @@ function App() {
           showMarkers, 
           toggleMarkersDisplay, 
           showPatents, 
-          setShowPatents, 
-          showPopulation, 
-          setShowPopulation,
-          togglePopulationDisplay }}>
+          setShowPatents}}>
           <CollectionContext.Provider value={collectionValue}>
             <RouterProvider router={router} />
           </CollectionContext.Provider>

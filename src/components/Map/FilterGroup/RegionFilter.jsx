@@ -1,14 +1,30 @@
 import { Card, CardContent, CardHeader, CardTitle } from "../../ui/Card/Card"
-import { useContext } from "react"
+import { useContext, useState } from "react"
 import { LayerContext } from "../../../context/layerContext"
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "../../ui/Collapsible/Collapsible"
 import { Label } from "../../ui/Label/Label"
 import { Checkbox } from "../../ui/Checkbox/Checkbox"
 import { RadioGroup, RadioGroupItem } from "../../ui/RadioGroup/radio-group"
+import { CollectionContext } from "../../../context/collection"
+import { useGeoJsonData } from "../../../hooks/useGeoJsonData"
 import PopulationLayer from "../PopulationLayer/PopulationLayer"
 
-function RegionGroup({ title, layers }) {
-  const { showMarkers, toggleMarkersDisplay, showPopulation, togglePopulationDisplay } = useContext(LayerContext)
+function RegionFilter({ mapDivision, title, layers, districtPopulation, showPopulation }) {
+  // const [showPopulation, setShowPopulation ] = useState(false)
+  const { showMarkers, toggleMarkersDisplay } = useContext(LayerContext)
+  const { collection } = useContext(CollectionContext)
+  const data = useGeoJsonData(mapDivision)
+
+  const renderPopulationMarkers = () => {
+    let filteredPopulation = collection[0]?.data?.filter((population) => {
+      return (districtPopulation && population.hasOwnProperty('districtPopulation')) || !districtPopulation
+    })
+
+    const markers = filteredPopulation?.map((population) => {
+      return markers
+    })
+    return renderPopulationMarkers
+  }
 
   return (
     <Card className='mb-2'>
@@ -47,7 +63,8 @@ function RegionGroup({ title, layers }) {
                   <Checkbox
                     id="population"
                     className="w-4 h-4"
-                    onChange={togglePopulationDisplay}
+                    check={showPopulation}
+                    onChange={() => showPopulation}
                   />
                   <Label htmlFor="population">Population</Label>
                 </div>
@@ -77,4 +94,4 @@ function RegionGroup({ title, layers }) {
   )
 }
 
-export default RegionGroup
+export default RegionFilter

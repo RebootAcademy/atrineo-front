@@ -18,6 +18,7 @@ import StartupsComponent from "../StartupsComponent/StartupsComponent"
 import PopulationLayer from "../PopulationLayer/PopulationLayer"
 import RangeFilter from "../RangeFilter/RangeFilter"
 import TileLayerComponent from "../TileLayerComponent/TileLayerComponent"
+import RegionFilter from "../FilterGroup/RegionFilter"
 // import { Filter } from "lucide-react"
 
 function MapComponent() {
@@ -28,6 +29,8 @@ function MapComponent() {
   const [searchPolygon, setSearchPolygon] = useState(null)
   const [selectedRegion, setSelectedRegion] = useState('')
   //Enz, Calw, Ortenaukreis, Freudenstadt
+  const [selectPopulation, setSelectPopulation] = useState(false)
+  const [showPopulation, setShowPopulation] = useState(false)
 
   //Function para pasarle por props la región y que una vez se elija la región se rederiza por la región que le hemos pasado en HeatMap 54
   //Cuando usamos el set del useState todo lo que haya en el return se renderiza de nuevo pero los estados se guardan
@@ -36,9 +39,11 @@ function MapComponent() {
     setSelectedRegion(region)
   }
 
-  const { showMarkers, showPopulation, toggleMarkersDisplay, togglePopulationDisplay } = useContext(LayerContext)
+  const onShowPopulation = () => {
+    setShowPopulation(!showPopulation)
+  }
 
-  const shouldShowPopulation = showPopulation
+  const { showMarkers, toggleMarkersDisplay } = useContext(LayerContext)
   const shouldShowStartups = showMarkers['startups']
 
   const handleFilterChange = (newValue) => {
@@ -60,7 +65,6 @@ function MapComponent() {
         <ContourLayer mapDivision={mapDivision} />
         <MapUpdater center={mapCenter} />
 
-        {shouldShowPopulation && <PopulationLayer togglePopulationDisplay={togglePopulationDisplay} />}
         <RangeFilter onChange={handleFilterChange} />
 
         <div className="flex flex-col items-start">
@@ -71,9 +75,10 @@ function MapComponent() {
         <CustomZoomControl />
         {shouldShowStartups && <StartupsComponent searchPolygon={searchPolygon} />}
 
-
         <MapUpdater center={mapCenter} />
-        <FilterData mapDivision={mapDivision} selectedRegion={selectedRegion} gnp={true} />
+        <FilterData mapDivision={mapDivision} selectedRegion={selectedRegion} gnp={true} showPopulation={onShowPopulation}/>
+        <RegionFilter mapDivision={mapDivision} districtPopulation={selectPopulation} showPopulation={showPopulation}/>
+        <PopulationLayer showPopulation={showPopulation}/>
         <HeatMapLayer mapDivision={mapDivision} onRegionSelected={onRegionSelected} />
 
         <CoordsDisplay />
