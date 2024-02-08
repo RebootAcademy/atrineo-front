@@ -8,6 +8,8 @@ import {
   CardTitle,
 } from "../../ui/Card/Card"
 
+import PropTypes from 'prop-types'
+
 function FilterGroup({ title, layers }) {
   return (
     <Card className='mb-2'>
@@ -28,6 +30,11 @@ function FilterGroup({ title, layers }) {
       </CardContent>
     </Card>
   )
+}
+
+FilterGroup.propTypes = {
+  title: PropTypes.string,
+  layers: PropTypes.array
 }
 
 export default FilterGroup

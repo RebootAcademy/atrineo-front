@@ -1,9 +1,11 @@
-import { useContext } from "react";
-import { LayerContext } from "../../../context/layerContext";
-import { CollapsibleTrigger } from "../../ui/Collapsible/Collapsible";
+import { useContext } from "react"
+import { LayerContext } from "../../../context/layerContext"
+import { CollapsibleTrigger } from "../../ui/Collapsible/Collapsible"
+
+import PropTypes from 'prop-types'
 
 function LayerItem({ layer }) {
-  const { showMarkers, toggleMarkersDisplay } = useContext(LayerContext);
+  const { showMarkers, toggleMarkersDisplay } = useContext(LayerContext)
 
   return (
     <div className="flex gap-2 mb-2">
@@ -21,6 +23,10 @@ function LayerItem({ layer }) {
       </label>
     </div>
   )
+}
+
+LayerItem.propTypes = {
+  layer: PropTypes.object
 }
 
 export default LayerItem;

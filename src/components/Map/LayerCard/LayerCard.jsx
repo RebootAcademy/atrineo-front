@@ -7,6 +7,7 @@ import {
 } from "../../ui/Card/Card"
 
 import FilterGroup from "../FilterGroup/Filtergroup"
+import PropTypes from 'prop-types'
 
 function LayerCard({ layerId=1 }) {
   return (
@@ -30,6 +31,10 @@ function LayerCard({ layerId=1 }) {
     </Card>
 
   )
+}
+
+LayerCard.propTypes = {
+  layerId: PropTypes.number
 }
 
 export default LayerCard

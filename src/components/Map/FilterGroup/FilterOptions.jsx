@@ -8,7 +8,6 @@ function FilterOptions() {
   const { 
     setPatentsFilter, 
     setIsFinancingFilterActive,
-    isGovFundsReceivedActive,
     toggleGovFundsReceived
   } = useContext(LayerContext);
 
