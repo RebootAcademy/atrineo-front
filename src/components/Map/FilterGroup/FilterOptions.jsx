@@ -11,7 +11,7 @@ function FilterOptions() {
     setPatentsFilter, 
     setIsFinancingFilterActive,
     toggleGovFundsReceived
-  } = useContext(LayerContext);
+  } = useContext(LayerContext)
 
   const handlePatentsSliderChange = (value) => {
     setPatentsFilter(value)
@@ -24,6 +24,8 @@ function FilterOptions() {
   const handleGovFundsSwitchChange = (newState) => {
     toggleGovFundsReceived(newState)
   }
+
+  
 
   return (
     <div className="flex flex-col gap-4">
