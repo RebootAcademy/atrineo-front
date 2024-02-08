@@ -15,7 +15,8 @@ function App() {
   const [showPatents, setShowPatents] = useState({ patents: false })
   const [patentsFilter, setPatentsFilter] = useState(0)
 
-  const [financingAccess, setFinancingAccess] = useState(false)
+  const [isFinancingFilterActive, setIsFinancingFilterActive] = useState(false)
+  const [isGovFundsReceivedActive, setIsGovFundsReceivedActive] = useState(false)
 
   const collectionValue = {collection, setCollection}
   
@@ -34,19 +35,12 @@ function App() {
   }
 
   const toggleFinancingAccess = (value) => {
-    setFinancingAccess(value)
+    setIsFinancingFilterActive(value)
   }
 
-  useEffect(() => {
-    // Verifica si al menos un objeto en `data` tiene `financingAccess` en true
-    const financingAccessEnabled = collection.some(item =>
-      item.data.some(dataItem => dataItem.financingAccess)
-    );
-    setFinancingAccess(financingAccessEnabled);
-  }, [collection])
-
-  console.log(collection)
-  console.log(financingAccess)
+  const toggleGovFundsReceived = (value) => {
+    setIsGovFundsReceivedActive(value);
+  }
   
   const value = {
     showMarkers,
@@ -57,9 +51,11 @@ function App() {
     setPatentsFilter,
     toggleMarkersDisplay,
     togglePatentsDisplay,
-    financingAccess,
-    setFinancingAccess,
-    toggleFinancingAccess // Asegúrate de incluir la función para actualizar el filtro
+    isFinancingFilterActive,
+    setIsFinancingFilterActive,
+    toggleFinancingAccess,
+    isGovFundsReceivedActive,
+    toggleGovFundsReceived
   }
 
   return (

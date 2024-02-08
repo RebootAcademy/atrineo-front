@@ -7,14 +7,15 @@ import { LayerContext } from "../../../context/layerContext"
 import { useContext } from "react"
 
 function StartupsComponent({ searchPolygon }) {
-  const { showMarkers, showPatents, financingAccess } = useContext(LayerContext)
+  const { showMarkers, showPatents } = useContext(LayerContext)
   
   return (
     <>
-      {financingAccess && (
+      {showMarkers && (
         <MarkerClusterGroup
           chunkedLoading
           polygonOptions={{ weight: 0 }}
+          maxClusterRadius={50}
           iconCreateFunction={function (cluster) {
             return L.divIcon({
               html: `<span>${cluster.getChildCount()}</span>`,
