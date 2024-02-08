@@ -61,7 +61,7 @@ function App() {
   return (
     <>
       <QueryClientProvider client={queryClient}>
-        <LayerContext.Provider value={{ showMarkers, toggleMarkersDisplay, showPatents, setShowPatents }}>
+        <LayerContext.Provider value={value}>
           <CollectionContext.Provider value={collectionValue}>
             <RouterProvider router={router} />
           </CollectionContext.Provider>

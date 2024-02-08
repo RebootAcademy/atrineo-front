@@ -36,9 +36,8 @@ function MapComponent() {
     setSelectedRegion(region)
   }
 
-  const { showMarkers, showPopulation, toggleMarkersDisplay, togglePopulationDisplay } = useContext(LayerContext)
+  const { showMarkers, toggleMarkersDisplay } = useContext(LayerContext)
 
-  const shouldShowPopulation = showPopulation
   const shouldShowStartups = showMarkers['startups']
 
   const handleFilterChange = (newValue) => {
@@ -60,7 +59,6 @@ function MapComponent() {
         <ContourLayer mapDivision={mapDivision} />
         <MapUpdater center={mapCenter} />
 
-        {shouldShowPopulation && <PopulationLayer togglePopulationDisplay={togglePopulationDisplay} />}
         <RangeFilter onChange={handleFilterChange} />
 
         <div className="flex flex-col items-start">
