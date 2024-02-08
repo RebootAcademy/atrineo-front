@@ -5,7 +5,9 @@ import { Label } from "../../ui/Label/Label"
 import { Slider } from "../../ui/Slider/Slider"
 
 function FilterOptions() {
-  const { 
+  const {
+    isFinancingFilterActive,
+    isGovFundsReceivedActive,
     setPatentsFilter, 
     setIsFinancingFilterActive,
     toggleGovFundsReceived
@@ -30,6 +32,7 @@ function FilterOptions() {
           id="financing"
           className="w-11 h-6"
           onCheckedChange={handleFinancingSwitchChange}
+          checked={isFinancingFilterActive}
         />
         <Label htmlFor="financing">Financing Access</Label>
       </div>
@@ -38,12 +41,15 @@ function FilterOptions() {
           id="govFunds"
           className="w-11 h-6"
           onCheckedChange={handleGovFundsSwitchChange}
+          checked={isGovFundsReceivedActive}
         />
         <Label htmlFor="govFunds">Receive Gov Funds</Label>
       </div>
       <div className="flex flex-col items-center space-x-2 gap-2">
         <Label htmlFor="patents">Patents Nº</Label>
-        <Slider onValueChange={handlePatentsSliderChange} />
+        <Slider 
+          onValueChange={handlePatentsSliderChange}
+        />
       </div>
     </div>
   )
