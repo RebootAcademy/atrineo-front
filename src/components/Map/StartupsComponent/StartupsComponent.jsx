@@ -7,7 +7,7 @@ import { LayerContext } from "../../../context/layerContext"
 import { useContext } from "react"
 
 function StartupsComponent({ searchPolygon }) {
-  const { showMarkers } = useContext(LayerContext)
+  const { showMarkers, showPatents } = useContext(LayerContext)
   
   return (
     <>
@@ -15,6 +15,7 @@ function StartupsComponent({ searchPolygon }) {
         <MarkerClusterGroup
           chunkedLoading
           polygonOptions={{ weight: 0 }}
+          maxClusterRadius={50}
           iconCreateFunction={function (cluster) {
             return L.divIcon({
               html: `<span>${cluster.getChildCount()}</span>`,
@@ -26,7 +27,7 @@ function StartupsComponent({ searchPolygon }) {
           <MarkersDisplay searchPolygon={searchPolygon} />
         </MarkerClusterGroup>
       )}
-      <PatentsLayer />
+      {showPatents && <PatentsLayer />}
     </>
   )
 }
