@@ -5,7 +5,7 @@ import { LayersControl, TileLayer, LayerGroup } from "react-leaflet"
 import MarkerClusterGroup from "react-leaflet-cluster"
 
 import MarkersDisplay from "../MarkersDisplay/MarkersDisplay"
-import PopulationLayer from "../PopulationLayer/PopulationLayer"
+import PopulationCircleRenderer from "../PopulationCircleRendererComponent/PopulationCircleRenderer"
 import PatentsLayer from "../PatentsLayer/PatentsLayer"
 import RangeFilter from "../RangeFilter/RangeFilter"
 
@@ -47,7 +47,7 @@ function LayersControlComponent({ searchPolygon }) {
 
         <LayersControl.Overlay name="Populations">
           <LayerGroup>
-            <PopulationLayer filterValue={filterValue} />
+            <PopulationCircleRenderer filterValue={filterValue} />
           </LayerGroup>
         </LayersControl.Overlay>
 

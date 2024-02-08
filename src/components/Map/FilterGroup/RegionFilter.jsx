@@ -40,7 +40,7 @@ function RegionGroup({ title, layers, onPopulationClicked }) {
                   <Checkbox
                     id="population"
                     className="w-4 h-4"
-                    onChange={() => onPopulationClicked}
+                    onChange={onPopulationClicked}
                   />
                   <Label htmlFor="population">Population</Label>
                 </div>

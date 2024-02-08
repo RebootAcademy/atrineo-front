@@ -7,43 +7,52 @@ import ContourLayer from "../MapContour/MapContour"
 import HeatMapLayer from "../../HeatMapLayerComponent.jsx/HeatMapComponent"
 import CoordsDisplay from "../CoordsDisplay/CoordsDisplay"
 import DrawComponent from "../DrawComponent/DrawComponent"
-import FilterData from "../../FilterDataComponent/FilterData"
-
+import CompanyMarkerRenderer from "../../CompanyMarkerRendererComponent/CompanyMarkerRenderer"
+import { CollectionContext } from "../../../context/collection"
 import "leaflet/dist/leaflet.css"
 
 import CustomZoomControl from "../CustomZoomControl/CustomZoomControl"
 import SearchBar from "../SearchBar/SearchBar"
 import LayersContainer from "../LayersContainer/LayersContainer"
 import StartupsComponent from "../StartupsComponent/StartupsComponent"
-import PopulationLayer from "../PopulationLayer/PopulationLayer"
+import PopulationCircleRenderer from "../PopulationCircleRendererComponent/PopulationCircleRenderer"
 import RangeFilter from "../RangeFilter/RangeFilter"
 import TileLayerComponent from "../TileLayerComponent/TileLayerComponent"
 import RegionFilter from "../FilterGroup/RegionFilter"
-// import { Filter } from "lucide-react"
 
 function MapComponent() {
   const mapRef = useRef()
   const [mapCenter, setMapCenter] = useState([48.6, 9])
-  const [filterValue, setFilterValue] = useState(null)
   const [mapDivision, setMapDivision] = useState("division3")
   const [searchPolygon, setSearchPolygon] = useState(null)
   const [selectedRegion, setSelectedRegion] = useState('')
-  //Enz, Calw, Ortenaukreis, Freudenstadt
-  const [selectPopulation, setSelectPopulation] = useState()
   const [showPopulation, setShowPopulation] = useState()
+  const [companies, setCompanies] = useState([])
+  const { collection } = useContext(CollectionContext)
+
+  const filterCompanies = () => {
+    if (collection && collection.length > 0) {
+      let filteredCompanies = collection[0]?.data?.filter((company) => {
+        return company.locationId[mapDivision]?.name === selectedRegion
+      })
+
+      setCompanies(filteredCompanies)
+    }
+  }
 
   //Function para pasarle por props la región y que una vez se elija la región se rederiza por la región que le hemos pasado en HeatMap 54
   //Cuando usamos el set del useState todo lo que haya en el return se renderiza de nuevo pero los estados se guardan
   //Por lo que en FilterData al tener como prop la selectedRegion se pinta los marcadores de la nueva region
-  const onRegionSelected = (region) => {
+  const onRegionSelected= (region) => {
     setSelectedRegion(region)
+    filterCompanies()
   }
 
   const onPopulationClicked = () => {
     setShowPopulation(!showPopulation)
   }
 
-  const { showMarkers, toggleMarkersDisplay } = useContext(LayerContext)
+  const { showMarkers } = useContext(LayerContext)
 
   const shouldShowStartups = showMarkers['startups']
 
@@ -76,10 +85,10 @@ function MapComponent() {
         <CustomZoomControl />
         {shouldShowStartups && <StartupsComponent searchPolygon={searchPolygon} />}
 
-        <PopulationLayer/>
+        <PopulationCircleRenderer companies={companies} showPopulation={showPopulation}/>
+        <CompanyMarkerRenderer companies={companies} />
 
         <MapUpdater center={mapCenter} />
-        <FilterData mapDivision={mapDivision} selectedRegion={selectedRegion} gnp={true} showPopulation={showPopulation} />
         <HeatMapLayer mapDivision={mapDivision} onRegionSelected={onRegionSelected} />
         <RegionFilter onPopulationClicked={onPopulationClicked}/>
         <CoordsDisplay />
