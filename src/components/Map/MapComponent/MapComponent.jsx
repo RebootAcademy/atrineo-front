@@ -76,7 +76,7 @@ function MapComponent() {
         <CustomZoomControl />
         {shouldShowStartups && <StartupsComponent searchPolygon={searchPolygon} />}
 
-        <PopulationLayer filterValue={{showPopulation}} />
+        <PopulationLayer/>
 
         <MapUpdater center={mapCenter} />
         <FilterData mapDivision={mapDivision} selectedRegion={selectedRegion} gnp={true} showPopulation={showPopulation} />

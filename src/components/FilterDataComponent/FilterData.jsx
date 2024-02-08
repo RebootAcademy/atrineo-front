@@ -6,8 +6,9 @@ import PropTypes from 'prop-types'
 
 //pasar por props el filtro que queremos que se vea 
 function FilterData({ mapDivision, selectedRegion, gnp, showPopulation }) {
+  console.log(showPopulation)
   const { collection } = useContext(CollectionContext)
-  console.log(collection)
+  // console.log(collection)
   const data = useGeoJsonData(mapDivision)
 
   //esto se hace asi para poder ir filtrando todos los datos que queremos ya sean cuantitativos o cualitativos
@@ -15,15 +16,16 @@ function FilterData({ mapDivision, selectedRegion, gnp, showPopulation }) {
     let filteredCompanies = collection[0]?.data?.filter((company) => {
       return !selectedRegion || company.locationId[mapDivision]?.name === selectedRegion
     })
-    // filteredCompanies = filteredCompanies?.filter((compnay) => {
-    //   return (startup && company.hasOwnProperty('startup')) || !startup
-    // })
+
     filteredCompanies = filteredCompanies?.filter((company) => {
       return (gnp && company.hasOwnProperty('gnp')) || !gnp
     })
     filteredCompanies = filteredCompanies?.filter((company) => {
-      return (showPopulation && company.hasOwnProperty('population')) || !showPopulation
+      return (showPopulation && company.hasOwnProperty('districtPopulation')) || !showPopulation
     })
+
+
+
 
     const markers = filteredCompanies?.map((company) => {
       return <MarkerComponent
