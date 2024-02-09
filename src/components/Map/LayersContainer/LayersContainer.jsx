@@ -18,7 +18,7 @@ function LayersContainer() {
           </Button>
         </SheetTrigger>
 
-        <SheetContent side='left' className="p-2 w-auto h-screen flex">
+        <SheetContent side='left' className="p-2 w-full h-screen flex justify-center">
           <LayerCard />
         </SheetContent>
       </Sheet>

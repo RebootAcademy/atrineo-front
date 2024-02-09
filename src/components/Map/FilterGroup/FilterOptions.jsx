@@ -1,4 +1,4 @@
-import { useContext, useState } from "react"
+import { useContext } from "react"
 import { LayerContext } from "../../../context/layerContext"
 import { Switch } from "../../ui/Switch/Switch"
 import { Label } from "../../ui/Label/Label"
@@ -13,7 +13,6 @@ function FilterOptions() {
     setIsFinancingFilterActive,
     toggleGovFundsReceived
   } = useContext(LayerContext)
-
   
   const handleFinancingSwitchChange = (newState) => {
     setIsFinancingFilterActive(newState)
@@ -47,18 +46,27 @@ function FilterOptions() {
         />
         <Label htmlFor="govFunds">Receive Gov Funds</Label>
       </div>
-      <div className="flex flex-col items-center space-x-2 gap-2 bg-orange-200">
+
+      <div className="flex flex-col items-center space-x-2 gap-2">
         <Label htmlFor="patents">Patents Nº</Label>
         <div className="flex space-x-40">
           <div className="text-sm">Min</div>
           <div className="text-sm">Max</div>
         </div>
         <Slider 
-          patentsValue={patentsFilter}
+          id='patents'
+          patentsvalue={patentsFilter}
           onValueChange={handlePatentsSliderChange}
         />
+        <div className="flex space-x-40">
+          <div className="text-sm">
+            <input />
+          </div>
+          <div className="text-sm">Max</div>
+        </div>
         <div>{patentsFilter}</div>
       </div>
+
     </div>
   )
 }
