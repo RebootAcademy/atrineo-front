@@ -84,16 +84,17 @@ function MapComponent() {
 
         <div className="flex flex-col items-start">
           <SearchBar />
-          <LayersContainer onPopulationClicked={onPopulationClicked} />
+          <LayersContainer />
+          {/* <LayersContainer onPopulationClicked={onPopulationClicked} /> */}
         </div>
 
         <CustomZoomControl />
-        {shouldShowStartups && <StartupsComponent searchPolygon={searchPolygon} />}
+        <StartupsComponent />
 
         <PopulationCircleRenderer companies={collection[0]?.data} showPopulation={showPopulation} />
         <CompanyMarkerRenderer companies={companies} />
 
-        <StartupsComponent />
+        {/* <StartupsComponent /> */}
 
         <MapUpdater center={mapCenter} />
         <HeatMapLayer mapDivision={mapDivision} onRegionSelected={onRegionSelected} />

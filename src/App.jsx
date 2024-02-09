@@ -13,7 +13,7 @@ function App() {
   const [collection, setCollection] = useState([])
   const [showMarkers, setShowMarkers] = useState({ startups: false })
   const [showPatents, setShowPatents] = useState({ patents: false })
-  const [patentsFilter, setPatentsFilter] = useState(0)
+  const [patentsFilter, setPatentsFilter] = useState([0])
   const [populationFilter, setPopulationFilter] = useState([0])
   // const [showPopulation, setShowPopulation] = useState({})
   const [isFinancingFilterActive, setIsFinancingFilterActive] = useState(false)

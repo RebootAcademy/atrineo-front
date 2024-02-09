@@ -6,7 +6,6 @@ import { Select, SelectTrigger, SelectContent, SelectValue, SelectItem } from ".
 import { Slider } from "../../ui/Slider/Slider"
 import { useGeoJsonData } from "../../../hooks/useGeoJsonData"
 import { CollectionContext } from "../../../context/collection"
-import { useState } from "react"
 import HeatMapLayer from "../../HeatMapLayerComponent.jsx/HeatMapComponent"
 
 function FilterOptions() {
@@ -30,11 +29,11 @@ function FilterOptions() {
   const handleFinancingSwitchChange = (newState) => {
     setIsFinancingFilterActive(newState)
   }
-  
+
   const handleGovFundsSwitchChange = (newState) => {
     toggleGovFundsReceived(newState)
   }
-  
+
   const handlePatentsSliderChange = (value) => {
     setPatentsFilter(value)
   }
@@ -94,17 +93,12 @@ function FilterOptions() {
           <div className="text-sm">Min</div>
           <div className="text-sm">Max</div>
         </div>
-        <Slider 
+        <Slider
           patentsValue={patentsFilter}
           onValueChange={handlePatentsSliderChange}
         />
         <div>{patentsFilter}</div>
       </div>
-      <Slider
-        patentsValue={patentsFilter}
-        onValueChange={handlePatentsSliderChange}
-      />
-      <div>{patentsFilter}</div>
 
       <div className="flex flex-col items-center space-x-2 gap-2">
         <Label htmlFor="population">Population</Label>

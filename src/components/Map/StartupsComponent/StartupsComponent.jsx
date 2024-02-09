@@ -26,9 +26,8 @@ function StartupsComponent() {
           <MarkersDisplay />
         </MarkerClusterGroup>
       )}
-      {showPatents && <PatentsLayer />}
-      <PopulationLayer />
       <PatentsLayer />
+      {/* <PopulationLayer /> */}
     </>
   )
 }
