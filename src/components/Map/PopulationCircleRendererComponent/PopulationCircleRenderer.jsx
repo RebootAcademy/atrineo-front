@@ -5,14 +5,19 @@ import { Circle } from "react-leaflet"
 function PopulationCircleRenderer({ companies, showPopulation }) {
   const renderCircles = () => {
     if (showPopulation) {
-      return companies.map((company, index) => (
-        <Circle
-          key={index}
-          center={[company.latitude, company.longitude]}
-          pathOptions={{ fillColor: 'orange', stroke: false, fillOpacity: 0.6 }}
-          radius={company.districtPopulation / 500}
-        />
-      ))
+      return companies.map((company, index) => {
+        console.log(company.districtPopulation)
+        return (
+          <Circle
+            key={index}
+            center={[company.latitude, company.longitude]}
+            pathOptions={{ fillColor: 'orange', stroke: false, fillOpacity: 0.6 }}
+            radius={company.districtPopulation / 500}
+          />
+        )
+      }
+      )
+
     } else return null
   }
   return renderCircles()

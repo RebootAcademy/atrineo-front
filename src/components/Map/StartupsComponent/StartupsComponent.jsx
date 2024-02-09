@@ -5,6 +5,7 @@ import PatentsLayer from "../PatentsLayer/PatentsLayer"
 import PropTypes from 'prop-types'
 import { LayerContext } from "../../../context/layerContext"
 import { useContext } from "react"
+import PopulationLayer from "../PopulationLayer/PopulationLayer"
 
 function StartupsComponent({ searchPolygon }) {
   const { showMarkers, showPatents } = useContext(LayerContext)
@@ -28,6 +29,7 @@ function StartupsComponent({ searchPolygon }) {
         </MarkerClusterGroup>
       )}
       {showPatents && <PatentsLayer />}
+      <PopulationLayer />
     </>
   )
 }

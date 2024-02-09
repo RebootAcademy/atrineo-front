@@ -16,10 +16,20 @@ const HeatMapLayer = ({ mapDivision, onRegionSelected }) => {
     setSelectedRegion(null)
   }, [mapDivision])
 
+  const setStyle = (feature) => {
+    const currentGroupId = feature.properties.ID_3
+
+    if (selectedRegion && selectedRegion.feature.properties.ID_3 === currentGroupId){
+      return selectedStyle
+    } else {
+      return defaultStyle
+    }
+  }
+
   const onEachFeature = (feature, layer) => {
     //console.log({feature, layer})
     layer.on('click', () => {
-      console.log(feature)
+      console.log(feature.properties.NAME_3)
       if (mapDivision == 'country') {
         setSelectedRegion((prevSelectedRegion) => {
           return prevSelectedRegion && prevSelectedRegion.feature.properties.ID_0 === feature.properties.ID_0
@@ -63,7 +73,7 @@ const HeatMapLayer = ({ mapDivision, onRegionSelected }) => {
       <GeoJSON
         data={filteredData}
         onEachFeature={onEachFeature}
-        // style={(feature) => setStyle(feature)}
+        style={(feature) => setStyle(feature)}
       />
     )
   } else {

@@ -19,6 +19,7 @@ import PopulationCircleRenderer from "../PopulationCircleRendererComponent/Popul
 import RangeFilter from "../RangeFilter/RangeFilter"
 import TileLayerComponent from "../TileLayerComponent/TileLayerComponent"
 import RegionFilter from "../FilterGroup/RegionFilter"
+import { useGeoJsonData } from "../../../hooks/useGeoJsonData"
 
 function MapComponent() {
   const mapRef = useRef()
@@ -84,13 +85,13 @@ function MapComponent() {
 
         <div className="flex flex-col items-start">
           <SearchBar />
-          <LayersContainer onPopulationClicked={onPopulationClicked}/>
+          <LayersContainer onPopulationClicked={onPopulationClicked} />
         </div>
 
         <CustomZoomControl />
         {shouldShowStartups && <StartupsComponent searchPolygon={searchPolygon} />}
 
-        <PopulationCircleRenderer companies={companies} showPopulation={showPopulation}/>
+        <PopulationCircleRenderer companies={collection[0]?.data} showPopulation={showPopulation} />
         <CompanyMarkerRenderer companies={companies} />
 
         <MapUpdater center={mapCenter} />
