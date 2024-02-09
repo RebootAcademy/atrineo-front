@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import { FeatureGroup, MapContainer } from "react-leaflet"
 import { useState, useRef, useContext, useEffect } from "react"
 import { LayerContext } from "../../../context/layerContext"
@@ -94,12 +93,14 @@ function MapComponent() {
         <PopulationCircleRenderer companies={collection[0]?.data} showPopulation={showPopulation} />
         <CompanyMarkerRenderer companies={companies} />
 
+        <StartupsComponent />
+
         <MapUpdater center={mapCenter} />
         <HeatMapLayer mapDivision={mapDivision} onRegionSelected={onRegionSelected} />
         {/* <RegionFilter onPopulationClicked={onPopulationClicked}/> */}
         <CoordsDisplay />
         <FeatureGroup>
-          <DrawComponent searchPolygon={searchPolygon} setSearchPolygon={setSearchPolygon} />
+          <DrawComponent />
         </FeatureGroup>
 
       </MapContainer>

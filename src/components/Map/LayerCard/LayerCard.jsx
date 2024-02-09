@@ -8,10 +8,11 @@ import {
 
 import FilterGroup from "../FilterGroup/Filtergroup"
 import RegionFilter from "../FilterGroup/RegionFilter"
+import PropTypes from 'prop-types'
 
 function LayerCard({ layerId = 1, onPopulationClicked }) {
   return (
-    <Card className='w-[250px] '>
+    <Card className='w-[260px] flex flex-col'>
       <CardHeader>
         <CardTitle>Layer {layerId}</CardTitle>
       </CardHeader>
@@ -37,6 +38,10 @@ function LayerCard({ layerId = 1, onPopulationClicked }) {
     </Card>
 
   )
+}
+
+LayerCard.propTypes = {
+  layerId: PropTypes.number
 }
 
 export default LayerCard

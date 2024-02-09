@@ -7,27 +7,27 @@ import {
 
 import LayerCard from "../LayerCard/LayerCard"
 
-function LayersContainer({onPopulationClicked}) {
+function LayersContainer({ onPopulationClicked }) {
   return (
     <aside className="grid grid-cols-2 gap-2 z-[9999999] relative top-8 left-4">
-        <Sheet key='left'>
+      <Sheet key='left'>
 
-          <SheetTrigger asChild>
-            <Button variant="outline">
-              <div className="font-bold text-xl text-gray-600">+</div>
-            </Button>
-          </SheetTrigger>
+        <SheetTrigger asChild>
+          <Button variant="outline">
+            <div className="font-bold text-xl text-gray-600">+</div>
+          </Button>
+        </SheetTrigger>
 
-          <SheetContent side='left' className="w-[300px] h-screen">
-            <div className="grid gap-4 py-4">
-              <div className="grid grid-cols-4 items-center gap-4">
+        <SheetContent side='left' className="p-2 w-auto h-screen flex">
+          <div className="grid gap-4 py-4">
+            <div className="grid grid-cols-4 items-center gap-4">
 
-                <LayerCard onPopulationClicked={onPopulationClicked}/>
+              <LayerCard onPopulationClicked={onPopulationClicked} />
 
-              </div>
             </div>
-          </SheetContent>
-        </Sheet>
+          </div>
+        </SheetContent>
+      </Sheet>
     </aside>
   )
 }
