@@ -7,18 +7,24 @@ import { Slider } from "../../ui/Slider/Slider"
 import { useGeoJsonData } from "../../../hooks/useGeoJsonData"
 import { CollectionContext } from "../../../context/collection"
 import { useState } from "react"
+import HeatMapLayer from "../../HeatMapLayerComponent.jsx/HeatMapComponent"
 
 function FilterOptions() {
   const {
+    patentsFilter,
+    isFinancingFilterActive,
+    isGovFundsReceivedActive,
     setPatentsFilter,
     setIsFinancingFilterActive,
-    isGovFundsReceivedActive,
     toggleGovFundsReceived,
     setPopulationFilter
-  } = useContext(LayerContext);
+  } = useContext(LayerContext)
 
-  const handlePatentsSliderChange = (value) => {
-    setPatentsFilter(value)
+  const [selectDistrict, setSelectDistrict] = useState(null)
+
+  const handleDistrictChange = (district) => {
+    setSelectDistrict(district)
+    console.log(`district name: ${district}`)
   }
 
   const handleFinancingSwitchChange = (newState) => {
@@ -29,19 +35,25 @@ function FilterOptions() {
     toggleGovFundsReceived(newState)
   }
 
+  const handlePatentsSliderChange = (value) => {
+    setPatentsFilter(value)
+  }
+
   const handlePopulationSliderChange = (value) => {
     setPopulationFilter(value)
   }
 
   const { collection } = useContext(CollectionContext)
-  const data = useGeoJsonData
 
   const regionName = () => {
     const nameRegion = [...new Set(collection[0]?.data.map(item => item.districtName))];
+    console.log(nameRegion)
     return nameRegion;
   }
+
   return (
     <div className="flex flex-col gap-4">
+
       <div className="flex items-center space-x-2">
         <Label htmlFor="disctrictName">District Name:</Label>
         <Select>
@@ -50,38 +62,51 @@ function FilterOptions() {
           </SelectTrigger>
           <SelectContent>
             {regionName().map((district, index) => (
-              
-              <SelectItem key={index} value={district}>{district}</SelectItem>
-              ))}
+
+              <SelectItem key={index} value={district} onClick={handleDistrictChange}>{district}</SelectItem>
+            ))}
           </SelectContent>
         </Select>
       </div>
-
 
       <div className="flex items-center space-x-2">
         <Switch
           id="financing"
           className="w-11 h-6"
           onCheckedChange={handleFinancingSwitchChange}
+          checked={isFinancingFilterActive}
         />
         <Label htmlFor="financing">Financing Access</Label>
       </div>
+
       <div className="flex items-center space-x-2">
         <Switch
           id="govFunds"
           className="w-11 h-6"
           onCheckedChange={handleGovFundsSwitchChange}
+          checked={isGovFundsReceivedActive}
         />
         <Label htmlFor="govFunds">Receive Gov Funds</Label>
       </div>
-      <div className="flex flex-col items-center space-x-2 gap-2">
+
+      <div className="flex flex-col items-center space-x-2 gap-2 bg-orange-200">
         <Label htmlFor="patents">Patents Nº</Label>
-        <Slider onValueChange={handlePatentsSliderChange} />
+        <div className="flex space-x-40">
+          <div className="text-sm">Min</div>
+          <div className="text-sm">Max</div>
+        </div>
       </div>
+      <Slider
+        patentsValue={patentsFilter}
+        onValueChange={handlePatentsSliderChange}
+      />
+      <div>{patentsFilter}</div>
+
       <div className="flex flex-col items-center space-x-2 gap-2">
         <Label htmlFor="population">Population</Label>
         <Slider onValueChange={handlePopulationSliderChange} />
       </div>
+      {selectDistrict && (<HeatMapLayer mapDivision={mapDivision} onRegionSelected={onRegionSelected} selectDistrict={selectDistrict} />)}
     </div >
   )
 }

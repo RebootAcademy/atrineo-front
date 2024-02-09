@@ -23,12 +23,12 @@ function LayerCard({ layerId = 1, onPopulationClicked }) {
             // { id: 'population', name: 'Region' }
           ]}
         />
-        <RegionFilter
+        {/* <RegionFilter
           layers={[
             { id: 'region', name: 'Region' }
           ]}
           onPopulationClicked={onPopulationClicked}
-        />
+        /> */}
       </CardContent>
 
       <CardFooter>
