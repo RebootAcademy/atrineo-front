@@ -26,11 +26,11 @@ function PatentsLayer({ searchPolygon, isFinancingFilterActive, isGovFundsReceiv
 
             return booleanPointInPolygon(itemPoint, polygon([polygonCoordinates]));
           }
-          return true;
+          return true
         }
-        return false;
+        return false
       })
-  );
+  )
 
   const circles = filteredItems.map(filteredItem => (
     <Circle
@@ -41,7 +41,7 @@ function PatentsLayer({ searchPolygon, isFinancingFilterActive, isGovFundsReceiv
     />
   ))
 
-  return <>{circles}</>;
+  return <>{circles}</>
 }
 
-export default PatentsLayer;
+export default PatentsLayer

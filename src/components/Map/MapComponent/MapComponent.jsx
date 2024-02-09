@@ -1,7 +1,5 @@
-/* eslint-disable no-unused-vars */
 import { FeatureGroup, MapContainer } from "react-leaflet"
-import { useState, useRef, useContext } from "react"
-import { LayerContext } from "../../../context/layerContext"
+import { useState, useRef } from "react"
 import MapUpdater from "../MapUpdater/MapUpdaterComponent"
 import ContourLayer from "../MapContour/MapContour"
 import HeatMapLayer from "../../HeatMapLayerComponent.jsx/HeatMapComponent"
@@ -28,10 +26,6 @@ function MapComponent() {
   const [filterValue, setFilterValue] = useState(null)
   const [mapDivision, setMapDivision] = useState("division3")
   const [searchPolygon, setSearchPolygon] = useState(null)
-
-  const { showMarkers } = useContext(LayerContext)
-
-  const shouldShowStartups = showMarkers['startups']
 
   const handleFilterChange = (newValue) => {
     setFilterValue(newValue)
@@ -60,7 +54,7 @@ function MapComponent() {
 
         <CustomZoomControl />
 
-        {shouldShowStartups && <StartupsComponent searchPolygon={searchPolygon} />}
+        <StartupsComponent searchPolygon={searchPolygon} />
 
         <PopulationLayer filterValue={filterValue} />
 

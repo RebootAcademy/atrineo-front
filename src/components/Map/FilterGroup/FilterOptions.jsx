@@ -1,11 +1,15 @@
-import { useContext } from "react"
+import { useContext, useState } from "react"
 import { LayerContext } from "../../../context/layerContext"
 import { Switch } from "../../ui/Switch/Switch"
 import { Label } from "../../ui/Label/Label"
 import { Slider } from "../../ui/Slider/Slider"
 
 function FilterOptions() {
+  const [min, setMin] = useState(0)
+  const [max, setMax] = useState(100)
+
   const {
+    patentsFilter,
     isFinancingFilterActive,
     isGovFundsReceivedActive,
     setPatentsFilter, 
@@ -13,16 +17,26 @@ function FilterOptions() {
     toggleGovFundsReceived
   } = useContext(LayerContext)
 
-  const handlePatentsSliderChange = (value) => {
-    setPatentsFilter(value)
-  }
-
+  
   const handleFinancingSwitchChange = (newState) => {
     setIsFinancingFilterActive(newState)
   }
-
+  
   const handleGovFundsSwitchChange = (newState) => {
     toggleGovFundsReceived(newState)
+  }
+  
+  const handleMinValueChange = (e) => {
+    const newValue = Math.max(Number(e.target.value), 0)
+    setMin(newValue)
+  
+    if (patentsFilter < newValue) {
+      setPatentsFilter(newValue)
+    }
+  }
+  const handlePatentsSliderChange = (value) => {
+    const adjustedValue = Math.max(value, min)
+    setPatentsFilter(adjustedValue)
   }
 
   return (
@@ -45,11 +59,31 @@ function FilterOptions() {
         />
         <Label htmlFor="govFunds">Receive Gov Funds</Label>
       </div>
-      <div className="flex flex-col items-center space-x-2 gap-2">
+      <div className="flex flex-col items-center space-x-2 gap-2 bg-orange-200">
         <Label htmlFor="patents">Patents Nº</Label>
+        <div className="flex space-x-40">
+          <div className="text-sm">Min</div>
+          <div className="text-sm">Max</div>
+        </div>
         <Slider 
+          patentsValue={patentsFilter}
           onValueChange={handlePatentsSliderChange}
+          min={min}
+          max={100}
         />
+        <div className="flex space-x-40">
+          <div className="text-sm">
+            <input
+              type="number"
+              id="minValue"
+              value={min}
+              onChange={handleMinValueChange} // Maneja el cambio del valor mínimo
+              className="w-12 p-1 border rounded"
+            />
+          </div>
+          <div className="text-sm">Max</div>
+        </div>
+        <div>{patentsFilter}</div>
       </div>
     </div>
   )

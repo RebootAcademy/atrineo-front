@@ -7,7 +7,7 @@ import { LayerContext } from "../../../context/layerContext"
 import { useContext } from "react"
 
 function StartupsComponent({ searchPolygon }) {
-  const { showMarkers, showPatents, isFinancingFilterActive, isGovFundsReceivedActive } = useContext(LayerContext)
+  const { showMarkers, isFinancingFilterActive, isGovFundsReceivedActive } = useContext(LayerContext)
   
   return (
     <>
@@ -27,7 +27,7 @@ function StartupsComponent({ searchPolygon }) {
           <MarkersDisplay searchPolygon={searchPolygon} />
         </MarkerClusterGroup>
       )}
-      {showPatents && <PatentsLayer searchPolygon={searchPolygon} isFinancingFilterActive={isFinancingFilterActive} isGovFundsReceivedActive={isGovFundsReceivedActive} />}
+      <PatentsLayer searchPolygon={searchPolygon} isFinancingFilterActive={isFinancingFilterActive} isGovFundsReceivedActive={isGovFundsReceivedActive} />
     </>
   )
 }
