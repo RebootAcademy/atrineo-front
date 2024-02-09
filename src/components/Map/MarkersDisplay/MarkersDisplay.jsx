@@ -1,11 +1,8 @@
 import { CollectionContext } from "../../../context/collection"
 import { useContext } from "react"
 import MarkerComponent from "../MarkerComponent/MarkerComponent"
-
-import { point, polygon } from "@turf/helpers";
-import booleanPointInPolygon from "@turf/boolean-point-in-polygon";
-
-import { LayerContext } from "../../../context/layerContext";
+import { LayerContext } from "../../../context/layerContext"
+import { isWithinPolygon } from "../../../helpers"
 
 function MarkersDisplay() {
   const { collection } = useContext(CollectionContext)
@@ -17,20 +14,7 @@ function MarkersDisplay() {
         // Primero, verifica si el filtro de financiamiento está activo antes de aplicar cualquier filtrado
         .filter((dataItem) => !isFinancingFilterActive || dataItem.financingAccess)
         .filter((dataItem) => !isGovFundsReceivedActive || dataItem.govFundsReceived)
-        .filter((dataItem) => {
-        // Luego, aplica el filtrado basado en el polígono si es necesario
-          if (searchPolygon && searchPolygon.length > 0) {
-            const markerCoords = [parseFloat(dataItem.latitude), parseFloat(dataItem.longitude)]
-            const markerPoint = point(markerCoords)
-            const polygonCoordinates = searchPolygon[0].map(coord => [coord.lat, coord.lng]);
-            polygonCoordinates.push(polygonCoordinates[0])
-
-            if (polygonCoordinates.length >= 4) {
-              return booleanPointInPolygon(markerPoint, polygon([polygonCoordinates]));
-            }
-          }
-          return true
-        })
+        .filter((dataItem) => isWithinPolygon(dataItem, searchPolygon))
         .map((filteredDataItem, index) => (
           <MarkerComponent
             key={index}
