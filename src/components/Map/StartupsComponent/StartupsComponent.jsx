@@ -1,13 +1,11 @@
 import MarkersDisplay from "../MarkersDisplay/MarkersDisplay"
 import MarkerClusterGroup from "react-leaflet-cluster"
 import PatentsLayer from "../PatentsLayer/PatentsLayer"
-
-import PropTypes from 'prop-types'
 import { LayerContext } from "../../../context/layerContext"
 import { useContext } from "react"
 
-function StartupsComponent({ searchPolygon }) {
-  const { showMarkers, isFinancingFilterActive, isGovFundsReceivedActive } = useContext(LayerContext)
+function StartupsComponent() {
+  const { showMarkers } = useContext(LayerContext)
   
   return (
     <>
@@ -24,16 +22,12 @@ function StartupsComponent({ searchPolygon }) {
             })
           }}
         >
-          <MarkersDisplay searchPolygon={searchPolygon} />
+          <MarkersDisplay />
         </MarkerClusterGroup>
       )}
-      <PatentsLayer searchPolygon={searchPolygon} isFinancingFilterActive={isFinancingFilterActive} isGovFundsReceivedActive={isGovFundsReceivedActive} />
+      <PatentsLayer />
     </>
   )
-}
-
-StartupsComponent.propTypes = {
-  searchPolygon: PropTypes.array
 }
 
 export default StartupsComponent

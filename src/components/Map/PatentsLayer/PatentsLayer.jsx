@@ -6,9 +6,9 @@ import { Circle } from "react-leaflet"
 import { point, polygon } from "@turf/helpers"
 import booleanPointInPolygon from "@turf/boolean-point-in-polygon"
 
-function PatentsLayer({ searchPolygon, isFinancingFilterActive, isGovFundsReceivedActive }) {
+function PatentsLayer() {
   const { collection } = useContext(CollectionContext)
-  const { patentsFilter } = useContext(LayerContext)
+  const { patentsFilter, searchPolygon, isFinancingFilterActive, isGovFundsReceivedActive } = useContext(LayerContext)
 
   const filteredItems = collection.flatMap(item =>
     item.data

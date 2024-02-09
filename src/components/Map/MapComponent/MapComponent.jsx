@@ -25,7 +25,6 @@ function MapComponent() {
   const [mapCenter, setMapCenter] = useState([48.6, 9])
   const [filterValue, setFilterValue] = useState(null)
   const [mapDivision, setMapDivision] = useState("division3")
-  const [searchPolygon, setSearchPolygon] = useState(null)
 
   const handleFilterChange = (newValue) => {
     setFilterValue(newValue)
@@ -54,13 +53,13 @@ function MapComponent() {
 
         <CustomZoomControl />
 
-        <StartupsComponent searchPolygon={searchPolygon} />
+        <StartupsComponent />
 
         <PopulationLayer filterValue={filterValue} />
 
         <CoordsDisplay />
         <FeatureGroup>
-          <DrawComponent searchPolygon={searchPolygon} setSearchPolygon={setSearchPolygon} />
+          <DrawComponent />
         </FeatureGroup>
 
       </MapContainer>

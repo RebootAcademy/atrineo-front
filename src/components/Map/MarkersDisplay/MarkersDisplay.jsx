@@ -5,12 +5,11 @@ import MarkerComponent from "../MarkerComponent/MarkerComponent"
 import { point, polygon } from "@turf/helpers";
 import booleanPointInPolygon from "@turf/boolean-point-in-polygon";
 
-import PropTypes from 'prop-types'
 import { LayerContext } from "../../../context/layerContext";
 
-function MarkersDisplay({ searchPolygon }) {
+function MarkersDisplay() {
   const { collection } = useContext(CollectionContext)
-  const { isFinancingFilterActive, isGovFundsReceivedActive } = useContext(LayerContext)
+  const { isFinancingFilterActive, isGovFundsReceivedActive, searchPolygon } = useContext(LayerContext)
 
   const displayMarkers = () => {
     return collection.flatMap((item) =>
@@ -42,10 +41,6 @@ function MarkersDisplay({ searchPolygon }) {
   }
 
   return displayMarkers()
-}
-
-MarkersDisplay.propTypes = {
-  searchPolygon: PropTypes.array
 }
 
 export default MarkersDisplay
