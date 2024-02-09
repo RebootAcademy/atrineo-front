@@ -4,9 +4,9 @@ import { Switch } from "../../ui/Switch/Switch"
 import { Label } from "../../ui/Label/Label"
 import { Select, SelectTrigger, SelectContent, SelectValue, SelectItem } from "../../ui/Select/select"
 import { Slider } from "../../ui/Slider/Slider"
-import { useGeoJsonData } from "../../../hooks/useGeoJsonData"
 import { CollectionContext } from "../../../context/collection"
 import HeatMapLayer from "../../HeatMapLayerComponent.jsx/HeatMapComponent"
+
 
 function FilterOptions() {
   const {
@@ -19,10 +19,10 @@ function FilterOptions() {
     setPopulationFilter
   } = useContext(LayerContext)
 
-  const [selectDistrict, setSelectDistrict] = useState(null)
+  const [selectedNameDistrict, setSelectedNameDistrict] = useState(null)
 
   const handleDistrictChange = (district) => {
-    setSelectDistrict(district)
+    setSelectedNameDistrict(district)
     console.log(`district name: ${district}`)
   }
 
@@ -50,9 +50,9 @@ function FilterOptions() {
     return nameRegion;
   }
 
+  //con el regionName.map se obtiene la lista de distritos y cada elemento de la lista se representa en SelectItem
   return (
     <div className="flex flex-col gap-4">
-
       <div className="flex items-center space-x-2">
         <Label htmlFor="disctrictName">District Name:</Label>
         <Select>
@@ -61,8 +61,12 @@ function FilterOptions() {
           </SelectTrigger>
           <SelectContent>
             {regionName().map((district, index) => (
-
-              <SelectItem key={index} value={district} onClick={handleDistrictChange}>{district}</SelectItem>
+              <SelectItem
+                key={index}
+                value={district}
+                onClick={(e) => console.log(e)}>
+                {district}
+              </SelectItem>
             ))}
           </SelectContent>
         </Select>
@@ -87,14 +91,14 @@ function FilterOptions() {
         />
         <Label htmlFor="govFunds">Receive Gov Funds</Label>
       </div>
-      <div className="flex flex-col items-center space-x-2 gap-2 bg-orange-200">
+      <div className="flex flex-col items-center space-x-2 gap-2">
         <Label htmlFor="patents">Patents Nº</Label>
         <div className="flex space-x-40">
           <div className="text-sm">Min</div>
           <div className="text-sm">Max</div>
         </div>
         <Slider
-          patentsValue={patentsFilter}
+          patentsvalue={patentsFilter}
           onValueChange={handlePatentsSliderChange}
         />
         <div>{patentsFilter}</div>
@@ -104,8 +108,14 @@ function FilterOptions() {
         <Label htmlFor="population">Population</Label>
         <Slider onValueChange={handlePopulationSliderChange} />
       </div>
-      {selectDistrict && (<HeatMapLayer mapDivision={mapDivision} onRegionSelected={onRegionSelected} selectDistrict={selectDistrict} />)}
+      {selectedNameDistrict && (<HeatMapLayer
+        mapDivision={mapDivision}
+        onRegionSelected={onRegionSelected}
+        selectedNameDistrict={selectedNameDistrict}
+      />)}
+
     </div >
+
   )
 }
 

@@ -6,7 +6,7 @@ import { cn } from "../../../lib/utils"
 const Slider = React.forwardRef(({ className, ...props }, ref ) => (
   <SliderPrimitive.Root
     ref={ref}
-    defaultValue={props.patentsValue}
+    defaultValue={props.patentsvalue}
     className={cn("relative flex w-full touch-none select-none items-center", className)}
     onValueChange={(e) => onValueChange(e.target.value)}
     {...props}>

@@ -27,6 +27,7 @@ function MapComponent() {
   const [searchPolygon, setSearchPolygon] = useState(null)
   const [selectedRegion, setSelectedRegion] = useState('')
   const [showPopulation, setShowPopulation] = useState(false)
+  const [selectedNameDistrict, setSelectedNameDistrict] = useState(null)
   const [companies, setCompanies] = useState([])
   const { collection } = useContext(CollectionContext)
 
@@ -84,8 +85,7 @@ function MapComponent() {
 
         <div className="flex flex-col items-start">
           <SearchBar />
-          <LayersContainer />
-          {/* <LayersContainer onPopulationClicked={onPopulationClicked} /> */}
+          <LayersContainer onPopulationClicked={onPopulationClicked} />
         </div>
 
         <CustomZoomControl />
@@ -97,8 +97,8 @@ function MapComponent() {
         {/* <StartupsComponent /> */}
 
         <MapUpdater center={mapCenter} />
-        <HeatMapLayer mapDivision={mapDivision} onRegionSelected={onRegionSelected} />
-        {/* <RegionFilter onPopulationClicked={onPopulationClicked}/> */}
+        <HeatMapLayer mapDivision={mapDivision} onRegionSelected={onRegionSelected} selectedNameDistrict={setSelectedNameDistrict} />
+        <RegionFilter onPopulationClicked={onPopulationClicked} />
         <CoordsDisplay />
         <FeatureGroup>
           <DrawComponent />

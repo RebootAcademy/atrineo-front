@@ -15,13 +15,11 @@ function App() {
   const [showPatents, setShowPatents] = useState({ patents: false })
   const [patentsFilter, setPatentsFilter] = useState([0])
   const [populationFilter, setPopulationFilter] = useState([0])
-  // const [showPopulation, setShowPopulation] = useState({})
   const [isFinancingFilterActive, setIsFinancingFilterActive] = useState(false)
   const [isGovFundsReceivedActive, setIsGovFundsReceivedActive] = useState(false)
-
   const [searchPolygon, setSearchPolygon] = useState(null)
-
   const collectionValue = {collection, setCollection}
+  // const [showPopulation, setShowPopulation] = useState({})
   
   const toggleMarkersDisplay = (layerId) => {
     setShowMarkers(prevState => ({
