@@ -7,11 +7,10 @@ import { selectedStyle, defaultStyle, between10and20, between20and35 } from './S
 
 // import { getPublicCollections } from "../../services/collectionService";
 
-const HeatMapLayer = ({ mapDivision, onRegionSelected }) => {
+const HeatMapLayer = ({ mapDivision, onRegionSelected, districtName }) => {
   const data = useGeoJsonData(mapDivision)
-
-  const [selectedRegion, setSelectedRegion] = useState(null)  
-  const [selectedNameDistrict, setSelectedNameDistrict] = useState(null)
+  console.log(data)
+  const [selectedRegion, setSelectedRegion] = useState(null) 
 
   useEffect(() => {
     setSelectedRegion(null)
@@ -19,8 +18,9 @@ const HeatMapLayer = ({ mapDivision, onRegionSelected }) => {
 
   const setStyle = (feature) => {
     const currentGroupId = feature.properties.ID_3
-    if (selectedRegion && selectedRegion.feature.properties.ID_3 === currentGroupId ||
-    selectedNameDistrict && selectedNameDistrict.feature.properties.ID_3 === currentGroupId) {
+    const currentDistrict = feature.properties.NAME_3
+    if ((selectedRegion && selectedRegion.feature.properties.ID_3 === currentGroupId) ||
+      (districtName && districtName === currentDistrict)) {
       return selectedStyle
     } else {
       return defaultStyle
@@ -37,28 +37,36 @@ const HeatMapLayer = ({ mapDivision, onRegionSelected }) => {
             ? null
             : layer
         })
+       if (onRegionSelected) {
         onRegionSelected(feature.properties.NAME_0)
+       }
       } else if (mapDivision == 'division1') {
         setSelectedRegion((prevSelectedRegion) => {
           return prevSelectedRegion && prevSelectedRegion.feature.properties.id === feature.properties.id
             ? null
             : layer
         })
-        onRegionSelected(feature.properties.NAME_1)
+        if (onRegionSelected) {
+          onRegionSelected(feature.properties.NAME_1)
+         }
       } else if (mapDivision == 'division2') {
-        setSelectRegion((prevSelectedRegion) => {
+        setSelectedRegion((prevSelectedRegion) => {
           return prevSelectedRegion && prevSelectedRegion.feature.properties.ID_2 === feature.properties.ID_2
             ? null
             : layer
         })
-        onRegionSelected(feature.properties.NAME_2)
+        if (onRegionSelected) {
+          onRegionSelected(feature.properties.NAME_2)
+         }
       } else {
         setSelectedRegion((prevSelectedRegion) => {
           return prevSelectedRegion && prevSelectedRegion.feature.properties.ID_3 === feature.properties.ID_3
             ? null
             : layer
         })
-        onRegionSelected(feature.properties.NAME_3)
+        if (onRegionSelected) {
+          onRegionSelected(feature.properties.NAME_3)
+         }
       }
     })
   }

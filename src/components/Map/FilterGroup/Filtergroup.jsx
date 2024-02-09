@@ -10,7 +10,7 @@ import {
 
 import PropTypes from 'prop-types'
 
-function FilterGroup({ title, layers }) {
+function FilterGroup({ title, layers, mapDivision }) {
   return (
     <Card className='mb-2 w-60 pt-0 p-2'>
       <CardHeader>
@@ -22,7 +22,7 @@ function FilterGroup({ title, layers }) {
             <div key={id}>
               <LayerItem layer={layer} />
               <CollapsibleContent>
-                <FilterOptions />
+                <FilterOptions mapDivision={mapDivision} />
               </CollapsibleContent>
             </div>
           ))}

@@ -8,7 +8,7 @@ import { CollectionContext } from "../../../context/collection"
 import HeatMapLayer from "../../HeatMapLayerComponent.jsx/HeatMapComponent"
 
 
-function FilterOptions() {
+function FilterOptions({mapDivision}) {
   const {
     patentsFilter,
     isFinancingFilterActive,
@@ -20,10 +20,11 @@ function FilterOptions() {
   } = useContext(LayerContext)
 
   const [selectedNameDistrict, setSelectedNameDistrict] = useState(null)
+  
 
-  const handleDistrictChange = (district) => {
+  //empieza por on algo porque es un evento y es el formato por defecto
+  const onDistrictNameChange = (district) => {
     setSelectedNameDistrict(district)
-    console.log(`district name: ${district}`)
   }
 
   const handleFinancingSwitchChange = (newState) => {
@@ -43,10 +44,12 @@ function FilterOptions() {
   }
 
   const { collection } = useContext(CollectionContext)
-
+//se hace el filtro primero para poder filtar por los item que contenga algo diferente a null y los devuelve
   const regionName = () => {
-    const nameRegion = [...new Set(collection[0]?.data.map(item => item.districtName))];
-    console.log(nameRegion)
+    const nameRegionFiltered = collection[0]?.data
+    .filter((item) => item.locationId[mapDivision] !== null)
+    .map(item => item.locationId[mapDivision]?.name)
+    const nameRegion = [...new Set(nameRegionFiltered)]
     return nameRegion;
   }
 
@@ -55,7 +58,7 @@ function FilterOptions() {
     <div className="flex flex-col gap-4">
       <div className="flex items-center space-x-2">
         <Label htmlFor="disctrictName">District Name:</Label>
-        <Select>
+        <Select onValueChange={onDistrictNameChange}>
           <SelectTrigger className="w-[180px]">
             <SelectValue placeholder="Select" />
           </SelectTrigger>
@@ -64,7 +67,7 @@ function FilterOptions() {
               <SelectItem
                 key={index}
                 value={district}
-                onClick={(e) => console.log(e)}>
+              >
                 {district}
               </SelectItem>
             ))}
@@ -110,8 +113,7 @@ function FilterOptions() {
       </div>
       {selectedNameDistrict && (<HeatMapLayer
         mapDivision={mapDivision}
-        onRegionSelected={onRegionSelected}
-        selectedNameDistrict={selectedNameDistrict}
+        districtName={selectedNameDistrict}
       />)}
 
     </div >

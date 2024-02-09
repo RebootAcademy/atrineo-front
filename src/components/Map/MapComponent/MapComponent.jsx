@@ -85,7 +85,7 @@ function MapComponent() {
 
         <div className="flex flex-col items-start">
           <SearchBar />
-          <LayersContainer onPopulationClicked={onPopulationClicked} />
+          <LayersContainer mapDivision={mapDivision} />
         </div>
 
         <CustomZoomControl />

@@ -7,7 +7,7 @@ import {
 
 import LayerCard from "../LayerCard/LayerCard"
 
-function LayersContainer({ onPopulationClicked }) {
+function LayersContainer({ mapDivision }) {
   return (
     <aside className="grid grid-cols-2 gap-2 z-[9999999] relative top-8 left-4">
       <Sheet key='left'>
@@ -22,7 +22,7 @@ function LayersContainer({ onPopulationClicked }) {
           <div className="grid gap-4 py-4">
             <div className="grid grid-cols-4 items-center gap-4">
 
-              <LayerCard onPopulationClicked={onPopulationClicked} />
+              <LayerCard mapDivision={mapDivision} />
 
             </div>
           </div>
