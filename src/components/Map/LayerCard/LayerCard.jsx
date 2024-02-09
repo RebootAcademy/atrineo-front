@@ -7,9 +7,9 @@ import {
 } from "../../ui/Card/Card"
 
 import FilterGroup from "../FilterGroup/Filtergroup"
-import RegionGroup from "../FilterGroup/RegionFilter"
+import RegionFilter from "../FilterGroup/RegionFilter"
 
-function LayerCard({ layerId = 1 }) {
+function LayerCard({ layerId = 1, onPopulationClicked }) {
   return (
     <Card className='w-[250px] '>
       <CardHeader>
@@ -23,10 +23,11 @@ function LayerCard({ layerId = 1 }) {
             // { id: 'population', name: 'Region' }
           ]}
         />
-        <RegionGroup
+        <RegionFilter
           layers={[
             { id: 'region', name: 'Region' }
           ]}
+          onPopulationClicked={onPopulationClicked}
         />
       </CardContent>
 

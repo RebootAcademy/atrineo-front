@@ -7,7 +7,7 @@ import { Checkbox } from "../../ui/Checkbox/Checkbox"
 import { RadioGroup, RadioGroupItem } from "../../ui/RadioGroup/radio-group"
 
 
-function RegionGroup({ title, layers, onPopulationClicked }) {
+function RegionFilter({ title, layers, onPopulationClicked }) {
   const { showMarkers, toggleMarkersDisplay } = useContext(LayerContext)
 
   return (
@@ -40,7 +40,7 @@ function RegionGroup({ title, layers, onPopulationClicked }) {
                   <Checkbox
                     id="population"
                     className="w-4 h-4"
-                    onChange={onPopulationClicked}
+                    onCheckedChange={onPopulationClicked}
                   />
                   <Label htmlFor="population">Population</Label>
                 </div>
@@ -70,4 +70,4 @@ function RegionGroup({ title, layers, onPopulationClicked }) {
   )
 }
 
-export default RegionGroup
+export default RegionFilter

@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { FeatureGroup, MapContainer } from "react-leaflet"
-import { useState, useRef, useContext } from "react"
+import { useState, useRef, useContext, useEffect } from "react"
 import { LayerContext } from "../../../context/layerContext"
 import MapUpdater from "../MapUpdater/MapUpdaterComponent"
 import ContourLayer from "../MapContour/MapContour"
@@ -26,9 +26,15 @@ function MapComponent() {
   const [mapDivision, setMapDivision] = useState("division3")
   const [searchPolygon, setSearchPolygon] = useState(null)
   const [selectedRegion, setSelectedRegion] = useState('')
-  const [showPopulation, setShowPopulation] = useState()
+  const [showPopulation, setShowPopulation] = useState(false)
   const [companies, setCompanies] = useState([])
   const { collection } = useContext(CollectionContext)
+
+  //cada vez que selectedRegion cambia de valor se ejecutan los filtros
+  //aqui se pueden anadir mas variables como gnp, mapDivision...
+  useEffect(() => {
+    filterCompanies()
+  }, [selectedRegion])
 
   const filterCompanies = () => {
     if (collection && collection.length > 0) {
@@ -43,9 +49,8 @@ function MapComponent() {
   //Function para pasarle por props la región y que una vez se elija la región se rederiza por la región que le hemos pasado en HeatMap 54
   //Cuando usamos el set del useState todo lo que haya en el return se renderiza de nuevo pero los estados se guardan
   //Por lo que en FilterData al tener como prop la selectedRegion se pinta los marcadores de la nueva region
-  const onRegionSelected= (region) => {
+  const onRegionSelected = (region) => {
     setSelectedRegion(region)
-    filterCompanies()
   }
 
   const onPopulationClicked = () => {
@@ -79,7 +84,7 @@ function MapComponent() {
 
         <div className="flex flex-col items-start">
           <SearchBar />
-          <LayersContainer />
+          <LayersContainer onPopulationClicked={onPopulationClicked}/>
         </div>
 
         <CustomZoomControl />
@@ -90,7 +95,7 @@ function MapComponent() {
 
         <MapUpdater center={mapCenter} />
         <HeatMapLayer mapDivision={mapDivision} onRegionSelected={onRegionSelected} />
-        <RegionFilter onPopulationClicked={onPopulationClicked}/>
+        {/* <RegionFilter onPopulationClicked={onPopulationClicked}/> */}
         <CoordsDisplay />
         <FeatureGroup>
           <DrawComponent searchPolygon={searchPolygon} setSearchPolygon={setSearchPolygon} />
