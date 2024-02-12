@@ -6,9 +6,9 @@ import { Select, SelectTrigger, SelectContent, SelectValue, SelectItem } from ".
 import { Slider } from "../../ui/Slider/Slider"
 import { CollectionContext } from "../../../context/collection"
 import HeatMapLayer from "../../HeatMapLayerComponent.jsx/HeatMapComponent"
+import { RadioGroup, RadioGroupItem } from "../../ui/RadioGroup/radio-group"
 
-
-function FilterOptions({mapDivision}) {
+function FilterOptions({ mapDivision }) {
   const {
     patentsFilter,
     isFinancingFilterActive,
@@ -20,7 +20,7 @@ function FilterOptions({mapDivision}) {
   } = useContext(LayerContext)
 
   const [selectedNameDistrict, setSelectedNameDistrict] = useState(null)
-  
+
 
   //empieza por on algo porque es un evento y es el formato por defecto
   const onDistrictNameChange = (district) => {
@@ -44,11 +44,11 @@ function FilterOptions({mapDivision}) {
   }
 
   const { collection } = useContext(CollectionContext)
-//se hace el filtro primero para poder filtar por los item que contenga algo diferente a null y los devuelve
+  //se hace el filtro primero para poder filtar por los item que contenga algo diferente a null y los devuelve
   const regionName = () => {
     const nameRegionFiltered = collection[0]?.data
-    .filter((item) => item.locationId[mapDivision] !== null)
-    .map(item => item.locationId[mapDivision]?.name)
+      .filter((item) => item.locationId[mapDivision] !== null)
+      .map(item => item.locationId[mapDivision]?.name)
     const nameRegion = [...new Set(nameRegionFiltered)]
     return nameRegion;
   }
@@ -63,6 +63,7 @@ function FilterOptions({mapDivision}) {
             <SelectValue placeholder="Select" />
           </SelectTrigger>
           <SelectContent>
+            <SelectItem value='unassigned'>Select</SelectItem>
             {regionName().map((district, index) => (
               <SelectItem
                 key={index}
@@ -111,10 +112,26 @@ function FilterOptions({mapDivision}) {
         <Label htmlFor="population">Population</Label>
         <Slider onValueChange={handlePopulationSliderChange} />
       </div>
+
       {selectedNameDistrict && (<HeatMapLayer
         mapDivision={mapDivision}
-        districtName={selectedNameDistrict}
-      />)}
+        districtName={selectedNameDistrict} />)}
+
+      <Label className='mt-4'htmlFor="lifeQuality">Life Quality:</Label>
+      <RadioGroup defaultValue="comfortable">
+        <div className="flex items-center space-x-2">
+          <RadioGroupItem value="low" id="low-option" />
+          <Label htmlFor="low">Low</Label>
+        </div>
+        <div className="flex items-center space-x-2">
+          <RadioGroupItem value="medium" id="medium-option" />
+          <Label htmlFor="medium">Medium</Label>
+        </div>
+        <div className="flex items-center space-x-2">
+          <RadioGroupItem value="high" id="high-option" />
+          <Label htmlFor="high">High</Label>
+        </div>
+      </RadioGroup>
 
     </div >
 

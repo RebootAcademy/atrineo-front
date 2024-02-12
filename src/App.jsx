@@ -61,7 +61,6 @@ function App() {
     // setShowPopulation,
     populationFilter, 
     setPopulationFilter,
-    toggleGovFundsReceived,
     searchPolygon,
     setSearchPolygon
   }

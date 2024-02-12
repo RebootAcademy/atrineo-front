@@ -9,7 +9,7 @@ import { selectedStyle, defaultStyle, between10and20, between20and35 } from './S
 
 const HeatMapLayer = ({ mapDivision, onRegionSelected, districtName }) => {
   const data = useGeoJsonData(mapDivision)
-  console.log(data)
+  //console.log(data)
   const [selectedRegion, setSelectedRegion] = useState(null) 
 
   useEffect(() => {
