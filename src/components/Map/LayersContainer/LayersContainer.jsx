@@ -19,13 +19,7 @@ function LayersContainer({ mapDivision }) {
         </SheetTrigger>
 
         <SheetContent side='left' className="p-2 w-full h-screen flex justify-center">
-          <div className="grid gap-4 py-4">
-            <div className="grid grid-cols-4 items-center gap-4">
-
-              <LayerCard mapDivision={mapDivision} />
-
-            </div>
-          </div>
+          <LayerCard mapDivision={mapDivision} />
         </SheetContent>
       </Sheet>
     </aside>
