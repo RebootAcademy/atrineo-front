@@ -1,5 +1,3 @@
-import { CollapsibleTrigger } from "../../ui/Collapsible/Collapsible"
-
 import PropTypes from 'prop-types'
 
 function LayerItem({ layer }) {
@@ -9,7 +7,7 @@ function LayerItem({ layer }) {
         htmlFor={layer.id}
         className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
       >
-        <CollapsibleTrigger className="text-lg font-bold mb-2">{layer.name}</CollapsibleTrigger>
+        <div className="text-lg font-bold mb-2">{layer.name}</div>
       </label>
     </div>
   )

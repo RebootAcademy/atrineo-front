@@ -3,6 +3,7 @@ import MarkerClusterGroup from "react-leaflet-cluster"
 import PatentsLayer from "../PatentsLayer/PatentsLayer"
 import { LayerContext } from "../../../context/layerContext"
 import { useContext } from "react"
+import PopulationLayer from "../PopulationLayer/PopulationLayer"
 
 function StartupsComponent() {
   const { showMarkers } = useContext(LayerContext)
@@ -26,6 +27,7 @@ function StartupsComponent() {
         </MarkerClusterGroup>
       )}
       <PatentsLayer />
+      <PopulationLayer />
     </>
   )
 }
