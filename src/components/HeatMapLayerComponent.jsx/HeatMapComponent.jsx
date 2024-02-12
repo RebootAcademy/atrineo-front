@@ -3,8 +3,6 @@ import { GeoJSON } from "react-leaflet";
 import { useGeoJsonData } from "../../hooks/useGeoJsonData";
 import { selectedStyle, defaultStyle, between10and20, between20and35 } from './Style'
 // import usePopulationData from "../../hooks/usePopulationData";
-
-
 // import { getPublicCollections } from "../../services/collectionService";
 
 const HeatMapLayer = ({ mapDivision, onRegionSelected, districtName }) => {

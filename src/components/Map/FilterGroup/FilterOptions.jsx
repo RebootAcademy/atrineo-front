@@ -43,6 +43,10 @@ function FilterOptions({ mapDivision }) {
     setPopulationFilter(value)
   }
 
+  const onLifeQualityChange = (quality) => {
+    setLifeQuality
+  }
+
   const { collection } = useContext(CollectionContext)
   //se hace el filtro primero para poder filtar por los item que contenga algo diferente a null y los devuelve
   const regionName = () => {
@@ -154,7 +158,7 @@ function FilterOptions({ mapDivision }) {
         districtName={selectedNameDistrict} />)}
 
       <Label className='mt-4'htmlFor="lifeQuality">Life Quality:</Label>
-      <RadioGroup defaultValue="comfortable">
+      <RadioGroup defaultValue="comfortable" onValueChange={onLifeQualityChange}>
         <div className="flex items-center space-x-2">
           <RadioGroupItem value="low" id="low-option" />
           <Label htmlFor="low">Low</Label>

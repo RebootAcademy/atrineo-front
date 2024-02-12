@@ -18,6 +18,7 @@ import PopulationCircleRenderer from "../PopulationCircleRendererComponent/Popul
 import RangeFilter from "../RangeFilter/RangeFilter"
 import TileLayerComponent from "../TileLayerComponent/TileLayerComponent"
 import RegionFilter from "../FilterGroup/RegionFilter"
+import LifeQualityLayer from "../LifeQualityLayer/LifeQuality"
 import { useGeoJsonData } from "../../../hooks/useGeoJsonData"
 
 function MapComponent() {
@@ -31,6 +32,7 @@ function MapComponent() {
   const [companies, setCompanies] = useState([])
   const { collection } = useContext(CollectionContext)
 
+
   //cada vez que selectedRegion cambia de valor se ejecutan los filtros
   //aqui se pueden anadir mas variables como gnp, mapDivision...
   useEffect(() => {
@@ -42,7 +44,6 @@ function MapComponent() {
       let filteredCompanies = collection[0]?.data?.filter((company) => {
         return company.locationId[mapDivision]?.name === selectedRegion
       })
-
       setCompanies(filteredCompanies)
     }
   }
@@ -54,13 +55,13 @@ function MapComponent() {
     setSelectedRegion(region)
   }
 
+  const onLifeQuality = (quality) => {
+    setlifeQuality(quality)
+  }
+
   const onPopulationClicked = () => {
     setShowPopulation(!showPopulation)
   }
-
-  const { showMarkers } = useContext(LayerContext)
-
-  const shouldShowStartups = showMarkers['startups']
 
   const handleFilterChange = (newValue) => {
     setFilterValue(newValue)
@@ -97,8 +98,9 @@ function MapComponent() {
         {/* <StartupsComponent /> */}
 
         <MapUpdater center={mapCenter} />
-        <HeatMapLayer mapDivision={mapDivision} onRegionSelected={onRegionSelected} selectedNameDistrict={setSelectedNameDistrict} />
+        <HeatMapLayer mapDivision={mapDivision} onRegionSelected={onRegionSelected} selectedNameDistrict={setSelectedNameDistrict} onLifeQuality={onLifeQuality} />
         <RegionFilter onPopulationClicked={onPopulationClicked} />
+        <LifeQualityLayer />
         <CoordsDisplay />
         <FeatureGroup>
           <DrawComponent />
