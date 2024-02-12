@@ -1,4 +1,4 @@
-import { useContext } from "react"
+import { useContext, useState } from "react"
 import { LayerContext } from "../../../context/layerContext"
 import { Switch } from "../../ui/Switch/Switch"
 import { Label } from "../../ui/Label/Label"
