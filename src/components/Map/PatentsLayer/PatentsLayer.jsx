@@ -12,7 +12,7 @@ function PatentsLayer() {
     item.data
       .filter((dataItem) => !isFinancingFilterActive || dataItem.financingAccess)
       .filter((dataItem) => !isGovFundsReceivedActive || dataItem.govFundsReceived)
-      .filter((dataItem) => !isNaN(dataItem.patents) && dataItem.patents <= patentsFilter)
+      .filter((dataItem) => !isNaN(dataItem.patents) && dataItem.patents <= patentsFilter[0] && dataItem.patents <= patentsFilter[1])
       .filter((dataItem) => isWithinPolygon(dataItem, searchPolygon))
   )
 
