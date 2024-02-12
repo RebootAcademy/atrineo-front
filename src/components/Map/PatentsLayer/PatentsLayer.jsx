@@ -2,9 +2,7 @@ import { useContext } from "react"
 import { CollectionContext } from "../../../context/collection"
 import { LayerContext } from "../../../context/layerContext"
 import { Circle } from "react-leaflet"
-
-import { point, polygon } from "@turf/helpers"
-import booleanPointInPolygon from "@turf/boolean-point-in-polygon"
+import { isWithinPolygon } from "../../../helpers"
 
 function PatentsLayer() {
   const { collection } = useContext(CollectionContext)
@@ -14,22 +12,8 @@ function PatentsLayer() {
     item.data
       .filter((dataItem) => !isFinancingFilterActive || dataItem.financingAccess)
       .filter((dataItem) => !isGovFundsReceivedActive || dataItem.govFundsReceived)
-      .filter(dataItem => {
-        const meetsPatentCriteria = !isNaN(dataItem.patents) && dataItem.patents <= patentsFilter;
-        const hasValidCoordinates = dataItem.latitude != null && dataItem.longitude != null;
-        if (meetsPatentCriteria && hasValidCoordinates) {
-          if (searchPolygon && searchPolygon.length > 0) {
-            const itemCoords = [parseFloat(dataItem.longitude), parseFloat(dataItem.latitude)];
-            const itemPoint = point(itemCoords);
-            const polygonCoordinates = searchPolygon[0].map(coord => [coord.lng, coord.lat]);
-            polygonCoordinates.push(polygonCoordinates[0]); // Cierra el polígono
-
-            return booleanPointInPolygon(itemPoint, polygon([polygonCoordinates]));
-          }
-          return true
-        }
-        return false
-      })
+      .filter((dataItem) => !isNaN(dataItem.patents) && dataItem.patents <= patentsFilter[0] && dataItem.patents <= patentsFilter[1])
+      .filter((dataItem) => isWithinPolygon(dataItem, searchPolygon))
   )
 
   const circles = filteredItems.map(filteredItem => (

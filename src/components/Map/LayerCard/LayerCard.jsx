@@ -13,7 +13,7 @@ import PropTypes from 'prop-types'
 
 function LayerCard({ layerId = 1, mapDivision }) {
   return (
-    <Card className='w-[260px] flex flex-col'>
+    <Card className='w-full flex flex-col items-center'>
       <CardHeader>
         <CardTitle>Layer {layerId}</CardTitle>
       </CardHeader>

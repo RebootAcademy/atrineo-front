@@ -1,4 +1,4 @@
-import { useContext, useState } from "react"
+import { useContext } from "react"
 import { LayerContext } from "../../../context/layerContext"
 import { Switch } from "../../ui/Switch/Switch"
 import { Label } from "../../ui/Label/Label"
@@ -54,6 +54,22 @@ function FilterOptions({ mapDivision }) {
   }
 
   //con el regionName.map se obtiene la lista de distritos y cada elemento de la lista se representa en SelectItem
+  const handleMinChange = (e) => {
+    const minVal = Math.max(0, parseInt(e.target.value, 10))
+    if (minVal <= patentsFilter[1]) {
+      setPatentsFilter([minVal, patentsFilter[1]])
+    }
+  }
+
+  const handleMaxChange = (e) => {
+    const maxVal = parseInt(e.target.value, 10)
+    if (maxVal >= patentsFilter[0]) {
+      setPatentsFilter([patentsFilter[0], maxVal])
+    }
+  }
+
+  console.log(patentsFilter)
+
   return (
     <div className="flex flex-col gap-4">
       <div className="flex items-center space-x-2">
@@ -101,11 +117,31 @@ function FilterOptions({ mapDivision }) {
           <div className="text-sm">Min</div>
           <div className="text-sm">Max</div>
         </div>
-        <Slider
+        <Slider 
+          id='patents'
           patentsvalue={patentsFilter}
+          value={patentsFilter}
           onValueChange={handlePatentsSliderChange}
         />
-        <div>{patentsFilter}</div>
+        <div className="flex space-x-40">
+          <div className="text-sm flex items-center">
+            <input 
+              type="number" 
+              className="w-12"
+              value={patentsFilter[0]}
+              onChange={handleMinChange}
+            />
+          </div>
+          <div className="text-sm flex items-center">
+            <input 
+              type="number" 
+              className="w-12" 
+              value={patentsFilter[1]}
+              onChange={handleMaxChange}
+            />
+          </div>
+        </div>
+{/*         <div>{`Min: ${patentsFilter[0]}, Max: ${patentsFilter[1]} `}</div> */}
       </div>
 
       <div className="flex flex-col items-center space-x-2 gap-2">

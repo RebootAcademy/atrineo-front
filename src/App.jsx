@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { QueryClient, QueryClientProvider } from 'react-query'
 import { RouterProvider } from 'react-router-dom'
 
@@ -13,8 +13,9 @@ function App() {
   const [collection, setCollection] = useState([])
   const [showMarkers, setShowMarkers] = useState({ startups: false })
   const [showPatents, setShowPatents] = useState({ patents: false })
-  const [patentsFilter, setPatentsFilter] = useState([0])
   const [populationFilter, setPopulationFilter] = useState([0])
+  const [patentsFilter, setPatentsFilter] = useState([0, 100])
+
   const [isFinancingFilterActive, setIsFinancingFilterActive] = useState(false)
   const [isGovFundsReceivedActive, setIsGovFundsReceivedActive] = useState(false)
   const [searchPolygon, setSearchPolygon] = useState(null)
