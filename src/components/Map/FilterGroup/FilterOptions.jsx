@@ -8,7 +8,7 @@ import { CollectionContext } from "../../../context/collection"
 import HeatMapLayer from "../../HeatMapLayerComponent.jsx/HeatMapComponent"
 import { RadioGroup, RadioGroupItem } from "../../ui/RadioGroup/radio-group"
 
-function FilterOptions({ mapDivision }) {
+function FilterOptions({ mapDivision, onLifeQualityChange }) {
   const {
     patentsFilter,
     isFinancingFilterActive,
@@ -20,7 +20,6 @@ function FilterOptions({ mapDivision }) {
   } = useContext(LayerContext)
 
   const [selectedNameDistrict, setSelectedNameDistrict] = useState(null)
-
 
   //empieza por on algo porque es un evento y es el formato por defecto
   const onDistrictNameChange = (district) => {
@@ -43,9 +42,6 @@ function FilterOptions({ mapDivision }) {
     setPopulationFilter(value)
   }
 
-  const onLifeQualityChange = (quality) => {
-    setLifeQuality
-  }
 
   const { collection } = useContext(CollectionContext)
   //se hace el filtro primero para poder filtar por los item que contenga algo diferente a null y los devuelve

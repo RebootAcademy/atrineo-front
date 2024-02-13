@@ -11,7 +11,7 @@ import RegionFilter from "../FilterGroup/RegionFilter"
 import PropTypes from 'prop-types'
 
 
-function LayerCard({ layerId = 1, mapDivision }) {
+function LayerCard({ layerId = 1, mapDivision, onLifeQualityChange }) {
   return (
     <Card className='w-full flex flex-col items-center'>
       <CardHeader>
@@ -20,6 +20,7 @@ function LayerCard({ layerId = 1, mapDivision }) {
       <CardContent>
         <FilterGroup
         mapDivision={mapDivision}
+          onLifeQualityChange={onLifeQualityChange}
           layers={[
             { id: 'startups', name: 'Startups' },
             // { id: 'population', name: 'Region' }

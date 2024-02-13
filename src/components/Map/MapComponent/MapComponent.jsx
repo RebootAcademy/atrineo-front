@@ -18,7 +18,6 @@ import PopulationCircleRenderer from "../PopulationCircleRendererComponent/Popul
 import RangeFilter from "../RangeFilter/RangeFilter"
 import TileLayerComponent from "../TileLayerComponent/TileLayerComponent"
 import RegionFilter from "../FilterGroup/RegionFilter"
-import LifeQualityLayer from "../LifeQualityLayer/LifeQuality"
 import { useGeoJsonData } from "../../../hooks/useGeoJsonData"
 
 function MapComponent() {
@@ -31,6 +30,7 @@ function MapComponent() {
   const [selectedNameDistrict, setSelectedNameDistrict] = useState(null)
   const [companies, setCompanies] = useState([])
   const { collection } = useContext(CollectionContext)
+  const [lifeQuality, setLifeQuality] = useState(null)
 
 
   //cada vez que selectedRegion cambia de valor se ejecutan los filtros
@@ -55,8 +55,8 @@ function MapComponent() {
     setSelectedRegion(region)
   }
 
-  const onLifeQuality = (quality) => {
-    setlifeQuality(quality)
+  const onLifeQualityChange = (quality) => {
+    setLifeQuality(quality)
   }
 
   const onPopulationClicked = () => {
@@ -86,7 +86,7 @@ function MapComponent() {
 
         <div className="flex flex-col items-start">
           <SearchBar />
-          <LayersContainer mapDivision={mapDivision} />
+          <LayersContainer mapDivision={mapDivision} onLifeQualityChange={onLifeQualityChange}/>
         </div>
 
         <CustomZoomControl />
@@ -98,9 +98,8 @@ function MapComponent() {
         {/* <StartupsComponent /> */}
 
         <MapUpdater center={mapCenter} />
-        <HeatMapLayer mapDivision={mapDivision} onRegionSelected={onRegionSelected} selectedNameDistrict={setSelectedNameDistrict} onLifeQuality={onLifeQuality} />
+        <HeatMapLayer mapDivision={mapDivision} onRegionSelected={onRegionSelected} selectedNameDistrict={setSelectedNameDistrict} lifeQuality={lifeQuality} />
         <RegionFilter onPopulationClicked={onPopulationClicked} />
-        <LifeQualityLayer />
         <CoordsDisplay />
         <FeatureGroup>
           <DrawComponent />

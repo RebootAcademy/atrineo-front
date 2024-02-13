@@ -2,10 +2,12 @@ import { useContext, useEffect, useState } from "react";
 import { GeoJSON } from "react-leaflet";
 import { useGeoJsonData } from "../../hooks/useGeoJsonData";
 import { selectedStyle, defaultStyle, between10and20, between20and35 } from './Style'
+import { CollectionContext } from "../../context/collection";
 // import usePopulationData from "../../hooks/usePopulationData";
 // import { getPublicCollections } from "../../services/collectionService";
 
-const HeatMapLayer = ({ mapDivision, onRegionSelected, districtName }) => {
+const HeatMapLayer = ({ mapDivision, onRegionSelected, districtName, lifeQuality }) => {
+  const { collection } = useContext(CollectionContext)
   const data = useGeoJsonData(mapDivision)
   console.log(data)
   const [selectedRegion, setSelectedRegion] = useState(null) 
@@ -74,7 +76,16 @@ const HeatMapLayer = ({ mapDivision, onRegionSelected, districtName }) => {
   }
 
   if (data) {
+    let filteredLifeQualityCompanies = []
     const filteredData = { ...data, features: filteredRegions('Baden-Württemberg') }
+    if (collection[0] && collection[0].data && lifeQuality) {
+      filteredLifeQualityCompanies = collection[0].data.filter((company) => {
+        if (lifeQuality === company.lifeQuality){
+          return true
+        }
+        return false
+      }) 
+    }
 
     return (
       <GeoJSON
