@@ -1,10 +1,7 @@
-import { useContext } from "react"
-import { CollectionContext } from "../../../context/collection"
 import { LayerContext } from "../../../context/layerContext"
 import { Circle } from "react-leaflet"
 import { useDistrictsCoords } from "../../../hooks/useDistrictCoords"
 import { useContext } from "react"
-import { LayerContext } from "../../../context/layerContext"
 import { isWithinPolygon } from "../../../helpers"
 
 function PopulationLayer() {

@@ -1,26 +1,19 @@
 import { FeatureGroup, MapContainer } from "react-leaflet"
 import { useState, useRef, useContext, useEffect } from "react"
-import { LayerContext } from "../../../context/layerContext"
 import { MapUpdater } from "../MapUpdater/MapUpdaterComponent"
 import ContourLayer from "../MapContour/MapContour"
 import HeatMapLayer from "../../HeatMapLayerComponent.jsx/HeatMapComponent"
 import CoordsDisplay from "../CoordsDisplay/CoordsDisplay"
 import DrawComponent from "../DrawComponent/DrawComponent"
-
-import CompanyMarkerRenderer from "../../CompanyMarkerRendererComponent/CompanyMarkerRenderer"
 import { CollectionContext } from "../../../context/collection"
 import "leaflet/dist/leaflet.css"
-
 import CustomZoomControl from "../CustomZoomControl/CustomZoomControl"
 import SearchBar from "../SearchBar/SearchBar"
 import LayersContainer from "../LayersContainer/LayersContainer"
 import StartupsComponent from "../StartupsComponent/StartupsComponent"
-import PopulationCircleRenderer from "../PopulationCircleRendererComponent/PopulationCircleRenderer"
-import RangeFilter from "../RangeFilter/RangeFilter"
 import TileLayerComponent from "../TileLayerComponent/TileLayerComponent"
 import RegionFilter from "../FilterGroup/RegionFilter"
-import { useGeoJsonData } from "../../../hooks/useGeoJsonData"
-import "leaflet/dist/leaflet.css"
+
 
 function MapComponent() {
   const mapRef = useRef()
@@ -58,6 +51,10 @@ function MapComponent() {
 
   const onPopulationClicked = () => {
     setShowPopulation(!showPopulation)
+  }
+
+  const handleFilterChange = (newValue) => {
+    setFilterValue(newValue)
   }
 
   return (
