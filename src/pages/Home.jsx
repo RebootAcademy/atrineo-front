@@ -7,9 +7,9 @@ import { getPublicCollections } from "../services/collectionService"
 import { I18N } from "../i18n"
 import MapComponent from "../components/Map/MapComponent/MapComponent"
 
-function Home () {
+function Home() {
   const { example } = I18N
-  const { collection, setCollection } = useContext(CollectionContext)
+  const { setCollection } = useContext(CollectionContext)
 
   const { 
     isLoading,
@@ -17,7 +17,9 @@ function Home () {
     //isSuccess
   } = useQuery('public', getPublicCollections, {
     onSuccess: (data) => {
-      setCollection(data.result)
+      if (data && data.result) {
+        setCollection(data.result)
+      }
     }
   })
 
