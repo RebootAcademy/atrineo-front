@@ -1,5 +1,6 @@
-import { point, polygon } from "@turf/helpers";
-import booleanPointInPolygon from "@turf/boolean-point-in-polygon";
+import { point, polygon } from "@turf/helpers"
+import booleanPointInPolygon from "@turf/boolean-point-in-polygon"
+import { useDistrictsCoords } from "../hooks/useDistrictCoords"
 
 /**
  * Función para verificar si un elemento está dentro de un polígono.
@@ -19,4 +20,11 @@ export const isWithinPolygon = (dataItem, searchPolygon) => {
   polygonCoordinates.push(polygonCoordinates[0])
 
   return booleanPointInPolygon(itemPoint, polygon([polygonCoordinates]))
+}
+
+export const CalculatePopulationBounds = (data) => {
+  const populations = data.map(item => item.districtPopulation)
+  const minPopulation = Math.min(...populations)
+  const maxPopulation = Math.max(...populations)
+  return { minPopulation, maxPopulation }
 }

@@ -1,7 +1,8 @@
 import { FeatureGroup, MapContainer } from "react-leaflet"
 import { useState, useRef } from "react"
 
-import MapUpdater from "../MapUpdater/MapUpdaterComponent"
+import { MapUpdater, FlyToMarker } from "../MapUpdater/MapUpdaterComponent"
+
 import ContourLayer from "../MapContour/MapContour"
 import CoordsDisplay from "../CoordsDisplay/CoordsDisplay"
 import DrawComponent from "../DrawComponent/DrawComponent"
@@ -12,6 +13,7 @@ import StartupsComponent from "../StartupsComponent/StartupsComponent"
 import TileLayerComponent from "../TileLayerComponent/TileLayerComponent"
 
 import "leaflet/dist/leaflet.css"
+import { center } from "@turf/turf"
 
 function MapComponent() {
   const mapRef = useRef()
@@ -32,6 +34,7 @@ function MapComponent() {
         <TileLayerComponent />
         <ContourLayer mapDivision={mapDivision} />
         <MapUpdater center={mapCenter} />
+        <FlyToMarker center={center}/>
 
         <div className="flex flex-col items-start">
           <SearchBar />

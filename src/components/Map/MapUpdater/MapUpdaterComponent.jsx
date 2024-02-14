@@ -1,9 +1,10 @@
 import PropTypes from "prop-types"
 import { useEffect } from "react"
-import { useMap } from "react-leaflet"
+import { useMap, useMapEvents } from "react-leaflet"
 
-function MapUpdater({ center }) {
+export function MapUpdater({ center }) {
   const map = useMap()
+
   useEffect(() => {
     map.setView(center)
   }, [center, map])
@@ -11,8 +12,16 @@ function MapUpdater({ center }) {
   return null
 }
 
-MapUpdater.propTypes = {
-  center: PropTypes.array
+export function FlyToMarker({ position }) {
+  const map = useMapEvents({
+    click() {
+      map.flyTo(position, map.getZoom())
+    }
+  })
+  return null
 }
 
-export default MapUpdater
+MapUpdater.propTypes = {
+  center: PropTypes.array,
+  position: PropTypes.array
+}

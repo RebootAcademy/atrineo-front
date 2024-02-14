@@ -13,7 +13,9 @@ function FilterOptions() {
     setIsFinancingFilterActive,
     toggleGovFundsReceived,
     populationFilter,
-    setPopulationFilter
+    setPopulationFilter,
+    minPopulation,
+    maxPopulation
   } = useContext(LayerContext)
 
   const handleFinancingSwitchChange = (newState) => {
@@ -45,20 +47,6 @@ function FilterOptions() {
       setPatentsFilter([patentsFilter[0], maxVal])
     }
   }
-
-/*   const handlePopulationMinChange = (e) => {
-    const minVal = Math.max(0, parseInt(e.target.value, 10))
-    if (minVal <= populationFilter[1]) {
-      setPopulationFilter([minVal, populationFilter[1]])
-    }
-  }
-
-  const handlePopulationMaxChange = (e) => {
-    const maxVal = parseInt(e.target.value, 10)
-    if (maxVal >= populationFilter[0]) {
-      setPopulationFilter([populationFilter[0], maxVal])
-    }
-  } */
 
   return (
     <div className="flex flex-col gap-4">
@@ -125,26 +113,11 @@ function FilterOptions() {
           id='population'
           patentsvalue={populationFilter}
           value={populationFilter}
+          min={minPopulation}
+          max={maxPopulation}
           onValueChange={handlePopulationSliderChange}
         />
-{/*         <div className="flex space-x-40">
-          <div className="text-sm flex items-center">
-            <input
-              type="number"
-              className="w-12"
-              value={populationFilter[0]}
-              onChange={handlePopulationMinChange}
-            />
-          </div>
-          <div className="text-sm flex items-center">
-            <input
-              type="number"
-              className="w-12"
-              value={populationFilter[1]}
-              onChange={handlePopulationMaxChange}
-            />
-          </div>
-        </div> */}
+        {populationFilter}
       </div>
 
     </div>
