@@ -17,7 +17,8 @@ function FilterOptions({ mapDivision }) {
     setIsFinancingFilterActive,
     toggleGovFundsReceived,
     setPopulationFilter,
-    setLifeQuality
+    setLifeQuality, 
+    setGnp
   } = useContext(LayerContext)
 
   const [selectedNameDistrict, setSelectedNameDistrict] = useState(null)
@@ -43,7 +44,6 @@ function FilterOptions({ mapDivision }) {
     setPopulationFilter(value)
   }
 
-
   const { collection } = useContext(CollectionContext)
   //se hace el filtro primero para poder filtar por los item que contenga algo diferente a null y los devuelve
   const regionName = () => {
@@ -68,8 +68,6 @@ function FilterOptions({ mapDivision }) {
       setPatentsFilter([patentsFilter[0], maxVal])
     }
   }
-
-  console.log(patentsFilter)
 
   return (
     <div className="flex flex-col gap-4">
@@ -169,6 +167,8 @@ function FilterOptions({ mapDivision }) {
           <Label htmlFor="high">High</Label>
         </div>
       </RadioGroup>
+      <Label className='mt-4' htmlFor='gnp'>Gnp:</Label>
+      <Slider onValueChange={setGnp}/>
 
     </div >
 

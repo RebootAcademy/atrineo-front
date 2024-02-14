@@ -3,11 +3,7 @@ import { GeoJSON } from "react-leaflet";
 import { useGeoJsonData } from "../../hooks/useGeoJsonData";
 import { selectedStyle, defaultStyle } from "./Style";
 
-const HeatMapLayer = ({
-  mapDivision,
-  onRegionSelected,
-  districtName
-}) => {
+const HeatMapLayer = ({ mapDivision, onRegionSelected, districtName }) => {
   const data = useGeoJsonData(mapDivision);
   const [selectedRegion, setSelectedRegion] = useState(null);
 

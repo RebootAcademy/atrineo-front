@@ -20,6 +20,7 @@ function App() {
   const [searchPolygon, setSearchPolygon] = useState(null)
   const collectionValue = {collection, setCollection}
   const [lifeQuality, setLifeQuality] = useState(null)
+  const [gnp, setGnp] = useState([0, 999999999])
   // const [showPopulation, setShowPopulation] = useState({})
   
   const toggleMarkersDisplay = (layerId) => {
@@ -65,7 +66,9 @@ function App() {
     searchPolygon,
     setSearchPolygon,
     lifeQuality,
-    setLifeQuality
+    setLifeQuality,
+    gnp, 
+    setGnp
   }
 
   return (
