@@ -20,11 +20,10 @@ function PatentsLayer() {
     <Circle
       key={filteredItem._id}
       center={[filteredItem.latitude, filteredItem.longitude]}
-      pathOptions={{ fillColor: "red", stroke: false, fillOpacity: 0.3 }}
-      radius={filteredItem.patents * 100}
+      pathOptions={{ fillColor: "orange", stroke: false, fillOpacity: 0.4 }}
+      radius={filteredItem.patents * 150}
     />
   ))
-
   return <>{circles}</>
 }
 
