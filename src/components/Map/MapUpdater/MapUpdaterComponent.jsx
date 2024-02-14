@@ -14,7 +14,7 @@ export function MapUpdater({ center }) {
 
 export function FlyToMarker({ center }) {
   const map = useMapEvent('click', () => {
-    map.flyTo(center, 100)
+    map.flyTo(center, 10)
   })
   return null
 }
