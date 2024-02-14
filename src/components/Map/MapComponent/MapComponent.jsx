@@ -1,7 +1,7 @@
 import { FeatureGroup, MapContainer } from "react-leaflet"
 import { useState } from "react"
 
-import { MapUpdater } from "../MapUpdater/MapUpdaterComponent"
+import { FlyToMarker, MapUpdater } from "../MapUpdater/MapUpdaterComponent"
 
 import ContourLayer from "../MapContour/MapContour"
 import CoordsDisplay from "../CoordsDisplay/CoordsDisplay"
@@ -43,6 +43,7 @@ function MapComponent() {
         <CoordsDisplay />
         <FeatureGroup>
           <DrawComponent />
+          <FlyToMarker center={mapCenter}/>
         </FeatureGroup>
 
       </MapContainer>

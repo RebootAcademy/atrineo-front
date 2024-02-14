@@ -13,13 +13,8 @@ export function MapUpdater({ center }) {
 }
 
 export function FlyToMarker({ center }) {
-  const map = useMapEvent({
-    click() {
-      map.flyTo(center, map.getZoom(), {
-        animate: true,
-        duration: 1.5,
-      })
-    }
+  const map = useMapEvent('click', () => {
+    map.flyTo(center, 100)
   })
   return null
 }
