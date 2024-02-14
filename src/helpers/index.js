@@ -1,6 +1,5 @@
 import { point, polygon } from "@turf/helpers"
 import booleanPointInPolygon from "@turf/boolean-point-in-polygon"
-import { useDistrictsCoords } from "../hooks/useDistrictCoords"
 
 /**
  * Función para verificar si un elemento está dentro de un polígono.

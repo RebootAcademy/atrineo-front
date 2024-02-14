@@ -1,6 +1,6 @@
 import PropTypes from "prop-types"
 import { useEffect } from "react"
-import { useMap, useMapEvents } from "react-leaflet"
+import { useMap, useMapEvent } from "react-leaflet"
 
 export function MapUpdater({ center }) {
   const map = useMap()
@@ -12,10 +12,13 @@ export function MapUpdater({ center }) {
   return null
 }
 
-export function FlyToMarker({ position }) {
-  const map = useMapEvents({
+export function FlyToMarker({ center }) {
+  const map = useMapEvent({
     click() {
-      map.flyTo(position, map.getZoom())
+      map.flyTo(center, map.getZoom(), {
+        animate: true,
+        duration: 1.5,
+      })
     }
   })
   return null

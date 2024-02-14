@@ -19,9 +19,7 @@ function FilterGroup({ title, layers }) {
           {layers && layers.map((layer, id) => (
             <div key={id}>
               <LayerItem layer={layer} />
-
                 <FilterOptions />
-
             </div>
           ))}
       </CardContent>
