@@ -9,7 +9,7 @@ function GnpLayer() {
 
   const companiesBySelectedGnp = collection[0]?.data?.filter((company) => {
     console.log(company.gnp)
-    return company.gnp === gnp
+    return company.gnp <= gnp[0] 
   })
 
   const circles = companiesBySelectedGnp?.map(company => (
@@ -17,7 +17,7 @@ function GnpLayer() {
       key={company._id}
       center={[company.latitude, company.longitude]}
       pathOptions={{ fillColor: "red", stroke: false, fillOpacity: 0.3 }}
-      radius={company.gnp * 100}
+      radius={company.gnp / 35000}
     >
     </Circle>
   ))
