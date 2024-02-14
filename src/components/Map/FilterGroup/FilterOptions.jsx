@@ -8,7 +8,7 @@ import { CollectionContext } from "../../../context/collection"
 import HeatMapLayer from "../../HeatMapLayerComponent.jsx/HeatMapComponent"
 import { RadioGroup, RadioGroupItem } from "../../ui/RadioGroup/radio-group"
 
-function FilterOptions({ mapDivision, onLifeQualityChange }) {
+function FilterOptions({ mapDivision }) {
   const {
     patentsFilter,
     isFinancingFilterActive,
@@ -16,7 +16,8 @@ function FilterOptions({ mapDivision, onLifeQualityChange }) {
     setPatentsFilter,
     setIsFinancingFilterActive,
     toggleGovFundsReceived,
-    setPopulationFilter
+    setPopulationFilter,
+    setLifeQuality
   } = useContext(LayerContext)
 
   const [selectedNameDistrict, setSelectedNameDistrict] = useState(null)
@@ -154,7 +155,7 @@ function FilterOptions({ mapDivision, onLifeQualityChange }) {
         districtName={selectedNameDistrict} />)}
 
       <Label className='mt-4'htmlFor="lifeQuality">Life Quality:</Label>
-      <RadioGroup defaultValue="comfortable" onValueChange={onLifeQualityChange}>
+      <RadioGroup defaultValue="comfortable" onValueChange={setLifeQuality}>
         <div className="flex items-center space-x-2">
           <RadioGroupItem value="low" id="low-option" />
           <Label htmlFor="low">Low</Label>

@@ -19,6 +19,7 @@ function App() {
   const [isGovFundsReceivedActive, setIsGovFundsReceivedActive] = useState(false)
   const [searchPolygon, setSearchPolygon] = useState(null)
   const collectionValue = {collection, setCollection}
+  const [lifeQuality, setLifeQuality] = useState(null)
   // const [showPopulation, setShowPopulation] = useState({})
   
   const toggleMarkersDisplay = (layerId) => {
@@ -62,7 +63,9 @@ function App() {
     populationFilter, 
     setPopulationFilter,
     searchPolygon,
-    setSearchPolygon
+    setSearchPolygon,
+    lifeQuality,
+    setLifeQuality
   }
 
   return (

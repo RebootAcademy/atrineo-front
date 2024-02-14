@@ -4,6 +4,7 @@ import PatentsLayer from "../PatentsLayer/PatentsLayer"
 import { LayerContext } from "../../../context/layerContext"
 import { useContext } from "react"
 import PopulationLayer from "../PopulationLayer/PopulationLayer"
+import LifeQualityLayer from "../LifeQualityLayer/LifeQualityLayer"
 
 function StartupsComponent() {
   const { showMarkers } = useContext(LayerContext)
@@ -27,6 +28,7 @@ function StartupsComponent() {
         </MarkerClusterGroup>
       )}
       <PatentsLayer />
+      <LifeQualityLayer />
       {/* <PopulationLayer /> */}
     </>
   )

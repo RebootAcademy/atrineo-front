@@ -1,23 +1,14 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { GeoJSON } from "react-leaflet";
 import { useGeoJsonData } from "../../hooks/useGeoJsonData";
-import {
-  selectedStyle,
-  defaultStyle,
-} from "./Style";
-import { CollectionContext } from "../../context/collection";
-// import usePopulationData from "../../hooks/usePopulationData";
-// import { getPublicCollections } from "../../services/collectionService";
+import { selectedStyle, defaultStyle } from "./Style";
 
 const HeatMapLayer = ({
   mapDivision,
   onRegionSelected,
-  districtName,
-  lifeQuality,
+  districtName
 }) => {
-  const { collection } = useContext(CollectionContext);
   const data = useGeoJsonData(mapDivision);
-  console.log(data);
   const [selectedRegion, setSelectedRegion] = useState(null);
 
   useEffect(() => {
@@ -25,8 +16,8 @@ const HeatMapLayer = ({
   }, [mapDivision]);
 
   const setStyle = (feature) => {
-    const currentGroupId = feature.properties.ID_3;
-    const currentDistrict = feature.properties.NAME_3;
+    const currentGroupId = feature.properties.ID_3
+    const currentDistrict = feature.properties.NAME_3
     if (
       (selectedRegion &&
         selectedRegion.feature.properties.ID_3 === currentGroupId) ||
@@ -39,9 +30,7 @@ const HeatMapLayer = ({
   };
 
   const onEachFeature = (feature, layer) => {
-    //console.log({feature, layer})
     layer.on("click", () => {
-      // console.log(feature.properties)
       if (mapDivision == "country") {
         setSelectedRegion((prevSelectedRegion) => {
           return prevSelectedRegion &&
@@ -96,48 +85,14 @@ const HeatMapLayer = ({
   };
 
   if (data) {
-    let filteredLifeQualityCompanies = [];
     const filteredData = {
       ...data,
       features: filteredRegions("Baden-Württemberg"),
     };
 
-    //cogemos las compañias por lifeQuality
-    let regions = []
-    if (collection[0] && collection[0].data && lifeQuality) {
-      filteredLifeQualityCompanies = collection[0].data.filter((company) => {
-        if (lifeQuality === company.lifeQuality) {
-          return true;
-        }
-        return false;
-      });
-      //sacamos las regiones de las compañias que cogimos por lifeQuality
-      const regionsFilteredByLifeQuality = filteredLifeQualityCompanies.map(
-        (company) => {
-          return company.districtName;
-        }
-      );
-      //quitamos las regiones duplicadas
-      const regionsFilteredByLifeQualityWithoutDuplicates = [
-        ...new Set(regionsFilteredByLifeQuality),
-      ];
-
-      //cogemos las features de las regiones que hemos filtrado
-      regions = data.features.filter((region) => {
-        if (
-          regionsFilteredByLifeQualityWithoutDuplicates.includes(
-            region.properties.NAME_3
-          )
-        ) {
-          return true
-        }
-        return false
-      });
-    }
-    //cambio en data = a region en vez de FilteredData para probar, pero tiene que ser dinamico para que sirva con todo 
     return (
       <GeoJSON
-        data={regions}
+        data={filteredData}
         onEachFeature={onEachFeature}
         style={(feature) => setStyle(feature)}
       />

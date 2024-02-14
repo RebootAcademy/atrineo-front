@@ -30,7 +30,6 @@ function MapComponent() {
   const [selectedNameDistrict, setSelectedNameDistrict] = useState(null)
   const [companies, setCompanies] = useState([])
   const { collection } = useContext(CollectionContext)
-  const [lifeQuality, setLifeQuality] = useState(null)
 
 
   //cada vez que selectedRegion cambia de valor se ejecutan los filtros
@@ -53,10 +52,6 @@ function MapComponent() {
   //Por lo que en FilterData al tener como prop la selectedRegion se pinta los marcadores de la nueva region
   const onRegionSelected = (region) => {
     setSelectedRegion(region)
-  }
-
-  const onLifeQualityChange = (quality) => {
-    setLifeQuality(quality)
   }
 
   const onPopulationClicked = () => {
@@ -86,7 +81,7 @@ function MapComponent() {
 
         <div className="flex flex-col items-start">
           <SearchBar />
-          <LayersContainer mapDivision={mapDivision} onLifeQualityChange={onLifeQualityChange}/>
+          <LayersContainer mapDivision={mapDivision} />
         </div>
 
         <CustomZoomControl />
@@ -98,7 +93,7 @@ function MapComponent() {
         {/* <StartupsComponent /> */}
 
         <MapUpdater center={mapCenter} />
-        <HeatMapLayer mapDivision={mapDivision} onRegionSelected={onRegionSelected} selectedNameDistrict={setSelectedNameDistrict} lifeQuality={lifeQuality} />
+        <HeatMapLayer mapDivision={mapDivision} onRegionSelected={onRegionSelected} selectedNameDistrict={setSelectedNameDistrict} />
         <RegionFilter onPopulationClicked={onPopulationClicked} />
         <CoordsDisplay />
         <FeatureGroup>
