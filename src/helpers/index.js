@@ -27,3 +27,14 @@ export const CalculatePopulationBounds = (data) => {
   const maxPopulation = Math.max(...populations)
   return { minPopulation, maxPopulation }
 }
+
+export const CalculateResearchInvestmentBounds = (data) => {
+  const flattenedData = data.flat()
+  const researchInvestments = flattenedData.flatMap(item => item.data.map(innerItem => innerItem.researchInvestment))
+  const validInvestments = researchInvestments.filter(value => !isNaN(value))
+
+  const minResearchInvestment = Math.min(...validInvestments)
+  const maxResearchInvestment = Math.max(...validInvestments)
+
+  return { minResearchInvestment, maxResearchInvestment }
+}

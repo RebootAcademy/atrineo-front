@@ -15,7 +15,11 @@ function FilterOptions() {
     populationFilter,
     setPopulationFilter,
     minPopulation,
-    maxPopulation
+    maxPopulation,
+    researchInvestmentFilter,
+    setResearchInvestmentFilter,
+    minResearchInvestment,
+    maxResearchInvestment
   } = useContext(LayerContext)
 
   const handleFinancingSwitchChange = (newState) => {
@@ -30,10 +34,6 @@ function FilterOptions() {
     setPatentsFilter(value)
   }
 
-  const handlePopulationSliderChange = (value) => {
-    setPopulationFilter(value)
-  }
-
   const handlePatentsMinChange = (e) => {
     const minVal = Math.max(0, parseInt(e.target.value, 10))
     if (minVal <= patentsFilter[1]) {
@@ -46,6 +46,14 @@ function FilterOptions() {
     if (maxVal >= patentsFilter[0]) {
       setPatentsFilter([patentsFilter[0], maxVal])
     }
+  }
+
+  const handlePopulationSliderChange = (value) => {
+    setPopulationFilter(value)
+  }
+
+  const handleResearchInvestmentSliderChange = (value) => {
+    setResearchInvestmentFilter(value)
   }
 
   return (
@@ -118,6 +126,23 @@ function FilterOptions() {
           onValueChange={handlePopulationSliderChange}
         />
         {populationFilter}
+      </div>
+
+      <div className="flex flex-col items-center space-x-2 gap-2">
+        <Label htmlFor="researchInvestment">Research Investment</Label>
+        <div className="flex space-x-40">
+          <div className="text-sm">Min</div>
+          <div className="text-sm">Max</div>
+        </div>
+        <Slider
+          id='researchInvestment'
+          patentsvalue={researchInvestmentFilter}
+          value={researchInvestmentFilter}
+          min={minResearchInvestment}
+          max={maxResearchInvestment}
+          onValueChange={handleResearchInvestmentSliderChange}
+        />
+        {researchInvestmentFilter} €
       </div>
 
     </div>
