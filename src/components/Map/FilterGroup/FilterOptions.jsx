@@ -7,6 +7,7 @@ import { Slider } from "../../ui/Slider/Slider"
 import { CollectionContext } from "../../../context/collection"
 import HeatMapLayer from "../../HeatMapLayerComponent.jsx/HeatMapComponent"
 import { RadioGroup, RadioGroupItem } from "../../ui/RadioGroup/radio-group"
+import { Slider2 } from "../../ui/Slider2/Slider2"
 
 function FilterOptions({ mapDivision }) {
   const {
@@ -18,6 +19,7 @@ function FilterOptions({ mapDivision }) {
     toggleGovFundsReceived,
     setPopulationFilter,
     setLifeQuality, 
+    gnp,
     setGnp
   } = useContext(LayerContext)
 
@@ -67,6 +69,32 @@ function FilterOptions({ mapDivision }) {
     if (maxVal >= patentsFilter[0]) {
       setPatentsFilter([patentsFilter[0], maxVal])
     }
+  }
+
+  const getMinGnp = () => {
+    if (!collection || !collection[0].data) {
+      return 0
+    } 
+    const min = collection[0].data.reduce((prev, curr) => {
+      if (!curr.gnp){
+        return prev
+      }
+      return prev.gnp < curr.gnp ? prev : curr
+    }, {gnp: 999999999}) 
+    return min.gnp
+  }
+
+  const getMaxGnp = () => {
+    if (!collection || !collection[0].data) {
+      return 100
+    }
+    const max = collection[0].data.reduce((prev, curr) => {
+      if (!curr.gnp) {
+        return prev
+      }
+      return prev.gnp > curr.gnp ? prev : curr
+    }, {gnp: 0})
+    return max.gnp
   }
 
   return (
@@ -168,8 +196,12 @@ function FilterOptions({ mapDivision }) {
         </div>
       </RadioGroup>
       <Label className='mt-4' htmlFor='gnp'>Gnp:</Label>
-      <Slider onValueChange={setGnp}/>
-
+      <Slider2 
+        onValueChange={setGnp}
+        min={getMinGnp()}
+        max={getMaxGnp()}
+      />
+      <Label>{gnp}</Label>
     </div >
 
   )
