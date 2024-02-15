@@ -9,10 +9,11 @@ import HeatMapLayer from "../../HeatMapLayerComponent.jsx/HeatMapComponent"
 import { RadioGroup, RadioGroupItem } from "../../ui/RadioGroup/radio-group"
 import { Slider2 } from "../../ui/Slider2/Slider2"
 
-function FilterOptions({ mapDivision }) {
+function FilterOptions() {
   const [selectedNameDistrict, setSelectedNameDistrict] = useState(null)
 
   const {
+    mapDivision,
     patentsFilter,
     isFinancingFilterActive,
     isGovFundsReceivedActive,
@@ -112,7 +113,7 @@ function FilterOptions({ mapDivision }) {
   return (
     <div className="flex flex-col gap-4">
 
-{/*       <div className="flex items-center space-x-2">
+      <div className="flex items-center space-x-2">
         <Label htmlFor="disctrictName">District Name:</Label>
         <Select onValueChange={onDistrictNameChange}>
           <SelectTrigger className="w-[180px]">
@@ -130,7 +131,7 @@ function FilterOptions({ mapDivision }) {
             ))}
           </SelectContent>
         </Select>
-      </div> */}
+      </div>
 
       <div className="flex flex-col gap-4 mb-4">
         <div className="flex items-center space-x-2">
