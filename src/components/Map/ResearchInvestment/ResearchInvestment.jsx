@@ -12,9 +12,9 @@ function ResearchInvestmentLayer() {
     item.data
       .filter((dataItem) => !isFinancingFilterActive || dataItem.financingAccess)
       .filter((dataItem) => !isGovFundsReceivedActive || dataItem.govFundsReceived)
-      .filter((dataItem) => !isNaN(dataItem.researchInvestment) && dataItem.researchInvestment <= researchInvestmentFilter
+      .filter((dataItem) => !isNaN(dataItem.researchInvestment) && dataItem.researchInvestment <= researchInvestmentFilter)
       .filter((dataItem) => isWithinPolygon(dataItem, searchPolygon))
-      ))
+  )
 
   const circles = filteredItems.map(filteredItem => (
     <Circle

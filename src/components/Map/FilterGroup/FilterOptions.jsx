@@ -59,24 +59,26 @@ function FilterOptions() {
   return (
     <div className="flex flex-col gap-4">
 
-      <div className="flex items-center space-x-2">
-        <Switch
-          id="financing"
-          className="w-11 h-6"
-          onCheckedChange={handleFinancingSwitchChange}
-          checked={isFinancingFilterActive}
-        />
-        <Label htmlFor="financing">Financing Access</Label>
-      </div>
+      <div className="flex flex-col gap-4 mb-4">
+        <div className="flex items-center space-x-2">
+          <Switch
+            id="financing"
+            className="w-11 h-6"
+            onCheckedChange={handleFinancingSwitchChange}
+            checked={isFinancingFilterActive}
+          />
+          <Label htmlFor="financing">Financing Access</Label>
+        </div>
 
-      <div className="flex items-center space-x-2">
-        <Switch
-          id="govFunds"
-          className="w-11 h-6"
-          onCheckedChange={handleGovFundsSwitchChange}
-          checked={isGovFundsReceivedActive}
-        />
-        <Label htmlFor="govFunds">Receive Gov Funds</Label>
+        <div className="flex items-center space-x-2">
+          <Switch
+            id="govFunds"
+            className="w-11 h-6"
+            onCheckedChange={handleGovFundsSwitchChange}
+            checked={isGovFundsReceivedActive}
+          />
+          <Label htmlFor="govFunds">Receive Gov Funds</Label>
+        </div>
       </div>
 
       <div className="flex flex-col items-center space-x-2 gap-2">
