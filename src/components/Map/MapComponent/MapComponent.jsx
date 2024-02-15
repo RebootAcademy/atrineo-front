@@ -27,6 +27,7 @@ function MapComponent() {
   const [showPopulation, setShowPopulation] = useState(false)
   const [selectedNameDistrict, setSelectedNameDistrict] = useState(null)
   const [companies, setCompanies] = useState([])
+  
   const { collection } = useContext(CollectionContext)
   const { isSavedLayerVisible } = useContext(LayerContext)
 
