@@ -3,7 +3,6 @@ import { CollectionContext } from "../../../context/collection"
 import { Circle } from "react-leaflet"
 import { LayerContext } from "../../../context/layerContext"
 import { isWithinPolygon } from "../../../helpers"
-// import PopupComponent from "../../ui/PopupComponent/PopupComponent"
 
 function LifeQualityLayer() {
   const { collection } = useContext(CollectionContext)
@@ -26,7 +25,6 @@ function LifeQualityLayer() {
       pathOptions={pathOptions}
       radius={4000}
     >
-      {/* <PopupComponent name={company.name} /> */}
     </Circle>
   ))
 

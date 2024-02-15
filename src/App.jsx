@@ -31,6 +31,8 @@ function App() {
   const [lifeQuality, setLifeQuality] = useState(null)
   const [gnp, setGnp] = useState(0)
 
+  const [isSavedLayerVisible, setIsSavedLayerVisible] = useState(false)
+
   useEffect(() => {
     if (data.length > 0) {
       const { minPopulation, maxPopulation } = CalculatePopulationBounds(data)
@@ -66,6 +68,43 @@ function App() {
   const toggleGovFundsReceived = (value) => {
     setIsGovFundsReceivedActive(value);
   }
+
+  const saveCurrentState = () => {
+    const stateToSave = {
+      patentsFilter,
+      populationFilter,
+      populationBounds,
+      researchInvestmentFilter,
+      researchInvestmentBounds,
+      isFinancingFilterActive,
+      isGovFundsReceivedActive,
+      searchPolygon,
+      lifeQuality,
+      gnp,
+    }
+    localStorage.setItem('appState', JSON.stringify(stateToSave))
+    console.log('State saved to localStorage')
+    setIsSavedLayerVisible(true)
+  }
+
+  const clearSavedState = () => {
+    localStorage.removeItem('appState')
+    
+    setPatentsFilter([0, 100])
+    setPopulationFilter([0])
+    setPopulationBounds({ minPopulation: 0, maxPopulation: 0 })
+    setResearchInvestmentFilter([0])
+    setResearchInvestmentBounds({ minResearchInvestment: 0, maxResearchInvestment: 0 })
+    setIsFinancingFilterActive(false)
+    setIsGovFundsReceivedActive(false)
+    setSearchPolygon(null)
+    setLifeQuality(null)
+    setGnp(0)
+
+    setIsSavedLayerVisible(false)
+
+    console.log('State cleared')
+  }
   
   const value = {
     showMarkers,
@@ -91,6 +130,9 @@ function App() {
     researchInvestmentFilter,
     setResearchInvestmentFilter,
     ...researchInvestmentBounds,
+    saveCurrentState,
+    clearSavedState,
+    isSavedLayerVisible,
   }
 
   return (
