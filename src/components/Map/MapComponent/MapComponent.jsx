@@ -1,5 +1,4 @@
 import { FeatureGroup, MapContainer } from "react-leaflet"
-<<<<<<< HEAD
 import { useState } from "react"
 
 import { FlyToMarker, MapUpdater } from "../MapUpdater/MapUpdaterComponent"
@@ -7,33 +6,15 @@ import { FlyToMarker, MapUpdater } from "../MapUpdater/MapUpdaterComponent"
 import ContourLayer from "../MapContour/MapContour"
 import CoordsDisplay from "../CoordsDisplay/CoordsDisplay"
 import DrawComponent from "../DrawComponent/DrawComponent"
-=======
-import { useState, useRef, useContext, useEffect } from "react"
-import { MapUpdater } from "../MapUpdater/MapUpdaterComponent"
-import ContourLayer from "../MapContour/MapContour"
-import HeatMapLayer from "../../HeatMapLayerComponent.jsx/HeatMapComponent"
-import CoordsDisplay from "../CoordsDisplay/CoordsDisplay"
-import DrawComponent from "../DrawComponent/DrawComponent"
-import { CollectionContext } from "../../../context/collection"
-import "leaflet/dist/leaflet.css"
->>>>>>> 93a6e4aef7d4e25010b0c396165b963e46c30369
 import CustomZoomControl from "../CustomZoomControl/CustomZoomControl"
 import SearchBar from "../SearchBar/SearchBar"
 import LayersContainer from "../LayersContainer/LayersContainer"
 import StartupsComponent from "../StartupsComponent/StartupsComponent"
 import TileLayerComponent from "../TileLayerComponent/TileLayerComponent"
-<<<<<<< HEAD
 
 import "leaflet/dist/leaflet.css"
 
 function MapComponent() {
-=======
-import RegionFilter from "../FilterGroup/RegionFilter"
-
-
-function MapComponent() {
-  const mapRef = useRef()
->>>>>>> 93a6e4aef7d4e25010b0c396165b963e46c30369
   const [mapCenter, setMapCenter] = useState([48.6, 9])
   const [mapDivision, setMapDivision] = useState("division3")
   const [searchPolygon, setSearchPolygon] = useState(null)
@@ -96,15 +77,8 @@ function MapComponent() {
         <CustomZoomControl />
         <StartupsComponent />
 
-<<<<<<< HEAD
         <HeatMapLayer mapDivision={mapDivision} onRegionSelected={onRegionSelected} selectedNameDistrict={setSelectedNameDistrict} />
         <RegionFilter onPopulationClicked={onPopulationClicked} />
-=======
-        <MapUpdater center={mapCenter} />
-        <HeatMapLayer mapDivision={mapDivision} onRegionSelected={onRegionSelected} selectedNameDistrict={setSelectedNameDistrict} />
-        <RegionFilter onPopulationClicked={onPopulationClicked} />
-        
->>>>>>> 93a6e4aef7d4e25010b0c396165b963e46c30369
         <CoordsDisplay />
         
         <FeatureGroup>

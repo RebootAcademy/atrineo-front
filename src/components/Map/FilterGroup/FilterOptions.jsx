@@ -20,24 +20,16 @@ function FilterOptions({ mapDivision }) {
     setIsFinancingFilterActive,
     toggleGovFundsReceived,
     setPopulationFilter,
-<<<<<<< HEAD
     setLifeQuality,
-=======
-    setLifeQuality, 
->>>>>>> 93a6e4aef7d4e25010b0c396165b963e46c30369
     gnp,
     setGnp,
     populationFilter,
     minPopulation,
-<<<<<<< HEAD
     maxPopulation,
     researchInvestmentFilter,
     setResearchInvestmentFilter,
     minResearchInvestment,
     maxResearchInvestment
-=======
-    maxPopulation
->>>>>>> 93a6e4aef7d4e25010b0c396165b963e46c30369
   } = useContext(LayerContext)
 
 
@@ -46,10 +38,6 @@ function FilterOptions({ mapDivision }) {
   const onDistrictNameChange = (district) => {
     setSelectedNameDistrict(district)
   }
-<<<<<<< HEAD
-=======
-
->>>>>>> 93a6e4aef7d4e25010b0c396165b963e46c30369
   const handleFinancingSwitchChange = (newState) => {
     setIsFinancingFilterActive(newState)
   }
@@ -66,13 +54,10 @@ function FilterOptions({ mapDivision }) {
     setPopulationFilter(value)
   }
 
-<<<<<<< HEAD
   const handleResearchInvestmentSliderChange = (value) => {
     setResearchInvestmentFilter(value)
   }
 
-=======
->>>>>>> 93a6e4aef7d4e25010b0c396165b963e46c30369
   const { collection } = useContext(CollectionContext)
   //se hace el filtro primero para poder filtar por los item que contenga algo diferente a null y los devuelve
   const regionName = () => {
@@ -124,10 +109,6 @@ function FilterOptions({ mapDivision }) {
     return max.gnp
   }
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 93a6e4aef7d4e25010b0c396165b963e46c30369
   return (
 
     <div className="flex flex-col gap-4">
