@@ -8,7 +8,6 @@ function GnpLayer() {
   const { gnp } = useContext(LayerContext)
 
   const companiesBySelectedGnp = collection[0]?.data?.filter((company) => {
-    console.log(company.gnp)
     return company.gnp <= gnp[0] 
   })
 

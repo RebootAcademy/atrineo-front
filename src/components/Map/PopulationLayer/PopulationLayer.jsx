@@ -1,9 +1,11 @@
+<<<<<<< HEAD
 import { useContext } from "react"
+=======
+>>>>>>> 93a6e4aef7d4e25010b0c396165b963e46c30369
 import { LayerContext } from "../../../context/layerContext"
 import { Circle } from "react-leaflet"
 import { useDistrictsCoords } from "../../../hooks/useDistrictCoords"
 import { useContext } from "react"
-import { LayerContext } from "../../../context/layerContext"
 import { isWithinPolygon } from "../../../helpers"
 
 function PopulationLayer() {
