@@ -82,7 +82,6 @@ function MapComponent() {
 
         <HeatMapLayer mapDivision={mapDivision} onRegionSelected={onRegionSelected} selectedNameDistrict={setSelectedNameDistrict} />
         <RegionFilter onPopulationClicked={onPopulationClicked} />
-        <CompanyMarkerRenderer companies={companies} />
         <CoordsDisplay />
         
         <FeatureGroup>
