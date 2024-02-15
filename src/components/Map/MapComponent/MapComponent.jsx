@@ -13,6 +13,7 @@ import StartupsComponent from "../StartupsComponent/StartupsComponent"
 import TileLayerComponent from "../TileLayerComponent/TileLayerComponent"
 import HeatMapLayer from "../../HeatMapLayerComponent.jsx/HeatMapComponent"
 import RegionFilter from "../FilterGroup/RegionFilter"
+import CompanyMarkerRenderer from "../../CompanyMarkerRendererComponent/CompanyMarkerRenderer"
 
 import { CollectionContext } from "../../../context/collection"
 
@@ -83,6 +84,7 @@ function MapComponent() {
 
         <HeatMapLayer mapDivision={mapDivision} onRegionSelected={onRegionSelected} selectedNameDistrict={setSelectedNameDistrict} />
         <RegionFilter onPopulationClicked={onPopulationClicked} />
+        <CompanyMarkerRenderer companies={companies} />
         <CoordsDisplay />
         
         <FeatureGroup>
