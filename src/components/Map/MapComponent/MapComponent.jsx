@@ -1,5 +1,5 @@
 import { FeatureGroup, MapContainer } from "react-leaflet"
-import { useState, useContext, useEffect } from "react"
+import { useState, useContext } from "react"
 
 import { MapUpdater } from "../MapUpdater/MapUpdaterComponent"
 
@@ -19,16 +19,12 @@ import { CollectionContext } from "../../../context/collection"
 import { LayerContext } from "../../../context/layerContext"
 
 import "leaflet/dist/leaflet.css"
-import { LayerContext } from "../../../context/layerContext"
 
 function MapComponent() {
   const [mapCenter, setMapCenter] = useState([48.6, 9])
   const [mapDivision, setMapDivision] = useState("division3")
   const [showPopulation, setShowPopulation] = useState(false)
   const [selectedNameDistrict, setSelectedNameDistrict] = useState(null)
-  const [companies, setCompanies] = useState([])
-  
-  const { collection } = useContext(CollectionContext)
   const { setSelectedRegion, isSavedLayerVisible } = useContext(LayerContext)
 
 

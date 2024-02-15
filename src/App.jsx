@@ -12,6 +12,7 @@ const queryClient = new QueryClient()
 
 function App() {
   const data = useDistrictsCoords({}) || []
+  const [mapDivision, setMapDivision] = useState("division3")
 
   const [collection, setCollection] = useState([])
   const [showMarkers, setShowMarkers] = useState({ startups: false })
@@ -139,6 +140,8 @@ function App() {
     saveCurrentState,
     clearSavedState,
     isSavedLayerVisible,
+    mapDivision,
+    setMapDivision
   }
 
   return (
