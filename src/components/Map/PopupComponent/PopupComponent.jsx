@@ -1,10 +1,10 @@
 import { Popup } from "react-leaflet"
 import PropTypes from 'prop-types'
 
-function PopupComponent({ data }) {
+function PopupComponent({ name }) {
   return (
     <Popup>
-      <div className="text-sm">{data.name}</div>
+      <div className="text-sm">{name}</div>
     </Popup>
   )
 }

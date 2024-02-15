@@ -13,9 +13,10 @@ import StartupsComponent from "../StartupsComponent/StartupsComponent"
 import TileLayerComponent from "../TileLayerComponent/TileLayerComponent"
 import HeatMapLayer from "../../HeatMapLayerComponent.jsx/HeatMapComponent"
 import RegionFilter from "../FilterGroup/RegionFilter"
-import CompanyMarkerRenderer from "../../CompanyMarkerRendererComponent/CompanyMarkerRenderer"
+import SavedLayerComponent from "../SavedLayerComponent/SavedLayerComponent"
 
 import { CollectionContext } from "../../../context/collection"
+import { LayerContext } from "../../../context/layerContext"
 
 import "leaflet/dist/leaflet.css"
 
@@ -26,8 +27,9 @@ function MapComponent() {
   const [showPopulation, setShowPopulation] = useState(false)
   const [selectedNameDistrict, setSelectedNameDistrict] = useState(null)
   const [companies, setCompanies] = useState([])
+  
   const { collection } = useContext(CollectionContext)
-
+  const { isSavedLayerVisible } = useContext(LayerContext)
 
   //cada vez que selectedRegion cambia de valor se ejecutan los filtros
   //aqui se pueden anadir mas variables como gnp, mapDivision...
@@ -75,6 +77,7 @@ function MapComponent() {
         </div>
 
         <CustomZoomControl />
+        {isSavedLayerVisible && <SavedLayerComponent />}
         <StartupsComponent />
 
         <HeatMapLayer mapDivision={mapDivision} onRegionSelected={onRegionSelected} selectedNameDistrict={setSelectedNameDistrict} />
