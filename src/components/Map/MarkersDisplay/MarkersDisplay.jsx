@@ -19,6 +19,7 @@ function MarkersDisplay() {
           <MarkerComponent
             key={index}
             coords={{ latitude: filteredDataItem.latitude, longitude: filteredDataItem.longitude }}
+            name={filteredDataItem.name}
           />
         ))
     )
