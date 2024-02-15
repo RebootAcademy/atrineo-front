@@ -13,7 +13,10 @@ import StartupsComponent from "../StartupsComponent/StartupsComponent"
 import TileLayerComponent from "../TileLayerComponent/TileLayerComponent"
 import HeatMapLayer from "../../HeatMapLayerComponent.jsx/HeatMapComponent"
 import RegionFilter from "../FilterGroup/RegionFilter"
+import SavedLayerComponent from "../SavedLayerComponent/SavedLayerComponent"
+
 import { CollectionContext } from "../../../context/collection"
+import { LayerContext } from "../../../context/layerContext"
 
 import "leaflet/dist/leaflet.css"
 import { LayerContext } from "../../../context/layerContext"
@@ -24,8 +27,9 @@ function MapComponent() {
   const [showPopulation, setShowPopulation] = useState(false)
   const [selectedNameDistrict, setSelectedNameDistrict] = useState(null)
   const [companies, setCompanies] = useState([])
+  
   const { collection } = useContext(CollectionContext)
-  const { setSelectedRegion } = useContext(LayerContext)
+  const { setSelectedRegion, isSavedLayerVisible } = useContext(LayerContext)
 
 
   // //cada vez que selectedRegion cambia de valor se ejecutan los filtros
@@ -74,7 +78,8 @@ function MapComponent() {
         </div>
 
         <CustomZoomControl />
-        <StartupsComponent  />
+        {isSavedLayerVisible && <SavedLayerComponent />}
+        <StartupsComponent />
 
         <HeatMapLayer mapDivision={mapDivision} onRegionSelected={onRegionSelected} selectedNameDistrict={setSelectedNameDistrict} />
         <RegionFilter onPopulationClicked={onPopulationClicked} />

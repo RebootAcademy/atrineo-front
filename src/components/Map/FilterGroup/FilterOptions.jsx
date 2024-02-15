@@ -110,10 +110,9 @@ function FilterOptions({ mapDivision }) {
   }
 
   return (
-
     <div className="flex flex-col gap-4">
 
-      <div className="flex items-center space-x-2">
+{/*       <div className="flex items-center space-x-2">
         <Label htmlFor="disctrictName">District Name:</Label>
         <Select onValueChange={onDistrictNameChange}>
           <SelectTrigger className="w-[180px]">
@@ -131,7 +130,7 @@ function FilterOptions({ mapDivision }) {
             ))}
           </SelectContent>
         </Select>
-      </div>
+      </div> */}
 
       <div className="flex flex-col gap-4 mb-4">
         <div className="flex items-center space-x-2">

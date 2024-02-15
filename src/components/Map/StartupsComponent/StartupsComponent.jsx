@@ -1,8 +1,9 @@
+import { useContext } from "react"
+import { LayerContext } from "../../../context/layerContext"
+
 import MarkersDisplay from "../MarkersDisplay/MarkersDisplay"
 import MarkerClusterGroup from "react-leaflet-cluster"
 import PatentsLayer from "../PatentsLayer/PatentsLayer"
-import { LayerContext } from "../../../context/layerContext"
-import { useContext } from "react"
 import LifeQualityLayer from "../LifeQualityLayer/LifeQualityLayer"
 import GnpLayer from "../GnpLayer/GnpLayer"
 import PopulationLayer from "../PopulationLayer/PopulationLayer"

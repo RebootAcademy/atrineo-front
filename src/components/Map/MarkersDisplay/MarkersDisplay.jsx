@@ -19,8 +19,9 @@ function MarkersDisplay() {
         .filter((company) => selectedRegion === "" || company.locationId[mapDivision]?.name === selectedRegion)
         .map((filteredDataItem, index) => (
           <MarkerComponent
-          key={index}
-          coords={{ latitude: filteredDataItem.latitude, longitude: filteredDataItem.longitude }}
+            key={index}
+            coords={{ latitude: filteredDataItem.latitude, longitude: filteredDataItem.longitude }}
+            name={filteredDataItem.name}
           />
           ))
           )
