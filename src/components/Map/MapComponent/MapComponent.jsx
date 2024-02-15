@@ -1,27 +1,20 @@
 import { FeatureGroup, MapContainer } from "react-leaflet"
-import { useState, useRef, useContext, useEffect } from "react"
-import { LayerContext } from "../../../context/layerContext"
-import MapUpdater from "../MapUpdater/MapUpdaterComponent"
+import { useState } from "react"
+
+import { FlyToMarker, MapUpdater } from "../MapUpdater/MapUpdaterComponent"
+
 import ContourLayer from "../MapContour/MapContour"
-import HeatMapLayer from "../../HeatMapLayerComponent.jsx/HeatMapComponent"
 import CoordsDisplay from "../CoordsDisplay/CoordsDisplay"
 import DrawComponent from "../DrawComponent/DrawComponent"
-import CompanyMarkerRenderer from "../../CompanyMarkerRendererComponent/CompanyMarkerRenderer"
-import { CollectionContext } from "../../../context/collection"
-import "leaflet/dist/leaflet.css"
-
 import CustomZoomControl from "../CustomZoomControl/CustomZoomControl"
 import SearchBar from "../SearchBar/SearchBar"
 import LayersContainer from "../LayersContainer/LayersContainer"
 import StartupsComponent from "../StartupsComponent/StartupsComponent"
-import PopulationCircleRenderer from "../PopulationCircleRendererComponent/PopulationCircleRenderer"
-import RangeFilter from "../RangeFilter/RangeFilter"
 import TileLayerComponent from "../TileLayerComponent/TileLayerComponent"
-import RegionFilter from "../FilterGroup/RegionFilter"
-import { useGeoJsonData } from "../../../hooks/useGeoJsonData"
+
+import "leaflet/dist/leaflet.css"
 
 function MapComponent() {
-  const mapRef = useRef()
   const [mapCenter, setMapCenter] = useState([48.6, 9])
   const [mapDivision, setMapDivision] = useState("division3")
   const [searchPolygon, setSearchPolygon] = useState(null)
@@ -58,10 +51,6 @@ function MapComponent() {
     setShowPopulation(!showPopulation)
   }
 
-  const handleFilterChange = (newValue) => {
-    setFilterValue(newValue)
-  }
-
   return (
     <section>
       <MapContainer
@@ -70,14 +59,11 @@ function MapComponent() {
         minZoom={8}
         doubleClickZoom={false}
         style={{ height: `calc(100vh - 80px)`, width: "100vw", zIndex: 0 }}
-        ref={mapRef}
       >
 
         <TileLayerComponent />
         <ContourLayer mapDivision={mapDivision} />
         <MapUpdater center={mapCenter} />
-
-        <RangeFilter onChange={handleFilterChange} />
 
         <div className="flex flex-col items-start">
           <SearchBar />
@@ -87,17 +73,13 @@ function MapComponent() {
         <CustomZoomControl />
         <StartupsComponent />
 
-        <PopulationCircleRenderer companies={collection[0]?.data} showPopulation={showPopulation} />
-        <CompanyMarkerRenderer companies={companies} />
-
-        {/* <StartupsComponent /> */}
-
-        <MapUpdater center={mapCenter} />
         <HeatMapLayer mapDivision={mapDivision} onRegionSelected={onRegionSelected} selectedNameDistrict={setSelectedNameDistrict} />
         <RegionFilter onPopulationClicked={onPopulationClicked} />
         <CoordsDisplay />
+        
         <FeatureGroup>
           <DrawComponent />
+          <FlyToMarker center={mapCenter}/>
         </FeatureGroup>
 
       </MapContainer>

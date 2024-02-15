@@ -1,32 +1,22 @@
 import LayerItem from "./LayerItem"
 import FilterOptions from "./FilterOptions"
-import { Collapsible, CollapsibleContent } from "../../ui/Collapsible/Collapsible"
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "../../ui/Card/Card"
+import { Card, CardContent, CardHeader, CardTitle } from "../../ui/Card/Card"
 
 import PropTypes from 'prop-types'
 
-function FilterGroup({ title, layers, mapDivision }) {
+function FilterGroup({ title, layers }) {
   return (
     <Card className='mb-2 w-[300px] pt-0 p-2'>
       <CardHeader>
         <CardTitle>{title}</CardTitle>
       </CardHeader>
       <CardContent>
-        <Collapsible>
           {layers && layers.map((layer, id) => (
             <div key={id}>
               <LayerItem layer={layer} />
-              <CollapsibleContent>
-                <FilterOptions mapDivision={mapDivision} />
-              </CollapsibleContent>
+                <FilterOptions />
             </div>
           ))}
-        </Collapsible>
       </CardContent>
     </Card>
   )
