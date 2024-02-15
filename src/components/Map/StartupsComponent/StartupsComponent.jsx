@@ -6,10 +6,7 @@ import { useContext } from "react"
 import LifeQualityLayer from "../LifeQualityLayer/LifeQualityLayer"
 import GnpLayer from "../GnpLayer/GnpLayer"
 import PopulationLayer from "../PopulationLayer/PopulationLayer"
-<<<<<<< HEAD
 import ResearchInvestmentLayer from "../ResearchInvestment/ResearchInvestment"
-=======
->>>>>>> 93a6e4aef7d4e25010b0c396165b963e46c30369
 
 function StartupsComponent() {
   const { showMarkers } = useContext(LayerContext)
@@ -36,10 +33,7 @@ function StartupsComponent() {
       <LifeQualityLayer />
       <GnpLayer />
       <PopulationLayer />
-<<<<<<< HEAD
       <ResearchInvestmentLayer />
-=======
->>>>>>> 93a6e4aef7d4e25010b0c396165b963e46c30369
     </>
   )
 }

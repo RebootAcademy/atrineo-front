@@ -9,7 +9,7 @@ import MapComponent from "../components/Map/MapComponent/MapComponent"
 
 function Home() {
   const { example } = I18N
-  const { setCollection } = useContext(CollectionContext)
+  const { collection, setCollection } = useContext(CollectionContext)
 
   const { 
     isLoading,

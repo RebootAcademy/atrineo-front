@@ -1,5 +1,5 @@
 import { FeatureGroup, MapContainer } from "react-leaflet"
-import { useState } from "react"
+import { useState, useContext, useEffect } from "react"
 
 import { FlyToMarker, MapUpdater } from "../MapUpdater/MapUpdaterComponent"
 
@@ -11,6 +11,10 @@ import SearchBar from "../SearchBar/SearchBar"
 import LayersContainer from "../LayersContainer/LayersContainer"
 import StartupsComponent from "../StartupsComponent/StartupsComponent"
 import TileLayerComponent from "../TileLayerComponent/TileLayerComponent"
+import HeatMapLayer from "../../HeatMapLayerComponent.jsx/HeatMapComponent"
+import RegionFilter from "../FilterGroup/RegionFilter"
+
+import { CollectionContext } from "../../../context/collection"
 
 import "leaflet/dist/leaflet.css"
 
