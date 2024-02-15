@@ -23,8 +23,6 @@ function MarkerComponent({ coords, onClick, info }) {
   )
 }
 
-// eventHandlers = {{ click: onClick }} - añadir entre position y el icon de la linea 16
-
 MarkerComponent.propTypes = {
   coords: PropTypes.object,
   onClick: PropTypes.func

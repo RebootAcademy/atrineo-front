@@ -30,6 +30,8 @@ function App() {
   const collectionValue = {collection, setCollection}
   const [lifeQuality, setLifeQuality] = useState(null)
   const [gnp, setGnp] = useState(0)
+  const [companies, setCompanies] = useState([])
+  const [selectedRegion, setSelectedRegion] = useState("")
 
   useEffect(() => {
     if (data.length > 0) {
@@ -91,6 +93,10 @@ function App() {
     researchInvestmentFilter,
     setResearchInvestmentFilter,
     ...researchInvestmentBounds,
+    companies, 
+    setCompanies, 
+    selectedRegion, 
+    setSelectedRegion
   }
 
   return (
