@@ -1,7 +1,7 @@
 import { FeatureGroup, MapContainer } from "react-leaflet"
 import { useState, useContext, useEffect } from "react"
 
-import { FlyToMarker, MapUpdater } from "../MapUpdater/MapUpdaterComponent"
+import { MapUpdater } from "../MapUpdater/MapUpdaterComponent"
 
 import ContourLayer from "../MapContour/MapContour"
 import CoordsDisplay from "../CoordsDisplay/CoordsDisplay"
@@ -22,7 +22,6 @@ import "leaflet/dist/leaflet.css"
 function MapComponent() {
   const [mapCenter, setMapCenter] = useState([48.6, 9])
   const [mapDivision, setMapDivision] = useState("division3")
-  const [searchPolygon, setSearchPolygon] = useState(null)
   const [selectedRegion, setSelectedRegion] = useState('')
   const [showPopulation, setShowPopulation] = useState(false)
   const [selectedNameDistrict, setSelectedNameDistrict] = useState(null)
@@ -56,10 +55,6 @@ function MapComponent() {
     setShowPopulation(!showPopulation)
   }
 
-  const handleFilterChange = (newValue) => {
-    setFilterValue(newValue)
-  }
-
   return (
     <section>
       <MapContainer
@@ -89,7 +84,6 @@ function MapComponent() {
         
         <FeatureGroup>
           <DrawComponent />
-          <FlyToMarker center={mapCenter}/>
         </FeatureGroup>
 
       </MapContainer>
