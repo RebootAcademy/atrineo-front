@@ -13,24 +13,19 @@ function DistrictSelection() {
   } = useContext(CollectionContext)
 
   //se hace el filtro primero para poder filtar por los item que contenga algo diferente a null y los devuelve
-  // const nameRegionFiltered = collection && collection[0]?.data
-  //     .filter((item) => item.locationId[mapDivision] !== null)
-  //     .map(item => item.locationId[mapDivision]?.name)
-  // const nameRegion = [...new Set(nameRegionFiltered)]
-
-  const filteredRegions = collection
-    .flatMap(region => region.data)
-    .filter((item) => item.locationId[mapDivision]?.name)
-    .map(item => item.locationId[mapDivision]?.name) 
-
-    const nameRegion = [...new Set(filteredRegions)]
-    
-    const districtNames = filteredRegions.map((filteredRegion) => (
+  const nameRegionFiltered = collection
+    .flatMap((region) => region.data)
+    .filter((item) => item.locationId[mapDivision] !== null)
+    .map(item => { return { id: item.locationId[mapDivision]?._id, name: item.locationId[mapDivision]?.name }})
+  const nameRegion = nameRegionFiltered.reduce((prev, curr) => {
+    return prev.find((item) => item.id === curr.id) ? prev : [...prev, curr]
+  }, [])
+  const districtNames = nameRegion.map((filteredRegion) => (
       <SelectItem
-      key={filteredRegion._id}
-      value={filteredRegion.districtName}
+          key={filteredRegion.id}
+          value={filteredRegion.name}
       >
-      {filteredRegion.districtName}
+        {filteredRegion.name}
     </SelectItem>
   ))
   
