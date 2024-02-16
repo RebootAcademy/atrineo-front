@@ -8,9 +8,10 @@ function GnpLayer() {
   const { collection } = useContext(CollectionContext)
   const { gnp, searchPolygon } = useContext(LayerContext)
 
-  const companiesBySelectedGnp = collection[0]?.data
-    .filter((company) => company.gnp <= gnp[0])
-    .filter((dataItem) => isWithinPolygon(dataItem, searchPolygon)
+  const companiesBySelectedGnp = collection.flatMap(item =>
+    item.data
+      .filter((dataItem) => dataItem.gnp <= gnp[0])
+      .filter((dataItem) => isWithinPolygon(dataItem, searchPolygon))
   )
 
   const circles = companiesBySelectedGnp?.map(company => (

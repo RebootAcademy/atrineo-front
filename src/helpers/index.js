@@ -38,3 +38,4 @@ export const CalculateResearchInvestmentBounds = (data) => {
 
   return { minResearchInvestment, maxResearchInvestment }
 }
+

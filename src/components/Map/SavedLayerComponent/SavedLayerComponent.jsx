@@ -1,19 +1,27 @@
 import { useContext } from "react"
 import { LayerContext } from "../../../context/layerContext"
-import CustomButton from "../../CustomButton/CustomButton"
 import { Card } from "../../ui/Card/Card"
+import CustomButton from "../../CustomButton/CustomButton"
 
 function SavedLayerComponent() {
-  const { clearSavedState } = useContext(LayerContext)
+  const { clearSavedState, layers } = useContext(LayerContext)
 
   return (
-    <Card className='absolute top-20 right-3 z-[9999999999] w-60 flex justify-between items-center bg-white p-2'>
-      <p className="font-bold text-lg">Layer 1</p>
-      <CustomButton
-        text="Delete"
-        fn={clearSavedState}
-      />
-    </Card>
+    <>
+      {layers.map((layer, index) => (
+        <Card 
+          key={layer.id} 
+          className='absolute top-20 right-3 z-[9999999999] w-60 flex justify-between items-center bg-white p-2'
+          style={{ top: `${20 + index * 60}px`}}
+        >
+          <p className="font-bold text-lg">Layer {layer.id}</p>
+          <CustomButton
+            text="Delete"
+            fn={() => clearSavedState(layer.id)}
+          />
+        </Card>
+      ))}
+    </>
   )
 }
 

@@ -1,5 +1,6 @@
 import { useContext } from "react"
 import CustomButton from "../../CustomButton/CustomButton"
+import { SheetClose } from '../../ui/Sheet/sheet'
 import {
   Card,
   CardContent,
@@ -12,14 +13,14 @@ import FilterGroup from "../FilterGroup/Filtergroup"
 import PropTypes from 'prop-types'
 import { LayerContext } from "../../../context/layerContext"
 
-function LayerCard({ layerId = 1 }) {
-  const { saveCurrentState } = useContext(LayerContext)
+function LayerCard() {
+  const { saveCurrentState, nextLayerId } = useContext(LayerContext)
 
   return (
     <Card className='w-full flex flex-col items-center'>
 
       <CardHeader>
-        <CardTitle>Layer {layerId}</CardTitle>
+        <CardTitle>Layer {nextLayerId}</CardTitle>
       </CardHeader>
 
       <CardContent>
@@ -32,10 +33,12 @@ function LayerCard({ layerId = 1 }) {
       </CardContent>
 
       <CardFooter>
-        <CustomButton 
-          text="Save"
-          fn={saveCurrentState} 
-        />
+        <SheetClose>
+          <CustomButton 
+            text="Save"
+            fn={saveCurrentState} 
+          />
+        </SheetClose>
       </CardFooter>
 
     </Card>

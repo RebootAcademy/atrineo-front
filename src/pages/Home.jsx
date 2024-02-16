@@ -23,9 +23,9 @@ function Home() {
     }
   })
 
-  if (!isLoading) {
+/*   if (!isLoading) {
     console.log(collection)
-  }
+  } */
 
   return (
     <>
