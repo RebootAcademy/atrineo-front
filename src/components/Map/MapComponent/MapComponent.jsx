@@ -2,6 +2,7 @@ import { FeatureGroup, MapContainer } from "react-leaflet"
 import { useState, useContext } from "react"
 
 import { MapUpdater } from "../MapUpdater/MapUpdaterComponent"
+import HeatMapLayer from "../../HeatMapLayerComponent.jsx/HeatMapComponent"
 
 import ContourLayer from "../MapContour/MapContour"
 import CoordsDisplay from "../CoordsDisplay/CoordsDisplay"
@@ -16,11 +17,11 @@ import { LayerContext } from "../../../context/layerContext"
 
 import "leaflet/dist/leaflet.css"
 
+
 function MapComponent() {
   const [mapCenter, setMapCenter] = useState([48.6, 9])
   const [mapDivision, setMapDivision] = useState("division3")
   const [showPopulation, setShowPopulation] = useState(false)
-  const [selectedNameDistrict, setSelectedNameDistrict] = useState(null)
   const { setSelectedRegion, isSavedLayerVisible } = useContext(LayerContext)
 
 
@@ -72,6 +73,7 @@ function MapComponent() {
         <CustomZoomControl />
         {isSavedLayerVisible && <SavedLayerComponent />}
         <StartupsComponent />
+        <HeatMapLayer mapDivision={mapDivision} onRegionSelected={onRegionSelected}/>
 
         <CoordsDisplay />
       

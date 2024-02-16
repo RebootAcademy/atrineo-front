@@ -33,6 +33,7 @@ function App() {
   const [gnp, setGnp] = useState(0)
   const [companies, setCompanies] = useState([])
   const [selectedRegion, setSelectedRegion] = useState("")
+  const [selectedNameDistrict, setSelectedNameDistrict] = useState("")
 
   const [isSavedLayerVisible, setIsSavedLayerVisible] = useState(false)
 
@@ -141,7 +142,9 @@ function App() {
     clearSavedState,
     isSavedLayerVisible,
     mapDivision,
-    setMapDivision
+    setMapDivision,
+    selectedNameDistrict,
+    setSelectedNameDistrict
   }
 
   return (

@@ -1,9 +1,14 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { GeoJSON } from "react-leaflet";
 import { useGeoJsonData } from "../../hooks/useGeoJsonData";
 import { selectedStyle, defaultStyle } from "./Style";
+import { LayerContext } from "../../context/layerContext";
 
-const HeatMapLayer = ({ mapDivision, onRegionSelected, districtName }) => {
+const HeatMapLayer = ({ mapDivision, onRegionSelected }) => {
+  const {
+    selectedNameDistrict
+  } = useContext(LayerContext)
+
   const data = useGeoJsonData(mapDivision);
   const [selectedRegion, setSelectedRegion] = useState(null);
 
@@ -15,9 +20,8 @@ const HeatMapLayer = ({ mapDivision, onRegionSelected, districtName }) => {
     const currentGroupId = feature.properties.ID_3
     const currentDistrict = feature.properties.NAME_3
     if (
-      (selectedRegion &&
-        selectedRegion.feature.properties.ID_3 === currentGroupId) ||
-      (districtName && districtName === currentDistrict)
+      (selectedRegion && selectedRegion.feature.properties.ID_3 === currentGroupId) ||
+      (selectedNameDistrict && selectedNameDistrict === currentDistrict)
     ) {
       return selectedStyle;
     } else {

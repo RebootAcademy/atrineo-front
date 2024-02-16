@@ -8,6 +8,7 @@ import LifeQualityLayer from "../LifeQualityLayer/LifeQualityLayer"
 import GnpLayer from "../GnpLayer/GnpLayer"
 import PopulationLayer from "../PopulationLayer/PopulationLayer"
 import ResearchInvestmentLayer from "../ResearchInvestment/ResearchInvestment"
+import DistrictSelection from "../DistrictSelection/DistrictSelection"
 
 function StartupsComponent() {
   const { showMarkers } = useContext(LayerContext)

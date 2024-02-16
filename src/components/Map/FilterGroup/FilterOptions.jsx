@@ -1,20 +1,23 @@
-import { useContext, useState } from "react"
-import { LayerContext } from "../../../context/layerContext"
-import { Switch } from "../../ui/Switch/Switch"
-import { Label } from "../../ui/Label/Label"
-import { Select, SelectTrigger, SelectContent, SelectValue, SelectItem } from "../../ui/Select/Select"
-import { Slider } from "../../ui/Slider/Slider"
-import { CollectionContext } from "../../../context/collection"
-import HeatMapLayer from "../../HeatMapLayerComponent.jsx/HeatMapComponent"
-import { RadioGroup, RadioGroupItem } from "../../ui/RadioGroup/radio-group"
-import { Slider2 } from "../../ui/Slider2/Slider2"
-import DistrictSelection from "../DistrictSelection/DistrictSelection"
+import { useContext, useState } from "react";
+import { LayerContext } from "../../../context/layerContext";
+import { Switch } from "../../ui/Switch/Switch";
+import { Label } from "../../ui/Label/Label";
+import {
+  Select,
+  SelectTrigger,
+  SelectContent,
+  SelectValue,
+  SelectItem,
+} from "../../ui/Select/Select";
+import { Slider } from "../../ui/Slider/Slider";
+import { CollectionContext } from "../../../context/collection";
+import HeatMapLayer from "../../HeatMapLayerComponent.jsx/HeatMapComponent";
+import { RadioGroup, RadioGroupItem } from "../../ui/RadioGroup/radio-group";
+import { Slider2 } from "../../ui/Slider2/Slider2";
+import DistrictSelection from "../DistrictSelection/DistrictSelection";
 
 function FilterOptions() {
-  const [selectedNameDistrict, setSelectedNameDistrict] = useState(null)
-
   const {
-    mapDivision,
     patentsFilter,
     isFinancingFilterActive,
     isGovFundsReceivedActive,
@@ -31,81 +34,85 @@ function FilterOptions() {
     researchInvestmentFilter,
     setResearchInvestmentFilter,
     minResearchInvestment,
-    maxResearchInvestment
-  } = useContext(LayerContext)
-
-
+    maxResearchInvestment,
+    setSelectedNameDistrict
+  } = useContext(LayerContext);
 
   //empieza por on algo porque es un evento y es el formato por defecto
   const onDistrictNameChange = (district) => {
-    setSelectedNameDistrict(district)
-  }
+    setSelectedNameDistrict(district);
+  };
   const handleFinancingSwitchChange = (newState) => {
-    setIsFinancingFilterActive(newState)
-  }
+    setIsFinancingFilterActive(newState);
+  };
 
   const handleGovFundsSwitchChange = (newState) => {
-    toggleGovFundsReceived(newState)
-  }
+    toggleGovFundsReceived(newState);
+  };
 
   const handlePatentsSliderChange = (value) => {
-    setPatentsFilter(value)
-  }
+    setPatentsFilter(value);
+  };
 
   const handlePopulationSliderChange = (value) => {
-    setPopulationFilter(value)
-  }
+    setPopulationFilter(value);
+  };
 
   const handleResearchInvestmentSliderChange = (value) => {
-    setResearchInvestmentFilter(value)
-  }
+    setResearchInvestmentFilter(value);
+  };
 
-  const { collection } = useContext(CollectionContext)
+  const { collection } = useContext(CollectionContext);
 
   //con el regionName.map se obtiene la lista de distritos y cada elemento de la lista se representa en SelectItem
   const handlePatentsMinChange = (e) => {
-    const minVal = Math.max(0, parseInt(e.target.value, 10))
+    const minVal = Math.max(0, parseInt(e.target.value, 10));
     if (minVal <= patentsFilter[1]) {
-      setPatentsFilter([minVal, patentsFilter[1]])
+      setPatentsFilter([minVal, patentsFilter[1]]);
     }
-  }
+  };
 
   const handlePatentsMaxChange = (e) => {
-    const maxVal = parseInt(e.target.value, 10)
+    const maxVal = parseInt(e.target.value, 10);
     if (maxVal >= patentsFilter[0]) {
-      setPatentsFilter([patentsFilter[0], maxVal])
+      setPatentsFilter([patentsFilter[0], maxVal]);
     }
-  }
+  };
 
   const getMinGnp = () => {
     if (!collection || !collection[0].data) {
-      return 0
+      return 0;
     }
-    const min = collection[0].data.reduce((prev, curr) => {
-      if (!curr.gnp) {
-        return prev
-      }
-      return prev.gnp < curr.gnp ? prev : curr
-    }, { gnp: 999999999 })
-    return min.gnp
-  }
+    const min = collection[0].data.reduce(
+      (prev, curr) => {
+        if (!curr.gnp) {
+          return prev;
+        }
+        return prev.gnp < curr.gnp ? prev : curr;
+      },
+      { gnp: 999999999 }
+    );
+    return min.gnp;
+  };
 
   const getMaxGnp = () => {
     if (!collection || !collection[0].data) {
-      return 100
+      return 100;
     }
-    const max = collection[0].data.reduce((prev, curr) => {
-      if (!curr.gnp) {
-        return prev
-      }
-      return prev.gnp > curr.gnp ? prev : curr
-    }, { gnp: 0 })
-    return max.gnp
-  }
+    const max = collection[0].data.reduce(
+      (prev, curr) => {
+        if (!curr.gnp) {
+          return prev;
+        }
+        return prev.gnp > curr.gnp ? prev : curr;
+      },
+      { gnp: 0 }
+    );
+    return max.gnp;
+  };
 
   return (
     <div className="flex flex-col gap-4">
-
       <div className="flex items-center space-x-2">
         <Label htmlFor="disctrictName">District Name:</Label>
         <Select onValueChange={onDistrictNameChange}>
@@ -147,7 +154,7 @@ function FilterOptions() {
           <div className="text-sm">Max</div>
         </div>
         <Slider
-          id='patents'
+          id="patents"
           patentsvalue={patentsFilter}
           value={patentsFilter}
           onValueChange={handlePatentsSliderChange}
@@ -179,7 +186,7 @@ function FilterOptions() {
           <div className="text-sm">Max</div>
         </div>
         <Slider
-          id='population'
+          id="population"
           patentsvalue={populationFilter}
           value={populationFilter}
           min={minPopulation}
@@ -196,7 +203,7 @@ function FilterOptions() {
           <div className="text-sm">Max</div>
         </div>
         <Slider
-          id='researchInvestment'
+          id="researchInvestment"
           patentsvalue={researchInvestmentFilter}
           value={researchInvestmentFilter}
           min={minResearchInvestment}
@@ -206,7 +213,9 @@ function FilterOptions() {
         {researchInvestmentFilter} €
       </div>
 
-      <Label className='mt-4' htmlFor="lifeQuality">Life Quality:</Label>
+      <Label className="mt-4" htmlFor="lifeQuality">
+        Life Quality:
+      </Label>
       <RadioGroup defaultValue="comfortable" onValueChange={setLifeQuality}>
         <div className="flex items-center space-x-2">
           <RadioGroupItem value="low" id="low-option" />
@@ -222,16 +231,13 @@ function FilterOptions() {
         </div>
       </RadioGroup>
 
-      <Label className='mt-4' htmlFor='gnp'>Gnp:</Label>
-      <Slider2
-        onValueChange={setGnp}
-        min={getMinGnp()}
-        max={getMaxGnp()}
-      />
+      <Label className="mt-4" htmlFor="gnp">
+        Gnp:
+      </Label>
+      <Slider2 onValueChange={setGnp} min={getMinGnp()} max={getMaxGnp()} />
       <Label>{gnp}</Label>
-
-    </div >
-  )
+    </div>
+  );
 }
 
-export default FilterOptions
+export default FilterOptions;
