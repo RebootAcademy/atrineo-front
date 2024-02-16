@@ -11,11 +11,7 @@ import SearchBar from "../SearchBar/SearchBar"
 import LayersContainer from "../LayersContainer/LayersContainer"
 import StartupsComponent from "../StartupsComponent/StartupsComponent"
 import TileLayerComponent from "../TileLayerComponent/TileLayerComponent"
-import HeatMapLayer from "../../HeatMapLayerComponent.jsx/HeatMapComponent"
-import RegionFilter from "../FilterGroup/RegionFilter"
 import SavedLayerComponent from "../SavedLayerComponent/SavedLayerComponent"
-
-import { CollectionContext } from "../../../context/collection"
 import { LayerContext } from "../../../context/layerContext"
 
 import "leaflet/dist/leaflet.css"
@@ -77,10 +73,8 @@ function MapComponent() {
         {isSavedLayerVisible && <SavedLayerComponent />}
         <StartupsComponent />
 
-        <HeatMapLayer mapDivision={mapDivision} onRegionSelected={onRegionSelected} selectedNameDistrict={setSelectedNameDistrict} />
-        <RegionFilter onPopulationClicked={onPopulationClicked} />
-        {/* <CompanyMarkerRenderer companies={companies} /> */}
         <CoordsDisplay />
+      
         
         <FeatureGroup>
           <DrawComponent />

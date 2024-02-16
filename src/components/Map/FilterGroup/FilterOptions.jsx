@@ -2,12 +2,13 @@ import { useContext, useState } from "react"
 import { LayerContext } from "../../../context/layerContext"
 import { Switch } from "../../ui/Switch/Switch"
 import { Label } from "../../ui/Label/Label"
-import { Select, SelectTrigger, SelectContent, SelectValue, SelectItem } from "../../ui/Select/select"
+import { Select, SelectTrigger, SelectContent, SelectValue, SelectItem } from "../../ui/Select/Select"
 import { Slider } from "../../ui/Slider/Slider"
 import { CollectionContext } from "../../../context/collection"
 import HeatMapLayer from "../../HeatMapLayerComponent.jsx/HeatMapComponent"
 import { RadioGroup, RadioGroupItem } from "../../ui/RadioGroup/radio-group"
 import { Slider2 } from "../../ui/Slider2/Slider2"
+import DistrictSelection from "../DistrictSelection/DistrictSelection"
 
 function FilterOptions() {
   const [selectedNameDistrict, setSelectedNameDistrict] = useState(null)
@@ -60,14 +61,6 @@ function FilterOptions() {
   }
 
   const { collection } = useContext(CollectionContext)
-  //se hace el filtro primero para poder filtar por los item que contenga algo diferente a null y los devuelve
-  const regionName = () => {
-    const nameRegionFiltered = collection[0]?.data
-      .filter((item) => item.locationId[mapDivision] !== null)
-      .map(item => item.locationId[mapDivision]?.name)
-    const nameRegion = [...new Set(nameRegionFiltered)]
-    return nameRegion;
-  }
 
   //con el regionName.map se obtiene la lista de distritos y cada elemento de la lista se representa en SelectItem
   const handlePatentsMinChange = (e) => {
@@ -117,18 +110,10 @@ function FilterOptions() {
         <Label htmlFor="disctrictName">District Name:</Label>
         <Select onValueChange={onDistrictNameChange}>
           <SelectTrigger className="w-[180px]">
-            <SelectValue placeholder="Select" />
+            <SelectValue placeholder="Select..." />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value='unassigned'>Select</SelectItem>
-            {regionName().map((district, index) => (
-              <SelectItem
-                key={index}
-                value={district}
-              >
-                {district}
-              </SelectItem>
-            ))}
+            <DistrictSelection />
           </SelectContent>
         </Select>
       </div>
@@ -220,10 +205,6 @@ function FilterOptions() {
         />
         {researchInvestmentFilter} €
       </div>
-
-      {selectedNameDistrict && (<HeatMapLayer
-        mapDivision={mapDivision}
-        districtName={selectedNameDistrict} />)}
 
       <Label className='mt-4' htmlFor="lifeQuality">Life Quality:</Label>
       <RadioGroup defaultValue="comfortable" onValueChange={setLifeQuality}>
