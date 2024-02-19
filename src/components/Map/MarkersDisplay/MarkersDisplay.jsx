@@ -9,7 +9,6 @@ function MarkersDisplay() {
   const { mapDivision, selectedRegion, isFinancingFilterActive, isGovFundsReceivedActive, searchPolygon, selectedNameDistrict } = useContext(LayerContext)
 
   const displayMarkers = () => {
-    console.log(selectedRegion)
     return collection.flatMap((item) =>
       item.data
         // Primero, verifica si el filtro de financiamiento está activo antes de aplicar cualquier filtrado

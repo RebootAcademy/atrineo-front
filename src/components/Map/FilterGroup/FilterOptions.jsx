@@ -2,16 +2,9 @@ import { useContext, useState } from "react";
 import { LayerContext } from "../../../context/layerContext";
 import { Switch } from "../../ui/Switch/Switch";
 import { Label } from "../../ui/Label/Label";
-import {
-  Select,
-  SelectTrigger,
-  SelectContent,
-  SelectValue,
-  SelectItem,
-} from "../../ui/Select/Select";
+import { Select, SelectTrigger, SelectContent, SelectValue } from "../../ui/Select/Select";
 import { Slider } from "../../ui/Slider/Slider";
 import { CollectionContext } from "../../../context/collectionContext";
-import HeatMapLayer from "../../HeatMapLayerComponent.jsx/HeatMapComponent";
 import { RadioGroup, RadioGroupItem } from "../../ui/RadioGroup/radio-group";
 import { Slider2 } from "../../ui/Slider2/Slider2";
 import DistrictSelection from "../DistrictSelection/DistrictSelection";
