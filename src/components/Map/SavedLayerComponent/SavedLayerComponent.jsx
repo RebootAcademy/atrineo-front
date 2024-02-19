@@ -4,11 +4,14 @@ import { Card } from "../../ui/Card/Card"
 import CustomButton from "../../CustomButton/CustomButton"
 
 function SavedLayerComponent() {
-  const { clearSavedState, layers } = useContext(LayerContext)
+  const { clearLayerById, layers } = useContext(LayerContext)
+
+  console.log(layers)
 
   return (
     <>
       {layers.map((layer, index) => (
+        // layer.isVisible &&
         <Card 
           key={layer.id} 
           className='absolute top-20 right-3 z-[9999999999] w-60 flex justify-between items-center bg-white p-2'
@@ -17,7 +20,7 @@ function SavedLayerComponent() {
           <p className="font-bold text-lg">Layer {layer.id}</p>
           <CustomButton
             text="Delete"
-            fn={() => clearSavedState(layer.id)}
+            fn={() => clearLayerById(layer.id)}
           />
         </Card>
       ))}

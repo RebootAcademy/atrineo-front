@@ -14,7 +14,7 @@ import PropTypes from 'prop-types'
 import { LayerContext } from "../../../context/layerContext"
 
 function LayerCard() {
-  const { saveCurrentState, nextLayerId } = useContext(LayerContext)
+  const { saveCurrentLayer, nextLayerId } = useContext(LayerContext)
 
   return (
     <Card className='w-full flex flex-col items-center'>
@@ -36,7 +36,7 @@ function LayerCard() {
         <SheetClose>
           <CustomButton 
             text="Save"
-            fn={saveCurrentState} 
+            fn={saveCurrentLayer} 
           />
         </SheetClose>
       </CardFooter>

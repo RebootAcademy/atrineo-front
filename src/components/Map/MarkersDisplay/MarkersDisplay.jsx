@@ -1,12 +1,12 @@
 import { CollectionContext } from "../../../context/collection"
 import { useContext } from "react"
-import MarkerComponent from "../MarkerComponent/MarkerComponent"
 import { LayerContext } from "../../../context/layerContext"
 import { isWithinPolygon } from "../../../helpers"
+import MarkerComponent from "../MarkerComponent/MarkerComponent"
 
 function MarkersDisplay() {
   const { collection } = useContext(CollectionContext)
-  const { mapDivision, selectedRegion, isFinancingFilterActive, isGovFundsReceivedActive, searchPolygon } = useContext(LayerContext)
+  const { isFinancingFilterActive, isGovFundsReceivedActive, searchPolygon } = useContext(LayerContext)
 
   const displayMarkers = () => {
     return collection.flatMap((item) =>

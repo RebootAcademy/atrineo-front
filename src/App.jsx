@@ -6,20 +6,17 @@ import { LayerContext } from './context/layerContext'
 import { router } from './router'
 
 import { CalculatePopulationBounds, CalculateResearchInvestmentBounds } from './helpers'
-// import { useDistrictsCoords } from './hooks/useDistrictCoords'
+import { useDistrictsCoords } from './hooks/useDistrictCoords'
 
 const queryClient = new QueryClient()
 
 function App() {
-  // const data = useDistrictsCoords({}) || []
+  const data = useDistrictsCoords({}) || []
   const [mapDivision, setMapDivision] = useState("division3")
 
   const [collection, setCollection] = useState([])
 
-  const [showMarkers, setShowMarkers] = useState({ startups: false })
-
   const [patentsFilter, setPatentsFilter] = useState([0, 100])
-
   const [populationFilter, setPopulationFilter] = useState([0])
   const [populationBounds, setPopulationBounds] = useState({ minPopulation: 0, maxPopulation: 0 })
 
@@ -36,7 +33,6 @@ function App() {
 
   const [layers, setLayers] = useState([])
   const [nextLayerId, setNextLayerId] = useState(1)
-  const [isSavedLayerVisible, setIsSavedLayerVisible] = useState(false)
 
   const collectionValue = { collection, setCollection }
 
@@ -44,12 +40,12 @@ function App() {
     localStorage.clear()
   }, [])
 
-  /*   useEffect(() => {
-      if (data.length > 0) {
-        const { minPopulation, maxPopulation } = CalculatePopulationBounds(data)
-        setPopulationBounds({ minPopulation, maxPopulation })
-      }
-    }, [data]) */
+  useEffect(() => {
+    if (data.length > 0) {
+      const { minPopulation, maxPopulation } = CalculatePopulationBounds(data)
+      setPopulationBounds({ minPopulation, maxPopulation })
+    }
+  }, [data])
 
   useEffect(() => {
     if (collection.length > 0) {
@@ -57,7 +53,6 @@ function App() {
       setResearchInvestmentBounds({ minResearchInvestment, maxResearchInvestment })
     }
   }, [collection])
-
 
   const toggleMarkersDisplay = (layerId) => {
     setShowMarkers(prevState => ({
@@ -78,11 +73,11 @@ function App() {
   }
 
   const toggleGovFundsReceived = (value) => {
-    setIsGovFundsReceivedActive(value);
+    setIsGovFundsReceivedActive(value)
   }
 
-  const saveCurrentState = () => {
-    const newLayerData = {
+  const saveCurrentLayer = () => {
+    const newLayer = {
       patentsFilter,
       populationFilter,
       populationBounds,
@@ -96,18 +91,24 @@ function App() {
     }
 
     // Guardar solo la nueva layer en localStorage bajo una clave única
-    localStorage.setItem(`layer ${nextLayerId}`, JSON.stringify(newLayerData))
+    localStorage.setItem(`layer ${nextLayerId}`, JSON.stringify(newLayer))
     console.log(`Layer ${nextLayerId} saved to localStorage`)
 
+    console.log(localStorage)
+
     // Actualizar el estado de layers y nextLayerId
-    setLayers(prevLayers => [...prevLayers, { id: nextLayerId, data: newLayerData }])
+    setLayers(prevLayers => [...prevLayers,
+    {
+      id: nextLayerId,
+      data: newLayer,
+      isVisible: true
+    }])
     setNextLayerId(prevId => prevId + 1)
 
-    resetState()
-    setIsSavedLayerVisible(true)
+    // resetFilters()
   }
 
-  const resetState = () => {
+  const resetFilters = () => {
     setPatentsFilter([0, 100])
     setPopulationFilter([0])
     setPopulationBounds({ minPopulation: 0, maxPopulation: 0 })
@@ -120,18 +121,15 @@ function App() {
     setGnp(0)
   }
 
-  const clearSavedState = () => {
-    localStorage.removeItem('appState') // OJO
+  const clearLayerById = (layerId) => {
+    localStorage.removeItem(`layer ${layerId}`)
+    setLayers(prevLayers => prevLayers.filter(layer => layer.id !== layerId))
 
-    resetState()
-    setIsSavedLayerVisible(false)
-
-    console.log('State cleared')
+    console.log('Layer deleted')
+    console.log(localStorage)
   }
 
   const value = {
-    showMarkers,
-    setShowMarkers,
     patentsFilter,
     setPatentsFilter,
     toggleMarkersDisplay,
@@ -157,13 +155,12 @@ function App() {
     setCompanies,
     selectedRegion,
     setSelectedRegion,
-    saveCurrentState,
-    clearSavedState,
-    isSavedLayerVisible,
+    saveCurrentLayer,
+    clearLayerById,
     mapDivision,
     setMapDivision,
     nextLayerId,
-    layers
+    layers,
   }
 
   return (

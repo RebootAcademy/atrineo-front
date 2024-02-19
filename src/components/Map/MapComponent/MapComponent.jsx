@@ -16,6 +16,7 @@ import SavedLayerComponent from "../SavedLayerComponent/SavedLayerComponent"
 import { LayerContext } from "../../../context/layerContext"
 
 import "leaflet/dist/leaflet.css"
+import LayersManager from "../LayersManager/LayersManager"
 
 function MapComponent() {
   const [mapCenter, setMapCenter] = useState([48.6, 9])
@@ -51,12 +52,15 @@ function MapComponent() {
 
         <div className="flex flex-col items-start">
           <SearchBar />
-          <LayersContainer mapDivision={mapDivision} />
+          <LayersContainer />
         </div>
 
         <CustomZoomControl />
-        {isSavedLayerVisible && <SavedLayerComponent />}
-        <StartupsComponent />
+
+        <LayersManager />
+        
+        <SavedLayerComponent />
+        {/* <StartupsComponent /> */}
 
         <CoordsDisplay />
         
