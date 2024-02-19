@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { QueryClient, QueryClientProvider } from 'react-query'
 import { RouterProvider } from 'react-router-dom'
-import { CollectionContext } from './context/collection'
+import { CollectionContext } from './context/collectionContext'
 import { LayerContext } from './context/layerContext'
 import { router } from './router'
 

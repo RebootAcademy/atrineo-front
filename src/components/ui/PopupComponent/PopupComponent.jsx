@@ -1,6 +1,6 @@
 import { Popup } from "react-leaflet";
 import { useContext } from "react";
-import { CollectionContext } from "../../../context/collection";
+import { CollectionContext } from "../../../context/collectionContext";
 
 export default function PopupComponent({name}) {
   const { collection } = useContext(CollectionContext);

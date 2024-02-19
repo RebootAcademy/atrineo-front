@@ -1,5 +1,5 @@
 import { useContext } from "react"
-import { CollectionContext } from "../../../context/collection"
+import { CollectionContext } from "../../../context/collectionContext"
 import { LayerContext } from "../../../context/layerContext"
 import { Circle } from "react-leaflet"
 import { isWithinPolygon } from "../../../helpers"

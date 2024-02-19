@@ -10,7 +10,7 @@ import {
   SelectItem,
 } from "../../ui/Select/Select";
 import { Slider } from "../../ui/Slider/Slider";
-import { CollectionContext } from "../../../context/collection";
+import { CollectionContext } from "../../../context/collectionContext";
 import HeatMapLayer from "../../HeatMapLayerComponent.jsx/HeatMapComponent";
 import { RadioGroup, RadioGroupItem } from "../../ui/RadioGroup/radio-group";
 import { Slider2 } from "../../ui/Slider2/Slider2";

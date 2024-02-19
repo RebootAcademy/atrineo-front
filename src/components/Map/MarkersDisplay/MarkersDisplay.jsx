@@ -1,4 +1,4 @@
-import { CollectionContext } from "../../../context/collection"
+import { CollectionContext } from "../../../context/collectionContext"
 import { useContext, useState } from "react"
 import MarkerComponent from "../MarkerComponent/MarkerComponent"
 import { LayerContext } from "../../../context/layerContext"

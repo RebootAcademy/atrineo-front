@@ -1,6 +1,6 @@
 import { useContext } from "react"
 import { LayerContext } from "../../../context/layerContext"
-import { CollectionContext } from "../../../context/collection"
+import { CollectionContext } from "../../../context/collectionContext"
 import { SelectItem } from "../../ui/Select/Select"
 
 function DistrictSelection() {
