@@ -13,6 +13,7 @@ const queryClient = new QueryClient()
 function App() {
   const data = useDistrictsCoords({}) || []
   const [mapDivision, setMapDivision] = useState("division3")
+  const [mapCenter, setMapCenter] = useState([48.6, 9])
 
   const [collection, setCollection] = useState([])
   const [showMarkers, setShowMarkers] = useState({ startups: false })
@@ -33,7 +34,7 @@ function App() {
   const [gnp, setGnp] = useState(0)
   const [companies, setCompanies] = useState([])
   const [selectedRegion, setSelectedRegion] = useState("")
-  const [selectedNameDistrict, setSelectedNameDistrict] = useState("")
+  const [selectedNameDistrict, setSelectedNameDistrict] = useState([])
 
   const [isSavedLayerVisible, setIsSavedLayerVisible] = useState(false)
 
@@ -58,19 +59,13 @@ function App() {
     }))
   }
   
-  const togglePatentsDisplay = (layerId) => {
-    setShowPatents(prevState => ({
-      ...prevState,
-      [layerId]: !prevState[layerId]
-    }))
-  }
 
   const toggleFinancingAccess = (value) => {
     setIsFinancingFilterActive(value)
   }
 
   const toggleGovFundsReceived = (value) => {
-    setIsGovFundsReceivedActive(value);
+    setIsGovFundsReceivedActive(value)
   }
 
   const saveCurrentState = () => {
@@ -116,7 +111,6 @@ function App() {
     patentsFilter,
     setPatentsFilter,
     toggleMarkersDisplay,
-    togglePatentsDisplay,
     isFinancingFilterActive,
     setIsFinancingFilterActive,
     toggleFinancingAccess,
@@ -144,7 +138,9 @@ function App() {
     mapDivision,
     setMapDivision,
     selectedNameDistrict,
-    setSelectedNameDistrict
+    setSelectedNameDistrict,
+    mapCenter, 
+    setMapCenter
   }
 
   return (

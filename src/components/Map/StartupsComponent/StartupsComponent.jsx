@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import { useContext } from "react"
 import { LayerContext } from "../../../context/layerContext"
 
@@ -8,7 +9,6 @@ import LifeQualityLayer from "../LifeQualityLayer/LifeQualityLayer"
 import GnpLayer from "../GnpLayer/GnpLayer"
 import PopulationLayer from "../PopulationLayer/PopulationLayer"
 import ResearchInvestmentLayer from "../ResearchInvestment/ResearchInvestment"
-import DistrictSelection from "../DistrictSelection/DistrictSelection"
 
 function StartupsComponent() {
   const { showMarkers } = useContext(LayerContext)
@@ -24,6 +24,7 @@ function StartupsComponent() {
             return L.divIcon({
               html: `<span>${cluster.getChildCount()}</span>`,
               className: 'rounded-full text-white text-sm font-bold text-center bg-radial-custom', // Clase personalizada
+              // eslint-disable-next-line no-undef
               iconSize: L.point(40, 40, true),
             })
           }}

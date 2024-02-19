@@ -1,5 +1,5 @@
 import { FeatureGroup, MapContainer } from "react-leaflet"
-import { useState, useContext } from "react"
+import { useContext } from "react"
 
 import { MapUpdater } from "../MapUpdater/MapUpdaterComponent"
 import HeatMapLayer from "../../HeatMapLayerComponent.jsx/HeatMapComponent"
@@ -17,38 +17,11 @@ import { LayerContext } from "../../../context/layerContext"
 
 import "leaflet/dist/leaflet.css"
 
-
 function MapComponent() {
-  const [mapCenter, setMapCenter] = useState([48.6, 9])
-  const [mapDivision, setMapDivision] = useState("division3")
-  const [showPopulation, setShowPopulation] = useState(false)
-  const { setSelectedRegion, isSavedLayerVisible } = useContext(LayerContext)
+  const { mapDivision, mapCenter, setSelectedRegion, isSavedLayerVisible } = useContext(LayerContext)
 
-
-  // //cada vez que selectedRegion cambia de valor se ejecutan los filtros
-  // //aqui se pueden anadir mas variables como gnp, mapDivision...
-  // useEffect(() => {
-  //   filterCompanies()
-  // }, [selectedRegion])
-
-  // const filterCompanies = () => {
-  //   if (collection && collection.length > 0) {
-  //     let filteredCompanies = collection[0]?.data?.filter((company) => {
-  //       return company.locationId[mapDivision]?.name === selectedRegion
-  //     })
-  //     setCompanies(filteredCompanies)
-  //   }
-  // }
-
-  //Function para pasarle por props la región y que una vez se elija la región se rederiza por la región que le hemos pasado en HeatMap 54
-  //Cuando usamos el set del useState todo lo que haya en el return se renderiza de nuevo pero los estados se guardan
-  //Por lo que en FilterData al tener como prop la selectedRegion se pinta los marcadores de la nueva region
   const onRegionSelected = (region) => {
     setSelectedRegion(region)
-  }
-
-  const onPopulationClicked = () => {
-    setShowPopulation(!showPopulation)
   }
 
   return (
@@ -73,11 +46,10 @@ function MapComponent() {
         <CustomZoomControl />
         {isSavedLayerVisible && <SavedLayerComponent />}
         <StartupsComponent />
-        <HeatMapLayer mapDivision={mapDivision} onRegionSelected={onRegionSelected}/>
+        <HeatMapLayer mapDivision={mapDivision} onRegionSelected={onRegionSelected} />
 
         <CoordsDisplay />
-      
-        
+
         <FeatureGroup>
           <DrawComponent />
         </FeatureGroup>

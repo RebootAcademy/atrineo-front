@@ -1,5 +1,5 @@
 import { CollectionContext } from "../../../context/collectionContext"
-import { useContext, useState } from "react"
+import { useContext } from "react"
 import MarkerComponent from "../MarkerComponent/MarkerComponent"
 import { LayerContext } from "../../../context/layerContext"
 import { isWithinPolygon } from "../../../helpers"
@@ -23,8 +23,8 @@ function MarkersDisplay() {
             coords={{ latitude: filteredDataItem.latitude, longitude: filteredDataItem.longitude }}
             name={filteredDataItem.name}
           />
-          ))
-          )
+        ))
+    )
   }
 
   return displayMarkers()

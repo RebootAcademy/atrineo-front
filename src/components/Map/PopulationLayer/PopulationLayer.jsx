@@ -11,7 +11,7 @@ function PopulationLayer() {
   const filteredItems = data
     .filter((dataItem) => !isNaN(dataItem.districtPopulation) && dataItem.districtPopulation <= populationFilter)
     .filter((dataItem) => isWithinPolygon(dataItem, searchPolygon)
-  )
+    )
 
   const circles = filteredItems.map((filteredItem, index) => (
     <Circle
