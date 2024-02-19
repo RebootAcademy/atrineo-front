@@ -103,6 +103,7 @@ function App() {
       data: newLayer,
       isVisible: true
     }])
+    
     setNextLayerId(prevId => prevId + 1)
 
     // resetFilters()

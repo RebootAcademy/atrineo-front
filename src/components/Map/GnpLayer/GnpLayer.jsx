@@ -18,7 +18,7 @@ function GnpLayer() {
     <Circle
       key={company._id}
       center={[company.latitude, company.longitude]}
-      pathOptions={{ fillColor: "black", stroke: false, fillOpacity: 0.3 }}
+      pathOptions={{ fillColor: "purple", stroke: false, fillOpacity: 0.3 }}
       radius={company.gnp / 35000}
     >
     </Circle>

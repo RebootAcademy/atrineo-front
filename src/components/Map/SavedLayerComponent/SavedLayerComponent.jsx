@@ -6,8 +6,6 @@ import CustomButton from "../../CustomButton/CustomButton"
 function SavedLayerComponent() {
   const { clearLayerById, layers } = useContext(LayerContext)
 
-  console.log(layers)
-
   return (
     <>
       {layers.map((layer, index) => (

@@ -9,7 +9,6 @@ import DrawComponent from "../DrawComponent/DrawComponent"
 import CustomZoomControl from "../CustomZoomControl/CustomZoomControl"
 import SearchBar from "../SearchBar/SearchBar"
 import LayersContainer from "../LayersContainer/LayersContainer"
-import StartupsComponent from "../StartupsComponent/StartupsComponent"
 import TileLayerComponent from "../TileLayerComponent/TileLayerComponent"
 import SavedLayerComponent from "../SavedLayerComponent/SavedLayerComponent"
 
@@ -41,14 +40,14 @@ function MapComponent() {
       <MapContainer
         center={mapCenter}
         zoom={2}
-        minZoom={8}
+        minZoom={9}
         doubleClickZoom={false}
         style={{ height: `calc(100vh - 80px)`, width: "100vw", zIndex: 0 }}
       >
 
         <TileLayerComponent />
         <ContourLayer mapDivision={mapDivision} />
-        <MapUpdater center={mapCenter} />
+        {/* <MapUpdater center={mapCenter} /> */}
 
         <div className="flex flex-col items-start">
           <SearchBar />
@@ -58,7 +57,7 @@ function MapComponent() {
         <CustomZoomControl />
 
         <LayersManager />
-        
+
         <SavedLayerComponent />
         {/* <StartupsComponent /> */}
 
