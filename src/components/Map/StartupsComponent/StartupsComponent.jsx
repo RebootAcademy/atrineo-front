@@ -24,11 +24,11 @@ function StartupsComponent() {
         <MarkersDisplay />
       </MarkerClusterGroup>
 
-      <PatentsLayer />
+{/*       <PatentsLayer />
       <PopulationLayer />
       <ResearchInvestmentLayer />
       <LifeQualityLayer />
-      <GnpLayer />
+      <GnpLayer /> */}
     </>
   )
 }

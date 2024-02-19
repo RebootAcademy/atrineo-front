@@ -54,20 +54,6 @@ function App() {
     }
   }, [collection])
 
-  const toggleMarkersDisplay = (layerId) => {
-    setShowMarkers(prevState => ({
-      ...prevState,
-      [layerId]: !prevState[layerId]
-    }))
-  }
-
-  const togglePatentsDisplay = (layerId) => {
-    setShowPatents(prevState => ({
-      ...prevState,
-      [layerId]: !prevState[layerId]
-    }))
-  }
-
   const toggleFinancingAccess = (value) => {
     setIsFinancingFilterActive(value)
   }
@@ -80,9 +66,7 @@ function App() {
     const newLayer = {
       patentsFilter,
       populationFilter,
-      populationBounds,
       researchInvestmentFilter,
-      researchInvestmentBounds,
       isFinancingFilterActive,
       isGovFundsReceivedActive,
       searchPolygon,
@@ -100,31 +84,34 @@ function App() {
     setLayers(prevLayers => [...prevLayers,
     {
       id: nextLayerId,
+      isVisible: true,
       data: newLayer,
-      isVisible: true
     }])
-    
-    setNextLayerId(prevId => prevId + 1)
 
-    // resetFilters()
+    setNextLayerId(prevId => prevId + 1)
+    resetFilters()
+
   }
 
   const resetFilters = () => {
-    setPatentsFilter([0, 100])
-    setPopulationFilter([0])
-    setPopulationBounds({ minPopulation: 0, maxPopulation: 0 })
-    setResearchInvestmentFilter([0])
-    setResearchInvestmentBounds({ minResearchInvestment: 0, maxResearchInvestment: 0 })
-    setIsFinancingFilterActive(false)
-    setIsGovFundsReceivedActive(false)
-    setSearchPolygon(null)
-    setLifeQuality(null)
-    setGnp(0)
+    setTimeout(() => {
+      setPatentsFilter([0, 100])
+      setPopulationFilter([0])
+      setResearchInvestmentFilter([0])
+      setIsFinancingFilterActive(false)
+      setIsGovFundsReceivedActive(false)
+      setSearchPolygon(null)
+      setLifeQuality(null)
+      setGnp(0)
+      // setPopulationBounds({ minPopulation: 0, maxPopulation: 0 })
+      // setResearchInvestmentBounds({ minResearchInvestment: 0, maxResearchInvestment: 0 })
+    }, 1500)
   }
 
   const clearLayerById = (layerId) => {
     localStorage.removeItem(`layer ${layerId}`)
     setLayers(prevLayers => prevLayers.filter(layer => layer.id !== layerId))
+    setNextLayerId(nextLayerId - 1)
 
     console.log('Layer deleted')
     console.log(localStorage)
@@ -133,8 +120,6 @@ function App() {
   const value = {
     patentsFilter,
     setPatentsFilter,
-    toggleMarkersDisplay,
-    togglePatentsDisplay,
     isFinancingFilterActive,
     setIsFinancingFilterActive,
     toggleFinancingAccess,

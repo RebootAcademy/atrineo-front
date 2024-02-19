@@ -9,7 +9,6 @@ function SavedLayerComponent() {
   return (
     <>
       {layers.map((layer, index) => (
-        // layer.isVisible &&
         <Card 
           key={layer.id} 
           className='absolute top-20 right-3 z-[9999999999] w-60 flex justify-between items-center bg-white p-2'

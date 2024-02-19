@@ -1,19 +1,29 @@
-import { useContext } from "react"
+import { useContext, useEffect, useState } from "react"
 import { LayerContext } from "../../../context/layerContext"
 import StartupsComponent from "../StartupsComponent/StartupsComponent"
+import PatentsLayer from "../PatentsLayer/PatentsLayer"
+import LifeQualityLayer from "../LifeQualityLayer/LifeQualityLayer"
+import GnpLayer from "../GnpLayer/GnpLayer"
+import PopulationLayer from "../PopulationLayer/PopulationLayer"
+import ResearchInvestmentLayer from "../ResearchInvestment/ResearchInvestment"
 
 function LayersManager() {
-  const { layers, nextLayerId } = useContext(LayerContext)
-
-  console.log(layers)
-  console.log(nextLayerId)
+  const { layers, setLayers } = useContext(LayerContext)
 
   return (
     <>
       {layers.map(layer => {
-        if (layer.id === nextLayerId - 1 && layer.isVisible) {
-          return <StartupsComponent key={layer.id} data={layer.data} />
-        }
+        console.log(layer)
+        return (
+          <div key={layer.id}>
+            <StartupsComponent />
+            <PatentsLayer />
+            <PopulationLayer />
+            <ResearchInvestmentLayer />
+            <LifeQualityLayer />
+            <GnpLayer />
+          </div>
+        )
       })}
     </>
   )
