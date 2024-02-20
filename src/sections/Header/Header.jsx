@@ -1,25 +1,19 @@
-// const Header = () => {
-//   return (
-//     <main className="h-20 flex items-center">
-//       <div className="text-3xl font-bold px-6">Atribase</div>
-//     </main>
-//   )
-// }
-
-// export default Header
-
 import { useState } from "react"
+import { useNavigate } from "react-router-dom"
+
 import CustomButton from "../../components/CustomButton/CustomButton"
 
 import { I18N } from "../../i18n"
 
 function Header () {
   const { headerOptions } = I18N.english
+  const navigate = useNavigate()
 
   const [ selected, setSelected ] = useState('Map')
 
   const selectOption = (text) => {
     setSelected(text)
+    navigate(text !== 'Map' ? text.toLowerCase() : '/')
   }
 
   const isSelected = (text) => {
