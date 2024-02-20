@@ -1,6 +1,6 @@
 //SUSTITUIRÍA A FILTEROPTIONS
 import { v4 as uuidv4 } from 'uuid'
-import { useContext } from "react"
+import { useContext, useRef } from "react"
 import PropTypes from 'prop-types'
 import { Card, CardContent, CardHeader, CardTitle } from "../../ui/Card/Card"
 import { Select, SelectTrigger, SelectContent, SelectValue, SelectItem } from "../../ui/Select/select"
@@ -16,16 +16,23 @@ function DisplayFilters() {
   const { collection } = useContext(CollectionContext)
   const layer = useContext(LayerContext)
 
-  const handleSliderChange = (e) => {
-    console.log(e)
+  const layerRef = useRef({})
+
+  const handleSliderChange = (value, target) => {
+    const newValue = value[0]
+    layerRef.current = { ...layerRef.current, [target]:newValue }
+    console.log(layerRef.current)
   }
 
-  const handleSwitchChange = (e) => {
-    console.log(e)
+  const handleSwitchChange = (value, target) => {
+    layerRef.current = { ...layerRef.current, [target]: value }
+    console.log(layerRef.current)
+
   }
 
-  const handleRadioChange = (e) => {
-    console.log(e)
+  const handleRadioChange = (value, target) => {
+    layerRef.current = { ...layerRef.current, [target]: value }
+    console.log(layerRef.current)
   }
 
   const fields = collection[0]?.data[0].fields.sort((a,b) => {

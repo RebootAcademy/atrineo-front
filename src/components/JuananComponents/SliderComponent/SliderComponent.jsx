@@ -2,6 +2,11 @@ import { Slider } from "../../ui/Slider/Slider"
 import { Label } from "../../ui/Label/Label"
 
 function SliderComponent({ name, handleChange }) {
+
+  const emitChange = (e) => {
+    handleChange(e, name)
+  }
+
   return (
     <>
       <Label 
@@ -11,7 +16,7 @@ function SliderComponent({ name, handleChange }) {
       </Label>
       <Slider
         id={name}
-        onValueChange={handleChange}
+        onValueChange={emitChange}
       />
     </>
   )

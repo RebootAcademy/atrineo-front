@@ -2,12 +2,17 @@ import { Label } from "../../ui/Label/Label"
 import { RadioGroup, RadioGroupItem } from "../../ui/RadioGroup/radio-group"
 
 function RadioComponent({name, handleChange, options}) {
+
+  const emitChange = (e) => {
+    handleChange(e, name)
+  }
+
   return (
     <>
       <Label htmlFor={name}>
         {name}
       </Label>
-      <RadioGroup onValueChange={handleChange}>
+      <RadioGroup onValueChange={emitChange}>
         {
           options.map(name => {
             return (
