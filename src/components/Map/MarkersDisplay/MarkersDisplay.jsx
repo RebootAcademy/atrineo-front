@@ -1,32 +1,11 @@
 /* eslint-disable no-unused-vars */
 import { CollectionContext } from '../../../context/collection'
-import { useContext, useEffect, useState } from 'react'
+import { useContext } from 'react'
 import { isWithinPolygon } from '../../../helpers'
 import MarkerComponent from '../MarkerComponent/MarkerComponent'
-import { LayerContext } from '../../../context/layerContext'
 
-function MarkersDisplay () {
+function MarkersDisplay ({ filters, searchPolygon }) {
   const { collection } = useContext(CollectionContext)
-  const { searchPolygon, nextLayerId } = useContext(LayerContext)
-
-  const [filters, setFilters] = useState({
-    isFinancingFilterActive: false,
-    isGovFundsReceivedActive: false
-  })
-
-  const currentLayer = nextLayerId - 1
-
-  const storage = window.localStorage
-
-  useEffect(() => {
-    const layerData = JSON.parse(storage.getItem(`layer ${currentLayer}`))
-    if (layerData) {
-      setFilters({
-        isFinancingFilterActive: layerData.isFinancingFilterActive,
-        isGovFundsReceivedActive: layerData.isGovFundsReceivedActive
-      })
-    }
-  }, [currentLayer])
 
   const displayMarkers = () => {
     return collection.flatMap((item) =>

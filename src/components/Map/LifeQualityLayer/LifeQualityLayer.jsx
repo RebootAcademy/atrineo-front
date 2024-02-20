@@ -1,29 +1,11 @@
 /* eslint-disable no-unused-vars */
-import { useContext, useState, useEffect } from 'react'
+import { useContext, useEffect } from 'react'
 import { CollectionContext } from '../../../context/collection'
 import { Circle } from 'react-leaflet'
-import { LayerContext } from '../../../context/layerContext'
 import { isWithinPolygon } from '../../../helpers'
 
-function LifeQualityLayer () {
+function LifeQualityLayer ({ filters, searchPolygon }) {
   const { collection } = useContext(CollectionContext)
-  const { searchPolygon, nextLayerId } = useContext(LayerContext)
-
-  const [filters, setFilters] = useState({
-    lifeQuality: null
-  })
-
-  const currentLayer = nextLayerId - 1
-  const storage = window.localStorage
-
-  useEffect(() => {
-    const layerData = JSON.parse(storage.getItem(`layer ${currentLayer}`))
-    if (layerData) {
-      setFilters({
-        lifeQuality: layerData.lifeQuality
-      })
-    }
-  }, [currentLayer])
 
   const companiesBySelectedLifeQuality = collection.flatMap(item =>
     item.data

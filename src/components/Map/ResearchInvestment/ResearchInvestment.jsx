@@ -1,33 +1,11 @@
 /* eslint-disable no-unused-vars */
-import { useContext, useState, useEffect } from 'react'
+import { useContext } from 'react'
 import { CollectionContext } from '../../../context/collection'
 import { Circle } from 'react-leaflet'
-import { LayerContext } from '../../../context/layerContext'
 import { isWithinPolygon } from '../../../helpers'
 
-function ResearchInvestmentLayer () {
+function ResearchInvestmentLayer ({ filters, searchPolygon }) {
   const { collection } = useContext(CollectionContext)
-  const { searchPolygon, nextLayerId } = useContext(LayerContext)
-
-  const [filters, setFilters] = useState({
-    researchInvestmentFilter: 0,
-    isFinancingFilterActive: false,
-    isGovFundsReceivedActive: false
-  })
-
-  const currentLayer = nextLayerId - 1
-  const storage = window.localStorage
-
-  useEffect(() => {
-    const layerData = JSON.parse(storage.getItem(`layer ${currentLayer}`))
-    if (layerData) {
-      setFilters({
-        researchInvestmentFilter: layerData.researchInvestmentFilter || 0,
-        isFinancingFilterActive: layerData.isFinancingFilterActive,
-        isGovFundsReceivedActive: layerData.isGovFundsReceivedActive
-      })
-    }
-  }, [currentLayer])
 
   const filteredItems = collection.flatMap(item =>
     item.data

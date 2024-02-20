@@ -3,7 +3,7 @@
 import MarkersDisplay from '../MarkersDisplay/MarkersDisplay'
 import MarkerClusterGroup from 'react-leaflet-cluster'
 
-function StartupsComponent () {
+function StartupsComponent ({ filters, searchPolygon }) {
   return (
     <>
       <MarkerClusterGroup
@@ -18,7 +18,7 @@ function StartupsComponent () {
           })
         }}
       >
-        <MarkersDisplay />
+        <MarkersDisplay filters={filters} searchPolygon={searchPolygon} />
       </MarkerClusterGroup>
     </>
   )

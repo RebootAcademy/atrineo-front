@@ -78,33 +78,28 @@ function App () {
 
     // Guardar solo la nueva layer en localStorage bajo una clave única
     storage.setItem(`layer ${nextLayerId}`, JSON.stringify(newLayer))
-    console.log(`Layer ${nextLayerId} saved to localStorage`)
+    console.log(`Layer ${nextLayerId} saved to localStorage`, storage)
 
     // Actualizar el estado de layers y nextLayerId
-    setLayers(prevLayers => [...prevLayers,
-      {
-        id: nextLayerId,
-        isVisible: true,
-        data: newLayer
-      }])
+    setLayers(prevLayers => [...prevLayers, {
+      id: nextLayerId,
+      isVisible: true,
+      data: newLayer
+    }])
 
     setNextLayerId(prevId => prevId + 1)
     resetFilters()
   }
 
   const resetFilters = () => {
-    setTimeout(() => {
-      setPatentsFilter([0, 100])
-      setPopulationFilter([0])
-      setResearchInvestmentFilter([0])
-      setIsFinancingFilterActive(false)
-      setIsGovFundsReceivedActive(false)
-      setSearchPolygon(null)
-      setLifeQuality(null)
-      setGnp(0)
-      // setPopulationBounds({ minPopulation: 0, maxPopulation: 0 })
-      // setResearchInvestmentBounds({ minResearchInvestment: 0, maxResearchInvestment: 0 })
-    }, 1500)
+    setPatentsFilter([0, 100])
+    setPopulationFilter([0])
+    setResearchInvestmentFilter([0])
+    setIsFinancingFilterActive(false)
+    setIsGovFundsReceivedActive(false)
+    setSearchPolygon(null)
+    setLifeQuality(null)
+    setGnp(0)
   }
 
   const clearLayerById = (layerId) => {
@@ -145,10 +140,9 @@ function App () {
     mapDivision,
     setMapDivision,
     nextLayerId,
-    layers
+    layers,
+    setLayers
   }
-
-  console.log(populationFilter)
 
   return (
     <>
