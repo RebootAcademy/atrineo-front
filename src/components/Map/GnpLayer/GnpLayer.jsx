@@ -1,10 +1,11 @@
-import { useContext } from "react"
-import { CollectionContext } from "../../../context/collection"
-import { Circle } from "react-leaflet"
-import { LayerContext } from "../../../context/layerContext"
-import { isWithinPolygon } from "../../../helpers"
+/* eslint-disable no-unused-vars */
+import { useContext } from 'react'
+import { CollectionContext } from '../../../context/collection'
+import { Circle } from 'react-leaflet'
+import { LayerContext } from '../../../context/layerContext'
+import { isWithinPolygon } from '../../../helpers'
 
-function GnpLayer() {
+function GnpLayer () {
   const { collection } = useContext(CollectionContext)
   const { gnp, searchPolygon } = useContext(LayerContext)
 
@@ -18,7 +19,7 @@ function GnpLayer() {
     <Circle
       key={company._id}
       center={[company.latitude, company.longitude]}
-      pathOptions={{ fillColor: "purple", stroke: false, fillOpacity: 0.3 }}
+      pathOptions={{ fillColor: 'purple', stroke: false, fillOpacity: 0.3 }}
       radius={company.gnp / 35000}
     >
     </Circle>

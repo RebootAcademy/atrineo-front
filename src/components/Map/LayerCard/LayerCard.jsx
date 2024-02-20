@@ -1,19 +1,20 @@
-import { useContext } from "react"
-import CustomButton from "../../CustomButton/CustomButton"
+/* eslint-disable no-unused-vars */
+import { useContext } from 'react'
+import CustomButton from '../../CustomButton/CustomButton'
 import { SheetClose } from '../../ui/Sheet/sheet'
 import {
   Card,
   CardContent,
   CardFooter,
   CardHeader,
-  CardTitle,
-} from "../../ui/Card/Card"
+  CardTitle
+} from '../../ui/Card/Card'
 
-import FilterGroup from "../FilterGroup/Filtergroup"
+import FilterGroup from '../FilterGroup/Filtergroup'
 import PropTypes from 'prop-types'
-import { LayerContext } from "../../../context/layerContext"
+import { LayerContext } from '../../../context/layerContext'
 
-function LayerCard() {
+function LayerCard () {
   const { saveCurrentLayer, nextLayerId } = useContext(LayerContext)
 
   return (
@@ -26,7 +27,7 @@ function LayerCard() {
       <CardContent>
         <FilterGroup
           layers={[
-            { id: 'startups', name: 'Startups' },
+            { id: 'startups', name: 'Startups' }
             // { id: 'population', name: 'Region' }
           ]}
         />
@@ -34,9 +35,9 @@ function LayerCard() {
 
       <CardFooter>
         <SheetClose>
-          <CustomButton 
+          <CustomButton
             text="Save"
-            fn={saveCurrentLayer} 
+            fn={saveCurrentLayer}
           />
         </SheetClose>
       </CardFooter>

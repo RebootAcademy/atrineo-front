@@ -1,14 +1,15 @@
-import { useContext, useEffect, useState } from "react"
-import { LayerContext } from "../../../context/layerContext"
-import StartupsComponent from "../StartupsComponent/StartupsComponent"
-import PatentsLayer from "../PatentsLayer/PatentsLayer"
-import LifeQualityLayer from "../LifeQualityLayer/LifeQualityLayer"
-import GnpLayer from "../GnpLayer/GnpLayer"
-import PopulationLayer from "../PopulationLayer/PopulationLayer"
-import ResearchInvestmentLayer from "../ResearchInvestment/ResearchInvestment"
+/* eslint-disable no-unused-vars */
+import { useContext } from 'react'
+import { LayerContext } from '../../../context/layerContext'
+import StartupsComponent from '../StartupsComponent/StartupsComponent'
+import PatentsLayer from '../PatentsLayer/PatentsLayer'
+import LifeQualityLayer from '../LifeQualityLayer/LifeQualityLayer'
+import GnpLayer from '../GnpLayer/GnpLayer'
+import PopulationLayer from '../PopulationLayer/PopulationLayer'
+import ResearchInvestmentLayer from '../ResearchInvestment/ResearchInvestment'
 
-function LayersManager() {
-  const { layers, setLayers } = useContext(LayerContext)
+function LayersManager () {
+  const { layers } = useContext(LayerContext)
 
   return (
     <>

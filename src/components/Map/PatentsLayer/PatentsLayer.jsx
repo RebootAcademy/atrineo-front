@@ -1,10 +1,11 @@
-import { useContext } from "react"
-import { CollectionContext } from "../../../context/collection"
-import { LayerContext } from "../../../context/layerContext"
-import { Circle } from "react-leaflet"
-import { isWithinPolygon } from "../../../helpers"
+/* eslint-disable no-unused-vars */
+import { useContext } from 'react'
+import { CollectionContext } from '../../../context/collection'
+import { LayerContext } from '../../../context/layerContext'
+import { Circle } from 'react-leaflet'
+import { isWithinPolygon } from '../../../helpers'
 
-function PatentsLayer() {
+function PatentsLayer () {
   const { collection } = useContext(CollectionContext)
   const { patentsFilter, searchPolygon, isFinancingFilterActive, isGovFundsReceivedActive } = useContext(LayerContext)
 
@@ -20,7 +21,7 @@ function PatentsLayer() {
     <Circle
       key={filteredItem._id}
       center={[filteredItem.latitude, filteredItem.longitude]}
-      pathOptions={{ fillColor: "orange", stroke: false, fillOpacity: 0.4 }}
+      pathOptions={{ fillColor: 'orange', stroke: false, fillOpacity: 0.4 }}
       radius={filteredItem.patents * 150}
     />
   ))

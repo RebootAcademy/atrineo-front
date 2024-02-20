@@ -1,12 +1,14 @@
-import MarkersDisplay from "../MarkersDisplay/MarkersDisplay"
-import MarkerClusterGroup from "react-leaflet-cluster"
-import PatentsLayer from "../PatentsLayer/PatentsLayer"
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-undef */
+import MarkersDisplay from '../MarkersDisplay/MarkersDisplay'
+import MarkerClusterGroup from 'react-leaflet-cluster'
+/* import PatentsLayer from "../PatentsLayer/PatentsLayer"
 import LifeQualityLayer from "../LifeQualityLayer/LifeQualityLayer"
 import GnpLayer from "../GnpLayer/GnpLayer"
 import PopulationLayer from "../PopulationLayer/PopulationLayer"
-import ResearchInvestmentLayer from "../ResearchInvestment/ResearchInvestment"
+import ResearchInvestmentLayer from "../ResearchInvestment/ResearchInvestment" */
 
-function StartupsComponent() {
+function StartupsComponent () {
   return (
     <>
       <MarkerClusterGroup
@@ -17,7 +19,7 @@ function StartupsComponent() {
           return L.divIcon({
             html: `<span>${cluster.getChildCount()}</span>`,
             className: 'rounded-full text-white text-sm font-bold text-center bg-radial-custom', // Clase personalizada
-            iconSize: L.point(40, 40, true),
+            iconSize: L.point(40, 40, true)
           })
         }}
       >

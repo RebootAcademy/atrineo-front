@@ -1,10 +1,11 @@
-import { useContext } from "react"
-import { CollectionContext } from "../../../context/collection"
-import { Circle } from "react-leaflet"
-import { LayerContext } from "../../../context/layerContext"
-import { isWithinPolygon } from "../../../helpers"
+/* eslint-disable no-unused-vars */
+import { useContext } from 'react'
+import { CollectionContext } from '../../../context/collection'
+import { Circle } from 'react-leaflet'
+import { LayerContext } from '../../../context/layerContext'
+import { isWithinPolygon } from '../../../helpers'
 
-function ResearchInvestmentLayer() {
+function ResearchInvestmentLayer () {
   const { collection } = useContext(CollectionContext)
   const { researchInvestmentFilter, isFinancingFilterActive, isGovFundsReceivedActive, searchPolygon } = useContext(LayerContext)
 
@@ -20,7 +21,7 @@ function ResearchInvestmentLayer() {
     <Circle
       key={filteredItem._id}
       center={[filteredItem.latitude, filteredItem.longitude]}
-      pathOptions={{ fillColor: "green", stroke: false, fillOpacity: 0.4 }}
+      pathOptions={{ fillColor: 'green', stroke: false, fillOpacity: 0.4 }}
       radius={(filteredItem.researchInvestment) / 8000}
     />
   ))

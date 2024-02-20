@@ -1,5 +1,5 @@
-import { point, polygon } from "@turf/helpers"
-import booleanPointInPolygon from "@turf/boolean-point-in-polygon"
+import { point, polygon } from '@turf/helpers'
+import booleanPointInPolygon from '@turf/boolean-point-in-polygon'
 
 /**
  * Función para verificar si un elemento está dentro de un polígono.
@@ -38,4 +38,3 @@ export const CalculateResearchInvestmentBounds = (data) => {
 
   return { minResearchInvestment, maxResearchInvestment }
 }
-

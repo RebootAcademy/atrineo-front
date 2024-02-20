@@ -1,10 +1,11 @@
-import LayerItem from "./LayerItem"
-import FilterOptions from "./FilterOptions"
-import { Card, CardContent, CardHeader, CardTitle } from "../../ui/Card/Card"
+/* eslint-disable no-unused-vars */
+import LayerItem from './LayerItem'
+import FilterOptions from './FilterOptions'
+import { Card, CardContent, CardHeader, CardTitle } from '../../ui/Card/Card'
 
 import PropTypes from 'prop-types'
 
-function FilterGroup({ title, layers }) {
+function FilterGroup ({ title, layers }) {
   return (
     <Card className='mb-2 w-[300px] pt-0 p-2'>
       <CardHeader>

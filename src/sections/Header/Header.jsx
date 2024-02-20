@@ -1,29 +1,20 @@
-// const Header = () => {
-//   return (
-//     <main className="h-20 flex items-center">
-//       <div className="text-3xl font-bold px-6">Atribase</div>
-//     </main>
-//   )
-// }
+/* eslint-disable no-unused-vars */
+import { useState } from 'react'
+import CustomButton from '../../components/CustomButton/CustomButton'
 
-// export default Header
-
-import { useState } from "react"
-import CustomButton from "../../components/CustomButton/CustomButton"
-
-import { I18N } from "../../i18n"
+import { I18N } from '../../i18n'
 
 function Header () {
   const { headerOptions } = I18N.english
 
-  const [ selected, setSelected ] = useState('Map')
+  const [selected, setSelected] = useState('Map')
 
   const selectOption = (text) => {
     setSelected(text)
   }
 
   const isSelected = (text) => {
-    return selected === text ? "border-t-2 border-primary" : ""
+    return selected === text ? 'border-t-2 border-primary' : ''
   }
 
   const displayOptions = () => {
@@ -50,9 +41,9 @@ function Header () {
           {/* <div className="grid grid-cols-3 bg-white-400 p-6 w-max-100 h-24 md: h-32"> */}
             <div className="flex w-full">
             <button>
-              <img 
+              <img
                 src="./atrineo_icon-removebg-preview.png"
-                alt="Atrineo icon" 
+                alt="Atrineo icon"
                 className="p-4 w-32 md:w-32"
               />
             </button>
@@ -66,4 +57,4 @@ function Header () {
   )
 }
 
-export default Header;
+export default Header

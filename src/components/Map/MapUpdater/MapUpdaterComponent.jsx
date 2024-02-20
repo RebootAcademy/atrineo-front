@@ -1,8 +1,8 @@
-import PropTypes from "prop-types"
-import { useEffect } from "react"
-import { useMap, useMapEvent } from "react-leaflet"
+import PropTypes from 'prop-types'
+import { useEffect } from 'react'
+import { useMap, useMapEvent } from 'react-leaflet'
 
-export function MapUpdater({ center }) {
+export function MapUpdater ({ center }) {
   const map = useMap()
 
   useEffect(() => {
@@ -12,7 +12,7 @@ export function MapUpdater({ center }) {
   return null
 }
 
-export function FlyToMarker({ center }) {
+export function FlyToMarker ({ center }) {
   const map = useMapEvent('click', () => {
     map.flyTo(center, 10)
   })

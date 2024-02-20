@@ -1,14 +1,15 @@
-import { useContext, useState } from "react"
-import { LayerContext } from "../../../context/layerContext"
-import { Switch } from "../../ui/Switch/Switch"
-import { Label } from "../../ui/Label/Label"
-import { Select, SelectTrigger, SelectContent, SelectValue, SelectItem } from "../../ui/Select/select"
-import { Slider } from "../../ui/Slider/Slider"
-import { CollectionContext } from "../../../context/collection"
-import { RadioGroup, RadioGroupItem } from "../../ui/RadioGroup/radio-group"
-import { Slider2 } from "../../ui/Slider2/Slider2"
+/* eslint-disable no-unused-vars */
+import { useContext } from 'react'
+import { LayerContext } from '../../../context/layerContext'
+import { Switch } from '../../ui/Switch/Switch'
+import { Label } from '../../ui/Label/Label'
+import { Select, SelectTrigger, SelectContent, SelectValue, SelectItem } from '../../ui/Select/select'
+import { Slider } from '../../ui/Slider/Slider'
+import { CollectionContext } from '../../../context/collection'
+import { RadioGroup, RadioGroupItem } from '../../ui/RadioGroup/radio-group'
+import { Slider2 } from '../../ui/Slider2/Slider2'
 
-function FilterOptions() {
+function FilterOptions () {
   const { collection } = useContext(CollectionContext)
 
   const {
@@ -51,8 +52,7 @@ function FilterOptions() {
     setResearchInvestmentFilter(value)
   }
 
-
-  //con el regionName.map se obtiene la lista de distritos y cada elemento de la lista se representa en SelectItem
+  // con el regionName.map se obtiene la lista de distritos y cada elemento de la lista se representa en SelectItem
   const handlePatentsMinChange = (e) => {
     const minVal = Math.max(0, parseInt(e.target.value, 10))
     if (minVal <= patentsFilter[1]) {

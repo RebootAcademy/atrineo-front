@@ -1,18 +1,20 @@
+/* eslint-disable no-unused-vars */
 import { useEffect, useState } from 'react'
 import { QueryClient, QueryClientProvider } from 'react-query'
-import { RouterProvider } from 'react-router-dom'
-import { CollectionContext } from './context/collection'
-import { LayerContext } from './context/layerContext'
 import { router } from './router'
+import { RouterProvider } from 'react-router-dom'
+
+import { LayerContext } from './context/layerContext'
+import { CollectionContext } from './context/collection'
 
 import { CalculatePopulationBounds, CalculateResearchInvestmentBounds } from './helpers'
 import { useDistrictsCoords } from './hooks/useDistrictCoords'
 
 const queryClient = new QueryClient()
 
-function App() {
+function App () {
   const data = useDistrictsCoords({}) || []
-  const [mapDivision, setMapDivision] = useState("division3")
+  const [mapDivision, setMapDivision] = useState('division3')
 
   const [collection, setCollection] = useState([])
 
@@ -29,15 +31,17 @@ function App() {
   const [lifeQuality, setLifeQuality] = useState(null)
   const [gnp, setGnp] = useState(0)
   const [companies, setCompanies] = useState([])
-  const [selectedRegion, setSelectedRegion] = useState("")
+  const [selectedRegion, setSelectedRegion] = useState('')
 
   const [layers, setLayers] = useState([])
   const [nextLayerId, setNextLayerId] = useState(1)
 
   const collectionValue = { collection, setCollection }
 
+  const storage = window.localStorage
+
   useEffect(() => {
-    localStorage.clear()
+    storage.clear()
   }, [])
 
   useEffect(() => {
@@ -71,26 +75,23 @@ function App() {
       isGovFundsReceivedActive,
       searchPolygon,
       lifeQuality,
-      gnp,
+      gnp
     }
 
     // Guardar solo la nueva layer en localStorage bajo una clave única
-    localStorage.setItem(`layer ${nextLayerId}`, JSON.stringify(newLayer))
+    storage.setItem(`layer ${nextLayerId}`, JSON.stringify(newLayer))
     console.log(`Layer ${nextLayerId} saved to localStorage`)
-
-    console.log(localStorage)
 
     // Actualizar el estado de layers y nextLayerId
     setLayers(prevLayers => [...prevLayers,
-    {
-      id: nextLayerId,
-      isVisible: true,
-      data: newLayer,
-    }])
+      {
+        id: nextLayerId,
+        isVisible: true,
+        data: newLayer
+      }])
 
     setNextLayerId(prevId => prevId + 1)
     resetFilters()
-
   }
 
   const resetFilters = () => {
@@ -109,12 +110,12 @@ function App() {
   }
 
   const clearLayerById = (layerId) => {
-    localStorage.removeItem(`layer ${layerId}`)
+    storage.removeItem(`layer ${layerId}`)
     setLayers(prevLayers => prevLayers.filter(layer => layer.id !== layerId))
     setNextLayerId(nextLayerId - 1)
 
     console.log('Layer deleted')
-    console.log(localStorage)
+    console.log(storage)
   }
 
   const value = {
@@ -146,7 +147,7 @@ function App() {
     mapDivision,
     setMapDivision,
     nextLayerId,
-    layers,
+    layers
   }
 
   return (
@@ -163,4 +164,3 @@ function App() {
 }
 
 export default App
-

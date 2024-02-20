@@ -1,17 +1,18 @@
-import { useContext } from "react"
-import { LayerContext } from "../../../context/layerContext"
-import { Circle } from "react-leaflet"
-import { useDistrictsCoords } from "../../../hooks/useDistrictCoords"
-import { isWithinPolygon } from "../../../helpers"
+/* eslint-disable no-unused-vars */
+import { useContext } from 'react'
+import { LayerContext } from '../../../context/layerContext'
+import { Circle } from 'react-leaflet'
+import { useDistrictsCoords } from '../../../hooks/useDistrictCoords'
+import { isWithinPolygon } from '../../../helpers'
 
-function PopulationLayer() {
+function PopulationLayer () {
   const { populationFilter, searchPolygon } = useContext(LayerContext)
   const data = useDistrictsCoords({}) || []
 
   const filteredItems = data
     .filter((dataItem) => !isNaN(dataItem.districtPopulation) && dataItem.districtPopulation <= populationFilter)
     .filter((dataItem) => isWithinPolygon(dataItem, searchPolygon)
-  )
+    )
 
   const circles = filteredItems.map((filteredItem, index) => (
     <Circle
