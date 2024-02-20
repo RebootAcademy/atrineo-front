@@ -22,7 +22,7 @@ function DisplayFilters() {
   const { collection } = useContext(CollectionContext)
   const layer = useContext(LayerContext)
 
-  const layerRef = useRef({})
+  const layerRef = useRef({}) //Objeto con los filtros modificados para esta nueva capa
 
   const handleFilterChange = (value, target) => {
     layerRef.current = { ...layerRef.current, [target]:value }
@@ -74,6 +74,7 @@ function DisplayFilters() {
 
   return (
     <div className="flex flex-col gap-4">
+      {/*FALTA METER EL SELECTOR DE LOS DISTRITOS*/ }
       { displayBooleanFields() }
       { displayNumericFields() }
       { displayStrings(stringOptions) }
