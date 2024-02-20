@@ -2,6 +2,8 @@ import LayerItem from "./LayerItem"
 import FilterOptions from "./FilterOptions"
 import { Card, CardContent, CardHeader, CardTitle } from "../../ui/Card/Card"
 
+import DisplayFilters from "../../JuananComponents/DisplayFilters/DisplayFilters"
+
 import PropTypes from 'prop-types'
 
 function FilterGroup({ title, layers }) {
@@ -14,7 +16,8 @@ function FilterGroup({ title, layers }) {
           {layers && layers.map((layer, id) => (
             <div key={id}>
               <LayerItem layer={layer} />
-                <FilterOptions />
+                {/* <FilterOptions /> */}
+                <DisplayFilters />
             </div>
           ))}
       </CardContent>

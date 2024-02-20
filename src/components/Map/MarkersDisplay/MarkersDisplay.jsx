@@ -10,7 +10,8 @@ function MarkersDisplay() {
 
   const displayMarkers = () => {
     console.log(selectedRegion)
-    return collection.flatMap((item) =>
+    return collection.flatMap((item) =>{
+      console.log(item.data)
       item.data
         // Primero, verifica si el filtro de financiamiento está activo antes de aplicar cualquier filtrado
         .filter((dataItem) => !isFinancingFilterActive || dataItem.financingAccess)
@@ -24,7 +25,7 @@ function MarkersDisplay() {
             name={filteredDataItem.name}
           />
           ))
-          )
+        })
   }
 
   return displayMarkers()
