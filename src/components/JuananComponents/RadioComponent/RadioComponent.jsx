@@ -3,8 +3,8 @@ import { RadioGroup, RadioGroupItem } from "../../ui/RadioGroup/radio-group"
 
 function RadioComponent({name, handleChange, options}) {
 
-  const emitChange = (e) => {
-    handleChange(e, name)
+  const emitChange = (value) => {
+    handleChange(value, name)
   }
 
   return (

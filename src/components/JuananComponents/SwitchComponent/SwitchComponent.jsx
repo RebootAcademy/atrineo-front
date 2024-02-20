@@ -3,8 +3,8 @@ import { Label } from "../../ui/Label/Label"
 
 function SwitchComponent({name, handleChange}) {
 
-  const emitChange = (e) => {
-    handleChange(e, name)
+  const emitChange = (value) => {
+    handleChange(value, name)
   }
 
   return (

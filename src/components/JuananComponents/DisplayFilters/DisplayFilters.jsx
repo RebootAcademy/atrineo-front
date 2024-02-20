@@ -12,112 +12,70 @@ import SliderComponent from '../SliderComponent/SliderComponent'
 import { CollectionContext } from "../../../context/collection"
 import { LayerContext } from "../../../context/layerContext"
 
+import { 
+  extractNumericFields,
+  extractStringOptions,
+  createStringOptionsObject 
+} from '../../../helpers'
+
 function DisplayFilters() {
   const { collection } = useContext(CollectionContext)
   const layer = useContext(LayerContext)
 
   const layerRef = useRef({})
 
-  const handleSliderChange = (value, target) => {
-    const newValue = value[0]
-    layerRef.current = { ...layerRef.current, [target]:newValue }
+  const handleFilterChange = (value, target) => {
+    layerRef.current = { ...layerRef.current, [target]:value }
     console.log(layerRef.current)
   }
 
-  const handleSwitchChange = (value, target) => {
-    layerRef.current = { ...layerRef.current, [target]: value }
-    console.log(layerRef.current)
+  const fields = collection[0]?.data[0].fields
 
-  }
+  const booleanFields = fields.filter(field => field.fieldType === 'boolean')
+  const numericFields = extractNumericFields(fields)
+  const stringOptions = extractStringOptions(fields) //Filtra las columnas que van a usarse como radio buttons
 
-  const handleRadioChange = (value, target) => {
-    layerRef.current = { ...layerRef.current, [target]: value }
-    console.log(layerRef.current)
-  }
-
-  const fields = collection[0]?.data[0].fields.sort((a,b) => {
-    return (
-      a.fieldType.localeCompare(b.fieldType) - 
-      b.fieldType.localeCompare(a.fieldType)
-    )
-  }).filter(field => field.fieldName !== 'districtId' && 
-                      field.fieldName !== 'districtName' &&
-                      field.fieldName !== 'name' &&
-                      field.fieldName !== 'latitude' &&
-                      field.fieldName !== 'longitude'
-                      )
-
-  const stringOptions = fields
-    .filter(field => field.fieldType === 'string' && 
-                      field.fieldName !== 'name' &&
-                      field.fieldName !== 'latitude' &&
-                      field.fieldName !== 'longitude' &&
-                      field.fieldName !== 'districtName'
-            )
-    .map(field =>  field.fieldName )
-
-  const optionsObj = {};
-
-  stringOptions.forEach(option => {
-    optionsObj[option] = new Set();
-  })
-
-  collection[0]?.data.forEach(row => {
-    row.fields.forEach(field => {
-      if (stringOptions.includes(field.fieldName)) {
-        optionsObj[field.fieldName].add(field.fieldValue);
-      }
-    })
-  })
-
-  for (const [key, value] of Object.entries(optionsObj)) {
-    optionsObj[key] = Array.from(value);
-  }
-
-  const checkField = (field) => {
-    switch (field.fieldType) {
-      case 'number':
-        return( 
-            <SliderComponent 
-              name={field.fieldName}
-              handleChange={handleSliderChange}
-            />
-          )
-      case 'boolean':
-        return (
-          <SwitchComponent
-            name={field.fieldName}
-            handleChange={handleSwitchChange}
-          />
-        )
-    }
-  }
+  // Almacena las distintas opciones posibles para cada grupo de radio buttons
+  const optionsObj = createStringOptionsObject(stringOptions, collection[0]?.data)
 
   const displayStrings = (arr) => {
     return arr.map(option => {
       return (
         <RadioComponent
           name={option}
-          handleChange={handleRadioChange}
+          handleChange={handleFilterChange}
           options={optionsObj[option]}
         />
       )
     })
   }
 
-  const displayFields = () => {
-    return fields.map(field => {
+  const displayNumericFields = () => {
+    return numericFields.map(field => {
+      return (
+        <SliderComponent
+          name={field.fieldName}
+          handleChange={handleFilterChange}
+        />
+      )
+    })
+  }
+
+  const displayBooleanFields = () => {
+    return booleanFields.map(field => {
       return(
-        <>
-          { checkField(field) }
-        </>
+        <SwitchComponent
+          name={field.fieldName}
+          handleChange={handleFilterChange}
+        />
       )
     })
   }
 
   return (
     <div className="flex flex-col gap-4">
-      { displayFields() }
+      { displayBooleanFields() }
+      { displayNumericFields() }
       { displayStrings(stringOptions) }
     </div>
   )
