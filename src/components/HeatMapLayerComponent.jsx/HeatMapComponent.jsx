@@ -22,8 +22,8 @@ const HeatMapLayer = ({ onRegionSelected }) => {
     const currentDistrict = feature.properties.NAME_3
 
     if (
+      (selectedNameDistrict.length === 1 && selectedNameDistrict[0].value === 'All') ||
       (selectedRegion && selectedRegion.feature.properties.ID_3 === currentGroupId) ||
-      // (selectedNameDistrict && selectedNameDistrict[0]?.value.includes(currentDistrict))
       (selectedNameDistrict && selectedNameDistrict.some(district => district.value === currentDistrict))
     ) {
       return selectedStyle

@@ -35,11 +35,14 @@ function FilterOptions() {
     collection
   } = useContext(CollectionContext)
 
-  //empieza por on algo porque es un evento y es el formato por defecto
   const onDistrictNameChange = (districts) => {
-    setSelectedNameDistrict(districts)
+    const isAllSelected = districts.some(district => district.value === 'All')
+    if (isAllSelected) {
+      setSelectedNameDistrict(districtSelection())
+    } else {
+      setSelectedNameDistrict(districts)
+    }
   }
-
   const handleFinancingSwitchChange = (newState) => {
     setIsFinancingFilterActive(newState)
   }
@@ -118,12 +121,15 @@ function FilterOptions() {
 
     nameRegion.sort((region1, region2) => region1.name.localeCompare(region2.name))
 
-    const districtNames = nameRegion.map((filteredRegion) => (
-      {
-        value: filteredRegion.name,
-        label: filteredRegion.name
-      }
-    ))
+    const districtNames = [
+      {value: 'All', label: 'All'},
+      ...nameRegion.map((filteredRegion) => (
+        {
+          value: filteredRegion.name,
+          label: filteredRegion.name
+        }
+      ))
+    ]
     return districtNames
 
   }
@@ -131,8 +137,8 @@ function FilterOptions() {
 
   return (
     <div className="flex flex-col gap-4">
+      <Label htmlFor="disctrictName">District Name:</Label>
       <div className="flex items-center space-x-2">
-        <Label htmlFor="disctrictName">District Name:</Label>
         <MultipleSelector
           placeholder="Select..."
           onChange={onDistrictNameChange}

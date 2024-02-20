@@ -29,7 +29,7 @@ function App() {
   const [isFinancingFilterActive, setIsFinancingFilterActive] = useState(false)
   const [isGovFundsReceivedActive, setIsGovFundsReceivedActive] = useState(false)
   const [searchPolygon, setSearchPolygon] = useState(null)
-  const collectionValue = {collection, setCollection}
+  const collectionValue = { collection, setCollection }
   const [lifeQuality, setLifeQuality] = useState(null)
   const [gnp, setGnp] = useState(0)
   const [companies, setCompanies] = useState([])
@@ -37,6 +37,7 @@ function App() {
   const [selectedNameDistrict, setSelectedNameDistrict] = useState([])
 
   const [isSavedLayerVisible, setIsSavedLayerVisible] = useState(false)
+  const [enableOption, setEnableOption] = useState(false)
 
   useEffect(() => {
     if (data.length > 0) {
@@ -44,21 +45,21 @@ function App() {
       setPopulationBounds({ minPopulation, maxPopulation })
     }
   }, [data])
-  
+
   useEffect(() => {
     if (collection.length > 0) {
       const { minResearchInvestment, maxResearchInvestment } = CalculateResearchInvestmentBounds(collection)
       setResearchInvestmentBounds({ minResearchInvestment, maxResearchInvestment })
     }
   }, [collection])
-  
+
   const toggleMarkersDisplay = (layerId) => {
     setShowMarkers(prevState => ({
       ...prevState,
       [layerId]: !prevState[layerId]
     }))
   }
-  
+
 
   const toggleFinancingAccess = (value) => {
     setIsFinancingFilterActive(value)
@@ -88,7 +89,7 @@ function App() {
 
   const clearSavedState = () => {
     localStorage.removeItem('appState')
-    
+
     setPatentsFilter([0, 100])
     setPopulationFilter([0])
     setPopulationBounds({ minPopulation: 0, maxPopulation: 0 })
@@ -104,7 +105,7 @@ function App() {
 
     console.log('State cleared')
   }
-  
+
   const value = {
     showMarkers,
     setShowMarkers,
@@ -115,12 +116,12 @@ function App() {
     setIsFinancingFilterActive,
     toggleFinancingAccess,
     isGovFundsReceivedActive,
-    toggleGovFundsReceived, 
+    toggleGovFundsReceived,
     searchPolygon,
     setSearchPolygon,
     lifeQuality,
     setLifeQuality,
-    gnp, 
+    gnp,
     setGnp,
     populationFilter,
     setPopulationFilter,
@@ -128,9 +129,9 @@ function App() {
     researchInvestmentFilter,
     setResearchInvestmentFilter,
     ...researchInvestmentBounds,
-    companies, 
-    setCompanies, 
-    selectedRegion, 
+    companies,
+    setCompanies,
+    selectedRegion,
     setSelectedRegion,
     saveCurrentState,
     clearSavedState,
@@ -139,8 +140,10 @@ function App() {
     setMapDivision,
     selectedNameDistrict,
     setSelectedNameDistrict,
-    mapCenter, 
-    setMapCenter
+    mapCenter,
+    setMapCenter,
+    enableOption,
+    setEnableOption
   }
 
   return (
