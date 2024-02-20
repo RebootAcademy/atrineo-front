@@ -8,12 +8,10 @@ import { LayerContext } from './context/layerContext'
 import { CollectionContext } from './context/collection'
 
 import { CalculatePopulationBounds, CalculateResearchInvestmentBounds } from './helpers'
-import { useDistrictsCoords } from './hooks/useDistrictCoords'
 
 const queryClient = new QueryClient()
 
 function App () {
-  const data = useDistrictsCoords({}) || []
   const [mapDivision, setMapDivision] = useState('division3')
 
   const [collection, setCollection] = useState([])
@@ -45,11 +43,11 @@ function App () {
   }, [])
 
   useEffect(() => {
-    if (data.length > 0) {
-      const { minPopulation, maxPopulation } = CalculatePopulationBounds(data)
+    if (collection.length > 0) {
+      const { minPopulation, maxPopulation } = CalculatePopulationBounds(collection)
       setPopulationBounds({ minPopulation, maxPopulation })
     }
-  }, [data])
+  }, [collection])
 
   useEffect(() => {
     if (collection.length > 0) {
@@ -149,6 +147,8 @@ function App () {
     nextLayerId,
     layers
   }
+
+  console.log(populationFilter)
 
   return (
     <>

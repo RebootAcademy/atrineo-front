@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 /* eslint-disable no-unused-vars */
 import { useContext, useState, useEffect } from 'react'
 import { CollectionContext } from '../../../context/collection'
@@ -8,17 +7,20 @@ import { isWithinPolygon } from '../../../helpers'
 
 function GnpLayer () {
   const { collection } = useContext(CollectionContext)
-  const { searchPolygon } = useContext(LayerContext)
+  const { searchPolygon, nextLayerId } = useContext(LayerContext)
   const [filters, setFilters] = useState({ gnp: [0] })
 
+  const currentLayer = nextLayerId - 1
+  const storage = window.localStorage
+
   useEffect(() => {
-    const layerData = JSON.parse(localStorage.getItem('layer 1'))
+    const layerData = JSON.parse(storage.getItem(`layer ${currentLayer}`))
     if (layerData) {
       setFilters({
         gnp: layerData.gnp || [0]
       })
     }
-  }, [])
+  }, [currentLayer])
 
   const companiesBySelectedGnp = collection.flatMap(item =>
     item.data

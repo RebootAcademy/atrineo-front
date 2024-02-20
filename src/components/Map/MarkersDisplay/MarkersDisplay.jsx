@@ -7,24 +7,26 @@ import { LayerContext } from '../../../context/layerContext'
 
 function MarkersDisplay () {
   const { collection } = useContext(CollectionContext)
-  const { searchPolygon } = useContext(LayerContext)
+  const { searchPolygon, nextLayerId } = useContext(LayerContext)
 
   const [filters, setFilters] = useState({
     isFinancingFilterActive: false,
     isGovFundsReceivedActive: false
   })
 
+  const currentLayer = nextLayerId - 1
+
   const storage = window.localStorage
 
   useEffect(() => {
-    const layerData = JSON.parse(storage.getItem('layer 1'))
+    const layerData = JSON.parse(storage.getItem(`layer ${currentLayer}`))
     if (layerData) {
       setFilters({
         isFinancingFilterActive: layerData.isFinancingFilterActive,
         isGovFundsReceivedActive: layerData.isGovFundsReceivedActive
       })
     }
-  }, [])
+  }, [currentLayer])
 
   const displayMarkers = () => {
     return collection.flatMap((item) =>

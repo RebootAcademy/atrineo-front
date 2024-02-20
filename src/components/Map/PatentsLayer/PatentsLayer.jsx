@@ -7,17 +7,19 @@ import { isWithinPolygon } from '../../../helpers'
 
 function PatentsLayer () {
   const { collection } = useContext(CollectionContext)
-  const { searchPolygon } = useContext(LayerContext)
+  const { searchPolygon, nextLayerId } = useContext(LayerContext)
+
   const [filters, setFilters] = useState({
     patentsFilter: [0, 100],
     isFinancingFilterActive: false,
     isGovFundsReceivedActive: false
   })
 
+  const currentLayer = nextLayerId - 1
   const storage = window.localStorage
 
   useEffect(() => {
-    const layerData = JSON.parse(storage.getItem('layer 1'))
+    const layerData = JSON.parse(storage.getItem(`layer ${currentLayer}`))
     if (layerData) {
       setFilters({
         patentsFilter: layerData.patentsFilter || [0, 100],
@@ -25,7 +27,7 @@ function PatentsLayer () {
         isGovFundsReceivedActive: layerData.isGovFundsReceivedActive
       })
     }
-  }, [])
+  }, [currentLayer])
 
   const filteredItems = collection.flatMap(item =>
     item.data
