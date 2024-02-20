@@ -7,11 +7,11 @@ import { LayerContext } from '../../../context/layerContext'
 
 function MarkersDisplay () {
   const { collection } = useContext(CollectionContext)
+  const { searchPolygon } = useContext(LayerContext)
 
   const [filters, setFilters] = useState({
     isFinancingFilterActive: false,
-    isGovFundsReceivedActive: false,
-    searchPolygon: false
+    isGovFundsReceivedActive: false
   })
 
   const storage = window.localStorage
@@ -21,8 +21,7 @@ function MarkersDisplay () {
     if (layerData) {
       setFilters({
         isFinancingFilterActive: layerData.isFinancingFilterActive,
-        isGovFundsReceivedActive: layerData.isGovFundsReceivedActive,
-        searchPolygon: layerData.searchPolygon
+        isGovFundsReceivedActive: layerData.isGovFundsReceivedActive
       })
     }
   }, [])
@@ -33,7 +32,7 @@ function MarkersDisplay () {
         // Primero, verifica si el filtro de financiamiento está activo antes de aplicar cualquier filtrado
         .filter((dataItem) => !filters.isFinancingFilterActive || dataItem.financingAccess)
         .filter((dataItem) => !filters.isGovFundsReceivedActive || dataItem.govFundsReceived)
-        .filter((dataItem) => !filters.searchPolygon || isWithinPolygon(dataItem, filters.searchPolygon))
+        .filter((dataItem) => isWithinPolygon(dataItem, searchPolygon))
         // .filter((company) => selectedRegion === "" || company.locationId[mapDivision]?.name === selectedRegion)
         .map((filteredDataItem, index) => (
           <MarkerComponent

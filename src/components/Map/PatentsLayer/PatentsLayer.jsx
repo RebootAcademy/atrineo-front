@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { useContext } from 'react'
+import { useContext, useState, useEffect } from 'react'
 import { CollectionContext } from '../../../context/collection'
 import { LayerContext } from '../../../context/layerContext'
 import { Circle } from 'react-leaflet'
@@ -7,13 +7,31 @@ import { isWithinPolygon } from '../../../helpers'
 
 function PatentsLayer () {
   const { collection } = useContext(CollectionContext)
-  const { patentsFilter, searchPolygon, isFinancingFilterActive, isGovFundsReceivedActive } = useContext(LayerContext)
+  const { searchPolygon } = useContext(LayerContext)
+  const [filters, setFilters] = useState({
+    patentsFilter: [0, 100],
+    isFinancingFilterActive: false,
+    isGovFundsReceivedActive: false
+  })
+
+  const storage = window.localStorage
+
+  useEffect(() => {
+    const layerData = JSON.parse(storage.getItem('layer 1'))
+    if (layerData) {
+      setFilters({
+        patentsFilter: layerData.patentsFilter || [0, 100],
+        isFinancingFilterActive: layerData.isFinancingFilterActive,
+        isGovFundsReceivedActive: layerData.isGovFundsReceivedActive
+      })
+    }
+  }, [])
 
   const filteredItems = collection.flatMap(item =>
     item.data
-      .filter((dataItem) => !isFinancingFilterActive || dataItem.financingAccess)
-      .filter((dataItem) => !isGovFundsReceivedActive || dataItem.govFundsReceived)
-      .filter((dataItem) => !isNaN(dataItem.patents) && dataItem.patents <= patentsFilter[0] && dataItem.patents <= patentsFilter[1])
+      .filter((dataItem) => !filters.isFinancingFilterActive || dataItem.financingAccess)
+      .filter((dataItem) => !filters.isGovFundsReceivedActive || dataItem.govFundsReceived)
+      .filter((dataItem) => !isNaN(dataItem.patents) && dataItem.patents <= filters.patentsFilter[0] && dataItem.patents <= filters.patentsFilter[1])
       .filter((dataItem) => isWithinPolygon(dataItem, searchPolygon))
   )
 
