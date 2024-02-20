@@ -1,25 +1,25 @@
-import { EditControl } from 'react-leaflet-draw';
-import 'leaflet/dist/leaflet.css';
-import 'leaflet-draw/dist/leaflet.draw.css';
-import { useContext } from 'react';
+import { EditControl } from 'react-leaflet-draw'
+import 'leaflet/dist/leaflet.css'
+import 'leaflet-draw/dist/leaflet.draw.css'
+import { useContext } from 'react'
 import { LayerContext } from '../../../context/layerContext'
 
 function DrawComponent() {
   const { searchPolygon, setSearchPolygon } = useContext(LayerContext)
   const onDrawCreate = (e) => {
     // Obtén la capa del evento
-    const layer = e.layer;
+    const layer = e.layer
     // Aquí puedes manejar la lógica adicional si es necesario
-    const latlngs = layer.getLatLngs();
+    const latlngs = layer.getLatLngs()
     setSearchPolygon(latlngs)
   }
 
   return (
-    <EditControl 
+    <EditControl
       position="bottomright"
       onCreated={onDrawCreate}
       onDeleted={() => {
-        setSearchPolygon(null);
+        setSearchPolygon(null)
       }}
       draw={{
         rectangle: false,

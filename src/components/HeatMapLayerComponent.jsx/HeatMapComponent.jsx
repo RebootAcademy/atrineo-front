@@ -4,6 +4,7 @@ import { useGeoJsonData } from "../../hooks/useGeoJsonData"
 import { selectedStyle, defaultStyle } from "./Style"
 import { LayerContext } from "../../context/layerContext"
 
+// eslint-disable-next-line react/prop-types
 const HeatMapLayer = ({ onRegionSelected }) => {
   const {
     selectedNameDistrict,
@@ -11,6 +12,7 @@ const HeatMapLayer = ({ onRegionSelected }) => {
   } = useContext(LayerContext)
 
   const data = useGeoJsonData(mapDivision)
+  // eslint-disable-next-line no-unused-vars
   const [selectedRegion, setSelectedRegion] = useState(null)
 
   useEffect(() => {
@@ -18,12 +20,13 @@ const HeatMapLayer = ({ onRegionSelected }) => {
   }, [mapDivision])
 
   const setStyle = (feature) => {
-    const currentGroupId = feature.properties.ID_3
+    //const currentGroupId = feature.properties.ID_3
     const currentDistrict = feature.properties.NAME_3
 
     if (
       (selectedNameDistrict.length === 1 && selectedNameDistrict[0].value === 'All') ||
-      (selectedRegion && selectedRegion.feature.properties.ID_3 === currentGroupId) ||
+      //la linea de abajo comentada es para activar que al hacer click en el mapa se pinte la zona donde se hace click
+      //(selectedRegion && selectedRegion.feature.properties.ID_3 === currentGroupId) ||
       (selectedNameDistrict && selectedNameDistrict.some(district => district.value === currentDistrict))
     ) {
       return selectedStyle

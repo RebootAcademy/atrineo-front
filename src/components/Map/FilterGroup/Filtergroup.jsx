@@ -11,12 +11,12 @@ function FilterGroup({ title, layers }) {
         <CardTitle>{title}</CardTitle>
       </CardHeader>
       <CardContent>
-          {layers && layers.map((layer, id) => (
-            <div key={id}>
-              <LayerItem layer={layer} />
-                <FilterOptions />
-            </div>
-          ))}
+        {layers && layers.map((layer, id) => (
+          <div key={id}>
+            <LayerItem layer={layer} />
+            <FilterOptions />
+          </div>
+        ))}
       </CardContent>
     </Card>
   )

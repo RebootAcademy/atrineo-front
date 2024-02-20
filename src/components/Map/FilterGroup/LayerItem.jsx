@@ -17,4 +17,4 @@ LayerItem.propTypes = {
   layer: PropTypes.object
 }
 
-export default LayerItem;
+export default LayerItem

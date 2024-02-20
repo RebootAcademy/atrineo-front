@@ -6,7 +6,7 @@ import { isWithinPolygon } from "../../../helpers"
 
 function MarkersDisplay() {
   const { collection } = useContext(CollectionContext)
-  const { mapDivision, selectedRegion, isFinancingFilterActive, isGovFundsReceivedActive, searchPolygon, selectedNameDistrict } = useContext(LayerContext)
+  const { mapDivision, isFinancingFilterActive, isGovFundsReceivedActive, searchPolygon, selectedNameDistrict } = useContext(LayerContext)
 
   const displayMarkers = () => {
     return collection.flatMap((item) =>
@@ -15,7 +15,8 @@ function MarkersDisplay() {
         .filter((dataItem) => !isFinancingFilterActive || dataItem.financingAccess)
         .filter((dataItem) => !isGovFundsReceivedActive || dataItem.govFundsReceived)
         .filter((dataItem) => isWithinPolygon(dataItem, searchPolygon))
-        .filter((company) => selectedRegion === "" || company.locationId[mapDivision]?.name === selectedRegion)
+        //si se utiliza linea 19 añadir selectedRegion al contexto en la fila 9
+        // .filter((company) => selectedRegion === "" || company.locationId[mapDivision]?.name === selectedRegion)
         .filter((company) => selectedNameDistrict === 0 || selectedNameDistrict.some(district => district.value === company.locationId[mapDivision]?.name))
         .map((filteredDataItem, index) => (
           <MarkerComponent

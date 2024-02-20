@@ -43,6 +43,7 @@ function FilterOptions() {
       setSelectedNameDistrict(districts)
     }
   }
+
   const handleFinancingSwitchChange = (newState) => {
     setIsFinancingFilterActive(newState)
   }
