@@ -2,9 +2,11 @@
 /* eslint-disable no-unused-vars */
 import { createBrowserRouter, redirect } from 'react-router-dom'
 
-import Home from '../pages/Home'
-import Login from '../pages/Login'
-import Layout from '../Layout/Layout'
+import Home from "../pages/Home"
+import Statistics from "../pages/Statistics"
+import Dataset from "../pages/Dataset"
+import Login from "../pages/Login"
+import Layout from "../Layout/Layout"
 
 const isAuthenticated = () => {
   if (!localStorage.getItem('token')) {
@@ -22,6 +24,14 @@ export const router = createBrowserRouter([
       {
         path: '/',
         element: <Home />
+      },
+      {
+        path: '/statistics',
+        element: <Statistics />
+      },
+      {
+        path: '/dataset',
+        element: <Dataset />
       },
       {
         path: '/login',

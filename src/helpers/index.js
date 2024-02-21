@@ -50,3 +50,48 @@ export const CalculateResearchInvestmentBounds = (data) => {
 
   return { minResearchInvestment, maxResearchInvestment }
 }
+
+export const extractNumericFields = (arr) => {
+  return arr.filter(
+    (field) =>
+      field.fieldType === "number" &&
+      field.fieldName !== "latitude" &&
+      field.fieldName !== "longitude" &&
+      field.fieldName !== "districtId"
+  )
+}
+
+export const extractStringOptions = (arr) => {
+  return arr
+    .filter(
+      (field) =>
+        field.fieldType === "string" &&
+        field.fieldName !== "name" &&
+        field.fieldName !== "latitude" &&
+        field.fieldName !== "longitude" &&
+        field.fieldName !== "districtName"
+    )
+    .map((field) => field.fieldName);
+}
+
+export const createStringOptionsObject = (arr, data) => {
+  const optionsObj = {}
+
+  arr.forEach(option => {
+    optionsObj[option] = new Set();
+  })
+
+  data.forEach(row => {
+    row.fields.forEach(field => {
+      if (arr.includes(field.fieldName)) {
+        optionsObj[field.fieldName].add(field.fieldValue);
+      }
+    })
+  })
+
+  for (const [key, value] of Object.entries(optionsObj)) {
+    optionsObj[key] = Array.from(value);
+  }
+
+  return optionsObj
+}
