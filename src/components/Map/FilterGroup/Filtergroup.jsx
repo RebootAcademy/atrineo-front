@@ -17,8 +17,8 @@ function FilterGroup({ title, layers }) {
         {layers && layers.map((layer, id) => (
           <div key={id}>
             <LayerItem layer={layer} />
-            {/* <FilterOptions /> */}
-            <DisplayFilters />
+            <FilterOptions />
+            {/* <DisplayFilters /> */}
           </div>
         ))}
       </CardContent>

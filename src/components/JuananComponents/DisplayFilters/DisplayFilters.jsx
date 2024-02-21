@@ -1,16 +1,13 @@
 //SUSTITUIRÍA A FILTEROPTIONS
-import { v4 as uuidv4 } from 'uuid'
+// import { v4 as uuidv4 } from 'uuid'
 import { useContext, useRef } from "react"
 import PropTypes from 'prop-types'
-import { Card, CardContent, CardHeader, CardTitle } from "../../ui/Card/Card"
-import { Select, SelectTrigger, SelectContent, SelectValue, SelectItem } from "../../ui/Select/select"
 
 import RadioComponent from '../RadioComponent/RadioComponent'
 import SwitchComponent from '../SwitchComponent/SwitchComponent'
 import SliderComponent from '../SliderComponent/SliderComponent'
 
-import { CollectionContext } from "../../../context/collection"
-import { LayerContext } from "../../../context/layerContext"
+import { CollectionContext } from "../../../context/collectionContext"
 
 import { 
   extractNumericFields,
@@ -20,7 +17,6 @@ import {
 
 function DisplayFilters() {
   const { collection } = useContext(CollectionContext)
-  const layer = useContext(LayerContext)
 
   const layerRef = useRef({}) //Objeto con los filtros modificados para esta nueva capa
 
@@ -39,9 +35,10 @@ function DisplayFilters() {
   const optionsObj = createStringOptionsObject(stringOptions, collection[0]?.data)
 
   const displayStrings = (arr) => {
-    return arr.map(option => {
+    return arr.map((option, index) => {
       return (
         <RadioComponent
+          key={index}
           name={option}
           handleChange={handleFilterChange}
           options={optionsObj[option]}
@@ -51,9 +48,10 @@ function DisplayFilters() {
   }
 
   const displayNumericFields = () => {
-    return numericFields.map(field => {
+    return numericFields.map((field, index) => {
       return (
         <SliderComponent
+          key={index}
           name={field.fieldName}
           handleChange={handleFilterChange}
         />
@@ -62,9 +60,10 @@ function DisplayFilters() {
   }
 
   const displayBooleanFields = () => {
-    return booleanFields.map(field => {
+    return booleanFields.map((field, index) => {
       return(
         <SwitchComponent
+          key={index}
           name={field.fieldName}
           handleChange={handleFilterChange}
         />

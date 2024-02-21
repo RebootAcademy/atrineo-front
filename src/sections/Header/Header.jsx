@@ -5,7 +5,7 @@ import CustomButton from "../../components/CustomButton/CustomButton"
 
 import { I18N } from "../../i18n"
 
-function Header () {
+function Header() {
   const { headerOptions } = I18N.english
   const navigate = useNavigate()
 
@@ -25,7 +25,7 @@ function Header () {
       return (
         <div
           key={option.text}
-          className={ `${isSelected(option.text)} w-[106px] h-10` }
+          className={`${isSelected(option.text)} w-[106px] h-10`}
         >
           <CustomButton
             text={option.text}
@@ -39,24 +39,24 @@ function Header () {
   }
 
   return (
-      <header>
-          <main className="h-20 flex items-center justify-between">
-          {/* <div className="grid grid-cols-3 bg-white-400 p-6 w-max-100 h-24 md: h-32"> */}
-            <div className="flex w-full">
-            <button>
-              <img
-                src="./atrineo_icon-removebg-preview.png"
-                alt="Atrineo icon"
-                className="p-4 w-32 md:w-32"
-              />
-            </button>
-            <div className="flex flex-grow justify-center items-center space-x-[26px]">
-              { displayOptions() }
-            </div>
-            <div className="w-32" />
-            </div>
-          </main>
-      </header>
+    <header>
+      <main className="h-20 flex items-center justify-between">
+        {/* <div className="grid grid-cols-3 bg-white-400 p-6 w-max-100 h-24 md: h-32"> */}
+        <div className="flex w-full">
+          <button>
+            <img
+              src="./atrineo_icon-removebg-preview.png"
+              alt="Atrineo icon"
+              className="p-4 w-32 md:w-32"
+            />
+          </button>
+          <div className="flex flex-grow justify-center items-center space-x-[26px]">
+            {displayOptions()}
+          </div>
+          <div className="w-32" />
+        </div>
+      </main>
+    </header>
   )
 }
 
