@@ -1,15 +1,16 @@
+/* eslint-disable no-unused-vars */
 import PropTypes from 'prop-types'
-import { Button } from "../ui/Button/Button"
+import { Button } from '../ui/Button/Button'
 
 function CustomButton ({ text, variant = 'default', fn, img }) {
   return (
-    <Button 
+    <Button
       variant={variant}
       onClick={fn}
     >
       {
-        img && 
-        <img 
+        img &&
+        <img
           src={img}
           className='mr-2'
         />

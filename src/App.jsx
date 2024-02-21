@@ -64,7 +64,7 @@ function App () {
     setIsGovFundsReceivedActive(value)
   }
 
-  const saveCurrentLayer = () => {
+  /*   const saveCurrentLayer = () => {
     const newLayer = {
       patentsFilter,
       populationFilter,
@@ -89,6 +89,39 @@ function App () {
 
     setNextLayerId(prevId => prevId + 1)
     resetFilters()
+  } */
+
+  const saveCurrentLayer = () => {
+    const newLayer = {
+      patentsFilter,
+      populationFilter,
+      researchInvestmentFilter,
+      isFinancingFilterActive,
+      isGovFundsReceivedActive,
+      searchPolygon,
+      lifeQuality,
+      gnp
+    }
+
+    // Intentar cargar el arreglo de capas existente desde localStorage, o iniciar uno nuevo si no existe
+    const existingLayers = JSON.parse(storage.getItem('layers')) || []
+
+    // Añadir la nueva capa al arreglo de capas existente
+    const updatedLayers = [...existingLayers, {
+      id: nextLayerId,
+      isVisible: true,
+      data: newLayer
+    }]
+
+    // Guardar el arreglo actualizado de capas en localStorage
+    storage.setItem('layers', JSON.stringify(updatedLayers))
+    console.log(`Layer ${nextLayerId} saved to localStorage with previous layers`, storage)
+
+    // Actualizar el estado de layers y nextLayerId
+    setLayers(updatedLayers)
+
+    setNextLayerId(prevId => prevId + 1)
+    resetFilters()
   }
 
   const resetFilters = () => {
@@ -103,8 +136,17 @@ function App () {
   }
 
   const clearLayerById = (layerId) => {
-    storage.removeItem(`layer ${layerId}`)
-    setLayers(prevLayers => prevLayers.filter(layer => layer.id !== layerId))
+    // Cargar el arreglo de capas existente desde localStorage
+    const existingLayers = JSON.parse(storage.getItem('layers')) || []
+
+    // Filtrar el arreglo para eliminar la capa con el id especificado
+    const updatedLayers = existingLayers.filter(layer => layer.id !== layerId)
+
+    // Guardar el arreglo actualizado de capas en localStorage
+    storage.setItem('layers', JSON.stringify(updatedLayers))
+
+    // Actualizar el estado de layers con el nuevo arreglo de capas
+    setLayers(updatedLayers)
     setNextLayerId(nextLayerId - 1)
 
     console.log('Layer deleted')

@@ -9,50 +9,26 @@ import PopulationLayer from '../PopulationLayer/PopulationLayer'
 import ResearchInvestmentLayer from '../ResearchInvestment/ResearchInvestment'
 
 function LayersManager () {
-  const { layers, nextLayerId, searchPolygon } = useContext(LayerContext)
-
-  const [filters, setFilters] = useState({
-    isFinancingFilterActive: false,
-    isGovFundsReceivedActive: false,
-    patentsFilter: [0, 100],
-    populationFilter: [0],
-    researchInvestmentFilter: 0,
-    lifeQuality: null,
-    gnp: [0]
-  })
-
-  const currentLayer = nextLayerId - 1
-  const storage = window.localStorage
+  const { searchPolygon, layers, setLayers } = useContext(LayerContext)
 
   useEffect(() => {
-    const layerData = JSON.parse(storage.getItem(`layer ${currentLayer}`))
-    if (layerData) {
-      setFilters({
-        isFinancingFilterActive: layerData.isFinancingFilterActive,
-        isGovFundsReceivedActive: layerData.isGovFundsReceivedActive,
-        patentsFilter: layerData.patentsFilter || [0, 100],
-        populationFilter: layerData.populationFilter,
-        researchInvestmentFilter: layerData.researchInvestmentFilter || 0,
-        lifeQuality: layerData.lifeQuality,
-        gnp: layerData.gnp || [0]
-      })
-    }
-  }, [currentLayer])
+    const storedLayers = JSON.parse(window.localStorage.getItem('layers')) || []
+    setLayers(storedLayers)
+  }, [])
 
   return (
     <>
-      {layers.map(layer => {
-        return (
-          <div key={layer.id}>
-            <StartupsComponent filters={filters} searchPolygon={searchPolygon} />
-            <PatentsLayer filters={filters} searchPolygon={searchPolygon} />
-            <PopulationLayer filters={filters} searchPolygon={searchPolygon} />
-            <ResearchInvestmentLayer filters={filters} searchPolygon={searchPolygon} />
-            <LifeQualityLayer filters={filters} searchPolygon={searchPolygon} />
-            <GnpLayer filters={filters} searchPolygon={searchPolygon} />
-          </div>
-        )
-      })}
+      {layers.map((layer, index) => (
+        <div key={index}>
+          {/* Asumiendo que cada componente de capa puede manejar su propia configuración de filtros */}
+          <StartupsComponent filters={layer.data} searchPolygon={searchPolygon} />
+          <PatentsLayer filters={layer.data} searchPolygon={searchPolygon} />
+          <PopulationLayer filters={layer.data} searchPolygon={searchPolygon} />
+          <ResearchInvestmentLayer filters={layer.data} searchPolygon={searchPolygon} />
+          <LifeQualityLayer filters={layer.data} searchPolygon={searchPolygon} />
+          <GnpLayer filters={layer.data} searchPolygon={searchPolygon} />
+        </div>
+      ))}
     </>
   )
 }

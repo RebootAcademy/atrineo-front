@@ -34,11 +34,11 @@ function LayerCard () {
       </CardContent>
 
       <CardFooter>
-        <SheetClose>
           <CustomButton
             text="Save"
             fn={saveCurrentLayer}
           />
+        <SheetClose>
         </SheetClose>
       </CardFooter>
 
