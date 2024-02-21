@@ -1,11 +1,13 @@
 /* eslint-disable no-unused-vars */
-import { CollectionContext } from '../../../context/collection'
+import { CollectionContext } from '../../../context/collectionContext'
 import { useContext } from 'react'
 import { isWithinPolygon } from '../../../helpers'
 import MarkerComponent from '../MarkerComponent/MarkerComponent'
+import { LayerContext } from '../../../context/layerContext'
 
 function MarkersDisplay ({ filters, searchPolygon }) {
   const { collection } = useContext(CollectionContext)
+  const { selectedNameDistrict, mapDivision } = useContext(LayerContext)
 
   const displayMarkers = () => {
     return collection.flatMap((item) =>

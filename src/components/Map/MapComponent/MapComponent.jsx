@@ -18,8 +18,7 @@ import { FeatureGroup, MapContainer } from "react-leaflet"
 import 'leaflet/dist/leaflet.css'
 
 
-/*   const [mapCenter, setMapCenter] = useState([48.6, 9])
-  const [mapDivision, setMapDivision] = useState('division3') */
+
 
 function MapComponent() {
   const { mapDivision, mapCenter, setSelectedRegion } = useContext(LayerContext)

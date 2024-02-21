@@ -2,7 +2,7 @@
 import { useContext } from 'react'
 import { Circle } from 'react-leaflet'
 import { isWithinPolygon } from '../../../helpers'
-import { CollectionContext } from '../../../context/collection'
+import { CollectionContext } from '../../../context/collectionContext'
 
 function PopulationLayer ({ filters, searchPolygon }) {
   const { collection } = useContext(CollectionContext)

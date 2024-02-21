@@ -5,7 +5,7 @@ import { router } from './router'
 import { RouterProvider } from 'react-router-dom'
 
 import { LayerContext } from './context/layerContext'
-import { CollectionContext } from './context/collection'
+import { CollectionContext } from './context/collectionContext'
 
 import { CalculatePopulationBounds, CalculateResearchInvestmentBounds } from './helpers'
 
@@ -13,6 +13,7 @@ const queryClient = new QueryClient()
 
 function App () {
   const [mapDivision, setMapDivision] = useState('division3')
+  const [mapCenter, setMapCenter] = useState([48.6, 9])
 
   const [collection, setCollection] = useState([])
 
@@ -39,11 +40,11 @@ function App () {
   const collectionValue = { collection, setCollection }
 
   const [selectedNameDistrict, setSelectedNameDistrict] = useState([])
-  const [isSavedLayerVisible, setIsSavedLayerVisible] = useState(false)
   const [enableOption, setEnableOption] = useState(false)
 
   useEffect(() => {
     storage.clear()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useEffect(() => {
@@ -67,33 +68,6 @@ function App () {
   const toggleGovFundsReceived = (value) => {
     setIsGovFundsReceivedActive(value)
   }
-
-  /*   const saveCurrentLayer = () => {
-    const newLayer = {
-      patentsFilter,
-      populationFilter,
-      researchInvestmentFilter,
-      isFinancingFilterActive,
-      isGovFundsReceivedActive,
-      searchPolygon,
-      lifeQuality,
-      gnp
-    }
-
-    // Guardar solo la nueva layer en localStorage bajo una clave única
-    storage.setItem(`layer ${nextLayerId}`, JSON.stringify(newLayer))
-    console.log(`Layer ${nextLayerId} saved to localStorage`, storage)
-
-    // Actualizar el estado de layers y nextLayerId
-    setLayers(prevLayers => [...prevLayers, {
-      id: nextLayerId,
-      isVisible: true,
-      data: newLayer
-    }])
-
-    setNextLayerId(prevId => prevId + 1)
-    resetFilters()
-  } */
 
   const saveCurrentLayer = () => {
     const newLayer = {

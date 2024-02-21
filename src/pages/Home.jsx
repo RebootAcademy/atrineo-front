@@ -2,7 +2,7 @@
 import { useContext } from 'react'
 import { useQuery } from 'react-query'
 
-import { CollectionContext } from '../context/collection'
+import { CollectionContext } from '../context/collectionContext'
 import { getPublicCollections } from '../services/collectionService'
 
 import { I18N } from '../i18n'

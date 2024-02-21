@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
 import { useEffect, useContext } from 'react'
 import { LayerContext } from '../../../context/layerContext'

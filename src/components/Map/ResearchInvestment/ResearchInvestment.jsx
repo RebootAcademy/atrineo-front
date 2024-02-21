@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { useContext } from 'react'
-import { CollectionContext } from '../../../context/collection'
+import { CollectionContext } from '../../../context/collectionContext'
 import { Circle } from 'react-leaflet'
 import { isWithinPolygon } from '../../../helpers'
 
