@@ -6,7 +6,7 @@ import PropTypes from 'prop-types'
 
 function FilterGroup({ title, layers }) {
   return (
-    <Card className='mb-2 w-[300px] pt-0 p-2'>
+    <Card className='bg-orange-400 mb-2 w-[300px] pt-0 p-2'>
       <CardHeader>
         <CardTitle>{title}</CardTitle>
       </CardHeader>
