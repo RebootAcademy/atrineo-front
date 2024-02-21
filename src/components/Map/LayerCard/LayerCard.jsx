@@ -1,7 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { useContext } from 'react'
 import CustomButton from '../../CustomButton/CustomButton'
-import { SheetClose } from '../../ui/Sheet/sheet'
 import {
   Card,
   CardContent,
@@ -38,8 +37,6 @@ function LayerCard() {
           text="Save"
           fn={saveCurrentLayer}
         />
-        <SheetClose>
-        </SheetClose>
       </CardFooter>
 
     </Card>

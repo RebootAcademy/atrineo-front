@@ -12,7 +12,7 @@ export const LayersIcon = () => (
 )
 
 export const LegendsIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <svg width="20" height="20" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M8.66667 11.3334L12 8.00008L8.66667 4.66675M4 11.3334L7.33333 8.00008L4 4.66675" stroke="#09090B" strokeLinecap="round" strokeLinejoin="round" />
   </svg>
 )

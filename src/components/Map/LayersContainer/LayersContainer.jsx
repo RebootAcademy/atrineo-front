@@ -6,22 +6,28 @@ import {
   SheetContent,
   SheetTrigger
 } from '../../ui/Sheet/sheet'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "../../ui/DropdownMenu/DropdownMenu"
 
 import LayerCard from '../LayerCard/LayerCard'
 
 function LayersContainer () {
   return (
-    <aside className="grid grid-cols-2 gap-2 z-[9999999] relative top-8 left-4">
-      <Sheet key='left'>
-        <SheetTrigger asChild>
-          <Button variant="outline">
-            <LayersIcon />
-          </Button>
-        </SheetTrigger>
-        <SheetContent side='left' className="p-2 w-full h-screen flex justify-center">
-          <LayerCard />
-        </SheetContent>
-      </Sheet>
+    <aside className="z-[9999999] flex justify-center relative top-8 left-4 bg-white rounded-sm w-10 h-10 border">
+      <DropdownMenu>
+        <DropdownMenuTrigger>
+          <LayersIcon />
+        </DropdownMenuTrigger>
+        <DropdownMenuContent>
+          <DropdownMenuItem>
+            <LayerCard />
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
     </aside>
   )
 }
