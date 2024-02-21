@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { Button } from '../../ui/Button/Button'
-import { LayersIcon } from '../../ui/Icons/Icons'
+import { LegendsIcon } from '../../ui/Icons/Icons'
 import {
   Sheet,
   SheetContent,
@@ -9,13 +9,13 @@ import {
 
 import LayerCard from '../LayerCard/LayerCard'
 
-function LayersContainer () {
+function LegendsContainer () {
   return (
-    <aside className="grid grid-cols-2 gap-2 z-[9999999] relative top-8 left-4">
+    <aside className="grid grid-cols-2 gap-2 z-[9999999] relative top-12 left-4">
       <Sheet key='left'>
         <SheetTrigger asChild>
           <Button variant="outline">
-            <LayersIcon />
+            <LegendsIcon />
           </Button>
         </SheetTrigger>
         <SheetContent side='left' className="p-2 w-full h-screen flex justify-center">
@@ -26,4 +26,4 @@ function LayersContainer () {
   )
 }
 
-export default LayersContainer
+export default LegendsContainer

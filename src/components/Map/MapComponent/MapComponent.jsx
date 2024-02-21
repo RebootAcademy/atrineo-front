@@ -2,8 +2,6 @@
 import { FeatureGroup, MapContainer } from 'react-leaflet'
 import { useState } from 'react'
 
-// import { MapUpdater } from "../MapUpdater/MapUpdaterComponent"
-
 import ContourLayer from '../MapContour/MapContour'
 import CoordsDisplay from '../CoordsDisplay/CoordsDisplay'
 import DrawComponent from '../DrawComponent/DrawComponent'
@@ -15,8 +13,7 @@ import SavedLayerComponent from '../SavedLayerComponent/SavedLayerComponent'
 import LayersManager from '../LayersManager/LayersManager'
 
 import 'leaflet/dist/leaflet.css'
-
-import { EditControl } from 'react-leaflet-draw'
+import LegendsContainer from '../LegendsContainer/LegendsContainer'
 
 function MapComponent () {
   const [mapCenter, setMapCenter] = useState([48.6, 9])
@@ -34,11 +31,11 @@ function MapComponent () {
 
         <TileLayerComponent />
         <ContourLayer mapDivision={mapDivision} />
-        {/* <MapUpdater center={mapCenter} /> */}
 
         <div className="flex flex-col items-start">
           <SearchBar />
           <LayersContainer />
+          <LegendsContainer />
         </div>
 
         <CustomZoomControl />
@@ -46,22 +43,11 @@ function MapComponent () {
         <LayersManager />
 
         <SavedLayerComponent />
-        {/* <StartupsComponent /> */}
 
         <CoordsDisplay />
 
         <FeatureGroup>
-{/*           <EditControl
-            position="topright"
-            draw={{
-              marker: false,
-              circlemarker: false,
-              circle: false,
-              polyline: false,
-            }}
-          > */}
             <DrawComponent />
-          {/* </EditControl> */}
         </FeatureGroup>
 
       </MapContainer>
