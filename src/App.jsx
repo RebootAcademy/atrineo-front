@@ -138,19 +138,29 @@ function App () {
   const clearLayerById = (layerId) => {
     // Cargar el arreglo de capas existente desde localStorage
     const existingLayers = JSON.parse(storage.getItem('layers')) || []
-
     // Filtrar el arreglo para eliminar la capa con el id especificado
     const updatedLayers = existingLayers.filter(layer => layer.id !== layerId)
-
     // Guardar el arreglo actualizado de capas en localStorage
     storage.setItem('layers', JSON.stringify(updatedLayers))
-
     // Actualizar el estado de layers con el nuevo arreglo de capas
     setLayers(updatedLayers)
     setNextLayerId(nextLayerId - 1)
 
     console.log('Layer deleted')
     console.log(storage)
+  }
+
+  const toggleLayerVisibility = (layerId) => {
+    const existingLayers = JSON.parse(storage.getItem('layers')) || []
+    const updatedLayers = existingLayers.map(layer => {
+      if (layer.id === layerId) {
+        return { ...layer, isVisible: !layer.isVisible }
+      }
+      return layer
+    })
+    storage.setItem('layers', JSON.stringify(updatedLayers))
+    setLayers(updatedLayers)
+    console.log(`Layer ${layerId} visibility toggled`)
   }
 
   const value = {
@@ -183,7 +193,8 @@ function App () {
     setMapDivision,
     nextLayerId,
     layers,
-    setLayers
+    setLayers,
+    toggleLayerVisibility
   }
 
   return (

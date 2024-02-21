@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { useState, useEffect, useContext } from 'react'
+import { useEffect, useContext } from 'react'
 import { LayerContext } from '../../../context/layerContext'
 import StartupsComponent from '../StartupsComponent/StartupsComponent'
 import PatentsLayer from '../PatentsLayer/PatentsLayer'
@@ -18,17 +18,19 @@ function LayersManager () {
 
   return (
     <>
-      {layers.map((layer, index) => (
-        <div key={index}>
-          {/* Asumiendo que cada componente de capa puede manejar su propia configuración de filtros */}
-          <StartupsComponent filters={layer.data} searchPolygon={searchPolygon} />
-          <PatentsLayer filters={layer.data} searchPolygon={searchPolygon} />
-          <PopulationLayer filters={layer.data} searchPolygon={searchPolygon} />
-          <ResearchInvestmentLayer filters={layer.data} searchPolygon={searchPolygon} />
-          <LifeQualityLayer filters={layer.data} searchPolygon={searchPolygon} />
-          <GnpLayer filters={layer.data} searchPolygon={searchPolygon} />
-        </div>
-      ))}
+      {layers.map((layer, index) => {
+        if (!layer.isVisible) return null
+        return (
+          <div key={index}>
+            <StartupsComponent filters={layer.data} searchPolygon={searchPolygon} />
+            <PatentsLayer filters={layer.data} searchPolygon={searchPolygon} />
+            <PopulationLayer filters={layer.data} searchPolygon={searchPolygon} />
+            <ResearchInvestmentLayer filters={layer.data} searchPolygon={searchPolygon} />
+            <LifeQualityLayer filters={layer.data} searchPolygon={searchPolygon} />
+            <GnpLayer filters={layer.data} searchPolygon={searchPolygon} />
+          </div>
+        )
+      })}
     </>
   )
 }

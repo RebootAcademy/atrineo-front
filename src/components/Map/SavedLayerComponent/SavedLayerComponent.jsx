@@ -2,10 +2,10 @@
 import { useContext } from 'react'
 import { LayerContext } from '../../../context/layerContext'
 import { Card } from '../../ui/Card/Card'
-import CustomButton from '../../CustomButton/CustomButton'
+import { EyeIcon, EyeOffIcon, TrashIcon } from '../../ui/Icons/Icons'
 
 function SavedLayerComponent () {
-  const { clearLayerById, layers } = useContext(LayerContext)
+  const { layers, clearLayerById, toggleLayerVisibility } = useContext(LayerContext)
 
   return (
     <>
@@ -16,10 +16,18 @@ function SavedLayerComponent () {
           style={{ top: `${20 + index * 60}px` }}
         >
           <p className="font-bold text-lg">Layer {layer.id}</p>
-          <CustomButton
-            text="Delete"
-            fn={() => clearLayerById(layer.id)}
-          />
+
+          <div className='flex gap-1'>
+            <button onClick={() => toggleLayerVisibility(layer.id)}>
+              {layer.isVisible ? <EyeOffIcon /> : <EyeIcon />}
+            </button>
+
+            <button onClick={() => clearLayerById(layer.id)}>
+              <TrashIcon />
+            </button>
+
+          </div>
+
         </Card>
       ))}
     </>
