@@ -14,7 +14,7 @@ import FilterGroup from '../FilterGroup/Filtergroup'
 import PropTypes from 'prop-types'
 import { LayerContext } from '../../../context/layerContext'
 
-function LayerCard () {
+function LayerCard() {
   const { saveCurrentLayer, nextLayerId } = useContext(LayerContext)
 
   return (
@@ -34,10 +34,10 @@ function LayerCard () {
       </CardContent>
 
       <CardFooter>
-          <CustomButton
-            text="Save"
-            fn={saveCurrentLayer}
-          />
+        <CustomButton
+          text="Save"
+          fn={saveCurrentLayer}
+        />
         <SheetClose>
         </SheetClose>
       </CardFooter>
