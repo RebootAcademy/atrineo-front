@@ -14,7 +14,9 @@ function MarkersDisplay ({ filters, searchPolygon }) {
         .filter((dataItem) => !filters.isFinancingFilterActive || dataItem.financingAccess)
         .filter((dataItem) => !filters.isGovFundsReceivedActive || dataItem.govFundsReceived)
         .filter((dataItem) => isWithinPolygon(dataItem, searchPolygon))
+        //si se utiliza linea 19 añadir selectedRegion al contexto en la fila 9
         // .filter((company) => selectedRegion === "" || company.locationId[mapDivision]?.name === selectedRegion)
+        .filter((company) => selectedNameDistrict === 0 || selectedNameDistrict.some(district => district.value === company.locationId[mapDivision]?.name))
         .map((filteredDataItem, index) => (
           <MarkerComponent
             key={index}

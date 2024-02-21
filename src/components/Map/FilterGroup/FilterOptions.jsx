@@ -3,11 +3,11 @@ import { useContext } from 'react'
 import { LayerContext } from '../../../context/layerContext'
 import { Switch } from '../../ui/Switch/Switch'
 import { Label } from '../../ui/Label/Label'
-import { Select, SelectTrigger, SelectContent, SelectValue, SelectItem } from '../../ui/Select/select'
 import { Slider } from '../../ui/Slider/Slider'
 import { CollectionContext } from '../../../context/collection'
 import { RadioGroup, RadioGroupItem } from '../../ui/RadioGroup/radio-group'
 import { Slider2 } from '../../ui/Slider2/Slider2'
+import MultipleSelector from '../../ui/MultiSelector/multple-selector'
 
 function FilterOptions () {
   const { collection } = useContext(CollectionContext)
@@ -29,8 +29,19 @@ function FilterOptions () {
     researchInvestmentFilter,
     setResearchInvestmentFilter,
     minResearchInvestment,
-    maxResearchInvestment
+    maxResearchInvestment,
+    setSelectedNameDistrict,
+    mapDivision
   } = useContext(LayerContext)
+
+  const onDistrictNameChange = (districts) => {
+    const isAllSelected = districts.some(district => district.value === 'All')
+    if (isAllSelected) {
+      setSelectedNameDistrict(districtSelection())
+    } else {
+      setSelectedNameDistrict(districts)
+    }
+  }
 
   const handleFinancingSwitchChange = (newState) => {
     setIsFinancingFilterActive(newState)
@@ -52,7 +63,7 @@ function FilterOptions () {
     setResearchInvestmentFilter(value)
   }
 
-  // con el regionName.map se obtiene la lista de distritos y cada elemento de la lista se representa en SelectItem
+  //con el regionName.map se obtiene la lista de distritos y cada elemento de la lista se representa en SelectItem
   const handlePatentsMinChange = (e) => {
     const minVal = Math.max(0, parseInt(e.target.value, 10))
     if (minVal <= patentsFilter[1]) {
@@ -71,12 +82,15 @@ function FilterOptions () {
     if (!collection || !collection[0]?.data) {
       return 0
     }
-    const min = collection[0].data.reduce((prev, curr) => {
-      if (!curr.gnp) {
-        return prev
-      }
-      return prev.gnp < curr.gnp ? prev : curr
-    }, { gnp: 999999999 })
+    const min = collection[0].data.reduce(
+      (prev, curr) => {
+        if (!curr.gnp) {
+          return prev
+        }
+        return prev.gnp < curr.gnp ? prev : curr
+      },
+      { gnp: 999999999 }
+    )
     return min.gnp
   }
 
@@ -84,37 +98,54 @@ function FilterOptions () {
     if (!collection || !collection[0]?.data) {
       return 100
     }
-    const max = collection[0].data.reduce((prev, curr) => {
-      if (!curr.gnp) {
-        return prev
-      }
-      return prev.gnp > curr.gnp ? prev : curr
-    }, { gnp: 0 })
+    const max = collection[0].data.reduce(
+      (prev, curr) => {
+        if (!curr.gnp) {
+          return prev
+        }
+        return prev.gnp > curr.gnp ? prev : curr
+      },
+      { gnp: 0 }
+    )
     return max.gnp
   }
 
+  const districtSelection = () => {
+    const nameRegionFiltered = collection
+      .flatMap((region) => region.data)
+      .filter((item) => item.locationId[mapDivision] !== null)
+      .map(item => { return { id: item.locationId[mapDivision]?._id, name: item.locationId[mapDivision]?.name } })
+    const nameRegion = nameRegionFiltered.reduce((prev, curr) => {
+      return prev.find((item) => item.id === curr.id) ? prev : [...prev, curr]
+    }, [])
+
+    nameRegion.sort((region1, region2) => region1.name.localeCompare(region2.name))
+
+    const districtNames = [
+      {value: 'All', label: 'All'},
+      ...nameRegion.map((filteredRegion) => (
+        {
+          value: filteredRegion.name,
+          label: filteredRegion.name
+        }
+      ))
+    ]
+    return districtNames
+
+  }
+  const defaultDistictOptions = districtSelection()
+
   return (
     <div className="flex flex-col gap-4">
-
-{/*       <div className="flex items-center space-x-2">
-        <Label htmlFor="disctrictName">District Name:</Label>
-        <Select onValueChange={onDistrictNameChange}>
-          <SelectTrigger className="w-[180px]">
-            <SelectValue placeholder="Select" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value='unassigned'>Select</SelectItem>
-            {regionName().map((district, index) => (
-              <SelectItem
-                key={index}
-                value={district}
-              >
-                {district}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-      </div> */}
+      <Label htmlFor="disctrictName">District Name:</Label>
+      <div className="flex items-center space-x-2">
+        <MultipleSelector
+          placeholder="Select..."
+          onChange={onDistrictNameChange}
+          defaultOptions={defaultDistictOptions}
+        >
+        </MultipleSelector>
+      </div>
 
       <div className="flex flex-col gap-4 mb-4">
         <div className="flex items-center space-x-2">
@@ -145,7 +176,7 @@ function FilterOptions () {
           <div className="text-sm">Max</div>
         </div>
         <Slider
-          id='patents'
+          id="patents"
           patentsvalue={patentsFilter}
           value={patentsFilter}
           onValueChange={handlePatentsSliderChange}
@@ -177,7 +208,7 @@ function FilterOptions () {
           <div className="text-sm">Max</div>
         </div>
         <Slider
-          id='population'
+          id="population"
           patentsvalue={populationFilter}
           value={populationFilter}
           min={minPopulation}
@@ -194,7 +225,7 @@ function FilterOptions () {
           <div className="text-sm">Max</div>
         </div>
         <Slider
-          id='researchInvestment'
+          id="researchInvestment"
           patentsvalue={researchInvestmentFilter}
           value={researchInvestmentFilter}
           min={minResearchInvestment}
@@ -204,7 +235,9 @@ function FilterOptions () {
         {researchInvestmentFilter} €
       </div>
 
-      <Label className='mt-4' htmlFor="lifeQuality">Life Quality:</Label>
+      <Label className="mt-4" htmlFor="lifeQuality">
+        Life Quality:
+      </Label>
       <RadioGroup defaultValue="comfortable" onValueChange={setLifeQuality}>
         <div className="flex items-center space-x-2">
           <RadioGroupItem value="low" id="low-option" />
@@ -220,15 +253,12 @@ function FilterOptions () {
         </div>
       </RadioGroup>
 
-      <Label className='mt-4' htmlFor='gnp'>Gnp:</Label>
-      <Slider2
-        onValueChange={setGnp}
-        min={getMinGnp()}
-        max={getMaxGnp()}
-      />
+      <Label className="mt-4" htmlFor="gnp">
+        Gnp:
+      </Label>
+      <Slider2 onValueChange={setGnp} min={getMinGnp()} max={getMaxGnp()} />
       <Label>{gnp}</Label>
-
-    </div >
+    </div>
   )
 }
 

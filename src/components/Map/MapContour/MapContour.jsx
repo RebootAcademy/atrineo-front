@@ -3,6 +3,8 @@ import { GeoJSON } from 'react-leaflet'
 import { useGeoJsonData } from '../../../hooks/useGeoJsonData'
 
 import PropTypes from 'prop-types'
+import { useContext } from "react"
+import { LayerContext } from "../../../context/layerContext"
 
 const style = {
   opacity: 0.8,
@@ -11,7 +13,8 @@ const style = {
   weight: 1.5
 }
 
-function ContourLayer ({ mapDivision }) {
+function ContourLayer() {
+  const { mapDivision } = useContext(LayerContext)
   const data = useGeoJsonData(mapDivision)
 
   const filteredDivision = () => {

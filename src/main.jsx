@@ -8,6 +8,6 @@ import './index.css'
 // en produccion no se hace, solo en desarollo
 ReactDOM.createRoot(document.getElementById('root')).render(
   // <React.StrictMode>
-    <App />
+  <App />
   // </React.StrictMode>,
 )

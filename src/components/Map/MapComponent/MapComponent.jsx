@@ -1,6 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { FeatureGroup, MapContainer } from 'react-leaflet'
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 
 import ContourLayer from '../MapContour/MapContour'
 import CoordsDisplay from '../CoordsDisplay/CoordsDisplay'
@@ -11,13 +10,23 @@ import LayersContainer from '../LayersContainer/LayersContainer'
 import TileLayerComponent from '../TileLayerComponent/TileLayerComponent'
 import SavedLayerComponent from '../SavedLayerComponent/SavedLayerComponent'
 import LayersManager from '../LayersManager/LayersManager'
-
-import 'leaflet/dist/leaflet.css'
 import LegendsContainer from '../LegendsContainer/LegendsContainer'
+import HeatMapLayer from "../../HeatMapLayerComponent.jsx/HeatMapComponent"
 
-function MapComponent () {
-  const [mapCenter, setMapCenter] = useState([48.6, 9])
-  const [mapDivision, setMapDivision] = useState('division3')
+import { LayerContext } from "../../../context/layerContext"
+import { FeatureGroup, MapContainer } from "react-leaflet"
+import 'leaflet/dist/leaflet.css'
+
+
+/*   const [mapCenter, setMapCenter] = useState([48.6, 9])
+  const [mapDivision, setMapDivision] = useState('division3') */
+
+function MapComponent() {
+  const { mapDivision, mapCenter, setSelectedRegion } = useContext(LayerContext)
+
+  const onRegionSelected = (region) => {
+    setSelectedRegion(region)
+  }
 
   return (
     <section>
@@ -44,10 +53,12 @@ function MapComponent () {
 
         <SavedLayerComponent />
 
+        <HeatMapLayer mapDivision={mapDivision} onRegionSelected={onRegionSelected} />
+
         <CoordsDisplay />
 
         <FeatureGroup>
-            <DrawComponent />
+          <DrawComponent />
         </FeatureGroup>
 
       </MapContainer>

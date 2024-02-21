@@ -34,9 +34,13 @@ function App () {
   const [layers, setLayers] = useState([])
   const [nextLayerId, setNextLayerId] = useState(1)
 
-  const collectionValue = { collection, setCollection }
 
   const storage = window.localStorage
+  const collectionValue = { collection, setCollection }
+
+  const [selectedNameDistrict, setSelectedNameDistrict] = useState([])
+  const [isSavedLayerVisible, setIsSavedLayerVisible] = useState(false)
+  const [enableOption, setEnableOption] = useState(false)
 
   useEffect(() => {
     storage.clear()
@@ -194,7 +198,13 @@ function App () {
     nextLayerId,
     layers,
     setLayers,
-    toggleLayerVisibility
+    toggleLayerVisibility,
+    selectedNameDistrict,
+    setSelectedNameDistrict,
+    mapCenter,
+    setMapCenter,
+    enableOption,
+    setEnableOption
   }
 
   return (
