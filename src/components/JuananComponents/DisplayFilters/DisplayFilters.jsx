@@ -40,7 +40,7 @@ function DisplayFilters() {
 
   //hacer variable con los distritos de la nueva base de datos - que no se exactamente cual es
   //const multipleSelector = 
-  const booleanFields = fields.filter(field => field.fieldType === 'boolean')
+  const booleanFields = fields?.filter(field => field.fieldType === 'boolean')
   const numericFields = extractNumericFields(fields)
   const stringOptions = extractStringOptions(fields) //Filtra las columnas que van a usarse como radio buttons
 
@@ -61,7 +61,7 @@ function DisplayFilters() {
   // }
 
   const displayStrings = (arr) => {
-    return arr.map((option, index) => {
+    return arr?.map((option, index) => {
       return (
         <RadioComponent
           key={index}
@@ -74,7 +74,7 @@ function DisplayFilters() {
   }
 
   const displayNumericFields = () => {
-    return numericFields.map((field, index) => {
+    return numericFields?.map((field, index) => {
       return (
         <SliderComponent
           key={index}
@@ -86,7 +86,7 @@ function DisplayFilters() {
   }
 
   const displayBooleanFields = () => {
-    return booleanFields.map((field, index) => {
+    return booleanFields?.map((field, index) => {
       return(
         <SwitchComponent
           key={index}
