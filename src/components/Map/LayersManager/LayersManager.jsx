@@ -17,9 +17,11 @@ function LayersManager () {
     setLayers(storedLayers)
   }, [])
 
+  console.log(layers)
+
   return (
     <>
-      {layers.map((layer, index) => {
+      {/* {layers.map((layer, index) => {
         if (!layer.isVisible) return null
         return (
           <div key={index}>
@@ -31,7 +33,7 @@ function LayersManager () {
             <GnpLayer filters={layer.data} searchPolygon={searchPolygon} />
           </div>
         )
-      })}
+      })} */}
     </>
   )
 }

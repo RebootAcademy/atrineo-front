@@ -16,20 +16,16 @@ import {
   findMaxAndMinValues
 } from '../../../helpers'
 
-function DisplayFilters() {
+function DisplayFilters({layerObj}) {
   const { collection } = useContext(CollectionContext)
-
-  
-
-  const layerRef = useRef({}) //Objeto con los filtros modificados para esta nueva capa
 
   const handleFilterChange = (value, target) => {
     if (value === 'remove') {
-      delete layerRef.current[target]
+      delete layerObj.current[target]
     } else {
-      layerRef.current = { ...layerRef.current, [target]:value }
+      layerObj.current = { ...layerObj.current, [target]:value }
     }
-    console.log(layerRef.current)
+    console.log(layerObj.current)
   }
 
   const data = collection[0]?.data

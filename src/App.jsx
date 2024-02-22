@@ -68,7 +68,7 @@ function App () {
     setIsGovFundsReceivedActive(value)
   }
 
-  const saveCurrentLayer = () => {
+  const saveCurrentLayer = (obj) => {
     const newLayer = {
       patentsFilter,
       populationFilter,
@@ -87,7 +87,7 @@ function App () {
     const updatedLayers = [...existingLayers, {
       id: nextLayerId,
       isVisible: true,
-      data: newLayer
+      data: obj
     }]
 
     // Guardar el arreglo actualizado de capas en localStorage

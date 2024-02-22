@@ -7,7 +7,7 @@ import DisplayFilters from "../../JuananComponents/DisplayFilters/DisplayFilters
 
 import PropTypes from 'prop-types'
 
-function FilterGroup({ title, layers }) {
+function FilterGroup({ title, layers, layerObj }) {
   return (
     <Card className='mb-2 w-[300px] pt-0 p-2'>
       <CardHeader>
@@ -18,7 +18,7 @@ function FilterGroup({ title, layers }) {
           <div key={id}>
             <LayerItem layer={layer} />
             {/* <FilterOptions /> */}
-            <DisplayFilters />
+            <DisplayFilters layerObj={layerObj} />
           </div>
         ))}
       </CardContent>
