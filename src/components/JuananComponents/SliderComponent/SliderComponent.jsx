@@ -1,4 +1,6 @@
 import { useState } from "react"
+import PropTypes from 'prop-types'
+
 import { Slider } from "../../ui/Slider/Slider"
 import { Label } from "../../ui/Label/Label"
 
@@ -48,6 +50,13 @@ function SliderComponent({ name, handleChange, minValue, maxValue }) {
       }
     </>
   )
+}
+
+SliderComponent.propTypes = {
+  name: PropTypes.string,
+  handleChange: PropTypes.func,
+  minValue: PropTypes.number,
+  maxValue: PropTypes.number
 }
 
 export default SliderComponent

@@ -1,6 +1,6 @@
 //SUSTITUIRÍA A FILTEROPTIONS
 // import { v4 as uuidv4 } from 'uuid'
-import { useContext, useRef } from "react"
+import { useContext } from "react"
 import PropTypes from 'prop-types'
 
 import RadioComponent from '../RadioComponent/RadioComponent'
@@ -90,7 +90,8 @@ function DisplayFilters({layerObj}) {
 
 DisplayFilters.propTypes = {
   title: PropTypes.string,
-  layers: PropTypes.array
+  layers: PropTypes.array,
+  layerObj: PropTypes.object
 }
 
 export default DisplayFilters

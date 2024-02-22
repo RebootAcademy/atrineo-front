@@ -1,4 +1,5 @@
 import { useState } from "react"
+import PropTypes from 'prop-types'
 
 import { Switch } from "../../ui/Switch/Switch"
 import { Label } from "../../ui/Label/Label"
@@ -38,6 +39,11 @@ function SwitchComponent({name, handleChange}) {
       }
     </>
   )
+}
+
+SwitchComponent.propTypes = {
+  name: PropTypes.string,
+  handleChange: PropTypes.func
 }
 
 export default SwitchComponent

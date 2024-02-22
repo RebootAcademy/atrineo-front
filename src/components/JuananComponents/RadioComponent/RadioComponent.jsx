@@ -1,4 +1,5 @@
 import { useState } from "react"
+import PropTypes from 'prop-types'
 
 import { Label } from "../../ui/Label/Label"
 import { RadioGroup, RadioGroupItem } from "../../ui/RadioGroup/radio-group"
@@ -45,6 +46,12 @@ function RadioComponent({name, handleChange, options}) {
       }
     </>
   )
+}
+
+RadioComponent.propTypes = {
+  name: PropTypes.string,
+  handleChange: PropTypes.func,
+  options: PropTypes.array
 }
 
 export default RadioComponent

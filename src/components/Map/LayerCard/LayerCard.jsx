@@ -52,7 +52,8 @@ function LayerCard({ onCloseMenu }) {
 }
 
 LayerCard.propTypes = {
-  layerId: PropTypes.number
+  layerId: PropTypes.number,
+  onCloseMenu: PropTypes.func
 }
 
 export default LayerCard
