@@ -24,8 +24,8 @@
 
 
   export const defaultStyle = {
-    opacity: 0.3,
-    fillOpacity: 0.8,
+    opacity: 0,
+    fillOpacity: 0,
     color: 'black',
     fillColor: '#aed6f1',
   }

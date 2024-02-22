@@ -23,7 +23,7 @@ function RadioComponent({name, handleChange, options}) {
   return (
     <>
       <div>
-        <input type="checkbox" className="mr-2" onChange={handleInput}/>
+        <input type="checkbox" checked={active} className="mr-2" onChange={handleInput}/>
         <Label htmlFor={name}>
           {name}
         </Label>
@@ -32,9 +32,9 @@ function RadioComponent({name, handleChange, options}) {
         active &&
         <RadioGroup onValueChange={emitChange}>
           {
-            options.map(name => {
+            options.map((name, index) => {
               return (
-                <div className="flex items-center space-x-2">
+                <div key={index} className="flex items-center space-x-2">
                   <RadioGroupItem value={name} id={name} />
                   <Label htmlFor={name}>{name}</Label>
                 </div>

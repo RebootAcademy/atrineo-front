@@ -5,7 +5,7 @@ import searchContext from '../../../context/searchContext'
 
 import './SearchResult.css'
 
-function SearchResult({ data }) {
+function SearchResult ({ data }) {
   const { setSearchQuery } = useContext(searchContext)
 
   const handleClick = () => {

@@ -1,7 +1,8 @@
+/* eslint-disable no-undef */
 import { useEffect } from 'react'
 import { useMap } from 'react-leaflet'
 
-function CustomZoomControl() {
+function CustomZoomControl () {
   const map = useMap()
 
   useEffect(() => {

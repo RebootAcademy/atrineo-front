@@ -1,19 +1,36 @@
-import { useContext } from "react"
-import { LayerContext } from "../../../context/layerContext"
-import CustomButton from "../../CustomButton/CustomButton"
-import { Card } from "../../ui/Card/Card"
+/* eslint-disable no-unused-vars */
+import { useContext } from 'react'
+import { LayerContext } from '../../../context/layerContext'
+import { Card } from '../../ui/Card/Card'
+import { EyeIcon, EyeOffIcon, TrashIcon } from '../../ui/Icons/Icons'
 
-function SavedLayerComponent() {
-  const { clearSavedState } = useContext(LayerContext)
+function SavedLayerComponent () {
+  const { layers, clearLayerById, toggleLayerVisibility } = useContext(LayerContext)
 
   return (
-    <Card className='absolute top-20 right-3 z-[9999999999] w-60 flex justify-between items-center bg-white p-2'>
-      <p className="font-bold text-lg">Layer 1</p>
-      <CustomButton
-        text="Delete"
-        fn={clearSavedState}
-      />
-    </Card>
+    <>
+      {layers.map((layer, index) => (
+        <Card
+          key={layer.id}
+          className='relative top-20 z-[9999999999] w-60 flex justify-between items-center p-2'
+          style={{ top: `${20 + index * 6}px` }}
+        >
+          <p className="font-bold text-lg">Layer {layer.id}</p>
+
+          <div className='flex gap-1'>
+            <button onClick={() => toggleLayerVisibility(layer.id)}>
+              {layer.isVisible ? <EyeOffIcon /> : <EyeIcon />}
+            </button>
+
+            <button onClick={() => clearLayerById(layer.id)}>
+              <TrashIcon />
+            </button>
+
+          </div>
+
+        </Card>
+      ))}
+    </>
   )
 }
 

@@ -1,24 +1,24 @@
-import { useContext } from "react"
-import { CollectionContext } from "../../../context/collection"
-import { Circle } from "react-leaflet"
-import { LayerContext } from "../../../context/layerContext"
-import { isWithinPolygon } from "../../../helpers"
+/* eslint-disable no-unused-vars */
+import { useContext } from 'react'
+import { CollectionContext } from '../../../context/collectionContext'
+import { Circle } from 'react-leaflet'
+import { isWithinPolygon } from '../../../helpers'
 
-function LifeQualityLayer() {
+function LifeQualityLayer ({ filters, searchPolygon }) {
   const { collection } = useContext(CollectionContext)
-  const { lifeQuality, searchPolygon } = useContext(LayerContext)
 
-  const companiesBySelectedLifeQuality = collection[0]?.data
-    .filter((company) => company.lifeQuality === lifeQuality)
-    .filter((dataItem) => isWithinPolygon(dataItem, searchPolygon)
-  )
+  const companiesBySelectedLifeQuality = collection.flatMap(item =>
+    item.data
+      .filter((dataItem) => dataItem.lifeQuality === filters.lifeQuality)
+      .filter((dataItem) => isWithinPolygon(dataItem, searchPolygon)
+      ))
 
-  let pathOptions = { fillColor: "orange", stroke: false, fillOpacity: 0.3 }
+  let pathOptions = { fillColor: 'orange', stroke: false, fillOpacity: 0.3 }
 
-  if (lifeQuality === 'medium') pathOptions = { fillColor: "yellow", stroke: false, fillOpacity: 0.3 }
-  else if (lifeQuality === 'high') pathOptions = { fillColor: "green", stroke: false, fillOpacity: 0.3 }
+  if (filters.lifeQuality === 'medium') pathOptions = { fillColor: 'yellow', stroke: false, fillOpacity: 0.3 }
+  else if (filters.lifeQuality === 'high') pathOptions = { fillColor: 'green', stroke: false, fillOpacity: 0.3 }
 
-  const circles = companiesBySelectedLifeQuality?.map(company => (
+  const circles = companiesBySelectedLifeQuality.map(company => (
     <Circle
       key={company._id}
       center={[company.latitude, company.longitude]}

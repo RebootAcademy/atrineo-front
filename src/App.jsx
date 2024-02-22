@@ -1,24 +1,23 @@
+/* eslint-disable no-unused-vars */
 import { useEffect, useState } from 'react'
 import { QueryClient, QueryClientProvider } from 'react-query'
-import { RouterProvider } from 'react-router-dom'
-import { CollectionContext } from './context/collection'
-import { LayerContext } from './context/layerContext'
 import { router } from './router'
+import { RouterProvider } from 'react-router-dom'
+
+import { LayerContext } from './context/layerContext'
+import { CollectionContext } from './context/collectionContext'
 
 import { CalculatePopulationBounds, CalculateResearchInvestmentBounds } from './helpers'
-import { useDistrictsCoords } from './hooks/useDistrictCoords'
 
 const queryClient = new QueryClient()
 
-function App() {
-  const data = useDistrictsCoords({}) || []
-  const [mapDivision, setMapDivision] = useState("division3")
+function App () {
+  const [mapDivision, setMapDivision] = useState('division3')
+  const [mapCenter, setMapCenter] = useState([48.6, 9])
 
   const [collection, setCollection] = useState([])
-  const [showMarkers, setShowMarkers] = useState({ startups: false })
 
   const [patentsFilter, setPatentsFilter] = useState([0, 100])
-
   const [populationFilter, setPopulationFilter] = useState([0])
   const [populationBounds, setPopulationBounds] = useState({ minPopulation: 0, maxPopulation: 0 })
 
@@ -28,104 +27,132 @@ function App() {
   const [isFinancingFilterActive, setIsFinancingFilterActive] = useState(false)
   const [isGovFundsReceivedActive, setIsGovFundsReceivedActive] = useState(false)
   const [searchPolygon, setSearchPolygon] = useState(null)
-  const collectionValue = {collection, setCollection}
   const [lifeQuality, setLifeQuality] = useState(null)
   const [gnp, setGnp] = useState(0)
   const [companies, setCompanies] = useState([])
-  const [selectedRegion, setSelectedRegion] = useState("")
+  const [selectedRegion, setSelectedRegion] = useState('')
 
-  const [isSavedLayerVisible, setIsSavedLayerVisible] = useState(false)
+  const [layers, setLayers] = useState([])
+  const [nextLayerId, setNextLayerId] = useState(1)
+
+  const storage = window.localStorage
+  const collectionValue = { collection, setCollection }
+
+  const [selectedNameDistrict, setSelectedNameDistrict] = useState([])
+  const [enableOption, setEnableOption] = useState(false)
 
   useEffect(() => {
-    if (data.length > 0) {
-      const { minPopulation, maxPopulation } = CalculatePopulationBounds(data)
+    storage.clear()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  useEffect(() => {
+    if (collection.length > 0) {
+      const { minPopulation, maxPopulation } = CalculatePopulationBounds(collection)
       setPopulationBounds({ minPopulation, maxPopulation })
     }
-  }, [data])
-  
+  }, [collection])
+
   useEffect(() => {
     if (collection.length > 0) {
       const { minResearchInvestment, maxResearchInvestment } = CalculateResearchInvestmentBounds(collection)
       setResearchInvestmentBounds({ minResearchInvestment, maxResearchInvestment })
     }
   }, [collection])
-  
-  const toggleMarkersDisplay = (layerId) => {
-    setShowMarkers(prevState => ({
-      ...prevState,
-      [layerId]: !prevState[layerId]
-    }))
-  }
-  
-  const togglePatentsDisplay = (layerId) => {
-    setShowPatents(prevState => ({
-      ...prevState,
-      [layerId]: !prevState[layerId]
-    }))
-  }
 
   const toggleFinancingAccess = (value) => {
     setIsFinancingFilterActive(value)
   }
 
   const toggleGovFundsReceived = (value) => {
-    setIsGovFundsReceivedActive(value);
+    setIsGovFundsReceivedActive(value)
   }
 
-  const saveCurrentState = () => {
-    const stateToSave = {
+  const saveCurrentLayer = () => {
+    const newLayer = {
       patentsFilter,
       populationFilter,
-      populationBounds,
       researchInvestmentFilter,
-      researchInvestmentBounds,
       isFinancingFilterActive,
       isGovFundsReceivedActive,
       searchPolygon,
       lifeQuality,
-      gnp,
+      gnp
     }
-    localStorage.setItem('appState', JSON.stringify(stateToSave))
-    console.log('State saved to localStorage')
-    setIsSavedLayerVisible(true)
+
+    // Intentar cargar el arreglo de capas existente desde localStorage, o iniciar uno nuevo si no existe
+    const existingLayers = JSON.parse(storage.getItem('layers')) || []
+
+    // Añadir la nueva capa al arreglo de capas existente
+    const updatedLayers = [...existingLayers, {
+      id: nextLayerId,
+      isVisible: true,
+      data: newLayer
+    }]
+
+    // Guardar el arreglo actualizado de capas en localStorage
+    storage.setItem('layers', JSON.stringify(updatedLayers))
+    console.log(`Layer ${nextLayerId} saved to localStorage with previous layers`, storage)
+
+    // Actualizar el estado de layers y nextLayerId
+    setLayers(updatedLayers)
+
+    setNextLayerId(prevId => prevId + 1)
+    resetFilters()
   }
 
-  const clearSavedState = () => {
-    localStorage.removeItem('appState')
-    
+  const resetFilters = () => {
     setPatentsFilter([0, 100])
     setPopulationFilter([0])
-    setPopulationBounds({ minPopulation: 0, maxPopulation: 0 })
     setResearchInvestmentFilter([0])
-    setResearchInvestmentBounds({ minResearchInvestment: 0, maxResearchInvestment: 0 })
     setIsFinancingFilterActive(false)
     setIsGovFundsReceivedActive(false)
     setSearchPolygon(null)
     setLifeQuality(null)
     setGnp(0)
-
-    setIsSavedLayerVisible(false)
-
-    console.log('State cleared')
   }
-  
+
+  const clearLayerById = (layerId) => {
+    // Cargar el arreglo de capas existente desde localStorage
+    const existingLayers = JSON.parse(storage.getItem('layers')) || []
+    // Filtrar el arreglo para eliminar la capa con el id especificado
+    const updatedLayers = existingLayers.filter(layer => layer.id !== layerId)
+    // Guardar el arreglo actualizado de capas en localStorage
+    storage.setItem('layers', JSON.stringify(updatedLayers))
+    // Actualizar el estado de layers con el nuevo arreglo de capas
+    setLayers(updatedLayers)
+    setNextLayerId(nextLayerId - 1)
+
+    console.log('Layer deleted')
+    console.log(storage)
+  }
+
+  const toggleLayerVisibility = (layerId) => {
+    const existingLayers = JSON.parse(storage.getItem('layers')) || []
+    const updatedLayers = existingLayers.map(layer => {
+      if (layer.id === layerId) {
+        return { ...layer, isVisible: !layer.isVisible }
+      }
+      return layer
+    })
+    storage.setItem('layers', JSON.stringify(updatedLayers))
+    setLayers(updatedLayers)
+    console.log(`Layer ${layerId} visibility toggled`)
+  }
+
   const value = {
-    showMarkers,
-    setShowMarkers,
     patentsFilter,
     setPatentsFilter,
-    toggleMarkersDisplay,
-    togglePatentsDisplay,
     isFinancingFilterActive,
     setIsFinancingFilterActive,
     toggleFinancingAccess,
     isGovFundsReceivedActive,
-    toggleGovFundsReceived, 
+    toggleGovFundsReceived,
     searchPolygon,
     setSearchPolygon,
     lifeQuality,
     setLifeQuality,
-    gnp, 
+    gnp,
     setGnp,
     populationFilter,
     setPopulationFilter,
@@ -133,15 +160,24 @@ function App() {
     researchInvestmentFilter,
     setResearchInvestmentFilter,
     ...researchInvestmentBounds,
-    companies, 
-    setCompanies, 
-    selectedRegion, 
+    companies,
+    setCompanies,
+    selectedRegion,
     setSelectedRegion,
-    saveCurrentState,
-    clearSavedState,
-    isSavedLayerVisible,
+    saveCurrentLayer,
+    clearLayerById,
     mapDivision,
-    setMapDivision
+    setMapDivision,
+    nextLayerId,
+    layers,
+    setLayers,
+    toggleLayerVisibility,
+    selectedNameDistrict,
+    setSelectedNameDistrict,
+    mapCenter,
+    setMapCenter,
+    enableOption,
+    setEnableOption
   }
 
   return (

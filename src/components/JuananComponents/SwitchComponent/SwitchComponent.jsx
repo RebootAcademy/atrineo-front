@@ -6,7 +6,7 @@ import { Label } from "../../ui/Label/Label"
 function SwitchComponent({name, handleChange}) {
 
   const [active, setActive] = useState(false)
-  
+
   const emitChange = (value) => {
     handleChange(value, name)
   }
@@ -23,7 +23,7 @@ function SwitchComponent({name, handleChange}) {
   return (
     <>
       <div>
-        <input type="checkbox" className="mr-2" onChange={handleInput}/>
+        <input type="checkbox" checked={active} className="mr-2" onChange={handleInput}/>
         <Label htmlFor={name}>
           {name}
         </Label>

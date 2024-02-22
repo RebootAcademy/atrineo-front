@@ -1,5 +1,5 @@
-import { point, polygon } from "@turf/helpers"
-import booleanPointInPolygon from "@turf/boolean-point-in-polygon"
+import { point, polygon } from '@turf/helpers'
+import booleanPointInPolygon from '@turf/boolean-point-in-polygon'
 
 /**
  * Función para verificar si un elemento está dentro de un polígono.
@@ -22,15 +22,27 @@ export const isWithinPolygon = (dataItem, searchPolygon) => {
 }
 
 export const CalculatePopulationBounds = (data) => {
-  const populations = data.map(item => item.districtPopulation)
-  const minPopulation = Math.min(...populations)
-  const maxPopulation = Math.max(...populations)
+  const flattenedData = data.flat()
+  const populations = flattenedData.flatMap(item =>
+    item.data.map(innerItem =>
+      innerItem.districtPopulation
+    ))
+
+  const validPopulations = populations.filter(value => !isNaN(value))
+
+  const minPopulation = Math.min(...validPopulations)
+  const maxPopulation = Math.max(...validPopulations)
+
   return { minPopulation, maxPopulation }
 }
 
 export const CalculateResearchInvestmentBounds = (data) => {
   const flattenedData = data.flat()
-  const researchInvestments = flattenedData.flatMap(item => item.data.map(innerItem => innerItem.researchInvestment))
+  const researchInvestments = flattenedData.flatMap(item =>
+    item.data.map(innerItem =>
+      innerItem.researchInvestment
+    ))
+
   const validInvestments = researchInvestments.filter(value => !isNaN(value))
 
   const minResearchInvestment = Math.min(...validInvestments)

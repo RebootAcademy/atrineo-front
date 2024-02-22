@@ -27,7 +27,7 @@
 //         const groupedDataWith3 = {};
 //         const groupedDataWithout3 = {};
 
-//         //se itera sobre los datos obtenidos con la condición si existe o si no 
+//         //se itera sobre los datos obtenidos con la condición si existe o si no
 //         result.collection.data.forEach((item) => {
 //           const key = item.locationId.division3 ? item.locationId.division3.geojsonId : item.locationId.division1.geojsonId;
 //           if (item.locationId.division3) {

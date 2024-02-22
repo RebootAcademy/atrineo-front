@@ -1,27 +1,31 @@
-import { Button } from "../../ui/Button/Button"
+/* eslint-disable no-unused-vars */
+import { useState } from 'react'
+import { LayersIcon } from '../../ui/Icons/Icons'
 import {
-  Sheet,
-  SheetContent,
-  SheetTrigger,
-} from "../../ui/Sheet/sheet"
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "../../ui/DropdownMenu/DropdownMenu"
 
-import LayerCard from "../LayerCard/LayerCard"
+import LayerCard from '../LayerCard/LayerCard'
 
-function LayersContainer() {
+function LayersContainer () {
+  const [isMenuOpen, setMenuOpen] = useState(false)
+  const toggleMenu = () => setMenuOpen(prev => !prev)
+
   return (
-    <aside className="grid grid-cols-2 gap-2 z-[9999999] relative top-8 left-4">
-      <Sheet key='left'>
-
-        <SheetTrigger asChild>
-          <Button variant="outline">
-            <div className="font-bold text-xl text-gray-600">+</div>
-          </Button>
-        </SheetTrigger>
-
-        <SheetContent side='left' className="p-2 w-full h-screen flex justify-center">
-          <LayerCard />
-        </SheetContent>
-      </Sheet>
+    <aside className="z-[9999999] flex justify-center relative top-8 left-4 bg-white rounded-sm w-10 h-10 border">
+      <DropdownMenu isOpen={isMenuOpen} onOpenChange={toggleMenu}>
+        <DropdownMenuTrigger>
+          <LayersIcon />
+        </DropdownMenuTrigger>
+        <DropdownMenuContent>
+          <DropdownMenuItem>
+            <LayerCard onCloseMenu={() => setMenuOpen(false)}/>
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
     </aside>
   )
 }

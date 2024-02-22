@@ -1,40 +1,46 @@
-import { useContext } from "react"
-import CustomButton from "../../CustomButton/CustomButton"
+/* eslint-disable no-unused-vars */
+import { useContext } from 'react'
+import CustomButton from '../../CustomButton/CustomButton'
 import {
   Card,
   CardContent,
   CardFooter,
   CardHeader,
-  CardTitle,
-} from "../../ui/Card/Card"
+  CardTitle
+} from '../../ui/Card/Card'
 
-import FilterGroup from "../FilterGroup/Filtergroup"
+import FilterGroup from '../FilterGroup/Filtergroup'
 import PropTypes from 'prop-types'
-import { LayerContext } from "../../../context/layerContext"
+import { LayerContext } from '../../../context/layerContext'
 
-function LayerCard({ layerId = 1 }) {
-  const { saveCurrentState } = useContext(LayerContext)
+function LayerCard({ onCloseMenu }) {
+  const { saveCurrentLayer, nextLayerId } = useContext(LayerContext)
+
+  const handleSave = () =>{
+    saveCurrentLayer()
+    onCloseMenu()
+  }
 
   return (
     <Card className='w-full flex flex-col items-center'>
 
       <CardHeader>
-        <CardTitle>Layer {layerId}</CardTitle>
+        <CardTitle>Layer {nextLayerId}</CardTitle>
       </CardHeader>
 
       <CardContent>
         <FilterGroup
           layers={[
-            { id: 'startups', name: 'Startups' },
+            { id: 'startups', name: 'Startups' }
             // { id: 'population', name: 'Region' }
           ]}
         />
       </CardContent>
 
       <CardFooter>
-        <CustomButton 
+        <CustomButton
           text="Save"
-          fn={saveCurrentState} 
+          fn={handleSave}
         />
       </CardFooter>
 

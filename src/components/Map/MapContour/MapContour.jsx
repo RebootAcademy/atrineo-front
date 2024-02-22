@@ -1,16 +1,20 @@
-import { GeoJSON } from "react-leaflet"
-import { useGeoJsonData } from "../../../hooks/useGeoJsonData"
+/* eslint-disable no-unused-vars */
+import { GeoJSON } from 'react-leaflet'
+import { useGeoJsonData } from '../../../hooks/useGeoJsonData'
 
 import PropTypes from 'prop-types'
+import { useContext } from "react"
+import { LayerContext } from "../../../context/layerContext"
 
 const style = {
-  opacity: .8,
-  fillOpacity: .1,
+  opacity: 0.8,
+  fillOpacity: 0.1,
   color: 'var(--primary)',
   weight: 1.5
 }
 
-function ContourLayer({ mapDivision }) {
+function ContourLayer() {
+  const { mapDivision } = useContext(LayerContext)
   const data = useGeoJsonData(mapDivision)
 
   const filteredDivision = () => {
@@ -18,7 +22,7 @@ function ContourLayer({ mapDivision }) {
   }
 
   if (data) {
-    const filteredData = {...data, features: filteredDivision()}
+    const filteredData = { ...data, features: filteredDivision() }
     return (
       <section>
         <GeoJSON
