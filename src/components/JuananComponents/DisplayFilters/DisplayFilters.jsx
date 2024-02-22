@@ -55,7 +55,6 @@ function DisplayFilters() {
   const displayNumericFields = () => {
     return numericFields.map(field => {
       const [max, min] = findMaxAndMinValues(data, field.fieldName)
-      console.log(max, min)
       return (
         <SliderComponent
           name={field.fieldName}
