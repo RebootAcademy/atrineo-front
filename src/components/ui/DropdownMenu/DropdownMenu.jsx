@@ -53,6 +53,7 @@ const DropdownMenuContent = React.forwardRef(({ className, sideOffset = 20, ...p
     <DropdownMenuPrimitive.Content
       ref={ref}
       sideOffset={sideOffset}
+      onCloseAutoFocus={(e) => e.preventDefault()}
       align="start"
       side="right"
       className={cn(
@@ -65,10 +66,10 @@ const DropdownMenuContent = React.forwardRef(({ className, sideOffset = 20, ...p
 DropdownMenuContent.displayName = DropdownMenuPrimitive.Content.displayName
 
 // Modificado para no cerrar al hacer click
-const DropdownMenuItem = React.forwardRef(({ className, inset, children, onClick, ...props }, ref) => {
+const DropdownMenuItem = React.forwardRef(({ className, inset, children, ...props }, ref) => {
   const handleClick = (e) => {
     // if (onClick) onClick(e)
-    e.preventDefault()
+    // e.preventDefault()
   }
 
   return (

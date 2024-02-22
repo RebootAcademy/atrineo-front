@@ -9,7 +9,7 @@ function RadioComponent({name, handleChange, options}) {
 
   const handleInput = () => {
     setActive(prev => {
-      if (!prev === false) {
+      if (prev) {
         handleChange('remove', name)
       }
       return !prev

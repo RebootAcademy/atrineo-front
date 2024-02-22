@@ -13,13 +13,13 @@ function SwitchComponent({name, handleChange}) {
 
   const handleInput = () => {
     setActive(prev => {
-      if (!prev === false) {
+      if (prev) {
         handleChange('remove', name)
       }
       return !prev
     })
   }
-  
+  console.log(active)
   return (
     <>
       <div>

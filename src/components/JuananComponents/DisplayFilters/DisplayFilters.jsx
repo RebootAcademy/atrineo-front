@@ -19,6 +19,8 @@ import {
 function DisplayFilters() {
   const { collection } = useContext(CollectionContext)
 
+  
+
   const layerRef = useRef({}) //Objeto con los filtros modificados para esta nueva capa
 
   const handleFilterChange = (value, target) => {
