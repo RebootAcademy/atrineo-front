@@ -1,7 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { useContext } from 'react'
 import CustomButton from '../../CustomButton/CustomButton'
-import { SheetClose } from '../../ui/Sheet/sheet'
 import {
   Card,
   CardContent,
@@ -14,8 +13,13 @@ import FilterGroup from '../FilterGroup/Filtergroup'
 import PropTypes from 'prop-types'
 import { LayerContext } from '../../../context/layerContext'
 
-function LayerCard() {
+function LayerCard({ onCloseMenu }) {
   const { saveCurrentLayer, nextLayerId } = useContext(LayerContext)
+
+  const handleSave = () =>{
+    saveCurrentLayer()
+    onCloseMenu()
+  }
 
   return (
     <Card className='w-full flex flex-col items-center'>
@@ -36,10 +40,8 @@ function LayerCard() {
       <CardFooter>
         <CustomButton
           text="Save"
-          fn={saveCurrentLayer}
+          fn={handleSave}
         />
-        <SheetClose>
-        </SheetClose>
       </CardFooter>
 
     </Card>

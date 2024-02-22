@@ -35,7 +35,6 @@ function App () {
   const [layers, setLayers] = useState([])
   const [nextLayerId, setNextLayerId] = useState(1)
 
-
   const storage = window.localStorage
   const collectionValue = { collection, setCollection }
 

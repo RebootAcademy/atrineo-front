@@ -1,27 +1,28 @@
 /* eslint-disable no-unused-vars */
-import { Button } from '../../ui/Button/Button'
 import { LegendsIcon } from '../../ui/Icons/Icons'
 import {
-  Sheet,
-  SheetContent,
-  SheetTrigger
-} from '../../ui/Sheet/sheet'
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "../../ui/DropdownMenu/DropdownMenu"
 
-import LayerCard from '../LayerCard/LayerCard'
+
+import LegendsCard from '../LegendsCard/LegendsCard'
 
 function LegendsContainer () {
   return (
-    <aside className="grid grid-cols-2 gap-2 z-[9999999] relative top-12 left-4">
-      <Sheet key='left'>
-        <SheetTrigger asChild>
-          <Button variant="outline">
-            <LegendsIcon />
-          </Button>
-        </SheetTrigger>
-        <SheetContent side='left' className="p-2 w-full h-screen flex justify-center">
-          <LayerCard />
-        </SheetContent>
-      </Sheet>
+    <aside className="z-[9999999] flex justify-center relative top-12 left-4 bg-white rounded-sm w-10 h-10 border">
+      <DropdownMenu dir='ltr'>
+        <DropdownMenuTrigger>
+          <LegendsIcon />
+        </DropdownMenuTrigger>
+        <DropdownMenuContent>
+          <DropdownMenuItem>
+            <LegendsCard />
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
     </aside>
   )
 }

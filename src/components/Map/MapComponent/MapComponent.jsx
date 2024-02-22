@@ -15,17 +15,11 @@ import HeatMapLayer from "../../HeatMapLayerComponent.jsx/HeatMapComponent"
 
 import { LayerContext } from "../../../context/layerContext"
 import { FeatureGroup, MapContainer } from "react-leaflet"
+
 import 'leaflet/dist/leaflet.css'
 
-
-
-
 function MapComponent() {
-  const { mapDivision, mapCenter, setSelectedRegion } = useContext(LayerContext)
-
-  const onRegionSelected = (region) => {
-    setSelectedRegion(region)
-  }
+  const { mapDivision, mapCenter } = useContext(LayerContext)
 
   return (
     <section>
@@ -50,9 +44,7 @@ function MapComponent() {
 
         <LayersManager />
 
-        <SavedLayerComponent />
-
-        <HeatMapLayer mapDivision={mapDivision} onRegionSelected={onRegionSelected} />
+        <HeatMapLayer />
 
         <CoordsDisplay />
 

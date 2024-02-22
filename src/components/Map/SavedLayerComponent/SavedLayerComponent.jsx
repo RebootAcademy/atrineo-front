@@ -12,8 +12,8 @@ function SavedLayerComponent () {
       {layers.map((layer, index) => (
         <Card
           key={layer.id}
-          className='absolute top-20 right-3 z-[9999999999] w-60 flex justify-between items-center bg-white p-2'
-          style={{ top: `${20 + index * 60}px` }}
+          className='relative top-20 z-[9999999999] w-60 flex justify-between items-center p-2'
+          style={{ top: `${20 + index * 6}px` }}
         >
           <p className="font-bold text-lg">Layer {layer.id}</p>
 
