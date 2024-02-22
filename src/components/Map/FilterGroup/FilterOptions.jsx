@@ -20,6 +20,7 @@ function FilterOptions () {
     setIsFinancingFilterActive,
     toggleGovFundsReceived,
     setPopulationFilter,
+    lifeQuality, 
     setLifeQuality,
     gnp,
     setGnp,
@@ -41,6 +42,10 @@ function FilterOptions () {
     } else {
       setSelectedNameDistrict(districts)
     }
+  }
+
+  const onLifeQualityChange = (value) => {
+    setLifeQuality((prev) => (prev === value ? null : value))
   }
 
   const handleFinancingSwitchChange = (newState) => {
@@ -122,7 +127,7 @@ function FilterOptions () {
     nameRegion.sort((region1, region2) => region1.name.localeCompare(region2.name))
 
     const districtNames = [
-      {value: 'All', label: 'All'},
+      { value: 'All', label: 'All' },
       ...nameRegion.map((filteredRegion) => (
         {
           value: filteredRegion.name,
@@ -240,15 +245,29 @@ function FilterOptions () {
       </Label>
       <RadioGroup defaultValue="comfortable" onValueChange={setLifeQuality}>
         <div className="flex items-center space-x-2">
-          <RadioGroupItem value="low" id="low-option" />
+          <RadioGroupItem 
+            value="low" 
+            id="low-option"
+            onClick={() => onLifeQualityChange('low')}
+            checked={lifeQuality === 'low'} />
           <Label htmlFor="low">Low</Label>
         </div>
         <div className="flex items-center space-x-2">
-          <RadioGroupItem value="medium" id="medium-option" />
+          <RadioGroupItem 
+            value="medium" 
+            id="medium-option" 
+            onClick={() => onLifeQualityChange('medium')}
+            checked={lifeQuality === 'medium'}
+          />
           <Label htmlFor="medium">Medium</Label>
         </div>
         <div className="flex items-center space-x-2">
-          <RadioGroupItem value="high" id="high-option" />
+          <RadioGroupItem 
+            value="high" 
+            id="high-option"
+            onClick={() => onLifeQualityChange('high')}
+            checked={lifeQuality === 'high'} 
+          />
           <Label htmlFor="high">High</Label>
         </div>
       </RadioGroup>
