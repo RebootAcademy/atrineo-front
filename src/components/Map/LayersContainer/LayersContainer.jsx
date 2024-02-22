@@ -16,12 +16,11 @@ function LayersContainer () {
 
   const handleItemClick = (e) => {
     e.preventDefault()
-    setMenuOpen(true)
   }
 
   return (
     <aside className="z-[9999999] flex justify-center relative top-8 left-4 bg-white rounded-sm w-10 h-10 border">
-      <DropdownMenu isOpen={isMenuOpen} onOpenChange={toggleMenu} onSelect={handleItemClick}>
+      <DropdownMenu isOpen={isMenuOpen} onOpenChange={toggleMenu}>
         <DropdownMenuTrigger>
           <LayersIcon />
         </DropdownMenuTrigger>
