@@ -15,7 +15,8 @@ import { LayerContext } from "../../../context/layerContext"
 import { 
   extractNumericFields,
   extractStringOptions,
-  createStringOptionsObject 
+  createStringOptionsObject, 
+  findMaxAndMinValues
 } from '../../../helpers'
 
 function DisplayFilters() {
@@ -29,7 +30,8 @@ function DisplayFilters() {
     console.log(layerRef.current)
   }
 
-  const fields = collection[0]?.data[0].fields
+  const data = collection[0]?.data
+  const fields = data[0].fields
 
   const booleanFields = fields.filter(field => field.fieldType === 'boolean')
   const numericFields = extractNumericFields(fields)
@@ -52,10 +54,14 @@ function DisplayFilters() {
 
   const displayNumericFields = () => {
     return numericFields.map(field => {
+      const [max, min] = findMaxAndMinValues(data, field.fieldName)
+      console.log(max, min)
       return (
         <SliderComponent
           name={field.fieldName}
           handleChange={handleFilterChange}
+          minValue={min}
+          maxValue={max}
         />
       )
     })
@@ -75,9 +81,9 @@ function DisplayFilters() {
   return (
     <div className="flex flex-col gap-4">
       {/*FALTA METER EL SELECTOR DE LOS DISTRITOS*/ }
-      { displayBooleanFields() }
-      { displayNumericFields() }
-      { displayStrings(stringOptions) }
+        { displayBooleanFields() }
+        { displayNumericFields() }
+        { displayStrings(stringOptions) }
     </div>
   )
 }

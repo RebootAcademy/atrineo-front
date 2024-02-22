@@ -83,3 +83,11 @@ export const createStringOptionsObject = (arr, data) => {
 
   return optionsObj
 }
+
+export const findMaxAndMinValues = (arr, name) => {
+  const values = arr
+    .flatMap((item) => item.fields)
+    .filter((field) => field.fieldName === name)
+    .map(item => item.fieldValue)
+  return [Math.max(...values), Math.min(...values)]
+}
