@@ -26,7 +26,11 @@ function DisplayFilters() {
   const layerRef = useRef({}) //Objeto con los filtros modificados para esta nueva capa
 
   const handleFilterChange = (value, target) => {
-    layerRef.current = { ...layerRef.current, [target]:value }
+    if (value === 'remove') {
+      delete layerRef.current[target]
+    } else {
+      layerRef.current = { ...layerRef.current, [target]:value }
+    }
     console.log(layerRef.current)
   }
 
@@ -69,10 +73,12 @@ function DisplayFilters() {
   const displayBooleanFields = () => {
     return booleanFields.map(field => {
       return(
-        <SwitchComponent
-          name={field.fieldName}
-          handleChange={handleFilterChange}
-        />
+        <>
+          <SwitchComponent
+            name={field.fieldName}
+            handleChange={handleFilterChange}
+          />
+        </>
       )
     })
   }
