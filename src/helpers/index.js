@@ -82,14 +82,14 @@ export const createStringOptionsObject = (arr, data) => {
 
   data?.forEach(row => {
     row.fields?.forEach(field => {
-      if (arr.includes(field.fieldName)) {
+      if (arr?.includes(field.fieldName)) {
         optionsObj[field.fieldName].add(field.fieldValue)
       }
     })
   })
 
   for (const [key, value] of Object.entries(optionsObj)) {
-    optionsObj[key] = Array.from(value);
+    optionsObj[key] = Array.from(value)
   }
 
   return optionsObj

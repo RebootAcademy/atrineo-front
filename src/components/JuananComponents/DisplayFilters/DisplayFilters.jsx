@@ -30,7 +30,7 @@ function DisplayFilters({layerObj}) {
   }
 
   const data = collection[0]?.data
-  const fields = data[0]?.fields
+  const fields = data[0].fields
 
   //function para poder seleccionar All
   // const onDistrictNameChange = (districts) => {
@@ -43,7 +43,7 @@ function DisplayFilters({layerObj}) {
   // } 
 
   //hacer variable con los distritos de la nueva base de datos - que no se exactamente cual es
-  //const multipleSelector = 
+  //const multipleSelector = fields?.filter (field => field.fieldType === '')
   const booleanFields = fields?.filter(field => field.fieldType === 'boolean')
   const numericFields = extractNumericFields(fields)
   const stringOptions = extractStringOptions(fields) //Filtra las columnas que van a usarse como radio buttons
