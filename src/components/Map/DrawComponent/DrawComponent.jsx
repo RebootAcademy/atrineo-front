@@ -1,10 +1,11 @@
+/* eslint-disable no-unused-vars */
 import { EditControl } from 'react-leaflet-draw'
-import 'leaflet/dist/leaflet.css'
-import 'leaflet-draw/dist/leaflet.draw.css'
 import { useContext } from 'react'
 import { LayerContext } from '../../../context/layerContext'
+import 'leaflet/dist/leaflet.css'
+import 'leaflet-draw/dist/leaflet.draw.css'
 
-function DrawComponent() {
+function DrawComponent () {
   const { searchPolygon, setSearchPolygon } = useContext(LayerContext)
   const onDrawCreate = (e) => {
     // Obtén la capa del evento
@@ -27,12 +28,14 @@ function DrawComponent() {
         circle: false,
         marker: false,
         circlemarker: false,
-        polygon: !searchPolygon ? {
-          shapeOptions: {
-            color: 'var(--primary)',
-            weight: 1
-          },
-        } : false,
+        polygon: !searchPolygon
+          ? {
+              shapeOptions: {
+                color: 'var(--primary)',
+                weight: 1
+              }
+            }
+          : false
       }}
     />
   )

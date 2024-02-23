@@ -1,52 +1,50 @@
-import { FeatureGroup, MapContainer } from "react-leaflet"
-import { useContext } from "react"
+/* eslint-disable no-unused-vars */
+import { useState, useContext } from 'react'
 
-import { MapUpdater } from "../MapUpdater/MapUpdaterComponent"
+import ContourLayer from '../MapContour/MapContour'
+import CoordsDisplay from '../CoordsDisplay/CoordsDisplay'
+import DrawComponent from '../DrawComponent/DrawComponent'
+import CustomZoomControl from '../CustomZoomControl/CustomZoomControl'
+import SearchBar from '../SearchBar/SearchBar'
+import LayersContainer from '../LayersContainer/LayersContainer'
+import TileLayerComponent from '../TileLayerComponent/TileLayerComponent'
+import SavedLayerComponent from '../SavedLayerComponent/SavedLayerComponent'
+import LayersManager from '../LayersManager/LayersManager'
+import LegendsContainer from '../LegendsContainer/LegendsContainer'
 import HeatMapLayer from "../../HeatMapLayerComponent.jsx/HeatMapComponent"
 
-import ContourLayer from "../MapContour/MapContour"
-import CoordsDisplay from "../CoordsDisplay/CoordsDisplay"
-import DrawComponent from "../DrawComponent/DrawComponent"
-import CustomZoomControl from "../CustomZoomControl/CustomZoomControl"
-import SearchBar from "../SearchBar/SearchBar"
-import LayersContainer from "../LayersContainer/LayersContainer"
-import StartupsComponent from "../StartupsComponent/StartupsComponent"
-import TileLayerComponent from "../TileLayerComponent/TileLayerComponent"
-import SavedLayerComponent from "../SavedLayerComponent/SavedLayerComponent"
 import { LayerContext } from "../../../context/layerContext"
+import { FeatureGroup, MapContainer } from "react-leaflet"
 
-import "leaflet/dist/leaflet.css"
+import 'leaflet/dist/leaflet.css'
 
 function MapComponent() {
-  const { mapDivision, mapCenter, setSelectedRegion, isSavedLayerVisible } = useContext(LayerContext)
-
-  const onRegionSelected = (region) => {
-    setSelectedRegion(region)
-  }
+  const { mapDivision, mapCenter } = useContext(LayerContext)
 
   return (
     <section>
       <MapContainer
         center={mapCenter}
         zoom={2}
-        minZoom={8}
+        minZoom={9}
         doubleClickZoom={false}
-        style={{ height: `calc(100vh - 80px)`, width: "100vw", zIndex: 0 }}
+        style={{ height: 'calc(100vh - 80px)', width: '100vw', zIndex: 0 }}
       >
 
         <TileLayerComponent />
         <ContourLayer mapDivision={mapDivision} />
-        <MapUpdater center={mapCenter} />
 
         <div className="flex flex-col items-start">
           <SearchBar />
-          <LayersContainer mapDivision={mapDivision} />
+          <LayersContainer />
+          <LegendsContainer />
         </div>
 
         <CustomZoomControl />
-        {isSavedLayerVisible && <SavedLayerComponent />}
-        <StartupsComponent />
-        <HeatMapLayer mapDivision={mapDivision} onRegionSelected={onRegionSelected} />
+
+        <LayersManager />
+
+        <HeatMapLayer />
 
         <CoordsDisplay />
 

@@ -1,7 +1,8 @@
-import { Outlet } from "react-router-dom";
-import Header from "../sections/Header/Header";
+/* eslint-disable no-unused-vars */
+import { Outlet } from 'react-router-dom'
+import Header from '../sections/Header/Header'
 
-function Layout(){
+function Layout () {
   return (
     <main className="h-screen">
       <Header/>

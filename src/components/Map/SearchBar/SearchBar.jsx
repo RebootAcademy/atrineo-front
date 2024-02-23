@@ -1,8 +1,9 @@
+/* eslint-disable no-undef */
+/* eslint-disable no-unused-vars */
 import { useState } from 'react'
-
 import SearchResult from '../SearchResult/SearchResult'
 
-function SearchBar() {
+function SearchBar () {
   const [searchResults, setSearchResults] = useState([])
 
   const handleChange = (e) => {
@@ -36,7 +37,7 @@ function SearchBar() {
         {displayResults()}
       </ul>
     </div>
-  );
+  )
 }
 
 export default SearchBar

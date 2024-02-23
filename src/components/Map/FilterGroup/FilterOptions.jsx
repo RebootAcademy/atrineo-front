@@ -1,15 +1,18 @@
-import { useContext } from "react"
-import { LayerContext } from "../../../context/layerContext"
-import { Switch } from "../../ui/Switch/Switch"
-import { Label } from "../../ui/Label/Label"
-import { Slider } from "../../ui/Slider/Slider"
-import { CollectionContext } from "../../../context/collectionContext"
-import { RadioGroup, RadioGroupItem } from "../../ui/RadioGroup/radio-group"
-import { Slider2 } from "../../ui/Slider2/Slider2"
+/* eslint-disable no-unused-vars */
+import { useContext } from 'react'
+import { LayerContext } from '../../../context/layerContext'
+import { Switch } from '../../ui/Switch/Switch'
+import { Label } from '../../ui/Label/Label'
+import { Slider } from '../../ui/Slider/Slider'
+import { CollectionContext } from '../../../context/collectionContext'
+import { RadioGroup, RadioGroupItem } from '../../ui/RadioGroup/radio-group'
+import { Slider2 } from '../../ui/Slider2/Slider2'
 import MultipleSelector from '../../ui/MultiSelector/multple-selector'
 import { Checkbox } from "../../ui/Checkbox/Checkbox"
 
-function FilterOptions() {
+function FilterOptions () {
+  const { collection } = useContext(CollectionContext)
+
   const {
     patentsFilter,
     isFinancingFilterActive,
@@ -32,10 +35,6 @@ function FilterOptions() {
     setSelectedNameDistrict,
     mapDivision
   } = useContext(LayerContext)
-
-  const {
-    collection
-  } = useContext(CollectionContext)
 
   const onDistrictNameChange = (districts) => {
     const isAllSelected = districts.some(district => district.value === 'All')
@@ -86,7 +85,7 @@ function FilterOptions() {
   }
 
   const getMinGnp = () => {
-    if (!collection || !collection[0].data) {
+    if (!collection || !collection[0]?.data) {
       return 0
     }
     const min = collection[0].data.reduce(
@@ -102,7 +101,7 @@ function FilterOptions() {
   }
 
   const getMaxGnp = () => {
-    if (!collection || !collection[0].data) {
+    if (!collection || !collection[0]?.data) {
       return 100
     }
     const max = collection[0].data.reduce(

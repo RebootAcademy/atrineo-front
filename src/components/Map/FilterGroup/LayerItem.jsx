@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 
-function LayerItem({ layer }) {
+function LayerItem ({ layer }) {
   return (
     <div className="flex gap-2 mb-2">
       <label

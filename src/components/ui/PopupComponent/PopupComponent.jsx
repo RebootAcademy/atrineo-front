@@ -1,12 +1,13 @@
-import { Popup } from "react-leaflet";
-import { useContext } from "react";
-import { CollectionContext } from "../../../context/collectionContext";
+/* eslint-disable no-unused-vars */
+import { Popup } from 'react-leaflet'
+import { useContext } from 'react'
+import { CollectionContext } from '../../../context/collection'
 
-export default function PopupComponent({name}) {
-  const { collection } = useContext(CollectionContext);
-  //console.log({ collection: collection })
+export default function PopupComponent ({ name }) {
+  const { collection } = useContext(CollectionContext)
+  // console.log({ collection: collection })
 
-  //Primero miramos sin collection llega hasta data
+  // Primero miramos sin collection llega hasta data
   if (!collection || !collection[0] || !collection[0].data) {
     return null
   }
@@ -20,8 +21,7 @@ export default function PopupComponent({name}) {
       <div className="text-sm">{name}</div>
     </Popup>
     )))
-  //console.log(startUpNames)
+  // console.log(startUpNames)
 
-  return <>{startUpNames}</>;
+  return <>{startUpNames}</>
 }
-

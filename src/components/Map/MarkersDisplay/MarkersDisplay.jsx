@@ -1,19 +1,20 @@
-import { CollectionContext } from "../../../context/collectionContext"
-import { useContext } from "react"
-import MarkerComponent from "../MarkerComponent/MarkerComponent"
-import { LayerContext } from "../../../context/layerContext"
-import { isWithinPolygon } from "../../../helpers"
+/* eslint-disable no-unused-vars */
+import { CollectionContext } from '../../../context/collectionContext'
+import { useContext } from 'react'
+import { isWithinPolygon } from '../../../helpers'
+import MarkerComponent from '../MarkerComponent/MarkerComponent'
+import { LayerContext } from '../../../context/layerContext'
 
-function MarkersDisplay() {
+function MarkersDisplay ({ filters, searchPolygon }) {
   const { collection } = useContext(CollectionContext)
-  const { mapDivision, isFinancingFilterActive, isGovFundsReceivedActive, searchPolygon, selectedNameDistrict } = useContext(LayerContext)
+  const { selectedNameDistrict, mapDivision } = useContext(LayerContext)
 
   const displayMarkers = () => {
     return collection.flatMap((item) =>
       item.data
         // Primero, verifica si el filtro de financiamiento está activo antes de aplicar cualquier filtrado
-        .filter((dataItem) => !isFinancingFilterActive || dataItem.financingAccess)
-        .filter((dataItem) => !isGovFundsReceivedActive || dataItem.govFundsReceived)
+        .filter((dataItem) => !filters.isFinancingFilterActive || dataItem.financingAccess)
+        .filter((dataItem) => !filters.isGovFundsReceivedActive || dataItem.govFundsReceived)
         .filter((dataItem) => isWithinPolygon(dataItem, searchPolygon))
         //si se utiliza linea 19 añadir selectedRegion al contexto en la fila 9
         // .filter((company) => selectedRegion === "" || company.locationId[mapDivision]?.name === selectedRegion)

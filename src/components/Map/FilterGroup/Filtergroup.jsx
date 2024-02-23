@@ -1,21 +1,27 @@
-import LayerItem from "./LayerItem"
-import FilterOptions from "./FilterOptions"
-import { Card, CardHeader, CardTitle } from "../../ui/Card/Card"
+/* eslint-disable no-unused-vars */
+import LayerItem from './LayerItem'
+import FilterOptions from './FilterOptions'
+import { Card, CardContent, CardHeader, CardTitle } from '../../ui/Card/Card'
+
+import DisplayFilters from "../../JuananComponents/DisplayFilters/DisplayFilters"
 
 import PropTypes from 'prop-types'
 
 function FilterGroup({ title, layers }) {
   return (
-    <Card className='bg-orange-400 mb-2 w-[300px] pt-0 p-2'>
+    <Card className='mb-2 w-[300px] pt-0 p-2'>
       <CardHeader>
         <CardTitle>{title}</CardTitle>
       </CardHeader>
-      {layers && layers.map((layer, id) => (
-        <div key={id}>
-          <LayerItem layer={layer} />
-          <FilterOptions />
-        </div>
-      ))}
+      <CardContent>
+        {layers && layers.map((layer, id) => (
+          <div key={id}>
+            <LayerItem layer={layer} />
+            {/* <FilterOptions /> */}
+            <DisplayFilters />
+          </div>
+        ))}
+      </CardContent>
     </Card>
   )
 }
