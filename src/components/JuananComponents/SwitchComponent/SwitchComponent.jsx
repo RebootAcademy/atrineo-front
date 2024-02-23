@@ -5,7 +5,6 @@ import { Switch } from "../../ui/Switch/Switch"
 import { Label } from "../../ui/Label/Label"
 
 function SwitchComponent({name, handleChange}) {
-
   const [active, setActive] = useState(false)
 
   const emitChange = (value) => {
@@ -20,7 +19,7 @@ function SwitchComponent({name, handleChange}) {
       return !prev
     })
   }
-  console.log(active)
+
   return (
     <>
       <div>

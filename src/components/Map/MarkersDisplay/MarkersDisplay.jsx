@@ -10,7 +10,7 @@ function MarkersDisplay ({ filters, searchPolygon }) {
   const { selectedNameDistrict, mapDivision } = useContext(LayerContext)
 
   const displayMarkers = () => {
-    return collection.flatMap((item) =>{
+    return collection.flatMap(item => {
       // console.log(item.data)
       // console.log(filters)
       // return item.data

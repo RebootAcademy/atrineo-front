@@ -25,10 +25,10 @@ function LayersManager () {
           <div key={index}>
             <StartupsComponent filters={layer.data} searchPolygon={searchPolygon} />
             <PopulationLayer filters={layer.data} searchPolygon={searchPolygon} />
-            {/* <PatentsLayer filters={layer.data} searchPolygon={searchPolygon} />
+            <GnpLayer filters={layer.data} searchPolygon={searchPolygon} />
+{/*             <PatentsLayer filters={layer.data} searchPolygon={searchPolygon} />
             <ResearchInvestmentLayer filters={layer.data} searchPolygon={searchPolygon} />
-            <LifeQualityLayer filters={layer.data} searchPolygon={searchPolygon} />
-            <GnpLayer filters={layer.data} searchPolygon={searchPolygon} /> */}
+            <LifeQualityLayer filters={layer.data} searchPolygon={searchPolygon} /> */}
           </div>
         )
       })}
