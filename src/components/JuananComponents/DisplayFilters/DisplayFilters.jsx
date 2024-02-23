@@ -6,25 +6,24 @@ import PropTypes from 'prop-types'
 import RadioComponent from '../RadioComponent/RadioComponent'
 import SwitchComponent from '../SwitchComponent/SwitchComponent'
 import SliderComponent from '../SliderComponent/SliderComponent'
-
 import { CollectionContext } from "../../../context/collectionContext"
 
-import { 
+import {
   extractNumericFields,
   extractStringOptions,
-  createStringOptionsObject, 
+  createStringOptionsObject,
   findMaxAndMinValues
 } from '../../../helpers'
-//import MultipleSelector from "../../ui/MultiSelector/multple-selector"
 
-function DisplayFilters({layerObj}) {
+function DisplayFilters({ layerObj }) {
+
   const { collection } = useContext(CollectionContext)
 
   const handleFilterChange = (value, target) => {
     if (value === 'remove') {
       delete layerObj.current[target]
     } else {
-      layerObj.current = { ...layerObj.current, [target]:value }
+      layerObj.current = { ...layerObj.current, [target]: value }
     }
     console.log(layerObj.current)
   }
@@ -32,18 +31,8 @@ function DisplayFilters({layerObj}) {
   const data = collection[0]?.data
   const fields = data[0].fields
 
-  //function para poder seleccionar All
-  // const onDistrictNameChange = (districts) => {
-  //   const isAllSelected = districts.some(district => district.value === 'All')
-  //   if (isAllSelected) {
-  //     setSelectedNameDistrict(districtSelection())
-  //   } else {
-  //     setSelectedNameDistrict(districts)
-  //   }
-  // } 
 
   //hacer variable con los distritos de la nueva base de datos - que no se exactamente cual es
-  //const multipleSelector = fields?.filter (field => field.fieldType === '')
   const booleanFields = fields?.filter(field => field.fieldType === 'boolean')
   const numericFields = extractNumericFields(fields)
   const stringOptions = extractStringOptions(fields) //Filtra las columnas que van a usarse como radio buttons
@@ -51,18 +40,7 @@ function DisplayFilters({layerObj}) {
   // Almacena las distintas opciones posibles para cada grupo de radio buttons
   const optionsObj = createStringOptionsObject(stringOptions, collection[0]?.data)
 
-  //crear la function para mostar el multipe selector
-  // const displayMultipleSelector = () => {
-  //   return (()) => {
-  //     return (
-  //       <MultipleSelector
-  //         key={index}
-  //         name={field.fieldName}
-  //         handleChange={onDistrictNameChange}
-  //       />
-  //     )
-  //   }
-  // }
+  //todo lo que habia aqui esta en MultipleSelector
 
   const displayStrings = (arr) => {
     return arr?.map((option, index) => {
@@ -94,7 +72,7 @@ function DisplayFilters({layerObj}) {
 
   const displayBooleanFields = () => {
     return booleanFields?.map((field, index) => {
-      return(
+      return (
         <SwitchComponent
           key={index}
           name={field.fieldName}
@@ -106,10 +84,10 @@ function DisplayFilters({layerObj}) {
 
   return (
     <div className="flex flex-col gap-4">
-      {/*FALTA METER EL SELECTOR DE LOS DISTRITOS*/ }
-      { displayBooleanFields() }
-      { displayNumericFields() }
-      { displayStrings(stringOptions) }
+      {/* {aqui va el multiple selector} */}
+      {displayBooleanFields()}
+      {displayNumericFields()}
+      {displayStrings(stringOptions)}
     </div>
   )
 }

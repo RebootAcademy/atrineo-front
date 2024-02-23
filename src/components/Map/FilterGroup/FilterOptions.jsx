@@ -139,6 +139,7 @@ function FilterOptions () {
     return districtNames
 
   }
+  
   const defaultDistictOptions = districtSelection()
 
   return (
