@@ -7,6 +7,7 @@ import { CollectionContext } from "../../../context/collectionContext"
 import { RadioGroup, RadioGroupItem } from "../../ui/RadioGroup/radio-group"
 import { Slider2 } from "../../ui/Slider2/Slider2"
 import MultipleSelector from '../../ui/MultiSelector/multple-selector'
+import { Checkbox } from "../../ui/Checkbox/Checkbox"
 
 function FilterOptions() {
   const {
@@ -17,7 +18,7 @@ function FilterOptions() {
     setIsFinancingFilterActive,
     toggleGovFundsReceived,
     setPopulationFilter,
-    lifeQuality, 
+    lifeQuality,
     setLifeQuality,
     gnp,
     setGnp,
@@ -143,7 +144,10 @@ function FilterOptions() {
 
   return (
     <div className="flex flex-col gap-4">
-      <Label htmlFor="disctrictName">District Name:</Label>
+      <div>
+        <Checkbox />
+        <Label className='ml-1 font-bold' htmlFor="disctrictName">District Name:</Label>
+      </div>
       <div className="flex items-center space-x-2">
         <MultipleSelector
           placeholder="Select..."
@@ -175,8 +179,11 @@ function FilterOptions() {
         </div>
       </div>
 
+      <div>
+        <Checkbox />
+        <Label className='ml-1 font-bold' htmlFor="patents">Patents Nº</Label>
+      </div>
       <div className="flex flex-col items-center space-x-2 gap-2">
-        <Label htmlFor="patents">Patents Nº</Label>
         <div className="flex space-x-40">
           <div className="text-sm">Min</div>
           <div className="text-sm">Max</div>
@@ -207,8 +214,11 @@ function FilterOptions() {
         </div>
       </div>
 
+      <div>
+        <Checkbox />
+        <Label className='ml-1 font-bold' htmlFor="population">District Population</Label>
+      </div>
       <div className="flex flex-col items-center space-x-2 gap-2">
-        <Label htmlFor="population">District Population</Label>
         <div className="flex space-x-40">
           <div className="text-sm">Min</div>
           <div className="text-sm">Max</div>
@@ -224,8 +234,11 @@ function FilterOptions() {
         {populationFilter}
       </div>
 
+      <div>
+        <Checkbox />
+        <Label className='ml-1 font-bold' htmlFor="researchInvestment">Research Investment</Label>
+      </div>
       <div className="flex flex-col items-center space-x-2 gap-2">
-        <Label htmlFor="researchInvestment">Research Investment</Label>
         <div className="flex space-x-40">
           <div className="text-sm">Min</div>
           <div className="text-sm">Max</div>
@@ -241,41 +254,47 @@ function FilterOptions() {
         {researchInvestmentFilter} €
       </div>
 
-      <Label className="mt-4" htmlFor="lifeQuality">
-        Life Quality:
-      </Label>
+      <div>
+        <Checkbox />
+        <Label className="ml-1 font-bold" htmlFor="lifeQuality">
+          Life Quality:
+        </Label>
+      </div>
       <RadioGroup defaultValue="comfortable" onValueChange={setLifeQuality}>
         <div className="flex items-center space-x-2">
-          <RadioGroupItem 
-            value="low" 
+          <RadioGroupItem
+            value="low"
             id="low-option"
             onClick={() => onLifeQualityChange('low')}
             checked={lifeQuality === 'low'} />
           <Label htmlFor="low">Low</Label>
         </div>
         <div className="flex items-center space-x-2">
-          <RadioGroupItem 
-            value="medium" 
-            id="medium-option" 
+          <RadioGroupItem
+            value="medium"
+            id="medium-option"
             onClick={() => onLifeQualityChange('medium')}
             checked={lifeQuality === 'medium'}
           />
           <Label htmlFor="medium">Medium</Label>
         </div>
         <div className="flex items-center space-x-2">
-          <RadioGroupItem 
-            value="high" 
+          <RadioGroupItem
+            value="high"
             id="high-option"
             onClick={() => onLifeQualityChange('high')}
-            checked={lifeQuality === 'high'} 
+            checked={lifeQuality === 'high'}
           />
           <Label htmlFor="high">High</Label>
         </div>
       </RadioGroup>
 
-      <Label className="mt-4" htmlFor="gnp">
-        Gnp:
-      </Label>
+      <div>
+        <Checkbox />
+        <Label className="mt-4" htmlFor="gnp">
+          Gnp:
+        </Label>
+      </div>
       <Slider2 onValueChange={setGnp} min={getMinGnp()} max={getMaxGnp()} />
       <Label>{gnp}</Label>
     </div>

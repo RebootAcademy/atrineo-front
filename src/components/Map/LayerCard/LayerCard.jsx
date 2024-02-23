@@ -1,12 +1,6 @@
 import { useContext } from "react"
 import CustomButton from "../../CustomButton/CustomButton"
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "../../ui/Card/Card"
+import { Card, CardFooter, CardHeader, CardTitle } from "../../ui/Card/Card"
 
 import FilterGroup from "../FilterGroup/Filtergroup"
 import PropTypes from 'prop-types'
@@ -16,25 +10,23 @@ function LayerCard({ layerId = 1 }) {
   const { saveCurrentState } = useContext(LayerContext)
 
   return (
-    <Card className='w-full flex flex-col items-center'>
+    <Card className='bg-blue-400 w-full flex flex-col items-center'>
 
       <CardHeader>
         <CardTitle>Layer {layerId}</CardTitle>
       </CardHeader>
 
-      <CardContent>
-        <FilterGroup
-          layers={[
-            { id: 'startups', name: 'Startups' },
-            // { id: 'population', name: 'Region' }
-          ]}
-        />
-      </CardContent>
+      <FilterGroup
+        layers={[
+          { id: 'startups', name: 'Startups' },
+          // { id: 'population', name: 'Region' }
+        ]}
+      />
 
       <CardFooter>
-        <CustomButton 
+        <CustomButton
           text="Save"
-          fn={saveCurrentState} 
+          fn={saveCurrentState}
         />
       </CardFooter>
 

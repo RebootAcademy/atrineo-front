@@ -1,6 +1,6 @@
 import LayerItem from "./LayerItem"
 import FilterOptions from "./FilterOptions"
-import { Card, CardContent, CardHeader, CardTitle } from "../../ui/Card/Card"
+import { Card, CardHeader, CardTitle } from "../../ui/Card/Card"
 
 import PropTypes from 'prop-types'
 
@@ -10,14 +10,12 @@ function FilterGroup({ title, layers }) {
       <CardHeader>
         <CardTitle>{title}</CardTitle>
       </CardHeader>
-      <CardContent>
-        {layers && layers.map((layer, id) => (
-          <div key={id}>
-            <LayerItem layer={layer} />
-            <FilterOptions />
-          </div>
-        ))}
-      </CardContent>
+      {layers && layers.map((layer, id) => (
+        <div key={id}>
+          <LayerItem layer={layer} />
+          <FilterOptions />
+        </div>
+      ))}
     </Card>
   )
 }
