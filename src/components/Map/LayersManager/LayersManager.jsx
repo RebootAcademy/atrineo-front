@@ -17,23 +17,21 @@ function LayersManager () {
     setLayers(storedLayers)
   }, [])
 
-  console.log(layers)
-
   return (
     <>
-      {/* {layers.map((layer, index) => {
+      {layers.map((layer, index) => {
         if (!layer.isVisible) return null
         return (
           <div key={index}>
             <StartupsComponent filters={layer.data} searchPolygon={searchPolygon} />
-            <PatentsLayer filters={layer.data} searchPolygon={searchPolygon} />
             <PopulationLayer filters={layer.data} searchPolygon={searchPolygon} />
+            {/* <PatentsLayer filters={layer.data} searchPolygon={searchPolygon} />
             <ResearchInvestmentLayer filters={layer.data} searchPolygon={searchPolygon} />
             <LifeQualityLayer filters={layer.data} searchPolygon={searchPolygon} />
-            <GnpLayer filters={layer.data} searchPolygon={searchPolygon} />
+            <GnpLayer filters={layer.data} searchPolygon={searchPolygon} /> */}
           </div>
         )
-      })} */}
+      })}
     </>
   )
 }
