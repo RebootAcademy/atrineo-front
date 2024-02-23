@@ -1,6 +1,6 @@
 //SUSTITUIRÍA A FILTEROPTIONS
 // import { v4 as uuidv4 } from 'uuid'
-import { useContext, useRef } from "react"
+import { useContext } from "react"
 import PropTypes from 'prop-types'
 
 import RadioComponent from '../RadioComponent/RadioComponent'
@@ -12,21 +12,25 @@ import { CollectionContext } from "../../../context/collectionContext"
 import { 
   extractNumericFields,
   extractStringOptions,
-  createStringOptionsObject 
+  createStringOptionsObject, 
+  findMaxAndMinValues
 } from '../../../helpers'
 //import MultipleSelector from "../../ui/MultiSelector/multple-selector"
 
-function DisplayFilters() {
+function DisplayFilters({layerObj}) {
   const { collection } = useContext(CollectionContext)
 
-  const layerRef = useRef({}) //Objeto con los filtros modificados para esta nueva capa
-
   const handleFilterChange = (value, target) => {
-    layerRef.current = { ...layerRef.current, [target]:value }
-    console.log(layerRef.current)
+    if (value === 'remove') {
+      delete layerObj.current[target]
+    } else {
+      layerObj.current = { ...layerObj.current, [target]:value }
+    }
+    console.log(layerObj.current)
   }
 
-  const fields = collection[0]?.data[0].fields
+  const data = collection[0]?.data
+  const fields = data[0].fields
 
   //function para poder seleccionar All
   // const onDistrictNameChange = (districts) => {
@@ -74,12 +78,15 @@ function DisplayFilters() {
   }
 
   const displayNumericFields = () => {
-    return numericFields?.map((field, index) => {
+    return numericFields.map((field, index) => {
+      const [max, min] = findMaxAndMinValues(data, field.fieldName)
       return (
         <SliderComponent
           key={index}
           name={field.fieldName}
           handleChange={handleFilterChange}
+          minValue={min}
+          maxValue={max}
         />
       )
     })
@@ -109,7 +116,8 @@ function DisplayFilters() {
 
 DisplayFilters.propTypes = {
   title: PropTypes.string,
-  layers: PropTypes.array
+  layers: PropTypes.array,
+  layerObj: PropTypes.object
 }
 
 export default DisplayFilters

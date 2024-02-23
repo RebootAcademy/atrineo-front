@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { useContext } from 'react'
+import { useContext, useRef } from 'react'
 import CustomButton from '../../CustomButton/CustomButton'
 import {
   Card,
@@ -16,8 +16,10 @@ import { LayerContext } from '../../../context/layerContext'
 function LayerCard({ onCloseMenu }) {
   const { saveCurrentLayer, nextLayerId } = useContext(LayerContext)
 
+  const layerRef = useRef({})
+
   const handleSave = () =>{
-    saveCurrentLayer()
+    saveCurrentLayer(layerRef.current)
     onCloseMenu()
   }
 
@@ -34,6 +36,7 @@ function LayerCard({ onCloseMenu }) {
             { id: 'startups', name: 'Startups' }
             // { id: 'population', name: 'Region' }
           ]}
+          layerObj={layerRef}
         />
       </CardContent>
 
@@ -49,7 +52,8 @@ function LayerCard({ onCloseMenu }) {
 }
 
 LayerCard.propTypes = {
-  layerId: PropTypes.number
+  layerId: PropTypes.number,
+  onCloseMenu: PropTypes.func
 }
 
 export default LayerCard

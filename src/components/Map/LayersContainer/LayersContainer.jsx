@@ -53,35 +53,32 @@
 
 // export default LayersContainer
 
-import { Button } from "../../ui/Button/Button"
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
+import { useState } from "react"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../../ui/DropdownMenu/DropdownMenu"
+import LayerCard from '../LayerCard/LayerCard'
+import { LayersIcon } from "../../ui/Icons/Icons"
 
-  DropdownMenuSeparator,
+function LayersContainer() {
+  const [isMenuOpen, setMenuOpen] = useState(false)
+  const toggleMenu = () => setMenuOpen(prev => !prev)
 
-  DropdownMenuTrigger,
-} from "../../ui/DropDown/DropdownMenu"
+  const handleItemClick = (e) => {
+    e.preventDefault()
+  }
 
-export function LayersContainer() {
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button variant="outline">Open</Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuTrigger>Open</DropdownMenuTrigger>
-      <DropdownMenuContent>
-        <DropdownMenuLabel>My Account</DropdownMenuLabel>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem>Profile</DropdownMenuItem>
-        <DropdownMenuItem>Billing</DropdownMenuItem>
-        <DropdownMenuItem>Team</DropdownMenuItem>
-        <DropdownMenuItem>Subscription</DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
-
+    <aside className="z-[9999999] flex justify-center relative top-8 left-4 bg-white rounded-sm w-10 h-10 border">
+      <DropdownMenu isOpen={isMenuOpen} onOpenChange={toggleMenu}>
+        <DropdownMenuTrigger>
+          <LayersIcon />
+        </DropdownMenuTrigger>
+        <DropdownMenuContent>
+          <DropdownMenuItem onSelect={handleItemClick}>
+            <LayerCard onCloseMenu={() => setMenuOpen(false)} />
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+    </aside>
   )
 }
 
