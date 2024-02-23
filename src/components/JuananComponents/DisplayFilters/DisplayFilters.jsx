@@ -30,7 +30,7 @@ function DisplayFilters({layerObj}) {
   }
 
   const data = collection[0]?.data
-  const fields = data[0].fields
+  const fields = data[0]?.fields
 
   //function para poder seleccionar All
   // const onDistrictNameChange = (districts) => {
