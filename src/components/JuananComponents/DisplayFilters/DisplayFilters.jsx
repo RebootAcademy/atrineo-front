@@ -15,7 +15,7 @@ import {
   findMaxAndMinValues
 } from '../../../helpers'
 
-function DisplayFilters({ layerObj }) {
+function DisplayFilters({ layerObj, type }) {
 
   const { collection } = useContext(CollectionContext)
 
@@ -28,8 +28,12 @@ function DisplayFilters({ layerObj }) {
     console.log(layerObj.current)
   }
 
-  const data = collection[0]?.data
-  const fields = data[0].fields
+  let data
+  let fields
+  if (collection) {
+    data = collection[0]?.data
+    fields = data[0].fields
+  }
 
 
   //hacer variable con los distritos de la nueva base de datos - que no se exactamente cual es
@@ -85,9 +89,9 @@ function DisplayFilters({ layerObj }) {
   return (
     <div className="flex flex-col gap-4">
       {/* {aqui va el multiple selector} */}
-      {displayBooleanFields()}
+      {type === 'startups' && displayBooleanFields()}
       {displayNumericFields()}
-      {displayStrings(stringOptions)}
+      {type === 'startups' && displayStrings(stringOptions)}
     </div>
   )
 }
@@ -95,7 +99,8 @@ function DisplayFilters({ layerObj }) {
 DisplayFilters.propTypes = {
   title: PropTypes.string,
   layers: PropTypes.array,
-  layerObj: PropTypes.object
+  layerObj: PropTypes.object,
+  type: PropTypes.string
 }
 
 export default DisplayFilters
