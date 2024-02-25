@@ -21,18 +21,26 @@ function LayersManager () {
     setLayers(storedLayers)
   }, [])
 
-  const displayLayers = (data) => {
+  const colors = ['dodgerBlue', 'red', 'green']
+
+  const displayLayers = (filters, array) => {
     const elements = []
-    for (const key in data) {
-      switch (typeof data[key]) {
+    let index = 0
+    for (const key in filters) {
+      switch (typeof filters[key]) {
       case 'number':
         elements.push(
           <NumericLayer
-            filters={data}
+            filters={filters}
             field={key}
+            data={array}
             searchPolygon={searchPolygon}
+            color={colors[index]}
           />
         )
+        index++
+        break
+      default:
         break
       }
     }
@@ -70,7 +78,7 @@ function LayersManager () {
         return (
           <>
             <StartupsComponent data={filteredData} searchPolygon={searchPolygon} />
-            {displayLayers(layer.data)}
+            {displayLayers(layer.data, filteredData)}
           </>
         )
         // return (

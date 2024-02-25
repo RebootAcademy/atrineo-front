@@ -17,7 +17,10 @@ import { CollectionContext } from "../../../context/collectionContext"
 
 function LayerCard({ onCloseMenu }) {
   const { collection } = useContext(CollectionContext)
-  const collectionType = collection[0].collectionType
+  let collectionType
+  if(collection.length !== 0) {
+    collectionType = collection[0].collectionType
+  }
 
   const { saveCurrentLayer, nextLayerId } = useContext(LayerContext)
 
