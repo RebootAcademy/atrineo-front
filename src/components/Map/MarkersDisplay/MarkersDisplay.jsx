@@ -5,7 +5,7 @@ import { isWithinPolygon } from '../../../helpers'
 import MarkerComponent from '../MarkerComponent/MarkerComponent'
 import { LayerContext } from '../../../context/layerContext'
 
-function MarkersDisplay ({ filters, searchPolygon }) {
+function MarkersDisplay ({ data, searchPolygon }) {
   const { collection } = useContext(CollectionContext)
   const { selectedNameDistrict, mapDivision } = useContext(LayerContext)
 
@@ -22,29 +22,29 @@ function MarkersDisplay ({ filters, searchPolygon }) {
       //   // .filter((company) => selectedRegion === "" || company.locationId[mapDivision]?.name === selectedRegion)
       //   .filter((company) => selectedNameDistrict === 0 || selectedNameDistrict.some(district => district.value === company.locationId[mapDivision]?.name))
       
-      return item.data.filter(row => {
-        let valid = true
-        row.fields.flatMap(item => {
-          for (const key in filters) {
-            if (key === item.fieldName && filters[key] !== item.fieldValue) {
-              valid = false
-            }
-          }
-        })
-        return valid
+      // return item.data.filter(row => {
+      //   let valid = true
+      //   row.fields.flatMap(item => {
+      //     for (const key in filters) {
+      //       if (key === item.fieldName && filters[key] !== item.fieldValue) {
+      //         valid = false
+      //       }
+      //     }
+      //   })
+      //   return valid
+      // })
+      return data.map((filteredDataItem, index) => {
+        const [latObj] = filteredDataItem.fields.filter(field => field.fieldName === 'latitude')
+        const [lonObj] = filteredDataItem.fields.filter(field => field.fieldName === 'longitude')
+        const [nameObj] = filteredDataItem.fields.filter(field => field.fieldName === 'name')
+        return (
+          <MarkerComponent
+            key={index}
+            coords={{ latitude: latObj.fieldValue, longitude: lonObj.fieldValue }}
+            name={nameObj.fieldValue}
+          />
+        )
       })
-        .map((filteredDataItem, index) => {
-          const [latObj] = filteredDataItem.fields.filter(field => field.fieldName === 'latitude')
-          const [lonObj] = filteredDataItem.fields.filter(field => field.fieldName === 'longitude')
-          const [nameObj] = filteredDataItem.fields.filter(field => field.fieldName === 'name')
-          return (
-            <MarkerComponent
-              key={index}
-              coords={{ latitude: latObj.fieldValue, longitude: lonObj.fieldValue }}
-              name={nameObj.fieldValue}
-            />
-          )
-        })
     })
   }
 

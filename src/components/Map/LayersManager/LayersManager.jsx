@@ -16,7 +16,6 @@ function LayersManager () {
 
   const { searchPolygon, layers, setLayers } = useContext(LayerContext)
 
-  
   useEffect(() => {
     const storedLayers = JSON.parse(window.localStorage.getItem('layers')) || []
     setLayers(storedLayers)
@@ -40,14 +39,37 @@ function LayersManager () {
     return elements
   }
 
+  const checkValue = (itemValue, layerKey, layerObj) => {
+    console.log(itemValue, layerKey, layerObj, layerObj[layerKey])
+    if (typeof layerObj[layerKey] === 'number') {
+      return itemValue >= layerObj[layerKey]
+    } else {
+      return itemValue === layerObj[layerKey]
+    }
+  }
+
   return (
     <>
       {layers.map((layer, index) => {
         if (!layer.isVisible) return null
-        
+
+        const filteredData = collection.flatMap((item) => {
+          return item.data.filter(row => {
+            let valid = true
+            row.fields.flatMap(item => {
+              for (const key in layer.data) {
+                if (key === item.fieldName && !checkValue(item.fieldValue, key, layer.data)) {
+                  valid = false
+                }
+              }
+            })
+            return valid
+          })
+        })
+        console.log(filteredData)
         return (
           <>
-            <StartupsComponent filters={layer.data} searchPolygon={searchPolygon} />
+            <StartupsComponent data={filteredData} searchPolygon={searchPolygon} />
             {displayLayers(layer.data)}
           </>
         )
