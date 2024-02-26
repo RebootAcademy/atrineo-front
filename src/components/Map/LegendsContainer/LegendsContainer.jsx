@@ -26,7 +26,7 @@ function LegendsContainer () {
           <LegendsIcon />
         </DropdownMenuTrigger>
         <DropdownMenuContent>
-          <DropdownMenuItem onSelect={handleItemClick} >
+          <DropdownMenuItem onSelect={handleItemClick}>
             <LegendsCard />
           </DropdownMenuItem>
         </DropdownMenuContent>

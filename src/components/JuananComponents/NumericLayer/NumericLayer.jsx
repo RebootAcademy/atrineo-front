@@ -30,8 +30,8 @@ function NumericLayer ({ field, filters, searchPolygon, data, color }) {
         <Circle
           key={index}
           center={[latitude, longitude]}
-          pathOptions={{ fillColor: color, stroke: false, fillOpacity: 0.15 }}
-          radius={value > 5000 ? value / 3000 : value > 1000 ? value / 800 : value * 100}
+          pathOptions={{ fillColor: color, stroke: false, fillOpacity: 0.20 }}
+          radius={value > 5000 ? value / 50000 : value > 1000 ? value / 800 : value * 150}
         />
       )
     }

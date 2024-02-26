@@ -9,25 +9,20 @@ function SavedLayerComponent () {
 
   return (
     <>
-      {layers.map((layer, index) => (
+      {layers.map((layer) => (
         <Card
           key={layer.id}
-          className='relative top-20 z-[9999999999] w-60 flex justify-between items-center p-2'
-          style={{ top: `${20 + index * 6}px` }}
+          className='relative z-[9999999999] w-48 flex justify-between items-center p-2 mb-2'
         >
-          <p className="font-bold text-lg">Layer {layer.id}</p>
-
+          <p className="font-bold text-base">Layer {layer.id}</p>
           <div className='flex gap-1'>
             <button onClick={() => toggleLayerVisibility(layer.id)}>
               {layer.isVisible ? <EyeOffIcon /> : <EyeIcon />}
             </button>
-
             <button onClick={() => clearLayerById(layer.id)}>
               <TrashIcon />
             </button>
-
           </div>
-
         </Card>
       ))}
     </>
