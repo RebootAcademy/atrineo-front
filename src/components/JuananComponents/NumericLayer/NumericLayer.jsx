@@ -4,6 +4,8 @@ import { Circle } from 'react-leaflet'
 import { isWithinPolygon } from '../../../helpers'
 import { CollectionContext } from '../../../context/collectionContext'
 
+import { calculateRadius } from '../../../helpers'
+
 // eslint-disable-next-line react/prop-types
 function NumericLayer({ field, filters, searchPolygon, data, color }) {
   const { collection } = useContext(CollectionContext)
@@ -33,7 +35,7 @@ function NumericLayer({ field, filters, searchPolygon, data, color }) {
           key={index}
           center={[latitude, longitude]}
           pathOptions={{ fillColor: color, stroke: false, fillOpacity: 0.20 }}
-          radius={value > 5000 ? value / 5000 : value > 1000 ? value / 800 : value * 100}
+          radius={calculateRadius(value)}
         />
       )
     }

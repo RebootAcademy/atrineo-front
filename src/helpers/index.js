@@ -8,7 +8,7 @@ import booleanPointInPolygon from '@turf/boolean-point-in-polygon'
  * @returns {boolean} - Verdadero si el elemento está dentro del polígono.
  */
 export const isWithinPolygon = (dataItem, searchPolygon) => {
-  if (!searchPolygon || !Array.isArray(searchPolygon) || searchPolygon.length === 0 || !Array.isArray(searchPolygon[0])) return true;
+  if (!searchPolygon || !Array.isArray(searchPolygon) || searchPolygon.length === 0 || !Array.isArray(searchPolygon[0])) return true
 
   // Encuentra los objetos de latitud y longitud
   const latObj = dataItem.fields.find(field => field.fieldName === 'latitude')
@@ -107,4 +107,13 @@ export const findMaxAndMinValues = (arr, name) => {
     .filter((field) => field.fieldName === name)
     .map(item => item.fieldValue)
   return [Math.max(...values), Math.min(...values)]
+}
+
+export const calculateRadius = (value) => {
+  if (value < 10) {
+    return value * 1000
+  } else {
+    const logScaleFactor = 1000
+    return Math.log(value) * logScaleFactor
+  }
 }
