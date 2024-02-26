@@ -8,12 +8,18 @@ import booleanPointInPolygon from '@turf/boolean-point-in-polygon'
  * @returns {boolean} - Verdadero si el elemento está dentro del polígono.
  */
 export const isWithinPolygon = (dataItem, searchPolygon) => {
-  if (!searchPolygon || searchPolygon.length === 0) return true
+  if (!searchPolygon || !Array.isArray(searchPolygon) || searchPolygon.length === 0 || !Array.isArray(searchPolygon[0])) return true;
 
-  const hasValidCoordinates = dataItem.latitude != null && dataItem.longitude != null
+  // Encuentra los objetos de latitud y longitud
+  const latObj = dataItem.fields.find(field => field.fieldName === 'latitude')
+  const lonObj = dataItem.fields.find(field => field.fieldName === 'longitude')
+
+  // Verifica si ambos están presentes y son válidos
+  const hasValidCoordinates = latObj != null && lonObj != null && latObj.fieldValue != null && lonObj.fieldValue != null
   if (!hasValidCoordinates) return false
 
-  const itemCoords = [parseFloat(dataItem.longitude), parseFloat(dataItem.latitude)]
+  // Prepara las coordenadas para la verificación
+  const itemCoords = [parseFloat(lonObj.fieldValue), parseFloat(latObj.fieldValue)]
   const itemPoint = point(itemCoords)
   const polygonCoordinates = searchPolygon[0].map(coord => [coord.lng, coord.lat])
   polygonCoordinates.push(polygonCoordinates[0])

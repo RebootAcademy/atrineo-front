@@ -3,6 +3,7 @@
 import { useEffect, useContext } from 'react'
 import { CollectionContext } from '../../../context/collectionContext'
 import { LayerContext } from '../../../context/layerContext'
+
 import StartupsComponent from '../StartupsComponent/StartupsComponent'
 import PatentsLayer from '../PatentsLayer/PatentsLayer'
 import LifeQualityLayer from '../LifeQualityLayer/LifeQualityLayer'
@@ -11,9 +12,10 @@ import PopulationLayer from '../PopulationLayer/PopulationLayer'
 import ResearchInvestmentLayer from '../ResearchInvestment/ResearchInvestment'
 import NumericLayer from '../../JuananComponents/NumericLayer/NumericLayer'
 
+import { isWithinPolygon } from '../../../helpers'
+
 function LayersManager () {
   const { collection } = useContext(CollectionContext)
-
   const { searchPolygon, layers, setLayers } = useContext(LayerContext)
 
   useEffect(() => {
@@ -48,7 +50,7 @@ function LayersManager () {
   }
 
   const checkValue = (itemValue, layerKey, layerObj) => {
-    console.log(itemValue, layerKey, layerObj, layerObj[layerKey])
+    // console.log(itemValue, layerKey, layerObj, layerObj[layerKey])
     if (typeof layerObj[layerKey] === 'number') {
       return itemValue >= layerObj[layerKey]
     } else {
@@ -58,11 +60,14 @@ function LayersManager () {
 
   return (
     <>
-      {layers.map((layer, index) => {
-        if (!layer.isVisible) return null
+      {layers
+        .filter(layer => layer.isVisible)
+        .map((layer, index) => {
 
         const filteredData = collection.flatMap((item) => {
-          return item.data.filter(row => {
+          return item.data
+            .filter((filteredData) => isWithinPolygon(filteredData, searchPolygon))
+            .filter(row => {
             let valid = true
             row.fields.flatMap(item => {
               for (const key in layer.data) {
@@ -76,10 +81,10 @@ function LayersManager () {
         })
         console.log(filteredData)
         return (
-          <>
-            <StartupsComponent data={filteredData} searchPolygon={searchPolygon} />
+          <div key={index}>
+            <StartupsComponent data={filteredData} />
             {displayLayers(layer.data, filteredData)}
-          </>
+          </div>
         )
         // return (
         //   // <div key={index}>
