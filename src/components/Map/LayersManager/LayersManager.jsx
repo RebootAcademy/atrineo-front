@@ -57,7 +57,6 @@ function LayersManager() {
       {layers
         .filter(layer => layer.isVisible)
         .map((layer, index) => {
-
           const filteredData = collection.flatMap((item) => {
             return item.data
               .filter((filteredData) => isWithinPolygon(filteredData, searchPolygon))
