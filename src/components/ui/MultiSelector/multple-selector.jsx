@@ -90,6 +90,7 @@ const MultipleSelector = React.forwardRef(
     const inputRef = React.useRef(null)
     const [open, setOpen] = React.useState(false)
     const [isLoading, setIsLoading] = React.useState(false)
+    const [insideComponent, setInsideComponent] = React.useState(false)
 
     const [selected, setSelected] = React.useState(value || [])
     const [options, setOptions] = React.useState(
@@ -106,6 +107,28 @@ const MultipleSelector = React.forwardRef(
       }),
       [selected]
     )
+
+    const handleOutsideClick = (event) => {
+      if (inputRef.current && !inputRef.current.contains(event.target)) {
+        setOpen(false)
+      }
+    }
+
+    useEffect(() => {
+      document.addEventListener('mousedown', handleOutsideClick)
+
+      return () => {
+        document.removeEventListener('mousedown', handleOutsideClick)
+      }
+    }, [])
+
+    useEffect(() => {
+      setInsideComponent(true)
+
+      return () => {
+        setInsideComponent(false)
+      }
+    }, [])
 
     const handleUnselect = React.useCallback(
       (option) => {
@@ -303,10 +326,10 @@ const MultipleSelector = React.forwardRef(
                 setInputValue(value)
                 inputProps?.onValueChange?.(value)
               }}
-              onBlur={(event) => {
-                setOpen(false)
-                inputProps?.onBlur?.(event)
-              }}
+              // onBlur={(event) => {
+              //   setOpen(false)
+              //   inputProps?.onBlur?.(event)
+              // }}
               onFocus={(event) => {
                 setOpen(true)
                 triggerSearchOnFocus && onSearch?.(debouncedSearchTerm)

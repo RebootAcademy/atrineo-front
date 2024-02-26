@@ -1,8 +1,9 @@
 import { useContext } from "react"
 
-import MultipleSelector from "../../ui/MultiSelector/multple-selector"
 import { LayerContext } from "../../../context/layerContext"
 import { CollectionContext } from "../../../context/collectionContext"
+
+import MultipleSelector from "../../ui/MultiSelector/multple-selector"
 
 function MultipleSelectorComponent() {
   const { mapDivision, setSelectedNameDistrict } = useContext(LayerContext)
@@ -21,7 +22,10 @@ function MultipleSelectorComponent() {
     const nameRegionFiltered = collection
       .flatMap((region) => region.data)
       .filter((item) => item.locationId[mapDivision] !== null)
-      .map(item => { return { id: item.locationId[mapDivision]?._id, name: item.locationId[mapDivision]?.name } })
+      .map(item => {
+        console.log(item.locationId[mapDivision].name)
+        return { id: item.locationId[mapDivision]?._id, name: item.locationId[mapDivision]?.name }
+      })
     const nameRegion = nameRegionFiltered.reduce((prev, curr) => {
       return prev.find((item) => item.id === curr.id) ? prev : [...prev, curr]
     }, [])
@@ -46,11 +50,15 @@ function MultipleSelectorComponent() {
 
   const multipleSelector = () => {
     return (
-      <MultipleSelector
-        placeholder="Select..."
-        onChange={onDistrictNameChange}
-        defaultOptions={defaultDistictOptions}
-      />
+      <div>
+        <input type='checkbox'>
+        </input>
+        <MultipleSelector
+          placeholder="Select..."
+          onChange={onDistrictNameChange}
+          defaultOptions={defaultDistictOptions}
+        />
+      </div>
     )
   }
   return <>{multipleSelector()}</>

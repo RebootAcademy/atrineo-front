@@ -18,8 +18,7 @@ function MarkersDisplay ({ data, searchPolygon }) {
       //   .filter((dataItem) => !filters.isFinancingFilterActive || dataItem.financingAccess)
       //   .filter((dataItem) => !filters.isGovFundsReceivedActive || dataItem.govFundsReceived)
       //   .filter((dataItem) => isWithinPolygon(dataItem, searchPolygon))
-      //   //si se utiliza linea 19 añadir selectedRegion al contexto en la fila 9
-      //   // .filter((company) => selectedRegion === "" || company.locationId[mapDivision]?.name === selectedRegion)
+      //   .filter((company) => selectedRegion === "" || company.locationId[mapDivision]?.name === selectedRegion)
       //   .filter((company) => selectedNameDistrict === 0 || selectedNameDistrict.some(district => district.value === company.locationId[mapDivision]?.name))
       
       // return item.data.filter(row => {
@@ -33,6 +32,7 @@ function MarkersDisplay ({ data, searchPolygon }) {
       //   })
       //   return valid
       // })
+      
       return data.map((filteredDataItem, index) => {
         const [latObj] = filteredDataItem.fields.filter(field => field.fieldName === 'latitude')
         const [lonObj] = filteredDataItem.fields.filter(field => field.fieldName === 'longitude')
