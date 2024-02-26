@@ -2,8 +2,6 @@
 import MarkerComponent from '../MarkerComponent/MarkerComponent'
 
 function MarkersDisplay ({ data }) {
-  console.log(data)
-
   const displayMarkers = () => {
       return data
         .map((item, index) => {

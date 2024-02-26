@@ -7,8 +7,6 @@ import { RouterProvider } from 'react-router-dom'
 import { LayerContext } from './context/layerContext'
 import { CollectionContext } from './context/collectionContext'
 
-import { CalculatePopulationBounds, CalculateResearchInvestmentBounds } from './helpers'
-
 const queryClient = new QueryClient()
 
 function App () {
@@ -45,20 +43,6 @@ function App () {
     storage.clear()
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-
-  useEffect(() => {
-    if (collection.length > 0) {
-      const { minPopulation, maxPopulation } = CalculatePopulationBounds(collection)
-      setPopulationBounds({ minPopulation, maxPopulation })
-    }
-  }, [collection])
-
-  useEffect(() => {
-    if (collection.length > 0) {
-      const { minResearchInvestment, maxResearchInvestment } = CalculateResearchInvestmentBounds(collection)
-      setResearchInvestmentBounds({ minResearchInvestment, maxResearchInvestment })
-    }
-  }, [collection])
 
   const toggleFinancingAccess = (value) => {
     setIsFinancingFilterActive(value)

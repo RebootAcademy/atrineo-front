@@ -1,6 +1,3 @@
-/* eslint-disable react/prop-types */
-/* eslint-disable no-unused-vars */
-/* eslint-disable no-undef */
 import MarkersDisplay from '../MarkersDisplay/MarkersDisplay'
 import MarkerClusterGroup from 'react-leaflet-cluster'
 

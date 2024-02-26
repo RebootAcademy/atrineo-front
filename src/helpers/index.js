@@ -27,7 +27,60 @@ export const isWithinPolygon = (dataItem, searchPolygon) => {
   return booleanPointInPolygon(itemPoint, polygon([polygonCoordinates]))
 }
 
-export const CalculatePopulationBounds = (data) => {
+
+export const extractNumericFields = (arr) => {
+  return arr?.filter(
+    (field) =>
+    field.fieldType === "number" &&
+    field.fieldName !== "latitude" &&
+    field.fieldName !== "longitude" &&
+    field.fieldName !== "districtId"
+    )
+  }
+  
+export const extractStringOptions = (arr) => {
+  return arr?.filter(
+    (field) =>
+      field.fieldType === "string" &&
+        field.fieldName !== "name" &&
+        field.fieldName !== "latitude" &&
+        field.fieldName !== "longitude" &&
+        field.fieldName !== "districtName"
+        )
+    .map((field) => field.fieldName)
+  }
+
+export const createStringOptionsObject = (arr, data) => {
+  const optionsObj = {}
+  
+  arr?.forEach(option => {
+    optionsObj[option] = new Set()
+  })
+  
+  data?.forEach(row => {
+    row.fields?.forEach(field => {
+      if (arr?.includes(field.fieldName)) {
+        optionsObj[field.fieldName].add(field.fieldValue)
+      }
+    })
+  })
+  
+  for (const [key, value] of Object.entries(optionsObj)) {
+    optionsObj[key] = Array.from(value)
+  }
+  
+  return optionsObj
+}
+
+export const findMaxAndMinValues = (arr, name) => {
+  const values = arr
+  .flatMap((item) => item.fields)
+  .filter((field) => field.fieldName === name)
+  .map(item => item.fieldValue)
+  return [Math.max(...values), Math.min(...values)]
+}
+
+/* export const CalculatePopulationBounds = (data) => {
   const flattenedData = data.flat()
   const populations = flattenedData.flatMap(item =>
     item.data.map(innerItem =>
@@ -40,9 +93,9 @@ export const CalculatePopulationBounds = (data) => {
   const maxPopulation = Math.max(...validPopulations)
 
   return { minPopulation, maxPopulation }
-}
+} */
 
-export const CalculateResearchInvestmentBounds = (data) => {
+/* export const CalculateResearchInvestmentBounds = (data) => {
   const flattenedData = data.flat()
   const researchInvestments = flattenedData.flatMap(item =>
     item.data.map(innerItem =>
@@ -55,56 +108,4 @@ export const CalculateResearchInvestmentBounds = (data) => {
   const maxResearchInvestment = Math.max(...validInvestments)
 
   return { minResearchInvestment, maxResearchInvestment }
-}
-
-export const extractNumericFields = (arr) => {
-  return arr?.filter(
-    (field) =>
-      field.fieldType === "number" &&
-      field.fieldName !== "latitude" &&
-      field.fieldName !== "longitude" &&
-      field.fieldName !== "districtId"
-  )
-}
-
-export const extractStringOptions = (arr) => {
-  return arr?.filter(
-    (field) =>
-      field.fieldType === "string" &&
-        field.fieldName !== "name" &&
-        field.fieldName !== "latitude" &&
-        field.fieldName !== "longitude" &&
-        field.fieldName !== "districtName"
-  )
-    .map((field) => field.fieldName)
-}
-
-export const createStringOptionsObject = (arr, data) => {
-  const optionsObj = {}
-
-  arr?.forEach(option => {
-    optionsObj[option] = new Set()
-  })
-
-  data?.forEach(row => {
-    row.fields?.forEach(field => {
-      if (arr?.includes(field.fieldName)) {
-        optionsObj[field.fieldName].add(field.fieldValue)
-      }
-    })
-  })
-
-  for (const [key, value] of Object.entries(optionsObj)) {
-    optionsObj[key] = Array.from(value)
-  }
-
-  return optionsObj
-}
-
-export const findMaxAndMinValues = (arr, name) => {
-  const values = arr
-    .flatMap((item) => item.fields)
-    .filter((field) => field.fieldName === name)
-    .map(item => item.fieldValue)
-  return [Math.max(...values), Math.min(...values)]
-}
+} */

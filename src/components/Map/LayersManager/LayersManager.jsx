@@ -1,16 +1,10 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable no-unused-vars */
 import { useEffect, useContext } from 'react'
 import { CollectionContext } from '../../../context/collectionContext'
 import { LayerContext } from '../../../context/layerContext'
 
 import StartupsComponent from '../StartupsComponent/StartupsComponent'
-import PatentsLayer from '../PatentsLayer/PatentsLayer'
-import LifeQualityLayer from '../LifeQualityLayer/LifeQualityLayer'
-import GnpLayer from '../GnpLayer/GnpLayer'
-import PopulationLayer from '../PopulationLayer/PopulationLayer'
-import ResearchInvestmentLayer from '../ResearchInvestment/ResearchInvestment'
 import NumericLayer from '../../JuananComponents/NumericLayer/NumericLayer'
+import RegionsComponent from '../RegionsComponent/RegionsComponent'
 
 import { isWithinPolygon } from '../../../helpers'
 
@@ -59,11 +53,10 @@ function LayersManager () {
   }
 
   return (
-    <>
+    <div>
       {layers
         .filter(layer => layer.isVisible)
-        .map((layer, index) => {
-
+        .map((layer) => {
         const filteredData = collection.flatMap((item) => {
           return item.data
             .filter((filteredData) => isWithinPolygon(filteredData, searchPolygon))
@@ -79,25 +72,16 @@ function LayersManager () {
             return valid
           })
         })
-        console.log(filteredData)
+
         return (
-          <div key={index}>
+          <div>
             <StartupsComponent data={filteredData} />
+            <RegionsComponent data={filteredData} />
             {displayLayers(layer.data, filteredData)}
           </div>
         )
-        // return (
-        //   // <div key={index}>
-        //   //   <StartupsComponent filters={layer.data} searchPolygon={searchPolygon} />
-        //   //   <PopulationLayer filters={layer.data} searchPolygon={searchPolygon} />
-        //   //   {/* <PatentsLayer filters={layer.data} searchPolygon={searchPolygon} />
-        //   //   <ResearchInvestmentLayer filters={layer.data} searchPolygon={searchPolygon} />
-        //   //   <LifeQualityLayer filters={layer.data} searchPolygon={searchPolygon} />
-        //   //   <GnpLayer filters={layer.data} searchPolygon={searchPolygon} /> */}
-        //   // </div>
-        // )
       })}
-    </>
+    </div>
   )
 }
 
