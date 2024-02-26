@@ -18,15 +18,13 @@ function MultipleSelectorComponent() {
   }
 
   const dislayMultipleSelector = () => {
-    const nameRegion = collection
-      .flatMap((item) => {
-        return item.data
-          .filter(filteredItem => filteredItem?.locationId[mapDivision]?.name)
-          .map(filteredItem => { return filteredItem.locationId[mapDivision]?.name })
-          .reduce((prev, curr) => {
-            return prev.find((filteredItem) => filteredItem.name === curr.name) ? prev : [...prev, curr]
-          }, [])
-      })
+    const nameRegionFiltered = collection
+      .flatMap((region) => region.data)
+      .filter((item) => item.locationId[mapDivision] !== null)
+      .map(item => { return { id: item.locationId[mapDivision]?._id, name: item.locationId[mapDivision]?.name } })
+    const nameRegion = nameRegionFiltered.reduce((prev, curr) => {
+      return prev.find((item) => item.id === curr.id) ? prev : [...prev, curr]
+    }, [])
 
     const sortedRegion = nameRegion.sort((region1, region2) => region1.name.localeCompare(region2.name))
     console.log(sortedRegion)
