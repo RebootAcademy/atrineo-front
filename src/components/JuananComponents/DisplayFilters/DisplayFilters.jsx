@@ -6,6 +6,7 @@ import PropTypes from 'prop-types'
 import RadioComponent from '../RadioComponent/RadioComponent'
 import SwitchComponent from '../SwitchComponent/SwitchComponent'
 import SliderComponent from '../SliderComponent/SliderComponent'
+import MultipleSelectorComponent from "../MultipleSelector/MultipleSelector"
 import { CollectionContext } from "../../../context/collectionContext"
 
 import {
@@ -43,8 +44,6 @@ function DisplayFilters({ layerObj, type }) {
 
   // Almacena las distintas opciones posibles para cada grupo de radio buttons
   const optionsObj = createStringOptionsObject(stringOptions, collection[0]?.data)
-
-  //todo lo que habia aqui esta en MultipleSelector
 
   const displayStrings = (arr) => {
     return arr?.map((option, index) => {
@@ -86,9 +85,15 @@ function DisplayFilters({ layerObj, type }) {
     })
   }
 
+  const displayMultipleSelectorFields = () => {
+    return (
+      <MultipleSelectorComponent/>
+    )
+  }
+
   return (
     <div className="flex flex-col gap-4">
-      {/* {aqui va el multiple selector} */}
+      {displayMultipleSelectorFields()}
       {type === 'startups' && displayBooleanFields()}
       {displayNumericFields()}
       {type === 'startups' && displayStrings(stringOptions)}
