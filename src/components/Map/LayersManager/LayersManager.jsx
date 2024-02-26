@@ -11,10 +11,10 @@ import PopulationLayer from '../PopulationLayer/PopulationLayer'
 import ResearchInvestmentLayer from '../ResearchInvestment/ResearchInvestment'
 import NumericLayer from '../../JuananComponents/NumericLayer/NumericLayer'
 
-function LayersManager () {
+function LayersManager() {
   const { collection } = useContext(CollectionContext)
 
-  const { searchPolygon, layers, setLayers } = useContext(LayerContext)
+  const { searchPolygon, layers, setLayers, mapDivision } = useContext(LayerContext)
 
   useEffect(() => {
     const storedLayers = JSON.parse(window.localStorage.getItem('layers')) || []
@@ -28,20 +28,20 @@ function LayersManager () {
     let index = 0
     for (const key in filters) {
       switch (typeof filters[key]) {
-      case 'number':
-        elements.push(
-          <NumericLayer
-            filters={filters}
-            field={key}
-            data={array}
-            searchPolygon={searchPolygon}
-            color={colors[index]}
-          />
-        )
-        index++
-        break
-      default:
-        break
+        case 'number':
+          elements.push(
+            <NumericLayer
+              filters={filters}
+              field={key}
+              data={array}
+              searchPolygon={searchPolygon}
+              color={colors[index]}
+            />
+          )
+          index++
+          break
+        default:
+          break
       }
     }
     return elements
@@ -71,6 +71,9 @@ function LayersManager () {
                 }
               }
             })
+            if (layer.data.regions && !layer.data.regions.includes(row.locationId[mapDivision]?.name)) {
+              valid = false
+            }
             return valid
           })
         })

@@ -90,6 +90,7 @@ const MultipleSelector = React.forwardRef(
     const inputRef = React.useRef(null)
     const [open, setOpen] = React.useState(false)
     const [isLoading, setIsLoading] = React.useState(false)
+    // eslint-disable-next-line no-unused-vars
     const [insideComponent, setInsideComponent] = React.useState(false)
 
     const [selected, setSelected] = React.useState(value || [])

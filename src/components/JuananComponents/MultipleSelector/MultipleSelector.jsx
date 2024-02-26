@@ -5,16 +5,17 @@ import { CollectionContext } from "../../../context/collectionContext"
 
 import MultipleSelector from "../../ui/MultiSelector/multple-selector"
 
-function MultipleSelectorComponent() {
+function MultipleSelectorComponent({ onValueChange }) {
   const { mapDivision, setSelectedNameDistrict } = useContext(LayerContext)
   const { collection } = useContext(CollectionContext)
 
   const onDistrictNameChange = (districts) => {
+    console.log(districts)
     const isAllSelected = districts.some(district => district.value === 'All')
     if (isAllSelected) {
-      setSelectedNameDistrict(dislayMultipleSelector())
+      onValueChange(dislayMultipleSelector())
     } else {
-      setSelectedNameDistrict(districts)
+      onValueChange(districts)
     }
   }
 
@@ -23,15 +24,14 @@ function MultipleSelectorComponent() {
       .flatMap((region) => region.data)
       .filter((item) => item.locationId[mapDivision] !== null)
       .map(item => {
-        console.log(item.locationId[mapDivision].name)
         return { id: item.locationId[mapDivision]?._id, name: item.locationId[mapDivision]?.name }
       })
     const nameRegion = nameRegionFiltered.reduce((prev, curr) => {
       return prev.find((item) => item.id === curr.id) ? prev : [...prev, curr]
     }, [])
 
+    // eslint-disable-next-line no-unused-vars
     const sortedRegion = nameRegion.sort((region1, region2) => region1.name.localeCompare(region2.name))
-    console.log(sortedRegion)
 
     const districtNames = [
       { value: 'All', label: 'All' },
@@ -42,7 +42,6 @@ function MultipleSelectorComponent() {
         }
       ))
     ]
-    console.log(districtNames)
     return districtNames
   }
 
@@ -51,7 +50,7 @@ function MultipleSelectorComponent() {
   const multipleSelector = () => {
     return (
       <div>
-        <input type='checkbox'>
+        <input type='checkbox' className="mr-2">
         </input>
         <MultipleSelector
           placeholder="Select..."

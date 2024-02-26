@@ -20,6 +20,11 @@ function DisplayFilters({ layerObj, type }) {
 
   const { collection } = useContext(CollectionContext)
 
+  const handleRegionChange = (value) => {
+    const names = value.map(name => name.value)
+    layerObj.current.regions = names
+  }
+
   const handleFilterChange = (value, target) => {
     if (value === 'remove') {
       delete layerObj.current[target]
@@ -87,7 +92,7 @@ function DisplayFilters({ layerObj, type }) {
 
   const displayMultipleSelectorFields = () => {
     return (
-      <MultipleSelectorComponent/>
+      <MultipleSelectorComponent onValueChange={handleRegionChange} />
     )
   }
 
@@ -109,3 +114,19 @@ DisplayFilters.propTypes = {
 }
 
 export default DisplayFilters
+
+
+
+// if (Object.hasOwn(layerObj.current, 'regions')) {
+//   const incomingLength = value.length
+//   const currentLength = layerObj.current.regions.length
+//   if (incomingLength > currentLength) {
+//     const newValue = value[value.length - 1].value
+//     console.log(newValue)
+//     layerObj.current.regions.push(newValue)
+//   } else {
+
+//   }
+// } else {
+//   layerObj.current.regions = [value[0].value]
+// }
