@@ -52,7 +52,7 @@ export const CalculateResearchInvestmentBounds = (data) => {
 }
 
 export const extractNumericFields = (arr) => {
-  return arr.filter(
+  return arr?.filter(
     (field) =>
       field.fieldType === "number" &&
       field.fieldName !== "latitude" &&
@@ -62,35 +62,34 @@ export const extractNumericFields = (arr) => {
 }
 
 export const extractStringOptions = (arr) => {
-  return arr
-    .filter(
-      (field) =>
-        field.fieldType === "string" &&
+  return arr?.filter(
+    (field) =>
+      field.fieldType === "string" &&
         field.fieldName !== "name" &&
         field.fieldName !== "latitude" &&
         field.fieldName !== "longitude" &&
         field.fieldName !== "districtName"
-    )
-    .map((field) => field.fieldName);
+  )
+    .map((field) => field.fieldName)
 }
 
 export const createStringOptionsObject = (arr, data) => {
   const optionsObj = {}
 
-  arr.forEach(option => {
-    optionsObj[option] = new Set();
+  arr?.forEach(option => {
+    optionsObj[option] = new Set()
   })
 
-  data.forEach(row => {
-    row.fields.forEach(field => {
-      if (arr.includes(field.fieldName)) {
-        optionsObj[field.fieldName].add(field.fieldValue);
+  data?.forEach(row => {
+    row.fields?.forEach(field => {
+      if (arr?.includes(field.fieldName)) {
+        optionsObj[field.fieldName].add(field.fieldValue)
       }
     })
   })
 
   for (const [key, value] of Object.entries(optionsObj)) {
-    optionsObj[key] = Array.from(value);
+    optionsObj[key] = Array.from(value)
   }
 
   return optionsObj

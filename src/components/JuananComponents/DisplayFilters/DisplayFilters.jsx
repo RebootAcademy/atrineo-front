@@ -6,40 +6,48 @@ import PropTypes from 'prop-types'
 import RadioComponent from '../RadioComponent/RadioComponent'
 import SwitchComponent from '../SwitchComponent/SwitchComponent'
 import SliderComponent from '../SliderComponent/SliderComponent'
-
 import { CollectionContext } from "../../../context/collectionContext"
 
-import { 
+import {
   extractNumericFields,
   extractStringOptions,
-  createStringOptionsObject, 
+  createStringOptionsObject,
   findMaxAndMinValues
 } from '../../../helpers'
 
-function DisplayFilters({layerObj}) {
+function DisplayFilters({ layerObj, type }) {
+
   const { collection } = useContext(CollectionContext)
 
   const handleFilterChange = (value, target) => {
     if (value === 'remove') {
       delete layerObj.current[target]
     } else {
-      layerObj.current = { ...layerObj.current, [target]:value }
+      layerObj.current = { ...layerObj.current, [target]: value }
     }
     console.log(layerObj.current)
   }
 
-  const data = collection[0]?.data
-  const fields = data[0].fields
+  let data
+  let fields
+  if (collection) {
+    data = collection[0]?.data
+    fields = data[0].fields
+  }
 
-  const booleanFields = fields.filter(field => field.fieldType === 'boolean')
+
+  //hacer variable con los distritos de la nueva base de datos - que no se exactamente cual es
+  const booleanFields = fields?.filter(field => field.fieldType === 'boolean')
   const numericFields = extractNumericFields(fields)
   const stringOptions = extractStringOptions(fields) //Filtra las columnas que van a usarse como radio buttons
 
   // Almacena las distintas opciones posibles para cada grupo de radio buttons
   const optionsObj = createStringOptionsObject(stringOptions, collection[0]?.data)
 
+  //todo lo que habia aqui esta en MultipleSelector
+
   const displayStrings = (arr) => {
-    return arr.map((option, index) => {
+    return arr?.map((option, index) => {
       return (
         <RadioComponent
           key={index}
@@ -67,8 +75,8 @@ function DisplayFilters({layerObj}) {
   }
 
   const displayBooleanFields = () => {
-    return booleanFields.map((field, index) => {
-      return(
+    return booleanFields?.map((field, index) => {
+      return (
         <SwitchComponent
           key={index}
           name={field.fieldName}
@@ -80,10 +88,10 @@ function DisplayFilters({layerObj}) {
 
   return (
     <div className="flex flex-col gap-4">
-      {/*FALTA METER EL SELECTOR DE LOS DISTRITOS*/ }
-      { displayBooleanFields() }
-      { displayNumericFields() }
-      { displayStrings(stringOptions) }
+      {/* {aqui va el multiple selector} */}
+      {type === 'startups' && displayBooleanFields()}
+      {displayNumericFields()}
+      {type === 'startups' && displayStrings(stringOptions)}
     </div>
   )
 }
@@ -91,7 +99,8 @@ function DisplayFilters({layerObj}) {
 DisplayFilters.propTypes = {
   title: PropTypes.string,
   layers: PropTypes.array,
-  layerObj: PropTypes.object
+  layerObj: PropTypes.object,
+  type: PropTypes.string
 }
 
 export default DisplayFilters

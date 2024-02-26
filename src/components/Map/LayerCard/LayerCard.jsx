@@ -12,8 +12,16 @@ import {
 import FilterGroup from '../FilterGroup/Filtergroup'
 import PropTypes from 'prop-types'
 import { LayerContext } from '../../../context/layerContext'
+import { CollectionContext } from "../../../context/collectionContext"
+
 
 function LayerCard({ onCloseMenu }) {
+  const { collection } = useContext(CollectionContext)
+  let collectionType
+  if(collection.length !== 0) {
+    collectionType = collection[0].collectionType
+  }
+
   const { saveCurrentLayer, nextLayerId } = useContext(LayerContext)
 
   const layerRef = useRef({})
@@ -23,8 +31,19 @@ function LayerCard({ onCloseMenu }) {
     onCloseMenu()
   }
 
+  const displayTypes = () => {
+    return collectionType === 'startups' ?
+      [
+        { id: 'startups', name: 'Startups' },
+        { id: 'regions', name: 'Regions' }
+      ] :
+      [
+        { id: 'regions', name: 'Regions' }
+      ]
+  }
+
   return (
-    <Card className='w-full flex flex-col items-center'>
+    <Card className='bg-blue-400 w-full flex flex-col items-center'>
 
       <CardHeader>
         <CardTitle>Layer {nextLayerId}</CardTitle>
@@ -32,11 +51,9 @@ function LayerCard({ onCloseMenu }) {
 
       <CardContent>
         <FilterGroup
-          layers={[
-            { id: 'startups', name: 'Startups' }
-            // { id: 'population', name: 'Region' }
-          ]}
+          layers={displayTypes()}
           layerObj={layerRef}
+          type={collectionType}
         />
       </CardContent>
 

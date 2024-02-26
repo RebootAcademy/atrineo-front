@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
 import { useEffect, useContext } from 'react'
+import { CollectionContext } from '../../../context/collectionContext'
 import { LayerContext } from '../../../context/layerContext'
 import StartupsComponent from '../StartupsComponent/StartupsComponent'
 import PatentsLayer from '../PatentsLayer/PatentsLayer'
@@ -8,8 +9,11 @@ import LifeQualityLayer from '../LifeQualityLayer/LifeQualityLayer'
 import GnpLayer from '../GnpLayer/GnpLayer'
 import PopulationLayer from '../PopulationLayer/PopulationLayer'
 import ResearchInvestmentLayer from '../ResearchInvestment/ResearchInvestment'
+import NumericLayer from '../../JuananComponents/NumericLayer/NumericLayer'
 
 function LayersManager () {
+  const { collection } = useContext(CollectionContext)
+
   const { searchPolygon, layers, setLayers } = useContext(LayerContext)
 
   useEffect(() => {
@@ -17,20 +21,76 @@ function LayersManager () {
     setLayers(storedLayers)
   }, [])
 
+  const colors = ['dodgerBlue', 'red', 'green']
+
+  const displayLayers = (filters, array) => {
+    const elements = []
+    let index = 0
+    for (const key in filters) {
+      switch (typeof filters[key]) {
+      case 'number':
+        elements.push(
+          <NumericLayer
+            filters={filters}
+            field={key}
+            data={array}
+            searchPolygon={searchPolygon}
+            color={colors[index]}
+          />
+        )
+        index++
+        break
+      default:
+        break
+      }
+    }
+    return elements
+  }
+
+  const checkValue = (itemValue, layerKey, layerObj) => {
+    console.log(itemValue, layerKey, layerObj, layerObj[layerKey])
+    if (typeof layerObj[layerKey] === 'number') {
+      return itemValue >= layerObj[layerKey]
+    } else {
+      return itemValue === layerObj[layerKey]
+    }
+  }
+
   return (
     <>
       {layers.map((layer, index) => {
         if (!layer.isVisible) return null
+
+        const filteredData = collection.flatMap((item) => {
+          return item.data.filter(row => {
+            let valid = true
+            row.fields.flatMap(item => {
+              for (const key in layer.data) {
+                if (key === item.fieldName && !checkValue(item.fieldValue, key, layer.data)) {
+                  valid = false
+                }
+              }
+            })
+            return valid
+          })
+        })
+        console.log(filteredData)
         return (
-          <div key={index}>
-            <StartupsComponent filters={layer.data} searchPolygon={searchPolygon} />
-            <PopulationLayer filters={layer.data} searchPolygon={searchPolygon} />
-            <GnpLayer filters={layer.data} searchPolygon={searchPolygon} />
-{/*             <PatentsLayer filters={layer.data} searchPolygon={searchPolygon} />
-            <ResearchInvestmentLayer filters={layer.data} searchPolygon={searchPolygon} />
-            <LifeQualityLayer filters={layer.data} searchPolygon={searchPolygon} /> */}
-          </div>
+          <>
+            <StartupsComponent data={filteredData} searchPolygon={searchPolygon} />
+            {displayLayers(layer.data, filteredData)}
+          </>
         )
+        // return (
+        //   // <div key={index}>
+        //   //   <StartupsComponent filters={layer.data} searchPolygon={searchPolygon} />
+        //   //   <PopulationLayer filters={layer.data} searchPolygon={searchPolygon} />
+        //   //   {/* <PatentsLayer filters={layer.data} searchPolygon={searchPolygon} />
+        //   //   <ResearchInvestmentLayer filters={layer.data} searchPolygon={searchPolygon} />
+        //   //   <LifeQualityLayer filters={layer.data} searchPolygon={searchPolygon} />
+        //   //   <GnpLayer filters={layer.data} searchPolygon={searchPolygon} /> */}
+        //   // </div>
+        // )
       })}
     </>
   )
