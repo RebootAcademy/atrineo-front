@@ -5,18 +5,13 @@ import { CollectionContext } from '../../../context/collectionContext'
 import { LayerContext } from '../../../context/layerContext'
 
 import StartupsComponent from '../StartupsComponent/StartupsComponent'
-import PatentsLayer from '../PatentsLayer/PatentsLayer'
-import LifeQualityLayer from '../LifeQualityLayer/LifeQualityLayer'
-import GnpLayer from '../GnpLayer/GnpLayer'
-import PopulationLayer from '../PopulationLayer/PopulationLayer'
-import ResearchInvestmentLayer from '../ResearchInvestment/ResearchInvestment'
 import NumericLayer from '../../JuananComponents/NumericLayer/NumericLayer'
-
 import { isWithinPolygon } from '../../../helpers'
 
-function LayersManager () {
+function LayersManager() {
   const { collection } = useContext(CollectionContext)
-  const { searchPolygon, layers, setLayers } = useContext(LayerContext)
+
+  const { searchPolygon, layers, setLayers, mapDivision } = useContext(LayerContext)
 
   useEffect(() => {
     const storedLayers = JSON.parse(window.localStorage.getItem('layers')) || []
@@ -50,7 +45,6 @@ function LayersManager () {
   }
 
   const checkValue = (itemValue, layerKey, layerObj) => {
-    // console.log(itemValue, layerKey, layerObj, layerObj[layerKey])
     if (typeof layerObj[layerKey] === 'number') {
       return itemValue >= layerObj[layerKey]
     } else {
@@ -64,28 +58,31 @@ function LayersManager () {
         .filter(layer => layer.isVisible)
         .map((layer, index) => {
 
-        const filteredData = collection.flatMap((item) => {
-          return item.data
-            .filter((filteredData) => isWithinPolygon(filteredData, searchPolygon))
-            .filter(row => {
-            let valid = true
-            row.fields.flatMap(item => {
-              for (const key in layer.data) {
-                if (key === item.fieldName && !checkValue(item.fieldValue, key, layer.data)) {
+          const filteredData = collection.flatMap((item) => {
+            return item.data
+              .filter((filteredData) => isWithinPolygon(filteredData, searchPolygon))
+              .filter(row => {
+                let valid = true
+                row.fields.flatMap(item => {
+                  for (const key in layer.data) {
+                    if (key === item.fieldName && !checkValue(item.fieldValue, key, layer.data)) {
+                      valid = false
+                    }
+                  }
+                })
+                if (layer.data.regions && !layer.data.regions.includes(row.locationId[mapDivision]?.name)) {
                   valid = false
                 }
-              }
-            })
-            return valid
+                return valid
+              })
           })
-        })
-        console.log(filteredData)
-        return (
-          <div key={index}>
-            <StartupsComponent data={filteredData} />
-            {displayLayers(layer.data, filteredData)}
-          </div>
-        )
+          console.log(filteredData)
+          return (
+            <div key={index}>
+              <StartupsComponent data={filteredData} />
+              {displayLayers(layer.data, filteredData)}
+            </div>
+          )
         // return (
         //   // <div key={index}>
         //   //   <StartupsComponent filters={layer.data} searchPolygon={searchPolygon} />
@@ -96,7 +93,7 @@ function LayersManager () {
         //   //   <GnpLayer filters={layer.data} searchPolygon={searchPolygon} /> */}
         //   // </div>
         // )
-      })}
+        })}
     </>
   )
 }

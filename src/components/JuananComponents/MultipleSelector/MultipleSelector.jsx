@@ -1,51 +1,66 @@
-// import { useContext } from "react"
+import { useContext } from "react"
 
-// import MultipleSelector from "../../ui/MultiSelector/multple-selector"
-// import { LayerContext } from "../../../context/layerContext"
-// import { CollectionContext } from "../../../context/collectionContext"
+import { LayerContext } from "../../../context/layerContext"
+import { CollectionContext } from "../../../context/collectionContext"
 
-// function MultipleSelectorComponent() {
-//   const { mapDivision } = useContext(LayerContext)
-//   const { collection } = useContext(CollectionContext)
+import MultipleSelector from "../../ui/MultiSelector/multple-selector"
 
-//   const dislayMultipleSelector = () => {
-//     const nameRegion = collection
-//       .flatMap((item) => {
-//         return item.data
-//           .filter(filteredItem => filteredItem?.locationId[mapDivision]?.name)
-//           .map(filteredItem => { return filteredItem.locationId[mapDivision]?.name })
-//           .reduce((prev, curr) => {
-//             return prev.find((filteredItem) => filteredItem.name === curr.name) ? prev : [...prev, curr]
-//           }, [])
-//       })
+function MultipleSelectorComponent({ onValueChange }) {
+  const { mapDivision, setSelectedNameDistrict } = useContext(LayerContext)
+  const { collection } = useContext(CollectionContext)
 
-//     const sortedRegion = nameRegion.sort((region1, region2) => region1.name.localeCompare(region2.name))
-//     console.log(sortedRegion)
+  const onDistrictNameChange = (districts) => {
+    console.log(districts)
+    const isAllSelected = districts.some(district => district.value === 'All')
+    if (isAllSelected) {
+      onValueChange(dislayMultipleSelector())
+    } else {
+      onValueChange(districts)
+    }
+  }
 
-//     // const districtNames = [
-//     //   { value: 'All', label: 'All' },
-//     //   ...nameRegion.map((filteredRegion) => (
-//     //     {
-//     //       value: filteredRegion.name,
-//     //       label: filteredRegion.name
-//     //     }
-//     //   ))
-//     // ]
-//     console.log(nameRegion)
-//     return nameRegion
-//   }
+  const dislayMultipleSelector = () => {
+    const nameRegionFiltered = collection
+      .flatMap((region) => region.data)
+      .filter((item) => item.locationId[mapDivision] !== null)
+      .map(item => {
+        return { id: item.locationId[mapDivision]?._id, name: item.locationId[mapDivision]?.name }
+      })
+    const nameRegion = nameRegionFiltered.reduce((prev, curr) => {
+      return prev.find((item) => item.id === curr.id) ? prev : [...prev, curr]
+    }, [])
 
-//   const defaultDistictOptions = dislayMultipleSelector()
+    // eslint-disable-next-line no-unused-vars
+    const sortedRegion = nameRegion.sort((region1, region2) => region1.name.localeCompare(region2.name))
 
-//   const multipleSelector = (nameRegion) => {
-//     return (
-//       <MultipleSelector
-//         placeholder="Select..."
-//         onChange={onDistrictNameChange}
-//         defaultOptions={defaultDistictOptions}
-//       />
-//     )
-//   }
-// }
+    const districtNames = [
+      { value: 'All', label: 'All' },
+      ...nameRegion.map((filteredRegion) => (
+        {
+          value: filteredRegion.name,
+          label: filteredRegion.name
+        }
+      ))
+    ]
+    return districtNames
+  }
 
-// export default MultipleSelectorComponent
+  const defaultDistictOptions = dislayMultipleSelector()
+
+  const multipleSelector = () => {
+    return (
+      <div>
+        <input type='checkbox' className="mr-2">
+        </input>
+        <MultipleSelector
+          placeholder="Select..."
+          onChange={onDistrictNameChange}
+          defaultOptions={defaultDistictOptions}
+        />
+      </div>
+    )
+  }
+  return <>{multipleSelector()}</>
+}
+
+export default MultipleSelectorComponent

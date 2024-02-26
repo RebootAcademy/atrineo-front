@@ -4,7 +4,8 @@ import { Circle } from 'react-leaflet'
 import { isWithinPolygon } from '../../../helpers'
 import { CollectionContext } from '../../../context/collectionContext'
 
-function NumericLayer ({ field, filters, searchPolygon, data, color }) {
+// eslint-disable-next-line react/prop-types
+function NumericLayer({ field, filters, searchPolygon, data, color }) {
   const { collection } = useContext(CollectionContext)
   // const filteredItems = data.filter(row => {
   //   let valid = true
@@ -16,6 +17,7 @@ function NumericLayer ({ field, filters, searchPolygon, data, color }) {
   //   return valid
   // })
 
+  // eslint-disable-next-line react/prop-types
   const circles = data.map((filteredItem, index) => {
     console.log(filteredItem.locationId.division4)
     const latitude = filteredItem.locationId?.division4?.latitude
