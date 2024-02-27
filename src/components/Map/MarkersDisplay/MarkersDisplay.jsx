@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import MarkerComponent from '../MarkerComponent/MarkerComponent'
 
 function MarkersDisplay ({ data }) {
-
   const displayMarkers = () => {
     return data
       .map((item, index) => {

@@ -1,6 +1,6 @@
 //SUSTITUIRÍA A FILTEROPTIONS
 // import { v4 as uuidv4 } from 'uuid'
-import { useContext } from "react"
+import { useContext, useState } from "react"
 import PropTypes from 'prop-types'
 
 import RadioComponent from '../RadioComponent/RadioComponent'
@@ -17,8 +17,8 @@ import {
 } from '../../../helpers'
 
 function DisplayFilters({ layerObj, type }) {
-
   const { collection } = useContext(CollectionContext)
+  const [activeSwitch, setActiveSwitch] = useState(null)
 
   const handleRegionChange = (value) => {
     const names = value.map(name => name.value)
@@ -26,10 +26,16 @@ function DisplayFilters({ layerObj, type }) {
   }
 
   const handleFilterChange = (value, target) => {
+    layerObj.current.type = type
     if (value === 'remove') {
       delete layerObj.current[target]
     } else {
-      layerObj.current = { ...layerObj.current, [target]: value }
+      if (type === 'startups') {
+        layerObj.current = { ...layerObj.current, [target]: value }
+      } else {
+        layerObj.current = { ...layerObj.current, [target]: value, fieldName: target }
+      }
+      setActiveSwitch(target)
     }
     console.log(layerObj.current)
   }
@@ -40,7 +46,6 @@ function DisplayFilters({ layerObj, type }) {
     data = collection[0]?.data
     fields = data[0].fields
   }
-
 
   //hacer variable con los distritos de la nueva base de datos - que no se exactamente cual es
   const booleanFields = fields?.filter(field => field.fieldType === 'boolean')
@@ -64,18 +69,32 @@ function DisplayFilters({ layerObj, type }) {
   }
 
   const displayNumericFields = () => {
-    return numericFields.map((field, index) => {
-      const [max, min] = findMaxAndMinValues(data, field.fieldName)
-      return (
-        <SliderComponent
-          key={index}
-          name={field.fieldName}
-          handleChange={handleFilterChange}
-          minValue={min}
-          maxValue={max}
-        />
-      )
-    })
+    if (type === 'startups') {
+      return numericFields.map((field, index) => {
+        const [max, min] = findMaxAndMinValues(data, field.fieldName)
+        return (
+          <SliderComponent
+            key={index}
+            name={field.fieldName}
+            handleChange={handleFilterChange}
+            minValue={min}
+            maxValue={max}
+          />
+        )
+      })
+    } else {
+      return numericFields.map((field, index) => {
+        const isActive = activeSwitch === field.fieldName
+        return (
+          <SwitchComponent
+            key={index}
+            name={field.fieldName}
+            handleChange={() => handleFilterChange(!isActive ? field.fieldName : 'remove', field.fieldName)}
+            isActive={isActive}
+          />
+        )
+      })
+    }
   }
 
   const displayBooleanFields = () => {

@@ -27,35 +27,6 @@ export const isWithinPolygon = (dataItem, searchPolygon) => {
   return booleanPointInPolygon(itemPoint, polygon([polygonCoordinates]))
 }
 
-export const CalculatePopulationBounds = (data) => {
-  const flattenedData = data.flat()
-  const populations = flattenedData.flatMap(item =>
-    item.data.map(innerItem =>
-      innerItem.districtPopulation
-    ))
-
-  const validPopulations = populations.filter(value => !isNaN(value))
-
-  const minPopulation = Math.min(...validPopulations)
-  const maxPopulation = Math.max(...validPopulations)
-
-  return { minPopulation, maxPopulation }
-}
-
-export const CalculateResearchInvestmentBounds = (data) => {
-  const flattenedData = data.flat()
-  const researchInvestments = flattenedData.flatMap(item =>
-    item.data.map(innerItem =>
-      innerItem.researchInvestment
-    ))
-
-  const validInvestments = researchInvestments.filter(value => !isNaN(value))
-
-  const minResearchInvestment = Math.min(...validInvestments)
-  const maxResearchInvestment = Math.max(...validInvestments)
-
-  return { minResearchInvestment, maxResearchInvestment }
-}
 
 export const extractNumericFields = (arr) => {
   return arr?.filter(
@@ -71,10 +42,10 @@ export const extractStringOptions = (arr) => {
   return arr?.filter(
     (field) =>
       field.fieldType === "string" &&
-        field.fieldName !== "name" &&
-        field.fieldName !== "latitude" &&
-        field.fieldName !== "longitude" &&
-        field.fieldName !== "districtName"
+      field.fieldName !== "name" &&
+      field.fieldName !== "latitude" &&
+      field.fieldName !== "longitude" &&
+      field.fieldName !== "districtName"
   )
     .map((field) => field.fieldName)
 }
@@ -108,6 +79,7 @@ export const findMaxAndMinValues = (arr, name) => {
     .map(item => item.fieldValue)
   return [Math.max(...values), Math.min(...values)]
 }
+
 
 export const calculateRadius = (value) => {
   if (value < 10) {

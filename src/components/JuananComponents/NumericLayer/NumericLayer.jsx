@@ -1,31 +1,16 @@
 /* eslint-disable no-unused-vars */
-import { useContext } from 'react'
 import { Circle } from 'react-leaflet'
-import { isWithinPolygon } from '../../../helpers'
-import { CollectionContext } from '../../../context/collectionContext'
-
 import { calculateRadius } from '../../../helpers'
 
 // eslint-disable-next-line react/prop-types
-function NumericLayer({ field, filters, searchPolygon, data, color }) {
-  const { collection } = useContext(CollectionContext)
-  // const filteredItems = data.filter(row => {
-  //   let valid = true
-  //   row.fields.flatMap(item => {
-  //     if (field === item.fieldName && filters[field] > item.fieldValue) {
-  //       valid = false
-  //     }
-  //   })
-  //   return valid
-  // })
-
+function NumericLayer({ field, data, color }) {
   // eslint-disable-next-line react/prop-types
   const circles = data.map((filteredItem, index) => {
-    console.log(filteredItem.locationId.division4)
+    // console.log(filteredItem.locationId.division4)
     const latitude = filteredItem.locationId?.division4?.latitude
-    console.log(latitude)
+    // console.log(latitude)
     const longitude = filteredItem.locationId?.division4?.longitude
-    console.log(longitude)
+    // console.log(longitude)
     const value = filteredItem.fields
       .filter(item => item.fieldName === field)
       .map(obj => obj.fieldValue)[0]

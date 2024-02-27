@@ -11,6 +11,7 @@ function TileLayerComponent () {
       <TileLayer
         attribution='© OpenStreetMap, © CartoDB'
         url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
+        
       />
     </>
   )
