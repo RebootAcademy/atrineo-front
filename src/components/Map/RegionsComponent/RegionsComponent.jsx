@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import HeatmapLayer from '../HeatmapLayer/HeatmapLayer'
 
-function RegionsComponent({ data }) {
+function RegionsComponent({ data, fieldName }) {
   console.log(data)
   if (!Array.isArray(data) || data.length === 0) {
     return console.log('No hay datos disponibles para mostrar')
@@ -38,37 +38,23 @@ function RegionsComponent({ data }) {
 
   const filteredData = Object.entries(groupedByGeojsonId).map(([geojsonId, items]) => {
     const sums = sumNumericFields(items)
-    return { geojsonId, sums } // Ajusta esto según la estructura de datos que necesite DestinationComponent
+    const detailedSums = Object.entries(sums).map(([fieldName, total]) => ({
+      fieldName,
+      total
+    }))
+    return { geojsonId, sums: detailedSums }
   })
 
+  console.log(filteredData)
+
   return (
-    <HeatmapLayer data={filteredData}/>
-  /*     <div>
-      {Object.entries(groupedByGeojsonId).map(([geojsonId, items]) => {
-        // console.log(geojsonId, items)
-        const sums = sumNumericFields(items)
-        return (
-          <div key={geojsonId}>
-            <h3>Geojson ID: {geojsonId}</h3>
-            <ul>
-              {Object.entries(sums).map(([fieldName, total], index) => {
-                console.log(geojsonId, fieldName, total)
-                return (
-                  <li key={index}>
-                    {fieldName}: {total}
-                  </li>
-                )
-              })}
-            </ul>
-          </div>
-        )
-      })}
-    </div> */
+    <HeatmapLayer data={filteredData} fieldName={fieldName} />
   )
 }
 
 RegionsComponent.propTypes = {
-  data: PropTypes.array.isRequired
+  data: PropTypes.array.isRequired,
+  fieldName: PropTypes.string
 }
 
 

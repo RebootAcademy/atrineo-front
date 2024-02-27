@@ -46,10 +46,13 @@ function LayersManager() {
   }
 
   const checkValue = (itemValue, layerKey, layerObj) => {
-    if (typeof layerObj[layerKey] === 'number') {
-      return itemValue >= layerObj[layerKey]
+    if (layerObj.data.type !== 'startup') {
+      return true
+    }
+    if (typeof layerObj.data[layerKey] === 'number') {
+      return itemValue >= layerObj.data[layerKey]
     } else {
-      return itemValue === layerObj[layerKey]
+      return itemValue === layerObj.data[layerKey]
     }
   }
 
@@ -58,6 +61,14 @@ function LayersManager() {
       {layers
         .filter(layer => layer.isVisible)
         .map((layer, index) => {
+          let field
+          for (const key in layer.data) {
+            if (key !== 'type' && key !== 'fieldName') {
+              field = key
+            }
+          }
+/*           const keys = Object.keys(layer.data)
+          const fieldName = keys.length > 1 ? keys[1] : null */
           const filteredData = collection.flatMap((item) => {
             return item.data
               .filter((filteredData) => isWithinPolygon(filteredData, searchPolygon))
@@ -65,7 +76,8 @@ function LayersManager() {
                 let valid = true
                 row.fields.flatMap(item => {
                   for (const key in layer.data) {
-                    if (key === item.fieldName && !checkValue(item.fieldValue, key, layer.data)) {
+                    if (key !== 'type' && key !== 'fieldName' && key === item.fieldName && !checkValue(item.fieldValue, key, layer)) {
+                      console.log(key)
                       valid = false
                     }
                   }
@@ -79,7 +91,10 @@ function LayersManager() {
           return (
             <div key={index}>
               <StartupsComponent data={filteredData} />
-              <RegionsComponent data={filteredData} />
+              {
+                layer.data.type === 'regions' &&
+                <RegionsComponent data={filteredData} fieldName={field} />
+              }
               {displayLayers(layer.data, filteredData)}
             </div>
           )

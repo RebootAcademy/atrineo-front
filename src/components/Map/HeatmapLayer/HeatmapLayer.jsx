@@ -1,99 +1,38 @@
 import { useContext } from "react"
 import { GeoJSON } from "react-leaflet"
 import { useGeoJsonData } from '../../../hooks/useGeoJsonData'
-// import { selectedStyle, below10, between10and20, between20and35, over35, defaultStyle } from './Styles'
+import { below10, between10and20, between20and35, over35, defaultStyle } from './Styles'
 import { LayerContext } from "../../../context/layerContext"
+import PropTypes from 'prop-types'
 
-const HeatmapLayer = ({ data }) => {
+const HeatmapLayer = ({ data, fieldName }) => {
   const { mapDivision } = useContext(LayerContext)
   const mapData = useGeoJsonData(mapDivision)
-  // const [selectedRegion, setSelectedRegion] = useState(null)
-  // const [key, setKey] = useState(0) // clave única
 
-  console.log(data)
+  console.log(fieldName)
 
+  const setStyle = (feature) => {
+    const currentGroupId = data.find(d => d.geojsonId === feature.properties.ID_3.toString())
+    console.log(currentGroupId)
+    const value = currentGroupId?.sums.find(sum => sum.fieldName === fieldName)?.total
 
-  // const { groupedDataWithDivision3, groupedDataWithoutDivision3 } = usePopulationData({})
-
-  /*   const getPopulationByDivision3 = () => {
-    const populationByDivision3 = {}
-    for (const key in groupedDataWithDivision3) {
-      const id = key
-      const totalPopulation = groupedDataWithDivision3[key].totalPopulation
-      populationByDivision3[id] = totalPopulation
-    }
-    return populationByDivision3
-  } */
-
-  const setStyle = () => {
-    // Obtener la población del estado actual
-    // const populationByDivision3 = getPopulationByDivision3()
-    // const currentGroupId = feature.properties.ID_3
-
-    // const population = populationByDivision3[currentGroupId]
-
-    // Asignar colores en función de los tramos de población
-  /*     if (selectedRegion && selectedRegion.feature.properties.ID_3 == currentGroupId) {
-      return selectedStyle
+    if (value < 10000000) {
+      return below10
+    } else if (value >= 10000000 & value < 20000000) {
+      return between10and20
+    } else if (value >= 20000000 & value < 35000000) {
+      return between20and35
+    } else if (value > 35000000) {
+      return over35
     } else {
-      if (population < 10000000) {
-        return below10
-      } else if (population >= 10000000 & population < 20000000) {
-        return between10and20
-      } else if (population >= 20000000 & population < 35000000) {
-        return between20and35
-      } else if (population > 35000000) {
-        return over35
-      } else {
-        return defaultStyle
-      }
-    } */
+      return defaultStyle
+    }
   }
-
-  /*   useEffect(() => {
-    setKey((prevKey) => prevKey + 1)
-  }, [data])
-
-  useEffect(() => {
-    setSelectedRegion(null)
-  }, [mapDivision]) */
-
-  /*   const onEachFeature = (feature, layer) => {
-    layer.on("click", () => {
-      console.log(feature)
-      if (mapDivision == "country") {
-        setSelectedRegion((prevSelectedRegion) => {
-          return prevSelectedRegion && prevSelectedRegion.feature.properties.ID_0 === feature.properties.ID_0
-            ? null
-            : layer
-        })
-      } else if (mapDivision == "division1") {
-        setSelectedRegion((prevSelectedRegion) => {
-          return prevSelectedRegion && prevSelectedRegion.feature.id === feature.id
-            ? null
-            : layer
-        })
-      } else if (mapDivision == "division2") {
-        setSelectedRegion((prevSelectedRegion) => {
-          return prevSelectedRegion && prevSelectedRegion.feature.properties.ID_2 === feature.properties.ID_2
-            ? null
-            : layer
-        })
-      } else {
-        setSelectedRegion((prevSelectedRegion) => {
-          return prevSelectedRegion && prevSelectedRegion.feature.properties.ID_3 === feature.properties.ID_3
-            ? null
-            : layer
-        })
-      }
-    })
-  } */
 
   const filteredRegions = () => {
     return mapData?.features.filter((region) => region.properties.NAME_1 === 'Baden-Württemberg')
   }
 
-  // render react-leaflet GeoJSON when the data is ready
   if (mapData) {
     const filteredData = { ...mapData, features: filteredRegions() }
 
@@ -101,13 +40,16 @@ const HeatmapLayer = ({ data }) => {
       <GeoJSON
         data={filteredData}
         style={(feature) => setStyle(feature)}
-        // onEachFeature={onEachFeature}
-        // key={key} // Usa la clave única
       />
     )
   } else {
     return null
   }
+}
+
+HeatmapLayer.propTypes = {
+  data: PropTypes.array.isRequired,
+  fieldName: PropTypes.string
 }
 
 export default HeatmapLayer

@@ -17,7 +17,6 @@ import {
 } from '../../../helpers'
 
 function DisplayFilters({ layerObj, type }) {
-
   const { collection } = useContext(CollectionContext)
 
   const handleRegionChange = (value) => {
@@ -26,10 +25,11 @@ function DisplayFilters({ layerObj, type }) {
   }
 
   const handleFilterChange = (value, target) => {
+    layerObj.current.type = type
     if (value === 'remove') {
       delete layerObj.current[target]
     } else {
-      layerObj.current = { ...layerObj.current, [target]: value }
+      layerObj.current = { ...layerObj.current, [target]: value, fieldName: target }
     }
     console.log(layerObj.current)
   }
@@ -40,7 +40,6 @@ function DisplayFilters({ layerObj, type }) {
     data = collection[0]?.data
     fields = data[0].fields
   }
-
 
   //hacer variable con los distritos de la nueva base de datos - que no se exactamente cual es
   const booleanFields = fields?.filter(field => field.fieldType === 'boolean')
@@ -64,18 +63,30 @@ function DisplayFilters({ layerObj, type }) {
   }
 
   const displayNumericFields = () => {
-    return numericFields.map((field, index) => {
-      const [max, min] = findMaxAndMinValues(data, field.fieldName)
-      return (
-        <SliderComponent
-          key={index}
-          name={field.fieldName}
-          handleChange={handleFilterChange}
-          minValue={min}
-          maxValue={max}
-        />
-      )
-    })
+    if (type === 'startups') {
+      return numericFields.map((field, index) => {
+        const [max, min] = findMaxAndMinValues(data, field.fieldName)
+        return (
+          <SliderComponent
+            key={index}
+            name={field.fieldName}
+            handleChange={handleFilterChange}
+            minValue={min}
+            maxValue={max}
+          />
+        )
+      })
+    } else {
+      return numericFields.map((field, index) => {
+        return (
+          <SwitchComponent
+            key={index}
+            name={field.fieldName}
+            handleChange={handleFilterChange}
+          />
+        )
+      })
+    }
   }
 
   const displayBooleanFields = () => {
