@@ -1,40 +1,29 @@
-export const selectedStyle = {
-  opacity: 0.7,
-  fillOpacity: 1,
-  fillColor: '#ebf5fb',
-}
-
 export const defaultStyle = {
   opacity: 0.1,
   fillOpacity: 0,
-  color: 'black',
-  fillColor: '#aed6f1',
+  fillColor: '#FFA07A',
 }
 
 export const below10 = {
   opacity: 0.3,
-  fillOpacity: 0.8,
-  color: 'black',
-  fillColor: '#85c1e9',
+  fillOpacity: 0.7,
+  fillColor: '#E9967A',
 }
 
 export const between10and20 = {
   opacity: 0.3,
-  fillOpacity: 0.8,
-  color: 'black',
-  fillColor: '#3498db',
+  fillOpacity: 0.7,
+  fillColor: '#FA8072',
 }
 
 export const between20and35 = {
   opacity: 0.3,
-  fillOpacity: 0.8,
-  color: 'black',
-  fillColor: '#2874a6',
+  fillOpacity: 0.7,
+  fillColor: '#F08080',
 }
 
 export const over35 = {
   opacity: 0.3,
-  fillOpacity: 0.8,
-  color: 'black',
-  fillColor: '#1b4f72',
+  fillOpacity: 0.7,
+  fillColor: '#CD5C5C',
 }
