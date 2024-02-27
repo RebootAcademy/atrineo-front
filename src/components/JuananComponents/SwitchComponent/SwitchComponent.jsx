@@ -1,11 +1,15 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import PropTypes from 'prop-types'
 
 import { Switch } from "../../ui/Switch/Switch"
 import { Label } from "../../ui/Label/Label"
 
-function SwitchComponent({name, handleChange}) {
-  const [active, setActive] = useState(false)
+function SwitchComponent({ name, handleChange, isActive }) {
+  const [active, setActive] = useState(isActive)
+
+  useEffect(() => {
+    setActive(isActive)
+  }, [isActive])
 
   const emitChange = (value) => {
     handleChange(value, name)
@@ -42,7 +46,8 @@ function SwitchComponent({name, handleChange}) {
 
 SwitchComponent.propTypes = {
   name: PropTypes.string,
-  handleChange: PropTypes.func
+  handleChange: PropTypes.func,
+  isActive: PropTypes.bool
 }
 
 export default SwitchComponent

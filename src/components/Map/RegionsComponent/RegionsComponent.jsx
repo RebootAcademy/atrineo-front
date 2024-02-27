@@ -2,7 +2,6 @@ import PropTypes from 'prop-types'
 import HeatmapLayer from '../HeatmapLayer/HeatmapLayer'
 
 function RegionsComponent({ data, fieldName }) {
-  console.log(data)
   if (!Array.isArray(data) || data.length === 0) {
     return console.log('No hay datos disponibles para mostrar')
   }
@@ -44,8 +43,6 @@ function RegionsComponent({ data, fieldName }) {
     }))
     return { geojsonId, sums: detailedSums }
   })
-
-  console.log(filteredData)
 
   return (
     <HeatmapLayer data={filteredData} fieldName={fieldName} />

@@ -11,7 +11,6 @@ import { isWithinPolygon } from '../../../helpers'
 
 function LayersManager() {
   const { collection } = useContext(CollectionContext)
-
   const { searchPolygon, layers, setLayers, mapDivision } = useContext(LayerContext)
 
   useEffect(() => {
@@ -67,8 +66,6 @@ function LayersManager() {
               field = key
             }
           }
-/*           const keys = Object.keys(layer.data)
-          const fieldName = keys.length > 1 ? keys[1] : null */
           const filteredData = collection.flatMap((item) => {
             return item.data
               .filter((filteredData) => isWithinPolygon(filteredData, searchPolygon))
@@ -90,7 +87,9 @@ function LayersManager() {
           })
           return (
             <div key={index}>
-              <StartupsComponent data={filteredData} />
+              {
+                layer.data.type === 'startups' &&
+                <StartupsComponent data={filteredData} />}
               {
                 layer.data.type === 'regions' &&
                 <RegionsComponent data={filteredData} fieldName={field} />

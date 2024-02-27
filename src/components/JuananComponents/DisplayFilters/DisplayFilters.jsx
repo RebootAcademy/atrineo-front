@@ -1,6 +1,6 @@
 //SUSTITUIRÍA A FILTEROPTIONS
 // import { v4 as uuidv4 } from 'uuid'
-import { useContext } from "react"
+import { useContext, useState } from "react"
 import PropTypes from 'prop-types'
 
 import RadioComponent from '../RadioComponent/RadioComponent'
@@ -18,6 +18,7 @@ import {
 
 function DisplayFilters({ layerObj, type }) {
   const { collection } = useContext(CollectionContext)
+  const [activeSwitch, setActiveSwitch] = useState(null)
 
   const handleRegionChange = (value) => {
     const names = value.map(name => name.value)
@@ -30,6 +31,7 @@ function DisplayFilters({ layerObj, type }) {
       delete layerObj.current[target]
     } else {
       layerObj.current = { ...layerObj.current, [target]: value, fieldName: target }
+      setActiveSwitch(target)
     }
     console.log(layerObj.current)
   }
@@ -78,11 +80,13 @@ function DisplayFilters({ layerObj, type }) {
       })
     } else {
       return numericFields.map((field, index) => {
+        const isActive = activeSwitch === field.fieldName
         return (
           <SwitchComponent
             key={index}
             name={field.fieldName}
-            handleChange={handleFilterChange}
+            handleChange={() => handleFilterChange(!isActive ? field.fieldName : 'remove', field.fieldName)}
+            isActive={isActive}
           />
         )
       })
