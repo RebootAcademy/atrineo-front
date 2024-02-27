@@ -117,3 +117,21 @@ export const calculateRadius = (value) => {
     return Math.log(value) * logScaleFactor
   }
 }
+
+export const extractRegionNames = (array, division) => {
+  const nameRegionFiltered = array
+    .flatMap((region) => region.data)
+    .filter((item) => item.locationId[division] !== null)
+    .map((item) => {
+      return {
+        id: item.locationId[division]?._id,
+        name: item.locationId[division]?.name,
+      }
+    })
+    
+  const nameRegion = nameRegionFiltered.reduce((prev, curr) => {
+    return prev.find((item) => item.id === curr.id) ? prev : [...prev, curr]
+  }, [])
+
+  return  nameRegion.map((region) => region.name)
+}
