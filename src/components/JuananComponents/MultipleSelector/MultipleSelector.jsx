@@ -5,7 +5,9 @@ import { CollectionContext } from "../../../context/collectionContext"
 
 import MultipleSelector from "../../ui/MultiSelector/multple-selector"
 
+// eslint-disable-next-line react/prop-types
 function MultipleSelectorComponent({ onValueChange }) {
+  // eslint-disable-next-line no-unused-vars
   const { mapDivision, setSelectedNameDistrict } = useContext(LayerContext)
   const { collection } = useContext(CollectionContext)
 
@@ -16,6 +18,8 @@ function MultipleSelectorComponent({ onValueChange }) {
       onValueChange(dislayMultipleSelector())
     } else {
       onValueChange(districts)
+      const selectedDistricts = districts.map(district => district.value)
+      setSelectedNameDistrict(selectedDistricts)
     }
   }
 

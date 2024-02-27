@@ -25,9 +25,10 @@ const HeatMapLayer = ({ onRegionSelected }) => {
 
     if (
       (selectedNameDistrict.length === 1 && selectedNameDistrict[0].value === 'All') ||
+      selectedNameDistrict.includes(currentDistrict)
       //la linea de abajo comentada es para activar que al hacer click en el mapa se pinte la zona donde se hace click
       //(selectedRegion && selectedRegion.feature.properties.ID_3 === currentGroupId) ||
-      (selectedNameDistrict && selectedNameDistrict.some(district => district.value === currentDistrict))
+      //(selectedNameDistrict && selectedNameDistrict.some(district => district.value === currentDistrict))
     ) {
       return selectedStyle
     } else {
