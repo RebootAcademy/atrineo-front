@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { useState, useContext } from 'react'
+import { useContext } from 'react'
 
 import ContourLayer from '../MapContour/MapContour'
 import CoordsDisplay from '../CoordsDisplay/CoordsDisplay'
@@ -8,10 +8,8 @@ import CustomZoomControl from '../CustomZoomControl/CustomZoomControl'
 import SearchBar from '../SearchBar/SearchBar'
 import LayersContainer from '../LayersContainer/LayersContainer'
 import TileLayerComponent from '../TileLayerComponent/TileLayerComponent'
-import SavedLayerComponent from '../SavedLayerComponent/SavedLayerComponent'
 import LayersManager from '../LayersManager/LayersManager'
 import LegendsContainer from '../LegendsContainer/LegendsContainer'
-import HeatMapLayer from "../../HeatMapLayerComponent.jsx/HeatMapComponent"
 
 import { LayerContext } from "../../../context/layerContext"
 import { FeatureGroup, MapContainer } from "react-leaflet"
@@ -43,8 +41,6 @@ function MapComponent() {
         <CustomZoomControl />
 
         <LayersManager />
-
-        <HeatMapLayer />
 
         <CoordsDisplay />
 

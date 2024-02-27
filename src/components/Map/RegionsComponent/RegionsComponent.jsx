@@ -1,3 +1,6 @@
+import PropTypes from 'prop-types'
+import HeatmapLayer from '../HeatmapLayer/HeatmapLayer'
+
 function RegionsComponent({ data }) {
   console.log(data)
   if (!Array.isArray(data) || data.length === 0) {
@@ -33,8 +36,14 @@ function RegionsComponent({ data }) {
     return sums
   }
 
+  const filteredData = Object.entries(groupedByGeojsonId).map(([geojsonId, items]) => {
+    const sums = sumNumericFields(items)
+    return { geojsonId, sums } // Ajusta esto según la estructura de datos que necesite DestinationComponent
+  })
+
   return (
-    <div>
+    <HeatmapLayer data={filteredData}/>
+  /*     <div>
       {Object.entries(groupedByGeojsonId).map(([geojsonId, items]) => {
         // console.log(geojsonId, items)
         const sums = sumNumericFields(items)
@@ -54,9 +63,13 @@ function RegionsComponent({ data }) {
           </div>
         )
       })}
-    </div>
+    </div> */
   )
-  }
+}
+
+RegionsComponent.propTypes = {
+  data: PropTypes.array.isRequired
+}
 
 
 export default RegionsComponent
