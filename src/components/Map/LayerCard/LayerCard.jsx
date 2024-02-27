@@ -18,7 +18,7 @@ import { CollectionContext } from "../../../context/collectionContext"
 function LayerCard({ onCloseMenu }) {
   const { collection } = useContext(CollectionContext)
   let collectionType
-  if(collection.length !== 0) {
+  if (collection.length !== 0) {
     collectionType = collection[0].collectionType
   }
 
@@ -26,7 +26,7 @@ function LayerCard({ onCloseMenu }) {
 
   const layerRef = useRef({})
 
-  const handleSave = () =>{
+  const handleSave = () => {
     saveCurrentLayer(layerRef.current)
     onCloseMenu()
   }
@@ -43,7 +43,7 @@ function LayerCard({ onCloseMenu }) {
   }
 
   return (
-    <Card className='bg-blue-400 w-full flex flex-col items-center'>
+    <Card className='w-full flex flex-col items-center'>
 
       <CardHeader>
         <CardTitle>Layer {nextLayerId}</CardTitle>

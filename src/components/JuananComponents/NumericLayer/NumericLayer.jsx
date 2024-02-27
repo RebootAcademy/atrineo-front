@@ -1,7 +1,10 @@
 /* eslint-disable no-unused-vars */
 import { Circle } from 'react-leaflet'
+import { calculateRadius } from '../../../helpers'
 
-function NumericLayer ({ field, data, color }) {
+// eslint-disable-next-line react/prop-types
+function NumericLayer({ field, data, color }) {
+  // eslint-disable-next-line react/prop-types
   const circles = data.map((filteredItem, index) => {
     // console.log(filteredItem.locationId.division4)
     const latitude = filteredItem.locationId?.division4?.latitude
@@ -17,7 +20,7 @@ function NumericLayer ({ field, data, color }) {
           key={index}
           center={[latitude, longitude]}
           pathOptions={{ fillColor: color, stroke: false, fillOpacity: 0.20 }}
-          radius={value > 5000 ? value / 5000 : value > 1000 ? value / 800 : value * 100}
+          radius={calculateRadius(value)}
         />
       )
     }

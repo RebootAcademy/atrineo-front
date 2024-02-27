@@ -6,6 +6,7 @@ import PropTypes from 'prop-types'
 import RadioComponent from '../RadioComponent/RadioComponent'
 import SwitchComponent from '../SwitchComponent/SwitchComponent'
 import SliderComponent from '../SliderComponent/SliderComponent'
+import MultipleSelectorComponent from "../MultipleSelector/MultipleSelector"
 import { CollectionContext } from "../../../context/collectionContext"
 
 import {
@@ -18,6 +19,11 @@ import {
 function DisplayFilters({ layerObj, type }) {
 
   const { collection } = useContext(CollectionContext)
+
+  const handleRegionChange = (value) => {
+    const names = value.map(name => name.value)
+    layerObj.current.regions = names
+  }
 
   const handleFilterChange = (value, target) => {
     if (value === 'remove') {
@@ -43,8 +49,6 @@ function DisplayFilters({ layerObj, type }) {
 
   // Almacena las distintas opciones posibles para cada grupo de radio buttons
   const optionsObj = createStringOptionsObject(stringOptions, collection[0]?.data)
-
-  //todo lo que habia aqui esta en MultipleSelector
 
   const displayStrings = (arr) => {
     return arr?.map((option, index) => {
@@ -86,9 +90,15 @@ function DisplayFilters({ layerObj, type }) {
     })
   }
 
+  const displayMultipleSelectorFields = () => {
+    return (
+      <MultipleSelectorComponent onValueChange={handleRegionChange} />
+    )
+  }
+
   return (
     <div className="flex flex-col gap-4">
-      {/* {aqui va el multiple selector} */}
+      {displayMultipleSelectorFields()}
       {type === 'startups' && displayBooleanFields()}
       {displayNumericFields()}
       {type === 'startups' && displayStrings(stringOptions)}
@@ -104,3 +114,19 @@ DisplayFilters.propTypes = {
 }
 
 export default DisplayFilters
+
+
+
+// if (Object.hasOwn(layerObj.current, 'regions')) {
+//   const incomingLength = value.length
+//   const currentLength = layerObj.current.regions.length
+//   if (incomingLength > currentLength) {
+//     const newValue = value[value.length - 1].value
+//     console.log(newValue)
+//     layerObj.current.regions.push(newValue)
+//   } else {
+
+//   }
+// } else {
+//   layerObj.current.regions = [value[0].value]
+// }
