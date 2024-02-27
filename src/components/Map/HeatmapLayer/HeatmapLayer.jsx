@@ -9,22 +9,31 @@ const HeatmapLayer = ({ data, fieldName }) => {
   const { mapDivision } = useContext(LayerContext)
   const mapData = useGeoJsonData(mapDivision)
 
+  const calculateMinMaxValues = () => {
+    const fieldValues = data.flatMap(group =>
+      group.sums.filter(sum => sum.fieldName === fieldName).map(filteredSum => filteredSum.total)
+    )
+    return [Math.min(...fieldValues), Math.max(...fieldValues)]
+  }
+
+  const [minValue, maxValue] = calculateMinMaxValues()
+
+  const determineStyle = (percentage) => {
+    if (percentage < 25) return below10
+    if (percentage < 50) return between10and20
+    if (percentage < 75) return between20and35
+    return over35
+  }
+
   const setStyle = (feature) => {
     const currentGroupId = data.find(d => d.geojsonId === feature.properties.ID_3.toString())
-    if (currentGroupId) {
-      const value = currentGroupId?.sums.find(sum => sum.fieldName === fieldName)?.total
-      if (value < 10000000) {
-        return below10
-      } else if (value >= 10000000 & value < 20000000) {
-        return between10and20
-      } else if (value >= 20000000 & value < 35000000) {
-        return between20and35
-      } else if (value > 35000000) {
-        return over35
-      }
-    } else {
-      return defaultStyle
+    const value = currentGroupId?.sums.find(sum => sum.fieldName === fieldName)?.total
+
+    if (value !== undefined) {
+      const percentage = ((value - minValue) / (maxValue - minValue)) * 100
+      return determineStyle(percentage)
     }
+    return defaultStyle
   }
 
   const filteredRegions = () => {
