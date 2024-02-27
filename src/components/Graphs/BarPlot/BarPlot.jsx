@@ -7,8 +7,8 @@ const BAR_PADDING = 0.3
 
 function Barplot ({ width, height, data, regions, fields }) {
 
-  const [field, setField] = useState('patents')
-
+  const [field, setField] = useState(fields[0].fieldName)
+  
   const boundsWidth = width - MARGIN.right - MARGIN.left
   const boundsHeight = height - MARGIN.top - MARGIN.bottom
   
