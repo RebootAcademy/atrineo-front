@@ -5,8 +5,10 @@ import { CollectionContext } from "../../../context/collectionContext"
 
 import MultipleSelector from "../../ui/MultiSelector/multple-selector"
 
+// eslint-disable-next-line react/prop-types
 function MultipleSelectorComponent({ onValueChange }) {
-  const { mapDivision } = useContext(LayerContext)
+  // eslint-disable-next-line no-unused-vars
+  const { mapDivision, setSelectedNameDistrict } = useContext(LayerContext)
   const { collection } = useContext(CollectionContext)
 
   const onDistrictNameChange = (districts) => {
@@ -32,7 +34,6 @@ function MultipleSelectorComponent({ onValueChange }) {
     // const sortedRegion = nameRegion.sort((region1, region2) => region1.name.localeCompare(region2.name))
 
     const districtNames = [
-      { value: 'All', label: 'All' },
       ...nameRegion.map((filteredRegion) => (
         {
           value: filteredRegion.name,
