@@ -18,8 +18,6 @@ function MultipleSelectorComponent({ onValueChange }) {
       onValueChange(dislayMultipleSelector())
     } else {
       onValueChange(districts)
-      const selectedDistricts = districts.map(district => district.value)
-      setSelectedNameDistrict(selectedDistricts)
     }
   }
 
@@ -38,7 +36,6 @@ function MultipleSelectorComponent({ onValueChange }) {
     const sortedRegion = nameRegion.sort((region1, region2) => region1.name.localeCompare(region2.name))
 
     const districtNames = [
-      { value: 'All', label: 'All' },
       ...nameRegion.map((filteredRegion) => (
         {
           value: filteredRegion.name,

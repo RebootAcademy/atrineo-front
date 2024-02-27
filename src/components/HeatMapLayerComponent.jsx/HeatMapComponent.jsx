@@ -7,7 +7,7 @@ import { LayerContext } from "../../context/layerContext"
 // eslint-disable-next-line react/prop-types
 const HeatMapLayer = ({ onRegionSelected }) => {
   const {
-    selectedNameDistrict,
+    layers,
     mapDivision
   } = useContext(LayerContext)
 
@@ -24,8 +24,9 @@ const HeatMapLayer = ({ onRegionSelected }) => {
     const currentDistrict = feature.properties.NAME_3
 
     if (
-      (selectedNameDistrict.length === 1 && selectedNameDistrict[0].value === 'All') ||
-      selectedNameDistrict.includes(currentDistrict)
+      layers?.find((layer) => layer.data.regions?.includes(currentDistrict) && layer.isVisible)
+      // (selectedNameDistrict.length === 1 && selectedNameDistrict[0].value === 'All') ||
+      //selectedNameDistrict.includes(currentDistrict)
       //la linea de abajo comentada es para activar que al hacer click en el mapa se pinte la zona donde se hace click
       //(selectedRegion && selectedRegion.feature.properties.ID_3 === currentGroupId) ||
       //(selectedNameDistrict && selectedNameDistrict.some(district => district.value === currentDistrict))
