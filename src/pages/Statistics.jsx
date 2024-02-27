@@ -16,9 +16,9 @@ function Statistics () {
   const data = collection[0]?.data
 
   return (
-    <div>
+    <>
       <BarPlot width={700} height={400} data={data} regions={regionNames}  />
-    </div>
+    </>
   )
 }
 
