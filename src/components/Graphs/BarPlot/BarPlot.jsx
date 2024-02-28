@@ -68,9 +68,7 @@ function Barplot ({ width, height, data, regions, fields, options, division }) {
   const xAxis = useMemo(() => d3.axisBottom(xScale), [xScale])
   const yAxis = useMemo(() => d3.axisLeft(yScale), [yScale])
 
-  const bars = useMemo(() => summedData.map((d, i) => {
-    console.log(d)
-    return(
+  const bars = useMemo(() => summedData.map((d, i) =>
     <rect
       key={i}
       x={xScale(d.name)}
@@ -79,7 +77,7 @@ function Barplot ({ width, height, data, regions, fields, options, division }) {
       height={boundsHeight - yScale(d.sum)}
       fill="#9d174d"
     />
-  )}), [xScale, yScale, summedData, boundsHeight])
+  ), [xScale, yScale, summedData, boundsHeight])
 
   return (
     <>
@@ -99,18 +97,23 @@ function Barplot ({ width, height, data, regions, fields, options, division }) {
           />
         </g>
       </svg>
-      yField:
-      <select name="y-fields" id="y-field-select" onChange={handleYChange}>
-        {
-          fields.map((f,i) => <option key={i} value={f.fieldName}>{f.fieldName}</option>)
-        }
-      </select>
-      xField:
-      <select name="x-fields" id="x-field-select" onChange={handleXChange}>
-        {
-          options.map((f, i) => <option key={i} value={f}>{f}</option>)
-        }
-      </select>
+      <div>
+        yField:
+        <select name="y-fields" id="y-field-select" onChange={handleYChange}>
+          {
+            fields.map((f,i) => <option key={i} value={f.fieldName}>{f.fieldName}</option>)
+          }
+        </select>
+
+      </div>
+      <div>
+        xField:
+        <select name="x-fields" id="x-field-select" onChange={handleXChange}>
+          {
+            options.map((f, i) => <option key={i} value={f}>{f}</option>)
+          }
+        </select>
+      </div>
     </>
   )
 }
