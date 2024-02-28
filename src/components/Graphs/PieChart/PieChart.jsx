@@ -19,10 +19,13 @@ const PieChart = ({ width, height, data }) => {
   )
   console.log(filteredData)
 
+  const dataMapped = filteredData.map(field => field['gnp'])
+  console.log(dataMapped)
+
   const pie = useMemo(() => {
-    const pieGenerator = d3.pie().value((d) => d.fields.fieldName)
-    return pieGenerator(data)
-  }, [data])
+    const pieGenerator = d3.pie().value((d) => d)
+    return pieGenerator(dataMapped)
+  }, [dataMapped])
 
   const arcs = useMemo(() => {
     const arcPathGenerator = d3.arc()
