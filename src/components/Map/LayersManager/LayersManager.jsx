@@ -45,7 +45,6 @@ function LayersManager() {
   }
 
   const checkValue = (itemValue, layerKey, layerObj) => {
-    console.log(layerObj.data.type)
     if (layerObj.data.type !== 'startups') {
       return true
     }
