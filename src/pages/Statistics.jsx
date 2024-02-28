@@ -1,4 +1,4 @@
-import { useContext } from "react"
+/* import { useContext } from "react"
 
 import BarPlot from '../components/Graphs/BarPlot/BarPlot'
 
@@ -49,4 +49,4 @@ function Statistics () {
   )
 }
 
-export default Statistics
+export default Statistics */
