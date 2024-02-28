@@ -119,8 +119,20 @@ function Barplot ({ width, height, data, regions, fields, options, division }) {
 
   return (
     <>
-      <svg width={width} height={height}>
-        <g transform={`translate(${MARGIN.left},${MARGIN.top})`}>
+      <svg width={width} height={height+50}>
+        {/*Legend*/ }
+        <g 
+          transform={`translate(${boundsWidth + MARGIN.right - boundsWidth/2},${MARGIN.top})`}
+          className="legend"
+        >
+          <g transform={`translate(0,0)`}>
+            <rect width={15} height={15} fill={"#9d174d"} />
+            <text x={15 + 5} y={17 - 5} style={{ fontSize: '0.8em' }}>
+              {yField}
+            </text>
+          </g>
+        </g>
+        <g transform={`translate(${MARGIN.left},${MARGIN.top + 50})`}>
           {bars}
           {/* Render X Axis */}
           <g
@@ -130,6 +142,7 @@ function Barplot ({ width, height, data, regions, fields, options, division }) {
           />
           {/* Render Y Axis */}
           <g
+            transform={`translate(0,0)`}
             ref={node => d3.select(node).call(yAxis)}
             className="y-axis"
           />
