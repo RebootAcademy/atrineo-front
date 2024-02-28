@@ -54,7 +54,11 @@ function Statistics() {
             width={700}
             height={400}
             data={data}
-            fields={fields} />
+            regions={regionNames}
+            fields={fields}
+            options={optionsArr}
+            division={mapDivision}
+          />
       }
 
     </>
