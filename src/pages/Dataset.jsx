@@ -1,8 +1,13 @@
+import { useContext } from "react"
+
+import TableComponent from "../components/Datasets/Table/TableComponent"
+
+import { CollectionContext } from "../context/collectionContext"
+
 function Dataset() {
+  const { collection } = useContext(CollectionContext)
   return (
-    <div>
-      DATASET PAGE
-    </div>
+    <TableComponent data={collection[0].data} />
   )
 }
 
