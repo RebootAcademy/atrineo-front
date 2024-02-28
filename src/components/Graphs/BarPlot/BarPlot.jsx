@@ -10,6 +10,9 @@ import { createStringOptionsObject } from '../../../helpers'
 function Barplot ({ width, height, data, regions, fields, options, division }) {
   const [yField, setYField] = useState(fields[0].fieldName)
   const [xField, setXField] = useState(options[0])
+  const [aggregation, setAggregation] = useState('sum')
+
+  const aggOptions = ['sum', 'avg', 'count']
 
   const xFieldValues = createStringOptionsObject(options, data)
   xFieldValues.regions = regions
@@ -25,6 +28,21 @@ function Barplot ({ width, height, data, regions, fields, options, division }) {
     setXField(e.target.value)
   }
 
+  const handleAggregationChange = (e) => {
+    setAggregation(e.target.value)
+  }
+
+  const checkAggregation = (value, prev, agg) => {
+    switch (agg) {
+    case ('sum'):
+      return prev + value.fieldValue
+    case ('count'):
+      return ++prev
+    case ('avg'):
+      return { count: ++prev.count, sum: prev.sum + value.fieldValue }
+    }
+  }
+
   const summedData = useMemo(() => {
     const sums = data.reduce((acc, cur) => {
       let name
@@ -38,15 +56,25 @@ function Barplot ({ width, height, data, regions, fields, options, division }) {
 
       if (!name) return acc
       if (!acc[name]) {
-        acc[name] = 0
+        if (aggregation === 'avg') {
+          acc[name] = {
+            count: 0,
+            sum: 0
+          }
+        } else {
+          acc[name] = 0
+        }
       }
-
       const [value] = cur.fields.filter(d => d.fieldName === yField)
-      acc[name] += value.fieldValue
+      acc[name] = checkAggregation(value, acc[name], aggregation )
       return acc
     }, {})
-    return Object.entries(sums).map(([name, sum]) => ({ name, sum }))
-  }, [data, xField, yField, division])
+    if (aggregation === 'avg') {
+      return Object.entries(sums).map(([name, info]) => ({ name, sum: info.sum / info.count }))
+    } else {
+      return Object.entries(sums).map(([name, sum]) => ({ name, sum }))
+    }
+  }, [data, xField, yField, division, aggregation])
 
   const maxSum = useMemo(() => Math.max(...summedData.map(d => d.sum)), [summedData])
 
@@ -111,6 +139,14 @@ function Barplot ({ width, height, data, regions, fields, options, division }) {
         <select name="x-fields" id="x-field-select" onChange={handleXChange}>
           {
             options.map((f, i) => <option key={i} value={f}>{f}</option>)
+          }
+        </select>
+      </div>
+      <div>
+        Aggregation:
+        <select name="x-fields" id="x-field-select" onChange={handleAggregationChange}>
+          {
+            aggOptions.map((agg, i) => <option key={i} value={agg}>{agg}</option>)
           }
         </select>
       </div>
