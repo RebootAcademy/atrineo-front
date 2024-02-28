@@ -11,12 +11,12 @@ function Barplot ({ width, height, data, regions, fields, options, division }) {
   const [yField, setYField] = useState(fields[0].fieldName)
   const [xField, setXField] = useState(options[0])
   const [aggregation, setAggregation] = useState('sum')
-
-  const aggOptions = ['sum', 'avg', 'count']
-
+  
+  const aggOptions = ['sum', 'avg', 'count', 'min', 'max']
+  
   const xFieldValues = createStringOptionsObject(options, data)
   xFieldValues.regions = regions
-
+  
   const boundsWidth = width - MARGIN.right - MARGIN.left
   const boundsHeight = height - MARGIN.top - MARGIN.bottom
   
@@ -27,7 +27,7 @@ function Barplot ({ width, height, data, regions, fields, options, division }) {
   const handleXChange = (e) => {
     setXField(e.target.value)
   }
-
+  
   const handleAggregationChange = (e) => {
     setAggregation(e.target.value)
   }
@@ -40,6 +40,12 @@ function Barplot ({ width, height, data, regions, fields, options, division }) {
       return ++prev
     case ('avg'):
       return { count: ++prev.count, sum: prev.sum + value.fieldValue }
+    case ('max'):
+      if (value.fieldValue > prev) return value.fieldValue
+      return prev
+    case ('min'):
+      if (value.fieldValue < prev) return value.fieldValue
+      return prev
     }
   }
 
@@ -53,7 +59,7 @@ function Barplot ({ width, height, data, regions, fields, options, division }) {
           .filter(f => f.fieldName === xField)
           .map(f => f.fieldValue)
       }
-
+      
       if (!name) return acc
       if (!acc[name]) {
         if (aggregation === 'avg') {
@@ -61,8 +67,13 @@ function Barplot ({ width, height, data, regions, fields, options, division }) {
             count: 0,
             sum: 0
           }
-        } else {
+        } else if (aggregation !== 'min') {
           acc[name] = 0
+        } else {
+          const minValue = data[0].fields
+            .filter(f => f.fieldName === yField)
+            .map(i => i.fieldValue)
+          acc[name] = minValue
         }
       }
       const [value] = cur.fields.filter(d => d.fieldName === yField)
@@ -75,7 +86,6 @@ function Barplot ({ width, height, data, regions, fields, options, division }) {
       return Object.entries(sums).map(([name, sum]) => ({ name, sum }))
     }
   }, [data, xField, yField, division, aggregation])
-
   const maxSum = useMemo(() => Math.max(...summedData.map(d => d.sum)), [summedData])
 
   const xScale = useMemo(() => {
