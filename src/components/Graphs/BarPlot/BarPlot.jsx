@@ -119,7 +119,7 @@ function Barplot ({ width, height, data, regions, fields, options, division }) {
 
   return (
     <>
-      <svg width={width} height={height+50}>
+      <svg width={width} height={height + 24}>
         {/*Legend*/ }
         <g 
           transform={`translate(${boundsWidth + MARGIN.right - boundsWidth/2},${MARGIN.top})`}
@@ -132,7 +132,7 @@ function Barplot ({ width, height, data, regions, fields, options, division }) {
             </text>
           </g>
         </g>
-        <g transform={`translate(${MARGIN.left},${MARGIN.top + 50})`}>
+        <g transform={`translate(${MARGIN.left},${MARGIN.top + 24})`}>
           {bars}
           {/* Render X Axis */}
           <g
