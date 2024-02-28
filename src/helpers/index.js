@@ -50,6 +50,12 @@ export const extractStringOptions = (arr) => {
     .map((field) => field.fieldName)
 }
 
+export const extractBooleanOptions = (arr) => {
+  return arr?.filter(
+    (field) => field.fieldType === "boolean")
+    .map((field) => field.fieldName)
+}
+
 export const createStringOptionsObject = (arr, data) => {
   const optionsObj = {}
 

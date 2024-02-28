@@ -5,22 +5,38 @@ import BarPlot from '../components/Graphs/BarPlot/BarPlot'
 import { CollectionContext } from "../context/collectionContext"
 import { LayerContext } from "../context/layerContext"
 
-import { extractRegionNames, extractNumericFields } from "../helpers"
+import { 
+  extractRegionNames,
+  extractNumericFields,
+  extractStringOptions,
+  extractBooleanOptions
+} from "../helpers"
 
 function Statistics () {
   const { collection } = useContext(CollectionContext)
   const { mapDivision } = useContext(LayerContext)
 
-  const regionNames = extractRegionNames(collection, mapDivision)
-  const data = collection[0]?.data
+  
   let fields
-  if (data) {
+  let data
+  if (collection.length !== 0) {
+    data = collection[0]?.data
     fields = extractNumericFields(data[0].fields)
   }
+  
+  const regionNames = extractRegionNames(collection, mapDivision)
+  const stringOptions = extractStringOptions(data[0].fields)
+  const booleanOptions = extractBooleanOptions(data[0].fields)
+
+  const optionsArr = ['regions', ...stringOptions, ...booleanOptions]
 
   return (
     <>
-      <BarPlot width={700} height={400} data={data} regions={regionNames} fields={fields} />
+      {
+        collection.length === 0 ? 
+          'Loading...':
+          <BarPlot width={700} height={400} data={data} regions={regionNames} fields={fields} options={optionsArr}/>
+      }
     </>
   )
 }

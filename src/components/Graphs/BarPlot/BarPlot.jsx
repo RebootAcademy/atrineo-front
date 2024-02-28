@@ -5,15 +5,20 @@ import * as d3 from "d3" // we will need d3.js
 const MARGIN = { top: 30, right: 30, bottom: 30, left: 80 }
 const BAR_PADDING = 0.3
 
-function Barplot ({ width, height, data, regions, fields }) {
+function Barplot ({ width, height, data, regions, fields, options }) {
 
-  const [field, setField] = useState(fields[0].fieldName)
-  
+  const [yField, setYField] = useState(fields[0].fieldName)
+  const [xField, setXField] = useState(options[0])
+
   const boundsWidth = width - MARGIN.right - MARGIN.left
   const boundsHeight = height - MARGIN.top - MARGIN.bottom
   
-  const handleChange = (e) => {
-    setField(e.target.value)
+  const handleYChange = (e) => {
+    setYField(e.target.value)
+  }
+
+  const handleXChange = (e) => {
+    setXField(e.target.value)
   }
 
   const summedData = useMemo(() => {
@@ -23,22 +28,22 @@ function Barplot ({ width, height, data, regions, fields }) {
       if (!acc[name]) {
         acc[name] = 0
       }
-      const [value] = cur.fields.filter(d => d.fieldName === field)
+      const [value] = cur.fields.filter(d => d.fieldName === yField)
       acc[name] += value.fieldValue
       return acc
     }, {})
     return Object.entries(sums).map(([name, sum]) => ({ name, sum }))
-  }, [data, field])
+  }, [data, yField])
 
   const maxSum = useMemo(() => Math.max(...summedData.map(d => d.sum)), [summedData])
 
   const xScale = useMemo(() => {
     return d3
       .scaleBand()
-      .domain(regions)
+      .domain(xField)
       .range([0, boundsWidth])
       .padding(BAR_PADDING)
-  }, [regions, boundsWidth])
+  }, [xField, boundsWidth])
 
   const yScale = useMemo(() => {
     return d3
@@ -79,9 +84,16 @@ function Barplot ({ width, height, data, regions, fields }) {
           />
         </g>
       </svg>
-      <select name="fields" id="field-select" onChange={handleChange}>
+      yField:
+      <select name="y-fields" id="y-field-select" onChange={handleYChange}>
         {
           fields.map((f,i) => <option key={i} value={f.fieldName}>{f.fieldName}</option>)
+        }
+      </select>
+      xField:
+      <select name="x-fields" id="x-field-select" onChange={handleXChange}>
+        {
+          options.map((f, i) => <option key={i} value={f}>{f}</option>)
         }
       </select>
     </>
@@ -93,7 +105,8 @@ Barplot.propTypes = {
   height: PropTypes.number,
   data: PropTypes.array,
   regions: PropTypes.array,
-  fields: PropTypes.array
+  fields: PropTypes.array,
+  options: PropTypes.array
 }
 
 export default Barplot
