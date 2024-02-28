@@ -5,10 +5,14 @@ import * as d3 from "d3" // we will need d3.js
 const MARGIN = { top: 30, right: 30, bottom: 30, left: 80 }
 const BAR_PADDING = 0.3
 
-function Barplot ({ width, height, data, regions, fields, options }) {
+import { createStringOptionsObject } from '../../../helpers'
 
+function Barplot ({ width, height, data, regions, fields, options, division }) {
   const [yField, setYField] = useState(fields[0].fieldName)
   const [xField, setXField] = useState(options[0])
+
+  const xFieldValues = createStringOptionsObject(options, data)
+  xFieldValues.regions = regions
 
   const boundsWidth = width - MARGIN.right - MARGIN.left
   const boundsHeight = height - MARGIN.top - MARGIN.bottom
@@ -23,27 +27,36 @@ function Barplot ({ width, height, data, regions, fields, options }) {
 
   const summedData = useMemo(() => {
     const sums = data.reduce((acc, cur) => {
-      const name = cur.locationId.division3?.name
+      let name
+      if (xField === 'regions') {
+        name = cur.locationId[division]?.name
+      } else {
+        name = cur.fields
+          .filter(f => f.fieldName === xField)
+          .map(f => f.fieldValue)
+      }
+
       if (!name) return acc
       if (!acc[name]) {
         acc[name] = 0
       }
+
       const [value] = cur.fields.filter(d => d.fieldName === yField)
       acc[name] += value.fieldValue
       return acc
     }, {})
     return Object.entries(sums).map(([name, sum]) => ({ name, sum }))
-  }, [data, yField])
+  }, [data, xField, yField, division])
 
   const maxSum = useMemo(() => Math.max(...summedData.map(d => d.sum)), [summedData])
 
   const xScale = useMemo(() => {
     return d3
       .scaleBand()
-      .domain(xField)
+      .domain(xFieldValues[xField].map(value=>String(value)))
       .range([0, boundsWidth])
       .padding(BAR_PADDING)
-  }, [xField, boundsWidth])
+  }, [xField, boundsWidth, xFieldValues])
 
   const yScale = useMemo(() => {
     return d3
@@ -55,7 +68,9 @@ function Barplot ({ width, height, data, regions, fields, options }) {
   const xAxis = useMemo(() => d3.axisBottom(xScale), [xScale])
   const yAxis = useMemo(() => d3.axisLeft(yScale), [yScale])
 
-  const bars = useMemo(() => summedData.map((d, i) => (
+  const bars = useMemo(() => summedData.map((d, i) => {
+    console.log(d)
+    return(
     <rect
       key={i}
       x={xScale(d.name)}
@@ -64,7 +79,7 @@ function Barplot ({ width, height, data, regions, fields, options }) {
       height={boundsHeight - yScale(d.sum)}
       fill="#9d174d"
     />
-  )), [xScale, yScale, summedData, boundsHeight])
+  )}), [xScale, yScale, summedData, boundsHeight])
 
   return (
     <>
@@ -106,7 +121,8 @@ Barplot.propTypes = {
   data: PropTypes.array,
   regions: PropTypes.array,
   fields: PropTypes.array,
-  options: PropTypes.array
+  options: PropTypes.array,
+  division: PropTypes.string
 }
 
 export default Barplot

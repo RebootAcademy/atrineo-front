@@ -35,7 +35,15 @@ function Statistics () {
       {
         collection.length === 0 ? 
           'Loading...':
-          <BarPlot width={700} height={400} data={data} regions={regionNames} fields={fields} options={optionsArr}/>
+          <BarPlot 
+            width={700} 
+            height={400} 
+            data={data} 
+            regions={regionNames} 
+            fields={fields} 
+            options={optionsArr} 
+            division={mapDivision} 
+          />
       }
     </>
   )
