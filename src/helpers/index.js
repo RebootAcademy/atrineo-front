@@ -1,5 +1,6 @@
-import { point, polygon } from '@turf/helpers'
 import booleanPointInPolygon from '@turf/boolean-point-in-polygon'
+import { point, polygon } from '@turf/helpers'
+import * as d3 from 'd3'
 
 /**
  * Función para verificar si un elemento está dentro de un polígono.
@@ -26,7 +27,6 @@ export const isWithinPolygon = (dataItem, searchPolygon) => {
 
   return booleanPointInPolygon(itemPoint, polygon([polygonCoordinates]))
 }
-
 
 export const extractNumericFields = (arr) => {
   return arr?.filter(
@@ -86,6 +86,19 @@ export const findMaxAndMinValues = (arr, name) => {
   return [Math.max(...values), Math.min(...values)]
 }
 
+/* export const calculateRadius = (data, fieldName) => {
+  const [maxValue, minValue] = findMaxAndMinValues(data, fieldName)
+  // Define el dominio de tu escala. Esto debería cubrir el rango de valores de datos que esperas.
+  const domain = [minValue, maxValue] 
+  // Define el rango de salida para los radios. Esto dependerá del tamaño que desees para tus círculos.
+  const range = [0, 50] // Ajusta esto según el tamaño deseado de tus círculos
+  // Crea la escala de raíz cuadrada usando D3
+  const sqrtScale = d3.scaleSqrt()
+  .domain(domain)
+  .range(range)
+  // Usa la escala para calcular el radio basado en el valor de entrada
+  return (value) => sqrtScale(value)
+} */
 
 export const calculateRadius = (value) => {
   if (value < 10) {
