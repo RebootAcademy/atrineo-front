@@ -12,8 +12,11 @@ import { Card, CardHeader } from '../../ui/Card/Card'
 import { Label } from '../../ui/Label/Label'
 import { Input } from '../../ui/Input/input'
 
-function OptionsMenu({ onChange, fields, options, aggOptions, changeAggregation, changeXAxis, changeYAxis, xAxis, yAxis }) {
-  const graphTypes = ['bar', 'pie']
+function OptionsMenu({ onChange, fields, options, aggOptions, changeAggregation, changeXAxis, changeYAxis }) {
+  const graphTypes = [
+    {name:'bar', img: '/public/barChart.svg'}, 
+    {name:'pie', img: '/public/pieChart.svg'}
+  ]
 
   const [chartName, setChartName] = useState('')
 
@@ -23,13 +26,30 @@ function OptionsMenu({ onChange, fields, options, aggOptions, changeAggregation,
     onChange(value)
   }
 
-  const displayOptions = (options) => {
+  const displayChartOptions = (options) => {
     return options.map((o, i) => 
+      <SelectItem
+        key={i}
+        value={o.name}
+      >
+        <div className='flex'>
+          <img
+            src={o.img}
+            className='mr-2'
+          />
+          { o.name }
+        </div>
+      </SelectItem>
+    )
+  }
+
+  const displayOptions = (options) => {
+    return options.map((o, i) =>
       <SelectItem
         key={i}
         value={o}
       >
-        { o }
+        {o}
       </SelectItem>
     )
   }
@@ -89,7 +109,7 @@ function OptionsMenu({ onChange, fields, options, aggOptions, changeAggregation,
           <SelectValue placeholder="Select a chart type" />
         </SelectTrigger>
         <SelectContent>
-          { displayOptions(graphTypes) }
+          { displayChartOptions(graphTypes) }
         </SelectContent>
       </Select>
 
@@ -113,9 +133,7 @@ OptionsMenu.propTypes = {
   aggOptions: PropTypes.array,
   changeAggregation: PropTypes.func,
   changeXAxis: PropTypes.func,
-  changeYAxis: PropTypes.func,
-  xAxis: PropTypes.string,
-  yAxis: PropTypes.string
+  changeYAxis: PropTypes.func
 }
 
 export default OptionsMenu

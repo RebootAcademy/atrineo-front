@@ -33,7 +33,6 @@ function Statistics() {
     booleanOptions = extractBooleanOptions(data[0].fields)
     optionsArr = ['regions', ...stringOptions, ...booleanOptions]
   }
-  console.log(data)
 
   const [width, setWidth] = useState(window.innerWidth)
   const [height, setHeight] = useState(window.innerHeight)
