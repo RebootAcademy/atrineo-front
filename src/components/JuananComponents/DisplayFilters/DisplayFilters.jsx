@@ -21,6 +21,7 @@ function DisplayFilters({ layerObj, type }) {
   const [activeSwitch, setActiveSwitch] = useState(null)
 
   const handleRegionChange = (value) => {
+    layerObj.current.type = type
     const names = value.map(name => name.value)
     layerObj.current.regions = names
   }

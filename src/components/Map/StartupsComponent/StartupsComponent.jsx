@@ -2,6 +2,7 @@ import MarkersDisplay from '../MarkersDisplay/MarkersDisplay'
 import MarkerClusterGroup from 'react-leaflet-cluster'
 
 function StartupsComponent({ data, searchPolygon }) {
+  console.log(data)
   return (
     <>
       <MarkerClusterGroup

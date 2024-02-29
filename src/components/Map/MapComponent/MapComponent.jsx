@@ -45,6 +45,7 @@ function MapComponent() {
 
         <HeatMapLayer />
 
+
         <CoordsDisplay />
 
         <FeatureGroup>
