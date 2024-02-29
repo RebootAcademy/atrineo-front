@@ -17,7 +17,6 @@ function Statistics() {
   const { collection } = useContext(CollectionContext)
   const { mapDivision } = useContext(LayerContext)
 
-
   let fields
   let data
   if (collection.length !== 0) {
@@ -27,10 +26,14 @@ function Statistics() {
   console.log(data)
 
   const regionNames = extractRegionNames(collection, mapDivision)
-  const stringOptions = extractStringOptions(data[0].fields)
-  const booleanOptions = extractBooleanOptions(data[0].fields)
-
-  const optionsArr = ['regions', ...stringOptions, ...booleanOptions]
+  let stringOptions
+  let booleanOptions
+  let optionsArr
+  if (data) {
+    stringOptions = extractStringOptions(data[0].fields)
+    booleanOptions = extractBooleanOptions(data[0].fields)
+    optionsArr = ['regions', ...stringOptions, ...booleanOptions]
+  }
 
   return (
     <>

@@ -10,10 +10,13 @@ import { createStringOptionsObject } from '../../../helpers'
 function Barplot ({ width, height, data, regions, fields, options, division }) {
   const [yField, setYField] = useState(fields[0].fieldName)
   const [xField, setXField] = useState(options[0])
-
+  const [aggregation, setAggregation] = useState('sum')
+  
+  const aggOptions = ['sum', 'avg', 'count', 'min', 'max']
+  
   const xFieldValues = createStringOptionsObject(options, data)
   xFieldValues.regions = regions
-
+  
   const boundsWidth = width - MARGIN.right - MARGIN.left
   const boundsHeight = height - MARGIN.top - MARGIN.bottom
   
@@ -23,6 +26,27 @@ function Barplot ({ width, height, data, regions, fields, options, division }) {
 
   const handleXChange = (e) => {
     setXField(e.target.value)
+  }
+  
+  const handleAggregationChange = (e) => {
+    setAggregation(e.target.value)
+  }
+
+  const checkAggregation = (value, prev, agg) => {
+    switch (agg) {
+    case ('sum'):
+      return prev + value.fieldValue
+    case ('count'):
+      return ++prev
+    case ('avg'):
+      return { count: ++prev.count, sum: prev.sum + value.fieldValue }
+    case ('max'):
+      if (value.fieldValue > prev) return value.fieldValue
+      return prev
+    case ('min'):
+      if (value.fieldValue < prev) return value.fieldValue
+      return prev
+    }
   }
 
   const summedData = useMemo(() => {
@@ -35,19 +59,33 @@ function Barplot ({ width, height, data, regions, fields, options, division }) {
           .filter(f => f.fieldName === xField)
           .map(f => f.fieldValue)
       }
-
+      
       if (!name) return acc
       if (!acc[name]) {
-        acc[name] = 0
+        if (aggregation === 'avg') {
+          acc[name] = {
+            count: 0,
+            sum: 0
+          }
+        } else if (aggregation !== 'min') {
+          acc[name] = 0
+        } else {
+          const minValue = data[0].fields
+            .filter(f => f.fieldName === yField)
+            .map(i => i.fieldValue)
+          acc[name] = minValue
+        }
       }
-
       const [value] = cur.fields.filter(d => d.fieldName === yField)
-      acc[name] += value.fieldValue
+      acc[name] = checkAggregation(value, acc[name], aggregation )
       return acc
     }, {})
-    return Object.entries(sums).map(([name, sum]) => ({ name, sum }))
-  }, [data, xField, yField, division])
-
+    if (aggregation === 'avg') {
+      return Object.entries(sums).map(([name, info]) => ({ name, sum: info.sum / info.count }))
+    } else {
+      return Object.entries(sums).map(([name, sum]) => ({ name, sum }))
+    }
+  }, [data, xField, yField, division, aggregation])
   const maxSum = useMemo(() => Math.max(...summedData.map(d => d.sum)), [summedData])
 
   const xScale = useMemo(() => {
@@ -81,8 +119,20 @@ function Barplot ({ width, height, data, regions, fields, options, division }) {
 
   return (
     <>
-      <svg width={width} height={height}>
-        <g transform={`translate(${MARGIN.left},${MARGIN.top})`}>
+      <svg width={width} height={height + 24}>
+        {/*Legend*/ }
+        <g 
+          transform={`translate(${boundsWidth + MARGIN.right - boundsWidth/2},${MARGIN.top})`}
+          className="legend"
+        >
+          <g transform={`translate(0,0)`}>
+            <rect width={15} height={15} fill={"#9d174d"} />
+            <text x={15 + 5} y={17 - 5} style={{ fontSize: '0.8em' }}>
+              {yField}
+            </text>
+          </g>
+        </g>
+        <g transform={`translate(${MARGIN.left},${MARGIN.top + 24})`}>
           {bars}
           {/* Render X Axis */}
           <g
@@ -92,6 +142,7 @@ function Barplot ({ width, height, data, regions, fields, options, division }) {
           />
           {/* Render Y Axis */}
           <g
+            transform={`translate(0,0)`}
             ref={node => d3.select(node).call(yAxis)}
             className="y-axis"
           />
@@ -111,6 +162,14 @@ function Barplot ({ width, height, data, regions, fields, options, division }) {
         <select name="x-fields" id="x-field-select" onChange={handleXChange}>
           {
             options.map((f, i) => <option key={i} value={f}>{f}</option>)
+          }
+        </select>
+      </div>
+      <div>
+        Aggregation:
+        <select name="x-fields" id="x-field-select" onChange={handleAggregationChange}>
+          {
+            aggOptions.map((agg, i) => <option key={i} value={agg}>{agg}</option>)
           }
         </select>
       </div>
