@@ -9,20 +9,22 @@ import RegionsComponent from '../RegionsComponent/RegionsComponent'
 
 import { isWithinPolygon } from '../../../helpers'
 
+
 function LayersManager() {
   const { collection } = useContext(CollectionContext)
   const { searchPolygon, layers, setLayers, mapDivision } = useContext(LayerContext)
+
+  let colorIndex = 0
 
   useEffect(() => {
     const storedLayers = JSON.parse(window.localStorage.getItem('layers')) || []
     setLayers(storedLayers)
   }, [])
 
-  const colors = ['dodgerBlue', 'red', 'green']
+  const colors = ['#4B7CCC', '#77F2FF', '#858D99', '#FF8658', '#CC5948', '#98FB98']
 
   const displayLayers = (filters, array) => {
     const elements = []
-    let index = 0
     for (const key in filters) {
       switch (typeof filters[key]) {
       case 'number':
@@ -32,10 +34,10 @@ function LayersManager() {
             field={key}
             data={array}
             searchPolygon={searchPolygon}
-            color={colors[index]}
+            color={colors[colorIndex % colors.length]}
           />
         )
-        index++
+        colorIndex++
         break
       default:
         break
@@ -84,6 +86,7 @@ function LayersManager() {
                 return valid
               })
           })
+          colorIndex++
 
           return (
             <div key={index}>

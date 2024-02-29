@@ -83,29 +83,17 @@ export const findMaxAndMinValues = (arr, name) => {
     .flatMap((item) => item.fields)
     .filter((field) => field.fieldName === name)
     .map(item => item.fieldValue)
-  return [Math.min(...values), Math.max(...values)]
+  return [Math.max(...values), Math.min(...values)]
 }
 
 export const calculateRadius = (value, minValue, maxValue) => {
-  console.log(value, minValue, maxValue)
-  // Define el rango de salida para los radios. Esto dependerá del tamaño que desees para tus círculos.
-  const range = [0, 1000] // Ajusta esto según el tamaño deseado de tus círculos
-  // Crea la escala de raíz cuadrada usando D3
+  const range = [1, 20000] // Ajusta esto según el tamaño deseado de tus círculos
+  // Asegúrate de que minValue y maxValue sean adecuados para tu escala seleccionada
   const sqrtScale = d3.scaleSqrt()
     .domain([minValue, maxValue])
     .range(range)
-  // Usa la escala para calcular el radio basado en el valor de entrada
   return sqrtScale(value)
 }
-
-/* export const calculateRadius = (value) => {
-  if (value < 10) {
-    return value * 1000
-  } else {
-    const logScaleFactor = 1000
-    return Math.log(value) * logScaleFactor
-  }
-} */
 
 export const extractRegionNames = (array, division) => {
   const nameRegionFiltered = array

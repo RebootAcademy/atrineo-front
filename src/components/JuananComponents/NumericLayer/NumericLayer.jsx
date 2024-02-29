@@ -4,9 +4,7 @@ import { calculateRadius, findMaxAndMinValues } from '../../../helpers'
 import PropTypes from 'prop-types'
 
 function NumericLayer({ field, data, color }) {
-  const [minValue, maxValue] = findMaxAndMinValues(data, field)
-
-  console.log(minValue, maxValue)
+  const [maxValue, minValue] = findMaxAndMinValues(data, field)
 
   const circles = data.map((filteredItem, index) => {
     const latitude = filteredItem.locationId?.division4?.latitude
@@ -20,8 +18,8 @@ function NumericLayer({ field, data, color }) {
         <Circle
           key={index}
           center={[latitude, longitude]}
-          pathOptions={{ fillColor: color, stroke: true, fillOpacity: 0.15, opacity: 0.5 }}
-          radius={calculateRadius(value, 1, 100)}
+          pathOptions={{ fillColor: color, fillOpacity: 0.3, stroke: true, opacity: 0.5, weight: 2 }}
+          radius={calculateRadius(value, minValue, maxValue)}
         />
       )
     }
