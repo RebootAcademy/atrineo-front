@@ -1,11 +1,10 @@
 import PropTypes from 'prop-types'
+import { useState } from 'react'
 
 import {
   Select,
   SelectContent,
-  SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue
 } from '../../ui/Select/Select'
@@ -13,8 +12,10 @@ import { Card, CardHeader } from '../../ui/Card/Card'
 import { Label } from '../../ui/Label/Label'
 import { Input } from '../../ui/Input/input'
 
-function OptionsMenu({ onChange, fields, options, aggOptions, changeAggregation, changeXAxis, changeYAxis }) {
+function OptionsMenu({ onChange, fields, options, aggOptions, changeAggregation, changeXAxis, changeYAxis, xAxis, yAxis }) {
   const graphTypes = ['bar', 'pie']
+
+  const [chartName, setChartName] = useState('')
 
   fields = fields.map(f => f.fieldName)
 
@@ -45,53 +46,61 @@ function OptionsMenu({ onChange, fields, options, aggOptions, changeAggregation,
     changeAggregation(value)
   }
 
+  const handleName = (e) => {
+    setChartName(e.target.value)
+  }
+
+  const displaySelect = (title, fn, arr) => {
+    return (
+      <>
+        <Label className="self-start ml-4 mt-4">
+          {title}
+        </Label>
+        <Select
+          onValueChange={fn}
+        >
+          <SelectTrigger className="w-5/6 mt-2">
+            <SelectValue defaultValue={arr[0]} placeholder={arr[0]} />
+            <SelectContent>
+              {displayOptions(arr)}
+            </SelectContent>
+          </SelectTrigger>
+        </Select>
+      </>
+
+    )
+  }
+
   return (
     <Card
-      className='h-full w-1/4'
+      className='h-full w-1/4 flex flex-col items-center'
     >
-      <CardHeader className="font-medium">
+      <CardHeader className="font-medium self-start">
         Chart Data
       </CardHeader>
+      <Label className="self-start ml-4 mt-4">
+        Chart Name:
+      </Label>
+      <Input className="w-5/6 m-3.5" value={chartName} onChange={handleName}/>
       <Select
         onValueChange={handleChange}
       >
-        <SelectTrigger className="w-[280px]">
+        <SelectTrigger className="w-5/6">
           <SelectValue placeholder="Select a chart type" />
         </SelectTrigger>
         <SelectContent>
           { displayOptions(graphTypes) }
         </SelectContent>
       </Select>
-      <Select
-        onValueChange={handleYAxis}
-      >
-        <SelectTrigger className="w-[280px]">
-          <SelectValue placeholder="yAxis" />
-          <SelectContent>
-            {displayOptions(fields)}
-          </SelectContent>
-        </SelectTrigger>
-      </Select>
-      <Select
-        onValueChange={handleXAxis}
-      >
-        <SelectTrigger className="w-[280px]">
-          <SelectValue placeholder="xAxis" />
-          <SelectContent>
-            {displayOptions(options)}
-          </SelectContent>
-        </SelectTrigger>
-      </Select>
-      <Select
-        onValueChange={handleAggregation}
-      >
-        <SelectTrigger className="w-[280px]">
-          <SelectValue placeholder="Aggregation" />
-          <SelectContent>
-            {displayOptions(aggOptions)}
-          </SelectContent>
-        </SelectTrigger>
-      </Select>
+
+      { displaySelect('Aggregation:', handleAggregation, aggOptions) }
+
+      <Label className="self-start ml-4 mt-4">
+        Axes:
+      </Label>
+
+      { displaySelect('X axis:', handleXAxis, options) }
+      { displaySelect('Y axis:', handleYAxis, fields) }
     </Card>
   )
 }
@@ -104,7 +113,9 @@ OptionsMenu.propTypes = {
   aggOptions: PropTypes.array,
   changeAggregation: PropTypes.func,
   changeXAxis: PropTypes.func,
-  changeYAxis: PropTypes.func
+  changeYAxis: PropTypes.func,
+  xAxis: PropTypes.string,
+  yAxis: PropTypes.string
 }
 
 export default OptionsMenu

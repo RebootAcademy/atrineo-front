@@ -120,6 +120,8 @@ function Statistics() {
               changeAggregation={changeAggregation}
               changeXAxis={changeXAxis}
               changeYAxis={changeYAxis}
+              xAxis={xAxis}
+              yAxis={yAxis}
             />
           </>
       }
