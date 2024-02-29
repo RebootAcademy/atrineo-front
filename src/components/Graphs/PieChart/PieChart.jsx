@@ -62,7 +62,7 @@ const PieChart = ({ width, height, data, regions, fields, division }) => {
     const isRightLabel = inflexionPoint[0] > 0
     const labelPosX = inflexionPoint[0] + 50 * (isRightLabel ? 1 : -1)
     const textAnchor = isRightLabel ? "start" : "end"
-    const label = grp.data.name + " (" + grp.value + ")"
+    const label = grp.data.name + " (" + grp.value.toLocaleString() + ")"
 
 
     return (
