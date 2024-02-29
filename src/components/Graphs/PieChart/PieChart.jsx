@@ -11,9 +11,7 @@ const colors = ["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56"]
 const PieChart = ({ 
   width, 
   height, 
-  data, 
-  regions, 
-  fields, 
+  data,
   division, 
   aggregation,
   xAxis,
