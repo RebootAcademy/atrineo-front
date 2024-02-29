@@ -8,7 +8,7 @@ import Layout from "../Layout/Layout"
 
 const isAuthenticated = () => {
   if (!localStorage.getItem('token')) {
-    return redirect('/access')
+    return redirect('/login')
   } else {
     return null
   }
