@@ -1,32 +1,37 @@
-/* eslint-disable no-unused-vars */
 import { Circle } from 'react-leaflet'
-import { calculateRadius } from '../../../helpers'
+import { calculateRadius, findMaxAndMinValues } from '../../../helpers'
 
-// eslint-disable-next-line react/prop-types
+import PropTypes from 'prop-types'
+
 function NumericLayer({ field, data, color }) {
-  // eslint-disable-next-line react/prop-types
+  const [maxValue, minValue] = findMaxAndMinValues(data, field)
+
   const circles = data.map((filteredItem, index) => {
-    // console.log(filteredItem.locationId.division4)
     const latitude = filteredItem.locationId?.division4?.latitude
-    // console.log(latitude)
     const longitude = filteredItem.locationId?.division4?.longitude
-    // console.log(longitude)
     const value = filteredItem.fields
       .filter(item => item.fieldName === field)
       .map(obj => obj.fieldValue)[0]
-    if (latitude && longitude) {
+
+    if (latitude && longitude && value !== undefined) {
       return (
         <Circle
           key={index}
           center={[latitude, longitude]}
-          pathOptions={{ fillColor: color, stroke: false, fillOpacity: 0.20 }}
-          radius={calculateRadius(value)}
+          pathOptions={{ fillColor: color, fillOpacity: 0.3, stroke: true, opacity: 0.5, weight: 2 }}
+          radius={calculateRadius(value, minValue, maxValue)}
         />
       )
     }
   })
 
   return <>{circles}</>
+}
+
+NumericLayer.propTypes = {
+  field: PropTypes.any,
+  data: PropTypes.any,
+  color: PropTypes.string
 }
 
 export default NumericLayer

@@ -20,14 +20,16 @@ function FilterGroup({ type, layers, layerObj }) {
       <CardContent>
         {layers && layers.map((layer, id) => (
           <div key={id}>
-            <div className="flex">
+            <div className="flex items-center mb-2">
               <input
                 type="checkbox"
                 checked={collectionType === layer.name}
                 className="mr-2"
                 onChange={() => selectType(layer.name)}
               />
-              <LayerItem layer={layer} />
+              <div className='mt-3'>
+                <LayerItem layer={layer} />
+              </div>
             </div>
             {/* <FilterOptions /> */}
             {
