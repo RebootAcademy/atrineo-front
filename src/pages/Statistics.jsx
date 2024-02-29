@@ -3,6 +3,7 @@ import { useContext, useEffect, useState } from "react"
 import BarPlot from '../components/Graphs/BarPlot/BarPlot'
 import PieChart from "../components/Graphs/PieChart/PieChart"
 import OptionsMenu from "../components/Graphs/OptionsMenu/OptionsMenu"
+import { Label } from "../components/ui/Label/Label"
 
 import { CollectionContext } from "../context/collectionContext"
 import { LayerContext } from "../context/layerContext"
@@ -41,10 +42,6 @@ function Statistics() {
   const [yAxis, setYAxis] = useState(fields[0].fieldName)
   const [xAxis, setXAxis] = useState(optionsArr[0])
 
-  console.log(xAxis)
-  console.log(yAxis)
-
-
   const aggOptions = ['sum', 'avg', 'count', 'min', 'max']
 
   useEffect(() => {
@@ -76,10 +73,9 @@ function Statistics() {
     case('bar'):
       return <BarPlot
         width={width * 0.75}
-        height={height * 0.5}
+        height={height * 0.75}
         data={data}
         regions={regionNames}
-        fields={fields}
         options={optionsArr}
         division={mapDivision}
         aggregation={aggregation}
@@ -91,19 +87,39 @@ function Statistics() {
     case('pie'):
       return <PieChart
         width={width * 0.75}
-        height={height * 0.8}
+        height={height * 0.75}
         data={data}
         regions={regionNames}
         fields={fields}
         options={optionsArr}
         division={mapDivision}
+        aggregation={aggregation}
+        xAxis={xAxis}
+        yAxis={yAxis}
+        changeXAxis={changeXAxis}
+        changeYAxis={changeYAxis}
       />
+    default:
+      return <div
+        className="w-3/4
+          mr-4
+          border-solid 
+          border-gray 
+          border-[1px] 
+          rounded-md
+          pt-4
+          pl-4"
+      >
+        <Label className="text-lg">
+          Preview Chart
+        </Label>
+      </div>
     }
   }
 
   return (
     <div
-      className="mt-[45px] h-4/5 flex"
+      className="mt-[45px] h-4/5 w-full flex mx-8"
     >
       {
         collection.length === 0 ?

@@ -73,7 +73,7 @@ function OptionsMenu({ onChange, fields, options, aggOptions, changeAggregation,
 
   return (
     <Card
-      className='h-full w-1/4 flex flex-col items-center'
+      className='h-full w-1/4 flex flex-col items-center ml-4'
     >
       <CardHeader className="font-medium self-start">
         Chart Data
