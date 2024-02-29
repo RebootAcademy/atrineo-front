@@ -25,20 +25,20 @@ function LayersManager() {
     let index = 0
     for (const key in filters) {
       switch (typeof filters[key]) {
-      case 'number':
-        elements.push(
-          <NumericLayer
-            filters={filters}
-            field={key}
-            data={array}
-            searchPolygon={searchPolygon}
-            color={colors[index]}
-          />
-        )
-        index++
-        break
-      default:
-        break
+        case 'number':
+          elements.push(
+            <NumericLayer
+              filters={filters}
+              field={key}
+              data={array}
+              searchPolygon={searchPolygon}
+              color={colors[index]}
+            />
+          )
+          index++
+          break
+        default:
+          break
       }
     }
     return elements
@@ -67,7 +67,7 @@ function LayersManager() {
               field = key
             }
           }
-          const filteredData = collection.flatMap((item) => {
+          let filteredData = collection.flatMap((item) => {
             return item.data
               .filter((filteredData) => isWithinPolygon(filteredData, searchPolygon))
               .filter(row => {

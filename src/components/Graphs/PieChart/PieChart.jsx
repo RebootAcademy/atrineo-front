@@ -10,10 +10,25 @@ const colors = ["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56"]
 
 const PieChart = ({ width, height, data, regions, fields, division }) => {
   const [option, setOption] = useState(fields[0].fieldName)
+  const [aggregationPieChart, setAggregationPieChart] = useState('sum')
   const ref = useRef(null)
+  const aggOptions = ['sum', 'avg']
 
   const handleChange = (e) => {
     setOption(e.target.value)
+  }
+
+  const handleAggregationChange = (e) => {
+    setAggregationPieChart(e.target.value)
+  }
+
+  const checkAggregation = (value, prev, agg) => {
+    switch (agg) {
+    case ('sum'):
+      return prev + value.fieldValue
+    case ('avg'):
+      return ++prev
+    }
   }
 
   const result = []
@@ -71,12 +86,12 @@ const PieChart = ({ width, height, data, regions, fields, division }) => {
         className='transition-opacity duration-300 opacity-100 cursor-pointer hover:opacity-60'
         onMouseEnter={() => {
           if (ref.current) {
-            ref.current.classList.add('transition-opacity duration-300 opacity-20 cursor-pointer')
+            ref.current.classList.add('transition-opacity duration-300 opacity-20')
           }
         }}
         onMouseLeave={() => {
           if (ref.current) {
-            ref.current.classList.remove('transition-opacity duration-300 opacity-20 cursor-pointer')
+            ref.current.classList.remove('transition-opacity duration-300 opacity-20')
           }
         }}
       >
@@ -123,10 +138,18 @@ const PieChart = ({ width, height, data, regions, fields, division }) => {
         </g>
       </svg>
       <div>
-        option 1:
+        Option 1:
         <select onChange={handleChange}>
           {
             fields.map((f, i) => <option key={i} value={f.fieldName}>{f.fieldName}</option>)
+          }
+        </select>
+      </div>
+      <div>
+        Aggregation:
+        <select onChange={handleAggregationChange}>
+          {
+            aggOptions.map((agg, i) => <option key={i} value={agg}>{agg}</option>)
           }
         </select>
       </div>

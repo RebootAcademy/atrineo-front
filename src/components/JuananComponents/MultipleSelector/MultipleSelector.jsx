@@ -1,23 +1,20 @@
-import { useContext } from "react"
+import { useContext, useState } from "react"
 import PropTypes from 'prop-types'
 import { LayerContext } from "../../../context/layerContext"
 import { CollectionContext } from "../../../context/collectionContext"
 
 import MultipleSelector from "../../ui/MultiSelector/multple-selector"
+import { Label } from "../../ui/Label/Label"
 
 // eslint-disable-next-line react/prop-types
 function MultipleSelectorComponent({ onValueChange }) {
   // eslint-disable-next-line no-unused-vars
   const { mapDivision, setSelectedNameDistrict } = useContext(LayerContext)
   const { collection } = useContext(CollectionContext)
+  const [active, setActive] = useState(false)
 
   const onDistrictNameChange = (districts) => {
-    const isAllSelected = districts.some(district => district.value === 'All')
-    if (isAllSelected) {
-      onValueChange(dislayMultipleSelector())
-    } else {
-      onValueChange(districts)
-    }
+    onValueChange(districts)
   }
 
   const dislayMultipleSelector = () => {
@@ -46,14 +43,29 @@ function MultipleSelectorComponent({ onValueChange }) {
 
   const defaultDistictOptions = dislayMultipleSelector()
 
+  const handleCheckboxChange = () => {
+    setActive((prev) => !prev)
+  }
+
   const multipleSelector = () => {
     return (
       <>
-        <MultipleSelector
-          placeholder="Select Region..."
-          onChange={onDistrictNameChange}
-          defaultOptions={defaultDistictOptions}
-        />
+        <div>
+          <input
+            type='checkbox'
+            checked={active}
+            className="mr-2"
+            onChange={handleCheckboxChange}
+          />
+          <span className="font-medium">districtNames:</span>
+        </div>
+        {active && (
+          <MultipleSelector
+            placeholder="Select Region..."
+            onChange={onDistrictNameChange}
+            defaultOptions={defaultDistictOptions}
+          />
+        )}
       </>
     )
   }
