@@ -1,7 +1,7 @@
 import { useContext } from "react"
 
 import BarPlot from '../components/Graphs/BarPlot/BarPlot'
-//import PieChart from "../components/Graphs/PieChart/PieChart"
+import PieChart from "../components/Graphs/PieChart/PieChart"
 
 import { CollectionContext } from "../context/collectionContext"
 import { LayerContext } from "../context/layerContext"
@@ -50,7 +50,7 @@ function Statistics() {
             division={mapDivision}
           />
       }
-      {/* {
+      {
         collection.length === 0 ?
           'Loading...' :
           <PieChart
@@ -62,7 +62,7 @@ function Statistics() {
             options={optionsArr}
             division={mapDivision}
           />
-      } */}
+      }
 
     </>
   )
