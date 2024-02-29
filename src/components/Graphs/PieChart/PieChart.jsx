@@ -1,61 +1,36 @@
 import PropTypes from 'prop-types'
-import { useMemo } from "react"
+import { useMemo, useState } from "react"
 import * as d3 from "d3"
-import { createStringOptionsObject } from '../../../helpers'
 
 const MARGIN = 30
 
 const colors = ["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56"]
 
-const PieChart = ({ width, height, data, regions, fields, options, division }) => {
-  const radius = Math.min(width, height) / 2 - MARGIN
-  const optionsArr = createStringOptionsObject(options, data)
-  console.log(regions)
-  console.log(fields)
-  console.log(division)
+const PieChart = ({ width, height, data, regions, fields, division }) => {
+  const [option, setOption] = useState(fields[0].fieldName)
+  console.log(option)
 
-  const filteredData = data.flatMap(item =>
-    item.fields
-      .filter(field => field.fieldType === 'number' && !["latitude", "longitude", "districtId"].includes(field.fieldName))
-      .reduce((acc, field) => {
-        acc[field.fieldName] = field.fieldValue
-        return acc
-      }, {})
-  )
-  console.log(filteredData)
-
-  const dataMapped = filteredData.map(field => field['gnp'])
-  //console.log(dataMapped)
-
-  // const result = {}
-  // regions.forEach(cur => {
-  //   result[cur] = 0
-  //   const filtered = data
-  //     .filter(d => d.locationId[division]?.name === cur)
-  //   const fieldsArr = filtered.map(d => d.fields)
-  //   fieldsArr.forEach(i => {
-  //     const [obj] = i.filter(f => f.fieldName === 'patents')
-  //     result[cur] = result[cur] + obj.fieldValue
-  //   })
-  // })
-
-  // console.log(result)
+  const handleChange = (e) => {
+    setOption(e.target.value)
+  }
 
   const result = []
   regions.forEach(cur => {
-    let sum = 0 // Inicializa la suma para la región actual
+    let sum = 0
     const filtered = data.filter(d => d.locationId[division]?.name === cur)
     const fieldsArr = filtered.map(d => d.fields)
     fieldsArr.forEach(i => {
-      const [obj] = i.filter(f => f.fieldName === 'districtPopulation')
-      if (obj) { // Asegúrate de que obj no sea undefined
+      const [obj] = i.filter(f => f.fieldName === option)
+      if (obj) {
         sum += obj.fieldValue
       }
     })
-    result.push({ name: cur, value: sum }) // Agrega el objeto con el nombre y la suma al resultado
+    result.push({ name: cur, value: sum })
   })
 
   console.log(result)
+
+  const radius = Math.min(width, height) / 2 - MARGIN
 
   const pie = useMemo(() => {
     const pieGenerator = d3.pie().value((d) => d.value)
@@ -85,12 +60,10 @@ const PieChart = ({ width, height, data, regions, fields, options, division }) =
       </svg>
       <div>
         option 1:
-        <select>
-
-        </select>
-        option 2:
-        <select>
-
+        <select onChange={handleChange}>
+          {
+            fields.map((f, i) => <option key={i} value={f.fieldName}>{f.fieldName}</option>)
+          }
         </select>
       </div>
     </>
