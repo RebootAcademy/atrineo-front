@@ -54,7 +54,7 @@ function App () {
 
     setNextLayerId(prevId => prevId + 1)
   }
-
+  
   const clearLayerById = (layerId) => {
     // Cargar el arreglo de capas existente desde localStorage
     const existingLayers = JSON.parse(storage.getItem('layers')) || []
