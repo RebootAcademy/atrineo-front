@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types'
-import { useMemo, useState, useRef } from "react"
+import { useMemo, useRef } from "react"
 import * as d3 from "d3"
 
 const MARGIN_X = 150
@@ -8,44 +8,71 @@ const INFLEXION_PADDING = 20
 
 const colors = ["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56"]
 
-const PieChart = ({ width, height, data, regions, fields, division }) => {
-  const [option, setOption] = useState(fields[0].fieldName)
-  const [aggregationPieChart, setAggregationPieChart] = useState('sum')
+const PieChart = ({ 
+  width, 
+  height, 
+  data,
+  division, 
+  aggregation,
+  xAxis,
+  yAxis 
+}) => {
   const ref = useRef(null)
-  const aggOptions = ['sum', 'avg']
-
-  const handleChange = (e) => {
-    setOption(e.target.value)
-  }
-
-  const handleAggregationChange = (e) => {
-    setAggregationPieChart(e.target.value)
-  }
 
   const checkAggregation = (value, prev, agg) => {
     switch (agg) {
     case ('sum'):
       return prev + value.fieldValue
-    case ('avg'):
+    case ('count'):
       return ++prev
+    case ('avg'):
+      return { count: ++prev.count, sum: prev.sum + value.fieldValue }
+    case ('max'):
+      if (value.fieldValue > prev) return value.fieldValue
+      return prev
+    case ('min'):
+      if (value.fieldValue < prev) return value.fieldValue
+      return prev
     }
   }
 
-  const result = []
-  regions.forEach(cur => {
-    let sum = 0
-    const filtered = data.filter(d => d.locationId[division]?.name === cur)
-    const fieldsArr = filtered.map(d => d.fields)
-    fieldsArr.forEach(i => {
-      const [obj] = i.filter(f => f.fieldName === option)
-      if (obj) {
-        sum += obj.fieldValue
+  const result = useMemo(() => {
+    const sums = data.reduce((acc, cur) => {
+      let name
+      if (xAxis === 'regions') {
+        name = cur.locationId[division]?.name
+      } else {
+        name = cur.fields
+          .filter(f => f.fieldName === xAxis)
+          .map(f => f.fieldValue)
       }
-    })
-    result.push({ name: cur, value: sum })
-  })
 
-  console.log(result)
+      if (!name) return acc
+      if (!acc[name]) {
+        if (aggregation === 'avg') {
+          acc[name] = {
+            count: 0,
+            sum: 0
+          }
+        } else if (aggregation !== 'min') {
+          acc[name] = 0
+        } else {
+          const minValue = data[0].fields
+            .filter(f => f.fieldName === yAxis)
+            .map(i => i.fieldValue)
+          acc[name] = minValue
+        }
+      }
+      const [value] = cur.fields.filter(d => d.fieldName === yAxis)
+      acc[name] = checkAggregation(value, acc[name], aggregation)
+      return acc
+    }, {})
+    if (aggregation === 'avg') {
+      return Object.entries(sums).map(([name, info]) => ({ name, value: info.sum / info.count }))
+    } else {
+      return Object.entries(sums).map(([name, value]) => ({ name, value }))
+    }
+  }, [data, xAxis, yAxis, division, aggregation])
 
   const radius = Math.min(width - 2 * MARGIN_X, height - 2 * MARGIN_Y) / 2
 
@@ -63,6 +90,7 @@ const PieChart = ({ width, height, data, regions, fields, division }) => {
       startAngle: grp.startAngle,
       endAngle: grp.endAngle,
     }
+
     const centroid = arcPathGenerator.centroid(sliceInfo)
     const slicePath = arcPathGenerator(sliceInfo)
 
@@ -72,6 +100,7 @@ const PieChart = ({ width, height, data, regions, fields, division }) => {
       startAngle: grp.startAngle,
       endAngle: grp.endAngle,
     }
+
     const inflexionPoint = arcPathGenerator.centroid(inflexionInfo)
 
     const isRightLabel = inflexionPoint[0] > 0
@@ -127,33 +156,20 @@ const PieChart = ({ width, height, data, regions, fields, division }) => {
   })
 
   return (
-    <>
-      <svg width={width} height={height} style={{ display: "inline-block" }}>
-        <g
-          transform={`translate(${width / 2}, ${height / 2})`}
-          className='transition duration-300 opacity-100 cursor-pointer'
-          ref={ref}
-        >
-          {shapes}
-        </g>
-      </svg>
-      <div>
-        Option 1:
-        <select onChange={handleChange}>
-          {
-            fields.map((f, i) => <option key={i} value={f.fieldName}>{f.fieldName}</option>)
-          }
-        </select>
-      </div>
-      <div>
-        Aggregation:
-        <select onChange={handleAggregationChange}>
-          {
-            aggOptions.map((agg, i) => <option key={i} value={agg}>{agg}</option>)
-          }
-        </select>
-      </div>
-    </>
+    <svg
+      className='border-solid border-gray border-[1px] rounded-md h-full mr-4'
+      width={width} 
+      height={height} 
+      style={{ display: "inline-block" }}
+    >
+      <g
+        transform={`translate(${width / 2}, ${height / 2})`}
+        className='transition duration-300 opacity-100 cursor-pointer'
+        ref={ref}
+      >
+        {shapes}
+      </g>
+    </svg>
   )
 }
 
@@ -164,7 +180,10 @@ PieChart.propTypes = {
   regions: PropTypes.array,
   fields: PropTypes.array,
   options: PropTypes.array,
-  division: PropTypes.string
+  division: PropTypes.string,
+  aggregation: PropTypes.string,
+  xAxis: PropTypes.string,
+  yAxis: PropTypes.string
 }
 
 export default PieChart

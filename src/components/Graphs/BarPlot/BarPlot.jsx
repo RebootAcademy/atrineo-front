@@ -1,36 +1,29 @@
 import PropTypes from 'prop-types'
-import { useMemo, useState } from 'react'
+import { useMemo } from 'react'
 import * as d3 from "d3" // we will need d3.js
 
-const MARGIN = { top: 30, right: 30, bottom: 30, left: 80 }
+const MARGIN = { top: 30, right: 50, bottom: 30, left: 80 }
 const BAR_PADDING = 0.3
 
 import { createStringOptionsObject } from '../../../helpers'
 
-function Barplot ({ width, height, data, regions, fields, options, division }) {
-  const [yField, setYField] = useState(fields[0].fieldName)
-  const [xField, setXField] = useState(options[0])
-  const [aggregation, setAggregation] = useState('sum')
-  
-  const aggOptions = ['sum', 'avg', 'count', 'min', 'max']
+function Barplot ({ 
+  width, 
+  height, 
+  data, 
+  regions, 
+  options, 
+  division, 
+  aggregation, 
+  xAxis, 
+  yAxis 
+}) {
   
   const xFieldValues = createStringOptionsObject(options, data)
   xFieldValues.regions = regions
   
   const boundsWidth = width - MARGIN.right - MARGIN.left
   const boundsHeight = height - MARGIN.top - MARGIN.bottom
-  
-  const handleYChange = (e) => {
-    setYField(e.target.value)
-  }
-
-  const handleXChange = (e) => {
-    setXField(e.target.value)
-  }
-  
-  const handleAggregationChange = (e) => {
-    setAggregation(e.target.value)
-  }
 
   const checkAggregation = (value, prev, agg) => {
     switch (agg) {
@@ -52,11 +45,11 @@ function Barplot ({ width, height, data, regions, fields, options, division }) {
   const summedData = useMemo(() => {
     const sums = data.reduce((acc, cur) => {
       let name
-      if (xField === 'regions') {
+      if (xAxis === 'regions') {
         name = cur.locationId[division]?.name
       } else {
         name = cur.fields
-          .filter(f => f.fieldName === xField)
+          .filter(f => f.fieldName === xAxis)
           .map(f => f.fieldValue)
       }
       
@@ -71,12 +64,12 @@ function Barplot ({ width, height, data, regions, fields, options, division }) {
           acc[name] = 0
         } else {
           const minValue = data[0].fields
-            .filter(f => f.fieldName === yField)
+            .filter(f => f.fieldName === yAxis)
             .map(i => i.fieldValue)
           acc[name] = minValue
         }
       }
-      const [value] = cur.fields.filter(d => d.fieldName === yField)
+      const [value] = cur.fields.filter(d => d.fieldName === yAxis)
       acc[name] = checkAggregation(value, acc[name], aggregation )
       return acc
     }, {})
@@ -85,16 +78,16 @@ function Barplot ({ width, height, data, regions, fields, options, division }) {
     } else {
       return Object.entries(sums).map(([name, sum]) => ({ name, sum }))
     }
-  }, [data, xField, yField, division, aggregation])
+  }, [data, xAxis, yAxis, division, aggregation])
   const maxSum = useMemo(() => Math.max(...summedData.map(d => d.sum)), [summedData])
 
   const xScale = useMemo(() => {
     return d3
       .scaleBand()
-      .domain(xFieldValues[xField].map(value=>String(value)))
+      .domain(xFieldValues[xAxis].map(value=>String(value)))
       .range([0, boundsWidth])
       .padding(BAR_PADDING)
-  }, [xField, boundsWidth, xFieldValues])
+  }, [xAxis, boundsWidth, xFieldValues])
 
   const yScale = useMemo(() => {
     return d3
@@ -103,8 +96,8 @@ function Barplot ({ width, height, data, regions, fields, options, division }) {
       .range([boundsHeight, 0])
   }, [maxSum, boundsHeight])
 
-  const xAxis = useMemo(() => d3.axisBottom(xScale), [xScale])
-  const yAxis = useMemo(() => d3.axisLeft(yScale), [yScale])
+  const xAxisInfo = useMemo(() => d3.axisBottom(xScale), [xScale])
+  const yAxisInfo = useMemo(() => d3.axisLeft(yScale), [yScale])
 
   const bars = useMemo(() => summedData.map((d, i) =>
     <rect
@@ -113,22 +106,26 @@ function Barplot ({ width, height, data, regions, fields, options, division }) {
       y={yScale(d.sum)}
       width={xScale.bandwidth()}
       height={boundsHeight - yScale(d.sum)}
-      fill="#9d174d"
+      fill="#ADFA1D"
     />
   ), [xScale, yScale, summedData, boundsHeight])
 
   return (
     <>
-      <svg width={width} height={height + 24}>
+      <svg 
+        width={width} 
+        height={height + 24}
+        className='border-solid border-gray border-[1px] rounded-md h-full mr-4'
+      >
         {/*Legend*/ }
         <g 
           transform={`translate(${boundsWidth + MARGIN.right - boundsWidth/2},${MARGIN.top})`}
           className="legend"
         >
           <g transform={`translate(0,0)`}>
-            <rect width={15} height={15} fill={"#9d174d"} />
+            <rect width={15} height={15} fill={"#ADFA1D"} />
             <text x={15 + 5} y={17 - 5} style={{ fontSize: '0.8em' }}>
-              {yField}
+              {yAxis}
             </text>
           </g>
         </g>
@@ -137,42 +134,17 @@ function Barplot ({ width, height, data, regions, fields, options, division }) {
           {/* Render X Axis */}
           <g
             transform={`translate(0,${boundsHeight})`}
-            ref={node => d3.select(node).call(xAxis)}
+            ref={node => d3.select(node).call(xAxisInfo)}
             className="x-axis"
           />
           {/* Render Y Axis */}
           <g
             transform={`translate(0,0)`}
-            ref={node => d3.select(node).call(yAxis)}
+            ref={node => d3.select(node).call(yAxisInfo)}
             className="y-axis"
           />
         </g>
       </svg>
-      <div>
-        yField:
-        <select name="y-fields" id="y-field-select" onChange={handleYChange}>
-          {
-            fields.map((f,i) => <option key={i} value={f.fieldName}>{f.fieldName}</option>)
-          }
-        </select>
-
-      </div>
-      <div>
-        xField:
-        <select name="x-fields" id="x-field-select" onChange={handleXChange}>
-          {
-            options.map((f, i) => <option key={i} value={f}>{f}</option>)
-          }
-        </select>
-      </div>
-      <div>
-        Aggregation:
-        <select name="x-fields" id="x-field-select" onChange={handleAggregationChange}>
-          {
-            aggOptions.map((agg, i) => <option key={i} value={agg}>{agg}</option>)
-          }
-        </select>
-      </div>
     </>
   )
 }
@@ -182,9 +154,11 @@ Barplot.propTypes = {
   height: PropTypes.number,
   data: PropTypes.array,
   regions: PropTypes.array,
-  fields: PropTypes.array,
   options: PropTypes.array,
-  division: PropTypes.string
+  division: PropTypes.string,
+  aggregation: PropTypes.string,
+  xAxis: PropTypes.string,
+  yAxis: PropTypes.string
 }
 
 export default Barplot
