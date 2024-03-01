@@ -5,13 +5,13 @@ import { selectedStyle, defaultStyle } from "./Style"
 import { LayerContext } from "../../context/layerContext"
 
 // eslint-disable-next-line react/prop-types
-const HeatMapLayer = ({ onRegionSelected }) => {
+const RegionsSelected = ({ onRegionSelected }) => {
   const {
     layers,
     mapDivision
   } = useContext(LayerContext)
 
-  const data = useGeoJsonData(mapDivision)
+  const mapData = useGeoJsonData(mapDivision)
   // eslint-disable-next-line no-unused-vars
   const [selectedRegion, setSelectedRegion] = useState(null)
 
@@ -87,14 +87,14 @@ const HeatMapLayer = ({ onRegionSelected }) => {
   }
 
   const filteredRegions = (regionName) => {
-    return data?.features.filter(
+    return mapData?.features.filter(
       (region) => region.properties.NAME_1 === regionName
     )
   }
 
-  if (data) {
+  if (mapData) {
     const filteredData = {
-      ...data,
+      ...mapData,
       features: filteredRegions("Baden-Württemberg"),
     }
 
@@ -110,4 +110,4 @@ const HeatMapLayer = ({ onRegionSelected }) => {
   }
 }
 
-export default HeatMapLayer
+export default RegionsSelected

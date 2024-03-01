@@ -45,7 +45,9 @@ function RegionsComponent({ data, fieldName }) {
   })
 
   return (
-    <HeatmapLayer data={filteredData} fieldName={fieldName} />
+    <>
+      <HeatmapLayer data={filteredData} fieldName={fieldName} />
+    </>
   )
 }
 

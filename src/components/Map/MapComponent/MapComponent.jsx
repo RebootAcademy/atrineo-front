@@ -15,7 +15,6 @@ import { LayerContext } from "../../../context/layerContext"
 import { MapContainer } from "react-leaflet"
 
 import 'leaflet/dist/leaflet.css'
-import HeatMapLayer from '../../HeatMapLayerComponent.jsx/HeatMapComponent'
 
 function MapComponent() {
   const { mapDivision, mapCenter } = useContext(LayerContext)
@@ -42,8 +41,6 @@ function MapComponent() {
         <CustomZoomControl />
 
         <LayersManager />
-
-        <HeatMapLayer />
 
         <CoordsDisplay />
 
