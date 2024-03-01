@@ -1,7 +1,7 @@
 import { createBrowserRouter, redirect } from 'react-router-dom'
 
 import Home from "../pages/Home"
-// import Statistics from "../pages/Statistics"
+import Statistics from "../pages/Statistics"
 import Dataset from "../pages/Dataset"
 import Login from "../pages/Login"
 import Layout from "../Layout/Layout"
@@ -23,10 +23,10 @@ export const router = createBrowserRouter([
         path: '/',
         element: <Home />
       },
-      /*       {
+      {
         path: '/statistics',
         element: <Statistics />
-      }, */
+      },
       {
         path: '/dataset',
         element: <Dataset />
