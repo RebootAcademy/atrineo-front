@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import { TileLayer } from 'react-leaflet'
 
 function TileLayerComponent () {

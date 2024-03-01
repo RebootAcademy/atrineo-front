@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import SavedLayerComponent from '../SavedLayerComponent/SavedLayerComponent'
 import {
   Card,

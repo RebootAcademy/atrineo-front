@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import { useContext } from 'react'
 import { LayerContext } from '../../../context/layerContext'
 import { Card } from '../../ui/Card/Card'

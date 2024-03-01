@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import { GeoJSON } from 'react-leaflet'
 import { useGeoJsonData } from '../../../hooks/useGeoJsonData'
 

@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import { useContext, useRef } from 'react'
 import CustomButton from '../../CustomButton/CustomButton'
 import {

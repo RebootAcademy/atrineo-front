@@ -1,14 +1,13 @@
-import { useContext, useState } from "react"
 import PropTypes from 'prop-types'
+import { useContext, useState } from "react"
+
 import { LayerContext } from "../../../context/layerContext"
 import { CollectionContext } from "../../../context/collectionContext"
 
 import MultipleSelector from "../../ui/MultiSelector/multple-selector"
-
-// eslint-disable-next-line react/prop-types
 function MultipleSelectorComponent({ onValueChange }) {
-  // eslint-disable-next-line no-unused-vars
-  const { mapDivision, setSelectedNameDistrict } = useContext(LayerContext)
+ 
+  const { mapDivision } = useContext(LayerContext)
   const { collection } = useContext(CollectionContext)
   const [active, setActive] = useState(false)
 

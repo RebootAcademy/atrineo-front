@@ -1,5 +1,4 @@
 /* eslint-disable no-undef */
-/* eslint-disable no-unused-vars */
 import { useState } from 'react'
 import SearchResult from '../SearchResult/SearchResult'
 

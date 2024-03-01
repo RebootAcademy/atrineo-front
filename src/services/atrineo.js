@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 import api from './config'
 
 const getAtrineoCollectionAPI = async () => {
