@@ -25,20 +25,20 @@ function LayersManager() {
     let index = 0
     for (const key in filters) {
       switch (typeof filters[key]) {
-        case 'number':
-          elements.push(
-            <NumericLayer
-              filters={filters}
-              field={key}
-              data={array}
-              searchPolygon={searchPolygon}
-              color={colors[index]}
-            />
-          )
-          index++
-          break
-        default:
-          break
+      case 'number':
+        elements.push(
+          <NumericLayer
+            filters={filters}
+            field={key}
+            data={array}
+            searchPolygon={searchPolygon}
+            color={colors[index]}
+          />
+        )
+        index++
+        break
+      default:
+        break
       }
     }
     return elements

@@ -16,8 +16,8 @@ function DrawComponent() {
   }
 
   return (
-    <EditControl
-      position="bottomright"
+    <EditControl 
+      position='bottomright'
       onCreated={onDrawCreate}
       onDeleted={() => {
         setSearchPolygon(null)
