@@ -4,7 +4,7 @@ import { CollectionContext } from '../../../context/collectionContext'
 import { LayerContext } from '../../../context/layerContext'
 
 import StartupsComponent from '../StartupsComponent/StartupsComponent'
-import NumericLayer from '../../JuananComponents/NumericLayer/NumericLayer'
+import NumericLayer from '../NumericLayer/NumericLayer'
 import RegionsComponent from '../RegionsComponent/RegionsComponent'
 
 import { isWithinPolygon } from '../../../helpers'

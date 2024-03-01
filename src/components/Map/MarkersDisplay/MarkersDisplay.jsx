@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import PropTypes from 'prop-types'
 import MarkerComponent from '../MarkerComponent/MarkerComponent'
 
@@ -9,7 +8,6 @@ function MarkersDisplay ({ data }) {
         const latObj = item.fields.find(field => field.fieldName === 'latitude')
         const lonObj = item.fields.find(field => field.fieldName === 'longitude')
         const nameObj = item.fields.find(field => field.fieldName === 'name')
-        console.log(latObj, lonObj, nameObj)
         return (
           <MarkerComponent
             key={index}
@@ -30,4 +28,7 @@ MarkersDisplay.propTypes = {
 }
 
 export default MarkersDisplay
+<<<<<<< HEAD
 
+=======
+>>>>>>> 79b1dd9e01e0a896ef72b677ffe8e26ca5475f76

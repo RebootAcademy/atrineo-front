@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
+import PropTypes from 'prop-types'
 import MarkersDisplay from '../MarkersDisplay/MarkersDisplay'
 import MarkerClusterGroup from 'react-leaflet-cluster'
-import PropTypes from 'prop-types'
 
 function StartupsComponent({ data }) {
   return (

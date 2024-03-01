@@ -26,6 +26,7 @@ function MarkerComponent ({ coords, onClick, name }) {
 }
 
 MarkerComponent.propTypes = {
+  name: PropTypes.string,
   coords: PropTypes.object,
   onClick: PropTypes.func
 }

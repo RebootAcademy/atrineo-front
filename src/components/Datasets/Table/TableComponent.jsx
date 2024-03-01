@@ -51,7 +51,6 @@ function TableComponent ({ data }) {
 
   const selectField = (e) => {
     if (e.target.innerText === sortField) {
-      console.log()
       setOrderFirst(!orderFirst)
     } else {
       setSortField(e.target.innerText)

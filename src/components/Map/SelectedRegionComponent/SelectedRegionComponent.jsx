@@ -1,8 +1,8 @@
 import { useContext, useEffect, useState } from "react"
 import { GeoJSON } from "react-leaflet"
-import { useGeoJsonData } from "../../hooks/useGeoJsonData"
+import { useGeoJsonData } from "../../../hooks/useGeoJsonData"
 import { selectedStyle, defaultStyle } from "./Style"
-import { LayerContext } from "../../context/layerContext"
+import { LayerContext } from "../../../context/layerContext"
 
 // eslint-disable-next-line react/prop-types
 const RegionsSelected = ({ onRegionSelected }) => {
