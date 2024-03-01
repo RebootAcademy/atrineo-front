@@ -1,10 +1,8 @@
-/* eslint-disable no-unused-vars */
 import { useState } from 'react'
 import LayerItem from './LayerItem'
-import FilterOptions from './FilterOptions'
-import { Card, CardContent, CardHeader, CardTitle } from '../../ui/Card/Card'
+import { Card, CardContent } from '../../ui/Card/Card'
 
-import DisplayFilters from "../../JuananComponents/DisplayFilters/DisplayFilters"
+import DisplayFilters from "../DisplayFilters/DisplayFilters"
 
 import PropTypes from 'prop-types'
 
@@ -31,7 +29,6 @@ function FilterGroup({ type, layers, layerObj }) {
                 <LayerItem layer={layer} />
               </div>
             </div>
-            {/* <FilterOptions /> */}
             {
               collectionType === layer.name &&
               <DisplayFilters layerObj={layerObj} type={layer.id} />

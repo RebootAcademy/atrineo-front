@@ -134,19 +134,3 @@ DisplayFilters.propTypes = {
 }
 
 export default DisplayFilters
-
-
-
-// if (Object.hasOwn(layerObj.current, 'regions')) {
-//   const incomingLength = value.length
-//   const currentLength = layerObj.current.regions.length
-//   if (incomingLength > currentLength) {
-//     const newValue = value[value.length - 1].value
-//     console.log(newValue)
-//     layerObj.current.regions.push(newValue)
-//   } else {
-
-//   }
-// } else {
-//   layerObj.current.regions = [value[0].value]
-// }

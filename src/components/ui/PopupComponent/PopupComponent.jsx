@@ -1,11 +1,10 @@
-/* eslint-disable no-unused-vars */
+import PropTypes from 'prop-types'
 import { Popup } from 'react-leaflet'
 import { useContext } from 'react'
 import { CollectionContext } from '../../../context/collection'
 
-export default function PopupComponent ({ name }) {
+function PopupComponent ({ name }) {
   const { collection } = useContext(CollectionContext)
-  // console.log({ collection: collection })
 
   // Primero miramos sin collection llega hasta data
   if (!collection || !collection[0] || !collection[0].data) {
@@ -16,12 +15,17 @@ export default function PopupComponent ({ name }) {
   const startUpNames = []
   collection[0]?.data.map((startup) => (
     startUpNames.push(
-    <Popup
-      key={startup._id}>
-      <div className="text-sm">{name}</div>
-    </Popup>
+      <Popup
+        key={startup._id}>
+        <div className="text-sm">{name}</div>
+      </Popup>
     )))
-  // console.log(startUpNames)
 
   return <>{startUpNames}</>
 }
+
+PopupComponent.propTypes = {
+  name: PropTypes.string
+}
+
+export default PopupComponent

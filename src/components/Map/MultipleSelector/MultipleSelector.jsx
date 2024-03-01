@@ -4,7 +4,6 @@ import { LayerContext } from "../../../context/layerContext"
 import { CollectionContext } from "../../../context/collectionContext"
 
 import MultipleSelector from "../../ui/MultiSelector/multple-selector"
-import { Label } from "../../ui/Label/Label"
 
 // eslint-disable-next-line react/prop-types
 function MultipleSelectorComponent({ onValueChange }) {

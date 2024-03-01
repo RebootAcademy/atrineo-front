@@ -15,19 +15,9 @@ function App () {
 
   const [collection, setCollection] = useState([])
 
-  const [patentsFilter, setPatentsFilter] = useState([0, 100])
-  const [populationFilter, setPopulationFilter] = useState([0])
-  const [populationBounds, setPopulationBounds] = useState({ minPopulation: 0, maxPopulation: 0 })
-
-  const [researchInvestmentFilter, setResearchInvestmentFilter] = useState([0])
-  const [researchInvestmentBounds, setResearchInvestmentBounds] = useState({ minResearchInvestment: 0, maxResearchInvestment: 0 })
-
-  const [isFinancingFilterActive, setIsFinancingFilterActive] = useState(false)
-  const [isGovFundsReceivedActive, setIsGovFundsReceivedActive] = useState(false)
   const [searchPolygon, setSearchPolygon] = useState(null)
-  const [lifeQuality, setLifeQuality] = useState(null)
-  const [gnp, setGnp] = useState(0)
-  const [companies, setCompanies] = useState([])
+
+  const [companies, setCompanies] = useState([]) //??=??
   const [selectedRegion, setSelectedRegion] = useState('')
 
   const [layers, setLayers] = useState([])
@@ -44,26 +34,7 @@ function App () {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const toggleFinancingAccess = (value) => {
-    setIsFinancingFilterActive(value)
-  }
-
-  const toggleGovFundsReceived = (value) => {
-    setIsGovFundsReceivedActive(value)
-  }
-
   const saveCurrentLayer = (obj) => {
-    const newLayer = {
-      patentsFilter,
-      populationFilter,
-      researchInvestmentFilter,
-      isFinancingFilterActive,
-      isGovFundsReceivedActive,
-      searchPolygon,
-      lifeQuality,
-      gnp
-    }
-
     // Intentar cargar el arreglo de capas existente desde localStorage, o iniciar uno nuevo si no existe
     const existingLayers = JSON.parse(storage.getItem('layers')) || []
 
@@ -82,18 +53,6 @@ function App () {
     setLayers(updatedLayers)
 
     setNextLayerId(prevId => prevId + 1)
-    resetFilters()
-  }
-
-  const resetFilters = () => {
-    setPatentsFilter([0, 100])
-    setPopulationFilter([0])
-    setResearchInvestmentFilter([0])
-    setIsFinancingFilterActive(false)
-    setIsGovFundsReceivedActive(false)
-    setSearchPolygon(null)
-    setLifeQuality(null)
-    setGnp(0)
   }
 
   const clearLayerById = (layerId) => {
@@ -125,25 +84,8 @@ function App () {
   }
 
   const value = {
-    patentsFilter,
-    setPatentsFilter,
-    isFinancingFilterActive,
-    setIsFinancingFilterActive,
-    toggleFinancingAccess,
-    isGovFundsReceivedActive,
-    toggleGovFundsReceived,
     searchPolygon,
     setSearchPolygon,
-    lifeQuality,
-    setLifeQuality,
-    gnp,
-    setGnp,
-    populationFilter,
-    setPopulationFilter,
-    ...populationBounds,
-    researchInvestmentFilter,
-    setResearchInvestmentFilter,
-    ...researchInvestmentBounds,
     companies,
     setCompanies,
     selectedRegion,

@@ -1,8 +1,9 @@
+/* eslint-disable no-undef */
+import PropTypes from 'prop-types'
 import MarkersDisplay from '../MarkersDisplay/MarkersDisplay'
 import MarkerClusterGroup from 'react-leaflet-cluster'
 
-function StartupsComponent({ data, searchPolygon }) {
-  console.log(data)
+function StartupsComponent({ data }) {
   return (
     <>
       <MarkerClusterGroup
@@ -21,6 +22,10 @@ function StartupsComponent({ data, searchPolygon }) {
       </MarkerClusterGroup>
     </>
   )
+}
+
+StartupsComponent.propTypes = {
+  data: PropTypes.array
 }
 
 export default StartupsComponent

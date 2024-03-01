@@ -15,7 +15,7 @@ import { LayerContext } from "../../../context/layerContext"
 import { FeatureGroup, MapContainer } from "react-leaflet"
 
 import 'leaflet/dist/leaflet.css'
-import HeatMapLayer from '../../HeatMapLayerComponent.jsx/HeatMapComponent'
+import HeatMapLayer from '../SelectedRegionComponent/SelectedRegionComponent'
 
 function MapComponent() {
   const { mapDivision, mapCenter } = useContext(LayerContext)
