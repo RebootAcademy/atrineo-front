@@ -1,12 +1,11 @@
-/* eslint-disable no-unused-vars */
 import { useEffect, useState } from 'react'
 import { QueryClient, QueryClientProvider } from 'react-query'
-import { router } from './router'
 import { RouterProvider } from 'react-router-dom'
 
 import { LayerContext } from './context/layerContext'
 import { CollectionContext } from './context/collectionContext'
-import { polygon } from '@turf/turf'
+
+import { router } from './router'
 
 const queryClient = new QueryClient()
 
