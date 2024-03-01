@@ -8,7 +8,7 @@ import NumericLayer from '../NumericLayer/NumericLayer'
 import RegionsComponent from '../RegionsComponent/RegionsComponent'
 
 import { isWithinPolygon } from '../../../helpers'
-import RegionsSelected from '../../HeatMapLayerComponent.jsx/HeatMapComponent'
+import SelectedRegionComponent from '../SelectedRegionComponent/SelectedRegionComponent'
 
 
 function LayersManager() {
@@ -95,7 +95,7 @@ function LayersManager() {
                 layer.data.type === 'startups' && (
                   <>
                     <StartupsComponent data={filteredData} />
-                    <RegionsSelected data={filteredData}/>
+                    <SelectedRegionComponent data={filteredData}/>
                   </>
                 )
               }

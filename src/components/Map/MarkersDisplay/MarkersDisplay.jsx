@@ -28,7 +28,3 @@ MarkersDisplay.propTypes = {
 }
 
 export default MarkersDisplay
-<<<<<<< HEAD
-
-=======
->>>>>>> 79b1dd9e01e0a896ef72b677ffe8e26ca5475f76
