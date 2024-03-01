@@ -10,7 +10,6 @@ import RegionsComponent from '../RegionsComponent/RegionsComponent'
 import { isWithinPolygon } from '../../../helpers'
 import SelectedRegionComponent from '../SelectedRegionComponent/SelectedRegionComponent'
 
-
 function LayersManager() {
   const { collection } = useContext(CollectionContext)
   const { searchPolygon, layers, setLayers, mapDivision } = useContext(LayerContext)

@@ -13,22 +13,14 @@ const queryClient = new QueryClient()
 function App() {
   const [mapDivision, setMapDivision] = useState('division3')
   const [mapCenter, setMapCenter] = useState([48.6, 9])
-
   const [collection, setCollection] = useState([])
-
   const [searchPolygon, setSearchPolygon] = useState(null)
-
-  const [companies, setCompanies] = useState([]) //??=??
   const [selectedRegion, setSelectedRegion] = useState('')
-
   const [layers, setLayers] = useState([])
   const [nextLayerId, setNextLayerId] = useState(1)
-
   const storage = window.localStorage
   const collectionValue = { collection, setCollection }
-
   const [selectedNameDistrict, setSelectedNameDistrict] = useState([])
-  const [enableOption, setEnableOption] = useState(false)
 
   useEffect(() => {
     storage.clear()
@@ -59,7 +51,7 @@ function App() {
 
     setNextLayerId(prevId => prevId + 1)
   }
-  
+
   const clearLayerById = (layerId) => {
     // Cargar el arreglo de capas existente desde localStorage
     const existingLayers = JSON.parse(storage.getItem('layers')) || []
@@ -91,8 +83,6 @@ function App() {
   const value = {
     searchPolygon,
     setSearchPolygon,
-    companies,
-    setCompanies,
     selectedRegion,
     setSelectedRegion,
     saveCurrentLayer,
@@ -106,9 +96,7 @@ function App() {
     selectedNameDistrict,
     setSelectedNameDistrict,
     mapCenter,
-    setMapCenter,
-    enableOption,
-    setEnableOption
+    setMapCenter
   }
 
   return (

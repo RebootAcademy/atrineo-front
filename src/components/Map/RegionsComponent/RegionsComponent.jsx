@@ -56,5 +56,4 @@ RegionsComponent.propTypes = {
   fieldName: PropTypes.string
 }
 
-
 export default RegionsComponent
