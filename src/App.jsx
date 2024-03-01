@@ -6,10 +6,11 @@ import { RouterProvider } from 'react-router-dom'
 
 import { LayerContext } from './context/layerContext'
 import { CollectionContext } from './context/collectionContext'
+import { polygon } from '@turf/turf'
 
 const queryClient = new QueryClient()
 
-function App () {
+function App() {
   const [mapDivision, setMapDivision] = useState('division3')
   const [mapCenter, setMapCenter] = useState([48.6, 9])
 
@@ -31,8 +32,12 @@ function App () {
 
   useEffect(() => {
     storage.clear()
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
+  useEffect(() => {
+
+  }, [searchPolygon])
 
   const saveCurrentLayer = (obj) => {
     // Intentar cargar el arreglo de capas existente desde localStorage, o iniciar uno nuevo si no existe

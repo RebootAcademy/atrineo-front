@@ -8,6 +8,7 @@ import NumericLayer from '../NumericLayer/NumericLayer'
 import RegionsComponent from '../RegionsComponent/RegionsComponent'
 
 import { isWithinPolygon } from '../../../helpers'
+import SelectedRegionComponent from '../SelectedRegionComponent/SelectedRegionComponent'
 
 
 function LayersManager() {
@@ -91,11 +92,19 @@ function LayersManager() {
           return (
             <div key={index}>
               {
-                layer.data.type === 'startups' &&
-                <StartupsComponent data={filteredData} />}
+                layer.data.type === 'startups' && (
+                  <>
+                    <StartupsComponent data={filteredData} />
+                    <SelectedRegionComponent data={filteredData}/>
+                  </>
+                )
+              }
               {
-                layer.data.type === 'regions' &&
-                <RegionsComponent data={filteredData} fieldName={field} />
+                layer.data.type === 'regions' && (
+                  <>
+                    <RegionsComponent data={filteredData} fieldName={field} />
+                  </>
+                )
               }
               {displayLayers(layer.data, filteredData)}
             </div>

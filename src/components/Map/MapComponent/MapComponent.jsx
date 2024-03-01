@@ -12,7 +12,7 @@ import LayersManager from '../LayersManager/LayersManager'
 import LegendsContainer from '../LegendsContainer/LegendsContainer'
 
 import { LayerContext } from "../../../context/layerContext"
-import { FeatureGroup, MapContainer } from "react-leaflet"
+import { MapContainer } from "react-leaflet"
 
 import 'leaflet/dist/leaflet.css'
 import HeatMapLayer from '../SelectedRegionComponent/SelectedRegionComponent'
@@ -43,14 +43,9 @@ function MapComponent() {
 
         <LayersManager />
 
-        <HeatMapLayer />
-
-
         <CoordsDisplay />
 
-        <FeatureGroup>
-          <DrawComponent />
-        </FeatureGroup>
+        <DrawComponent />
 
       </MapContainer>
     </section>
