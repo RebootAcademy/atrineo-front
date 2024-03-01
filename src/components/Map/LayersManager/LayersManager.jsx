@@ -95,7 +95,7 @@ function LayersManager() {
                 layer.data.type === 'startups' && (
                   <>
                     <StartupsComponent data={filteredData} />
-                    <SelectedRegionComponent data={filteredData}/>
+                    <SelectedRegionComponent data={filteredData} />
                   </>
                 )
               }

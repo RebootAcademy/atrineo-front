@@ -31,9 +31,7 @@ function DrawComponent() {
       })
     })
   }
-
-  console.log(searchPolygon)
-
+  
   return (
     <FeatureGroup>
       <EditControl
