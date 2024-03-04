@@ -87,7 +87,7 @@ export const findMaxAndMinValues = (arr, name) => {
 }
 
 export const calculateRadius = (value, minValue, maxValue) => {
-  const range = [1, 20000] // Ajusta esto según el tamaño deseado de tus círculos
+  const range = [1, 5000] // Ajusta esto según el tamaño deseado de tus círculos
   // Asegúrate de que minValue y maxValue sean adecuados para tu escala seleccionada
   const sqrtScale = d3.scaleSqrt()
     .domain([minValue, maxValue])
