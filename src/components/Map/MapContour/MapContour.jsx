@@ -9,8 +9,9 @@ import { LayerContext } from "../../../context/layerContext"
 const style = {
   opacity: 0.8,
   fillOpacity: 0.1,
-  color: 'var(--primary)',
-  weight: 1.5
+  color: 'black',
+  weight: 0.5,
+  fillColor: 'black'
 }
 
 function ContourLayer() {
