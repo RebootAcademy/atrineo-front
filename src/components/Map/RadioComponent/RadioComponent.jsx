@@ -35,7 +35,7 @@ function RadioComponent({name, handleChange, options}) {
           {
             options.map((name, index) => {
               return (
-                <div key={index} className="flex items-center space-x-2">
+                <div key={index} className="flex items-center space-x-2 ml-4">
                   <RadioGroupItem value={name} id={name} />
                   <Label htmlFor={name}>{name}</Label>
                 </div>

@@ -43,7 +43,7 @@ function LayerCard({ onCloseMenu }) {
   }
 
   return (
-    <Card className='w-full flex flex-col items-center'>
+    <Card className='w-full flex flex-col border-0'>
 
       <CardHeader>
         <CardTitle>Layer {nextLayerId}</CardTitle>

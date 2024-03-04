@@ -14,7 +14,7 @@ function FilterGroup({ type, layers, layerObj }) {
   }
 
   return (
-    <Card className='mb-2 w-[300px] pt-0 p-2 overflow-y-auto max-h-[500px]'>
+    <Card className='mb-2 w-[300px] pt-0 overflow-y-auto max-h-[500px] border-0'>
       <CardContent>
         {layers && layers.map((layer, id) => (
           <div key={id}>
