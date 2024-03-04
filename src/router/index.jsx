@@ -1,5 +1,3 @@
-/* eslint-disable no-undef */
-/* eslint-disable no-unused-vars */
 import { createBrowserRouter, redirect } from 'react-router-dom'
 
 import Home from "../pages/Home"
@@ -8,13 +6,13 @@ import Dataset from "../pages/Dataset"
 import Login from "../pages/Login"
 import Layout from "../Layout/Layout"
 
-const isAuthenticated = () => {
+/* const isAuthenticated = () => {
   if (!localStorage.getItem('token')) {
-    return redirect('/access')
+    return redirect('/login')
   } else {
     return null
   }
-}
+} */
 
 export const router = createBrowserRouter([
   {

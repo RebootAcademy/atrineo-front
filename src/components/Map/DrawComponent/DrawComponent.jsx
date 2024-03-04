@@ -1,7 +1,8 @@
 /* eslint-disable no-unused-vars */
 import { EditControl } from 'react-leaflet-draw'
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useRef } from 'react'
 import { LayerContext } from '../../../context/layerContext'
+import { FeatureGroup } from 'react-leaflet'
 import 'leaflet/dist/leaflet.css'
 import 'leaflet-draw/dist/leaflet.draw.css'
 
@@ -9,42 +10,56 @@ function DrawComponent() {
   const { searchPolygon, setSearchPolygon } = useContext(LayerContext)
 
   const onDrawCreate = (e) => {
-    const layer = e.layer
+    const { layer } = e
     const latlngs = layer.getLatLngs()
     setSearchPolygon(latlngs)
   }
 
   const onDrawEdit = (e) => {
-    const layer = e.layer
-    const editedPolygon = layer.getLayers()[0]
-    const latlngs = editedPolygon.getLatLngs()
-    setSearchPolygon(latlngs)
+    const layers = e.layers
+    layers.eachLayer((layer) => {
+      const latlngs = layer.getLatLngs()[0]
+      const polygonCoords = latlngs.map((latlng) => ({
+        lat: latlng.lat,
+        lng: latlng.lng
+      }))
+      setSearchPolygon(prevPolygon => {
+        if (prevPolygon === null) {
+          return [polygonCoords]
+        }
+        return [...prevPolygon, polygonCoords]
+      })
+    })
   }
 
+  console.log(searchPolygon)
+
   return (
-    <EditControl
-      position='bottomright'
-      onCreated={onDrawCreate}
-      onEdited={onDrawEdit}
-      onDeleted={() => {
-        setSearchPolygon(null)
-      }}
-      draw={{
-        rectangle: false,
-        polyline: false,
-        circle: false,
-        marker: false,
-        circlemarker: false,
-        polygon: !searchPolygon
-          ? {
-            shapeOptions: {
-              color: 'var(--primary)',
-              weight: 1
+    <FeatureGroup>
+      <EditControl
+        position="bottomright"
+        onCreated={onDrawCreate}
+        onDeleted={() => {
+          setSearchPolygon(null)
+        }}
+        onEdited={onDrawEdit}
+        draw={{
+          rectangle: false,
+          polyline: false,
+          circle: false,
+          marker: false,
+          circlemarker: false,
+          polygon: !searchPolygon
+            ? {
+              shapeOptions: {
+                color: 'var(--primary)',
+                weight: 1
+              }
             }
-          }
-          : false
-      }}
-    />
+            : false
+        }}
+      />
+    </FeatureGroup>
   )
 }
 

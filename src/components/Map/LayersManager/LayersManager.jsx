@@ -4,12 +4,11 @@ import { CollectionContext } from '../../../context/collectionContext'
 import { LayerContext } from '../../../context/layerContext'
 
 import StartupsComponent from '../StartupsComponent/StartupsComponent'
-import NumericLayer from '../../JuananComponents/NumericLayer/NumericLayer'
+import NumericLayer from '../NumericLayer/NumericLayer'
 import RegionsComponent from '../RegionsComponent/RegionsComponent'
 
 import { isWithinPolygon } from '../../../helpers'
-import HeatMapLayer from '../../HeatMapLayerComponent.jsx/HeatMapComponent'
-
+import SelectedRegionComponent from '../SelectedRegionComponent/SelectedRegionComponent'
 
 function LayersManager() {
   const { collection } = useContext(CollectionContext)
@@ -92,13 +91,19 @@ function LayersManager() {
           return (
             <div key={index}>
               {
-                layer.data.type === 'startups' &&
-                <StartupsComponent data={filteredData} />
+                layer.data.type === 'startups' && (
+                  <>
+                    <StartupsComponent data={filteredData} />
+                    <SelectedRegionComponent data={filteredData}/>
+                  </>
+                )
               }
-              {<HeatMapLayer/>}
               {
-                layer.data.type === 'regions' &&
-                <RegionsComponent data={filteredData} fieldName={field} />
+                layer.data.type === 'regions' && (
+                  <>
+                    <RegionsComponent data={filteredData} fieldName={field} />
+                  </>
+                )
               }
               {displayLayers(layer.data, filteredData)}
             </div>

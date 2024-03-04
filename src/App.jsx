@@ -1,69 +1,36 @@
-/* eslint-disable no-unused-vars */
 import { useEffect, useState } from 'react'
 import { QueryClient, QueryClientProvider } from 'react-query'
-import { router } from './router'
 import { RouterProvider } from 'react-router-dom'
 
 import { LayerContext } from './context/layerContext'
 import { CollectionContext } from './context/collectionContext'
 
+import { router } from './router'
+
 const queryClient = new QueryClient()
 
-function App () {
+function App() {
   const [mapDivision, setMapDivision] = useState('division3')
   const [mapCenter, setMapCenter] = useState([48.6, 9])
-
   const [collection, setCollection] = useState([])
-
-  const [patentsFilter, setPatentsFilter] = useState([0, 100])
-  const [populationFilter, setPopulationFilter] = useState([0])
-  const [populationBounds, setPopulationBounds] = useState({ minPopulation: 0, maxPopulation: 0 })
-
-  const [researchInvestmentFilter, setResearchInvestmentFilter] = useState([0])
-  const [researchInvestmentBounds, setResearchInvestmentBounds] = useState({ minResearchInvestment: 0, maxResearchInvestment: 0 })
-
-  const [isFinancingFilterActive, setIsFinancingFilterActive] = useState(false)
-  const [isGovFundsReceivedActive, setIsGovFundsReceivedActive] = useState(false)
   const [searchPolygon, setSearchPolygon] = useState(null)
-  const [lifeQuality, setLifeQuality] = useState(null)
-  const [gnp, setGnp] = useState(0)
-  const [companies, setCompanies] = useState([])
   const [selectedRegion, setSelectedRegion] = useState('')
-
   const [layers, setLayers] = useState([])
   const [nextLayerId, setNextLayerId] = useState(1)
-
   const storage = window.localStorage
   const collectionValue = { collection, setCollection }
-
   const [selectedNameDistrict, setSelectedNameDistrict] = useState([])
-  const [enableOption, setEnableOption] = useState(false)
 
   useEffect(() => {
     storage.clear()
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const toggleFinancingAccess = (value) => {
-    setIsFinancingFilterActive(value)
-  }
+  useEffect(() => {
 
-  const toggleGovFundsReceived = (value) => {
-    setIsGovFundsReceivedActive(value)
-  }
+  }, [searchPolygon])
 
   const saveCurrentLayer = (obj) => {
-    const newLayer = {
-      patentsFilter,
-      populationFilter,
-      researchInvestmentFilter,
-      isFinancingFilterActive,
-      isGovFundsReceivedActive,
-      searchPolygon,
-      lifeQuality,
-      gnp
-    }
-
     // Intentar cargar el arreglo de capas existente desde localStorage, o iniciar uno nuevo si no existe
     const existingLayers = JSON.parse(storage.getItem('layers')) || []
 
@@ -82,18 +49,6 @@ function App () {
     setLayers(updatedLayers)
 
     setNextLayerId(prevId => prevId + 1)
-    resetFilters()
-  }
-
-  const resetFilters = () => {
-    setPatentsFilter([0, 100])
-    setPopulationFilter([0])
-    setResearchInvestmentFilter([0])
-    setIsFinancingFilterActive(false)
-    setIsGovFundsReceivedActive(false)
-    setSearchPolygon(null)
-    setLifeQuality(null)
-    setGnp(0)
   }
 
   const clearLayerById = (layerId) => {
@@ -125,27 +80,8 @@ function App () {
   }
 
   const value = {
-    patentsFilter,
-    setPatentsFilter,
-    isFinancingFilterActive,
-    setIsFinancingFilterActive,
-    toggleFinancingAccess,
-    isGovFundsReceivedActive,
-    toggleGovFundsReceived,
     searchPolygon,
     setSearchPolygon,
-    lifeQuality,
-    setLifeQuality,
-    gnp,
-    setGnp,
-    populationFilter,
-    setPopulationFilter,
-    ...populationBounds,
-    researchInvestmentFilter,
-    setResearchInvestmentFilter,
-    ...researchInvestmentBounds,
-    companies,
-    setCompanies,
     selectedRegion,
     setSelectedRegion,
     saveCurrentLayer,
@@ -159,9 +95,7 @@ function App () {
     selectedNameDistrict,
     setSelectedNameDistrict,
     mapCenter,
-    setMapCenter,
-    enableOption,
-    setEnableOption
+    setMapCenter
   }
 
   return (
