@@ -3,7 +3,7 @@ import { createBrowserRouter, redirect } from 'react-router-dom'
 import Home from "../pages/Home"
 import Statistics from "../pages/Statistics"
 import Dataset from "../pages/Dataset"
-import Login from "../pages/Login"
+import Login from "../pages/Login/Login"
 import Layout from "../Layout/Layout"
 
 /* const isAuthenticated = () => {
@@ -21,6 +21,11 @@ export const router = createBrowserRouter([
     children: [
       {
         path: '/',
+        element: <Login />
+        // loader: isAuthenticated
+      },
+      {
+        path: '/map',
         element: <Home />
       },
       {
@@ -30,11 +35,6 @@ export const router = createBrowserRouter([
       {
         path: '/dataset',
         element: <Dataset />
-      },
-      {
-        path: '/login',
-        element: <Login />
-        // loader: isAuthenticated
       }
     ]
   }
