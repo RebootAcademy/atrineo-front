@@ -21,7 +21,6 @@ function DrawComponent() {
       removeButton.classList.add('leaflet-draw-edit-show')
       firstButton.style.setProperty('background-size', '300px', 'important')
       firstButton.style.setProperty('background-position', '-146px', 'important')
-
     } else {
       editButton.classList.remove('leaflet-draw-edit-show')
       removeButton.classList.remove('leaflet-draw-edit-show')
@@ -52,6 +51,8 @@ function DrawComponent() {
         return [...prevPolygon, polygonCoords]
       })
     })
+    setIsDrawing(false)
+    setTimeout(() => setIsDrawing(true), 0)
   }
 
   const onDrawDelete = () => {

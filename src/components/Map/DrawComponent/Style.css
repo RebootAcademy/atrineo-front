@@ -11,10 +11,10 @@
 }
 
 .leaflet-draw-toolbar a {
-  width: 36px !important;
-  height: 36px !important;
+  width: 38px !important;
+  height: 38px !important;
   background-size: 300px;
-  background-position: -27px !important;
+  background-position: -26px !important;
 }
 
 .leaflet-draw-toolbar a:nth-child(2) {
@@ -22,7 +22,7 @@
   background-position: -177px !important;
 }
 
-.leaflet-draw-edit-edit, .leaflet-draw-edit-remove{
+.leaflet-draw-edit-edit, .leaflet-draw-edit-remove {
   display: none !important;
 }
 
@@ -30,17 +30,16 @@
   display: block !important;
 }
 
-.leaflet-draw-actions-top {
+.leaflet-draw-actions-top a {
   position: relative ;
-  top: 170px !important;
+  top: 178px !important;
   left: 20px !important;
+  border-radius: 0 !important;
 }
 
-.leaflet-draw-actions-top-modified {
-  top: 200px !important;
+.leaflet-draw-actions-bottom a {
+  position: relative;
+  top: 177px;
+  left: 20px;
+  border-radius: 0 !important;
 }
-
-.leaflet-draw-actions-bottom-visible {
-  top: 188px !important;
-}
-
