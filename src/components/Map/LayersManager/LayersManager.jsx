@@ -8,6 +8,7 @@ import NumericLayer from '../../JuananComponents/NumericLayer/NumericLayer'
 import RegionsComponent from '../RegionsComponent/RegionsComponent'
 
 import { isWithinPolygon } from '../../../helpers'
+import HeatMapLayer from '../../HeatMapLayerComponent.jsx/HeatMapComponent'
 
 
 function LayersManager() {
@@ -92,7 +93,9 @@ function LayersManager() {
             <div key={index}>
               {
                 layer.data.type === 'startups' &&
-                <StartupsComponent data={filteredData} />}
+                <StartupsComponent data={filteredData} />
+              }
+              {<HeatMapLayer/>}
               {
                 layer.data.type === 'regions' &&
                 <RegionsComponent data={filteredData} fieldName={field} />
