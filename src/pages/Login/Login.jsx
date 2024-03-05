@@ -12,6 +12,7 @@ function Login() {
 
   const navigate = useNavigate()
 
+  //esto estaría guay refactorizar - importando los iconos, pero me está dando problema 
   const openEye = <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M1.33398 7.99992C1.33398 7.99992 3.33398 3.33325 8.00065 3.33325C12.6673 3.33325 14.6673 7.99992 14.6673 7.99992C14.6673 7.99992 12.6673 12.6666 8.00065 12.6666C3.33398 12.6666 1.33398 7.99992 1.33398 7.99992Z" stroke="#09090B" strokeLinecap="round" strokeLinejoin="round" />
     <path d="M8.00065 9.99992C9.10522 9.99992 10.0007 9.10449 10.0007 7.99992C10.0007 6.89535 9.10522 5.99992 8.00065 5.99992C6.89608 5.99992 6.00065 6.89535 6.00065 7.99992C6.00065 9.10449 6.89608 9.99992 8.00065 9.99992Z" stroke="#09090B" strokeLinecap="round" strokeLinejoin="round" />

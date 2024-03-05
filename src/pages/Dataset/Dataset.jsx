@@ -1,12 +1,13 @@
 import { useContext } from "react"
 import { useQuery } from "react-query"
 
-import TableComponent from "../components/Datasets/Table/TableComponent"
-import LoadingSpinner from "../components/LoadingSpinner/LoadingSpinner"
+import TableComponent from "../../components/Datasets/Table/TableComponent"
+import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner"
+import UploadCSVComponent from "../../components/Datasets/UploadCSV/UploadCSVComponent"
 
-import { CollectionContext } from "../context/collectionContext"
+import { CollectionContext } from "../../context/collectionContext"
 
-import { getPublicCollections } from "../services/collectionService"
+import { getPublicCollections } from "../../services/collectionService"
 
 function Dataset() {
   const { collection, setCollection } = useContext(CollectionContext)
@@ -20,13 +21,13 @@ function Dataset() {
     }
   })
 
-
   return (
     <>
       {
         collection.length === 0 ?
           <LoadingSpinner /> :
           <div className='overflow-x-auto'>
+            <UploadCSVComponent />
             <TableComponent data={collection[0].data} />
           </div>
       }
