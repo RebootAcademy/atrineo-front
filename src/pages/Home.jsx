@@ -14,7 +14,7 @@ function Home () {
   const { collection, setCollection } = useContext(CollectionContext)
 
   const {
-    isLoading
+    isLoading,
     // data,
     // isSuccess
   } = useQuery('public', getPublicCollections, {

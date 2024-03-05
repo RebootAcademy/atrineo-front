@@ -1,40 +1,44 @@
-import { createBrowserRouter } from 'react-router-dom'
-
+import { createBrowserRouter, redirect } from 'react-router-dom'
 import Home from "../pages/Home"
 import Statistics from "../pages/Statistics"
 import Dataset from "../pages/Dataset"
-import Login from "../pages/Login"
+import Login from "../pages/Login/Login"
 import Layout from "../Layout/Layout"
 
-/* const isAuthenticated = () => {
-  if (!localStorage.getItem('token')) {
-    return redirect('/login')
-  } else {
-    return null
+const isAuthenticated = () => {
+  return !!localStorage.getItem('token')
+}
+
+const authLoader = async () => {
+  if (!isAuthenticated()) {
+    return redirect("/")
   }
-} */
+  return true
+}
 
 export const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <Login />,
+  },
   {
     path: '/',
     element: <Layout />,
     children: [
       {
-        path: '/',
-        element: <Home />
+        path: '/map',
+        element: <Home />,
+        loader: authLoader
       },
       {
         path: '/statistics',
-        element: <Statistics />
+        element: <Statistics />,
+        loader: authLoader
       },
       {
         path: '/dataset',
-        element: <Dataset />
-      },
-      {
-        path: '/login',
-        element: <Login />
-        // loader: isAuthenticated
+        element: <Dataset />,
+        loader: authLoader
       }
     ]
   }

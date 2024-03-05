@@ -26,7 +26,9 @@ function Dataset() {
       {
         collection.length === 0 ?
           <LoadingSpinner /> :
-          <TableComponent data={collection[0].data} />
+          <div className='overflow-x-auto'>
+            <TableComponent data={collection[0].data} />
+          </div>
       }
     </>
   )

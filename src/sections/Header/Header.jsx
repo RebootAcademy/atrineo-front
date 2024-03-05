@@ -15,7 +15,7 @@ function Header() {
 
   const selectOption = (text) => {
     setSelected(text)
-    navigate(text !== 'Map' ? text.toLowerCase() : '/')
+    navigate(text.toLowerCase())
   }
 
   const isSelected = (text) => {
