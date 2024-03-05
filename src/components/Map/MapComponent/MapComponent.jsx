@@ -14,9 +14,6 @@ import LegendsContainer from '../LegendsContainer/LegendsContainer'
 import { LayerContext } from "../../../context/layerContext"
 import { MapContainer } from "react-leaflet"
 
-import 'leaflet/dist/leaflet.css'
-import HeatMapLayer from '../SelectedRegionComponent/SelectedRegionComponent'
-
 function MapComponent() {
   const { mapDivision, mapCenter } = useContext(LayerContext)
 

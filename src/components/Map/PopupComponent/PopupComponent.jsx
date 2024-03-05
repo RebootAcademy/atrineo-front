@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import { Popup } from 'react-leaflet'
 import PropTypes from 'prop-types'
 
@@ -11,7 +10,7 @@ function PopupComponent ({ name }) {
 }
 
 PopupComponent.propTypes = {
-  data: PropTypes.object
+  name: PropTypes.string
 }
 
 export default PopupComponent
