@@ -71,36 +71,30 @@ function Statistics() {
     setYAxis(name)
   }
 
+  const commonProps = {
+    width: width * 0.75,
+    height: height * 0.75,
+    data: data,
+    regions: regionNames,
+    options: optionsArr,
+    division: mapDivision,
+    aggregation: aggregation,
+    xAxis: xAxis,
+    yAxis: yAxis,
+    changeXAxis: changeXAxis,
+    changeYAxis: changeYAxis
+  }
+
   const displayChart = () => {
     switch(chartType){
     case('bar'):
-      return <BarPlot
-        width={width * 0.75}
-        height={height * 0.75}
-        data={data}
-        regions={regionNames}
-        options={optionsArr}
-        division={mapDivision}
-        aggregation={aggregation}
-        xAxis={xAxis}
-        yAxis={yAxis}
-        changeXAxis={changeXAxis}
-        changeYAxis={changeYAxis}
+      return <BarPlot 
+        {...commonProps} 
       />
     case('pie'):
       return <PieChart
-        width={width * 0.75}
-        height={height * 0.75}
-        data={data}
-        regions={regionNames}
+        {...commonProps }
         fields={fields}
-        options={optionsArr}
-        division={mapDivision}
-        aggregation={aggregation}
-        xAxis={xAxis}
-        yAxis={yAxis}
-        changeXAxis={changeXAxis}
-        changeYAxis={changeYAxis}
       />
     default:
       return <div
