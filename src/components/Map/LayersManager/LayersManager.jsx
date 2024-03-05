@@ -22,7 +22,7 @@ function LayersManager() {
     setLayers(storedLayers)
   }, [])
 
-  const colors = ['#4B7CCC', '#77F2FF', '#858D99', '#FF8658', '#CC5948', '#98FB98']
+  const colors = ['#E6437A', '#E6B743', '#436EE6', '#43E651', '#91815A', '#665158']
 
   const displayLayers = (filters, array) => {
     const elements = []
