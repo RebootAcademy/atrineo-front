@@ -10,7 +10,7 @@
     "lint:fix": "eslint . --fix --ext js,jsx --report-unused-disable-directives",
     "preview": "vite preview",
     "test": "lint-staged",
-    "prepare": "husky"
+    "prepare": "husky install"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.4",

@@ -15,7 +15,7 @@ function Dataset() {
   const { user, setUser } = useContext(UserContext)
 
   useQuery('profile', getOwnProfile, {
-    enabled: !user.name,
+    enabled: !!user.name,
     onSuccess: (data) => {
       if (data && data.result) {
         setUser(data.result)
