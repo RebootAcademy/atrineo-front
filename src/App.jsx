@@ -24,10 +24,10 @@ function App() {
   const userValue = { user, setUser }
   const [selectedNameDistrict, setSelectedNameDistrict] = useState([])
 
-  useEffect(() => {
+  /*useEffect(() => {
     storage.clear()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [])*/
 
   useEffect(() => {
   }, [searchPolygon])
