@@ -61,7 +61,7 @@ module.exports = {
         sm: "calc(var(--radius) - 4px)",
       },
       backgroundImage: {
-        'radial-custom': 'radial-gradient(circle, rgba(0,106,182,1) 0%, rgba(0,106,182,1) 20%, rgba(0,212,255,0) 100%)',
+        'radial-custom': 'radial-gradient(circle, rgba(0,106,190,1) 0%, rgba(0,106,182,1) 20%, rgba(0,212,255,0) 120%)',
       },
       keyframes: {
         "accordion-down": {

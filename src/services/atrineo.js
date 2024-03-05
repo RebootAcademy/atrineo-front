@@ -8,6 +8,7 @@ const getAtrineoCollectionAPI = async () => {
     const { data } = await api.get(`/collection/${id}`, {
       headers: {
         token: localStorage.getItem("token"),
+        // role: localStorage.getItem("role")
       }
     })
     return data

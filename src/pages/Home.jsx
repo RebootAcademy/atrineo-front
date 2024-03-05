@@ -13,7 +13,7 @@ function Home () {
   const { collection, setCollection } = useContext(CollectionContext)
 
   const {
-    isLoading
+    isLoading,
     // data,
     // isSuccess
   } = useQuery('public', getPublicCollections, {
@@ -24,9 +24,9 @@ function Home () {
     }
   })
 
-  /*   if (!isLoading) {
-    console.log(collection)
-  } */
+  // if (!isLoading) {
+  //   console.log(collection)
+  // } 
 
   return (
     <>

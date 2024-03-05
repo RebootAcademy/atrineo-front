@@ -48,10 +48,9 @@ function Login() {
   async function onLogin() {
     try {
       const loginResponse = await login({ email, password })
-      console.log(loginResponse)
-      if (loginResponse.result) {
+      if (loginResponse) {
         localStorage.setItem('token', loginResponse.result)
-        console.log('navigating to /map')
+        // localStorage.setItem('role', loginResponse.role)
         navigate('/map')
       }
     } catch (error) {
@@ -62,15 +61,15 @@ function Login() {
 
   return (
     <>
-      <div className='w-full h-full flex flex-col lg:flex-row md:flex-col justify-center items-center space-y- lg:space-y-8 md:space-x-24 lg:space-x-24'>
-        <div className='w-full sm:w-1/3 md:w-1/3 lg:w-1/4 xl:w-1/5'>
+      <div className='w-full h-screen flex flex-col lg:flex-row md:flex-col justify-center items-center space-y-12 lg:space-y-12 md:space-x-24 lg:space-x-24 mx-auto'>
+        <div className='sm:w-1/6 md:w-1/3 lg:w-1/4 xl:w-1/4 2xl:w-1/6'>
           <img
             src='./atrineo_icon-removebg-preview.png'
             alt='Atrineo icon'
             className='w-full'
           />
         </div>
-        <div className='border-2 border-grey-700 rounded w-full sm:w-1/2 md:w-1/2 lg:w-1/2 xl:w-1/4'>
+        <div className='border-2 border-grey-700 rounded w-full sm:w-1/2 md:w-1/2 lg:w-1/2 xl:w-1/3 2xl:w-1/6'>
           <div className='p-8'>
             <div className='text-center'>
               <p style={{ fontSize: "32px" }}>Login</p>

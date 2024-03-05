@@ -6,8 +6,11 @@ import { CollectionContext } from "../context/collectionContext"
 
 function Dataset() {
   const { collection } = useContext(CollectionContext)
+  
   return (
-    <TableComponent data={collection[0].data} />
+    <div className='overflow-x-auto'>
+      <TableComponent data={collection[0].data} />
+    </div>
   )
 }
 
