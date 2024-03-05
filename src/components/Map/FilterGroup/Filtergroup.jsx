@@ -14,13 +14,14 @@ function FilterGroup({ type, layers, layerObj }) {
   }
 
   return (
-    <Card className='mb-2 w-[300px] pt-0 overflow-y-auto max-h-[500px] border-0'>
+    <Card className='mb-4 w-[300px] pt-0 overflow-y-auto max-h-[500px] border-0'>
       <CardContent>
         {layers && layers.map((layer, id) => (
           <div key={id}>
             <div className="flex items-center mb-2">
               <input
-                type="checkbox"
+                type="radio"
+                name='collectionType'
                 checked={collectionType === layer.name}
                 className="mr-2"
                 onChange={() => selectType(layer.name)}

@@ -17,9 +17,9 @@ function SwitchComponent({ name, handleChange, isActive }) {
 
   const handleInput = () => {
     setActive(prev => {
-      if (prev) {
-        handleChange('remove', name)
-      }
+      const newValue = !prev
+      handleChange(newValue ? 'add' : 'remove', name)
+      emitChange(newValue)
       return !prev
     })
   }
@@ -32,14 +32,6 @@ function SwitchComponent({ name, handleChange, isActive }) {
           {name}
         </Label>
       </div>
-      {
-        active &&
-        <Switch
-          id={name}
-          className="w-11 h-6"
-          onCheckedChange={emitChange}
-        />
-      }
     </>
   )
 }
