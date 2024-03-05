@@ -4,19 +4,20 @@ import { useGeoJsonData } from '../../../hooks/useGeoJsonData'
 import { below10, between10and20, between20and35, over35, defaultStyle } from './Styles'
 import { LayerContext } from "../../../context/layerContext"
 import PropTypes from 'prop-types'
+import { findMaxAndMinValues } from "../../../helpers"
 
 function HeatmapLayer({ data, fieldName }) {
   const { mapDivision } = useContext(LayerContext)
   const mapData = useGeoJsonData(mapDivision)
 
-  const calculateMinMaxValues = () => {
-    const fieldValues = data.flatMap(group =>
-      group.sums.filter(sum => sum.fieldName === fieldName).map(filteredSum => filteredSum.total)
-    )
-    return [Math.min(...fieldValues), Math.max(...fieldValues)]
-  }
+  const adjustedData = data.map(group => ({
+    fields: group.sums.map(sum => ({
+      fieldName: sum.fieldName,
+      fieldValue: sum.total
+    }))
+  }))
 
-  const [minValue, maxValue] = calculateMinMaxValues()
+  const [maxValue, minValue] = findMaxAndMinValues(adjustedData, fieldName)
 
   const determineStyle = (percentage) => {
     if (percentage < 25) return below10
@@ -52,12 +53,11 @@ function HeatmapLayer({ data, fieldName }) {
     const filteredData = { ...mapData, features: filteredRegions() }
 
     return (
-      <>
-        <GeoJSON
-          data={filteredData}
-          style={(feature) => setStyle(feature)}
-        />
-      </>
+      <GeoJSON
+        data={filteredData}
+        style={(feature) => setStyle(feature)}
+      />
+
     )
   } else {
     return null
