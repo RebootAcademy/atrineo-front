@@ -31,7 +31,7 @@ function Home () {
     // data,
     // isSuccess
   } = useQuery('public', getPublicCollections, {
-    enabled: collection.length === 0 && user.name,
+    enabled: collection.length === 0 && !!user.name,
     onSuccess: (data) => {
       if (data && data.result) {
         setCollection(data.result)
