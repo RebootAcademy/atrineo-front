@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react"
-import PropTypes from 'prop-types'
-
-import { Switch } from "../../ui/Switch/Switch"
 import { Label } from "../../ui/Label/Label"
+import PropTypes from 'prop-types'
 
 function SwitchComponent({ name, handleChange, isActive }) {
   const [active, setActive] = useState(isActive)
@@ -17,9 +15,9 @@ function SwitchComponent({ name, handleChange, isActive }) {
 
   const handleInput = () => {
     setActive(prev => {
-      if (prev) {
-        handleChange('remove', name)
-      }
+      const newValue = !prev
+      handleChange(newValue ? 'add' : 'remove', name)
+      emitChange(newValue)
       return !prev
     })
   }
@@ -32,14 +30,6 @@ function SwitchComponent({ name, handleChange, isActive }) {
           {name}
         </Label>
       </div>
-      {
-        active &&
-        <Switch
-          id={name}
-          className="w-11 h-6"
-          onCheckedChange={emitChange}
-        />
-      }
     </>
   )
 }

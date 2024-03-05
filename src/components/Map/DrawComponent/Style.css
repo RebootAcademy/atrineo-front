@@ -1,0 +1,45 @@
+.leaflet-draw-toolbar {
+  position: relative;
+  top: 170px;
+  left: 6px;
+}
+
+.leaflet-draw-section {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+
+.leaflet-draw-toolbar a {
+  width: 38px !important;
+  height: 38px !important;
+  background-size: 300px;
+  background-position: -26px !important;
+}
+
+.leaflet-draw-toolbar a:nth-child(2) {
+  background-size: 300px;
+  background-position: -177px !important;
+}
+
+.leaflet-draw-edit-edit, .leaflet-draw-edit-remove {
+  display: none !important;
+}
+
+.leaflet-draw-edit-show {
+  display: block !important;
+}
+
+.leaflet-draw-actions-top a {
+  position: relative ;
+  top: 178px !important;
+  left: 20px !important;
+  border-radius: 0 !important;
+}
+
+.leaflet-draw-actions-bottom a {
+  position: relative;
+  top: 177px;
+  left: 20px;
+  border-radius: 0 !important;
+}

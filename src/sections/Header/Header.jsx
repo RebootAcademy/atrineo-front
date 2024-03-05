@@ -41,7 +41,8 @@ function Header() {
   }
 
   return (
-    <header>
+    <header className="relative border-b border-gray-200 shadow-2xl">
+      <div className="absolute bottom-0 left-0 w-full h-[1px] bg-gradient-to-b from-gray-300 to-transparent"></div>
       <main className="h-20 flex items-center justify-between">
         {/* <div className="grid grid-cols-3 bg-white-400 p-6 w-max-100 h-24 md: h-32"> */}
         <div className="flex w-full">

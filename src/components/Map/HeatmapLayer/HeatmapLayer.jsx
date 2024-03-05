@@ -4,19 +4,20 @@ import { useGeoJsonData } from '../../../hooks/useGeoJsonData'
 import { below10, between10and20, between20and35, over35, defaultStyle } from './Styles'
 import { LayerContext } from "../../../context/layerContext"
 import PropTypes from 'prop-types'
+import { findMaxAndMinValues } from "../../../helpers"
 
-const HeatmapLayer = ({ data, fieldName }) => {
+function HeatmapLayer({ data, fieldName }) {
   const { mapDivision } = useContext(LayerContext)
   const mapData = useGeoJsonData(mapDivision)
 
-  const calculateMinMaxValues = () => {
-    const fieldValues = data.flatMap(group =>
-      group.sums.filter(sum => sum.fieldName === fieldName).map(filteredSum => filteredSum.total)
-    )
-    return [Math.min(...fieldValues), Math.max(...fieldValues)]
-  }
+  const adjustedData = data.map(group => ({
+    fields: group.sums.map(sum => ({
+      fieldName: sum.fieldName,
+      fieldValue: sum.total
+    }))
+  }))
 
-  const [minValue, maxValue] = calculateMinMaxValues()
+  const [maxValue, minValue] = findMaxAndMinValues(adjustedData, fieldName)
 
   const determineStyle = (percentage) => {
     if (percentage < 25) return below10
@@ -25,6 +26,13 @@ const HeatmapLayer = ({ data, fieldName }) => {
     return over35
   }
 
+  /*   const determineStyle = (percentage) => {
+    if (percentage < 25) return 'patternBelow25'
+    if (percentage < 50) return 'patternBelow50'
+    if (percentage < 75) return 'patternBelow75'
+    return 'patternOver75'
+  }
+ */
   const setStyle = (feature) => {
     const currentGroupId = data.find(d => d.geojsonId === feature.properties.ID_3.toString())
     const value = currentGroupId?.sums.find(sum => sum.fieldName === fieldName)?.total
@@ -35,6 +43,7 @@ const HeatmapLayer = ({ data, fieldName }) => {
     }
     return defaultStyle
   }
+
 
   const filteredRegions = () => {
     return mapData?.features.filter((region) => region.properties.NAME_1 === 'Baden-Württemberg')
@@ -48,6 +57,7 @@ const HeatmapLayer = ({ data, fieldName }) => {
         data={filteredData}
         style={(feature) => setStyle(feature)}
       />
+
     )
   } else {
     return null

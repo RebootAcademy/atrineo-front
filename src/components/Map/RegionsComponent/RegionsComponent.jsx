@@ -16,6 +16,36 @@ function RegionsComponent({ data, fieldName }) {
     return acc
   }, {})
 
+  //console.log(groupedByGeojsonId)
+
+  /*   function groupByDivision3(groupedByGeojsonId) {
+    const grouped = {
+      noDivision3: []
+    }
+
+    // Iterar sobre cada grupo de datos
+    Object.values(groupedByGeojsonId).forEach(group => {
+      group.forEach(item => {
+        const division3Id = item.locationId.division3 ? item.locationId.division3.geojsonId : 'noDivision3'
+        const districtName = item.fields.find(field => field.fieldName === 'districtName').fieldValue
+
+        if (division3Id === 'noDivision3') {
+          grouped.noDivision3.push(districtName)
+        } else {
+          if (!grouped[division3Id]) {
+            grouped[division3Id] = []
+          }
+          grouped[division3Id].push(districtName)
+        }
+      })
+    })
+
+    return grouped
+  }
+
+  const groupedDistricts = groupByDivision3(groupedByGeojsonId)
+  console.log(JSON.stringify(groupedDistricts, null, 2)) */
+
   const sumNumericFields = (items) => {
     const sums = items.reduce((acc, item) => {
       item.fields.forEach(field => {
