@@ -62,7 +62,7 @@ function LayersManager() {
     <div>
       {layers
         .filter(layer => layer.isVisible)
-        .map((layer, index) => {
+        .map((layer) => {
           let field
           for (const key in layer.data) {
             if (key !== 'type' && key !== 'fieldName') {
@@ -90,7 +90,7 @@ function LayersManager() {
           colorIndex++
 
           return (
-            <div key={index}>
+            <div key={layer.id}>
               {
                 layer.data.type === 'startups' && (
                   <>

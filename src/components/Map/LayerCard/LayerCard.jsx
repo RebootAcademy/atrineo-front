@@ -22,7 +22,7 @@ function LayerCard({ onCloseMenu }) {
     collectionType = collection[0].collectionType
   }
 
-  const { saveCurrentLayer, nextLayerId } = useContext(LayerContext)
+  const { saveCurrentLayer } = useContext(LayerContext)
 
   const layerRef = useRef({})
 
@@ -46,7 +46,7 @@ function LayerCard({ onCloseMenu }) {
     <Card className='w-full flex flex-col border-0'>
 
       <CardHeader>
-        <CardTitle>Layer {nextLayerId}</CardTitle>
+        <CardTitle>Filter Layer {}</CardTitle>
       </CardHeader>
 
       <CardContent>
