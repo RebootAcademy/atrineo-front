@@ -6,13 +6,13 @@ import Dataset from "../pages/Dataset"
 import Login from "../pages/Login/Login"
 import Layout from "../Layout/Layout"
 
-const isAuthenticated = () => {
-  if (!localStorage.getItem('token')) {
-    return redirect('/login')
-  } else {
-    return null
-  }
-}
+// const isAuthenticated = () => {
+//   if (!localStorage.getItem('token')) {
+//     return redirect('/login')
+//   } else {
+//     return null
+//   }
+// }
 
 export const router = createBrowserRouter([
   {
@@ -22,7 +22,7 @@ export const router = createBrowserRouter([
       {
         path: '/',
         element: <Login />,
-        loader: isAuthenticated()
+        //loader: isAuthenticated()
       },
       {
         path: '/map',
