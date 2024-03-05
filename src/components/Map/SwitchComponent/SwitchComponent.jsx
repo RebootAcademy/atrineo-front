@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react"
-import PropTypes from 'prop-types'
-
-import { Switch } from "../../ui/Switch/Switch"
 import { Label } from "../../ui/Label/Label"
+import PropTypes from 'prop-types'
 
 function SwitchComponent({ name, handleChange, isActive }) {
   const [active, setActive] = useState(isActive)

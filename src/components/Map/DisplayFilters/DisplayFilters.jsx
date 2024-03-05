@@ -117,7 +117,7 @@ function DisplayFilters({ layerObj, type }) {
   }
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-4 ml-4 mb-4">
       {displayMultipleSelectorFields()}
       {type === 'startups' && displayBooleanFields()}
       {displayNumericFields()}
