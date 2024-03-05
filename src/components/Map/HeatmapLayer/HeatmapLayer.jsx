@@ -5,7 +5,7 @@ import { below10, between10and20, between20and35, over35, defaultStyle } from '.
 import { LayerContext } from "../../../context/layerContext"
 import PropTypes from 'prop-types'
 
-const HeatmapLayer = ({ data, fieldName }) => {
+function HeatmapLayer({ data, fieldName }) {
   const { mapDivision } = useContext(LayerContext)
   const mapData = useGeoJsonData(mapDivision)
 
@@ -25,6 +25,13 @@ const HeatmapLayer = ({ data, fieldName }) => {
     return over35
   }
 
+  /*   const determineStyle = (percentage) => {
+    if (percentage < 25) return 'patternBelow25'
+    if (percentage < 50) return 'patternBelow50'
+    if (percentage < 75) return 'patternBelow75'
+    return 'patternOver75'
+  }
+ */
   const setStyle = (feature) => {
     const currentGroupId = data.find(d => d.geojsonId === feature.properties.ID_3.toString())
     const value = currentGroupId?.sums.find(sum => sum.fieldName === fieldName)?.total
@@ -36,6 +43,7 @@ const HeatmapLayer = ({ data, fieldName }) => {
     return defaultStyle
   }
 
+
   const filteredRegions = () => {
     return mapData?.features.filter((region) => region.properties.NAME_1 === 'Baden-Württemberg')
   }
@@ -44,10 +52,12 @@ const HeatmapLayer = ({ data, fieldName }) => {
     const filteredData = { ...mapData, features: filteredRegions() }
 
     return (
-      <GeoJSON
-        data={filteredData}
-        style={(feature) => setStyle(feature)}
-      />
+      <>
+        <GeoJSON
+          data={filteredData}
+          style={(feature) => setStyle(feature)}
+        />
+      </>
     )
   } else {
     return null
