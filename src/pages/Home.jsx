@@ -7,6 +7,7 @@ import { getPublicCollections } from '../services/collectionService'
 
 import { I18N } from '../i18n'
 import MapComponent from '../components/Map/MapComponent/MapComponent'
+import LoadingSpinner from '../components/LoadingSpinner/LoadingSpinner'
 
 function Home () {
   const { example } = I18N
@@ -24,13 +25,13 @@ function Home () {
     }
   })
 
-  /*   if (!isLoading) {
-    console.log(collection)
-  } */
-
   return (
     <>
-      <MapComponent/>
+      {
+        isLoading ?
+          <LoadingSpinner /> :
+          <MapComponent />
+      }
     </>
   )
 }

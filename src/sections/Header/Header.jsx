@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useLocation } from "react-router-dom"
 
 import CustomButton from "../../components/CustomButton/CustomButton"
 
@@ -8,8 +8,10 @@ import { I18N } from "../../i18n"
 function Header() {
   const { headerOptions } = I18N.english
   const navigate = useNavigate()
-
-  const [selected, setSelected] = useState('Map')
+  const { pathname } = useLocation()
+  const optionName = pathname.split('/')[1]
+  const formattedOptionName = optionName.charAt(0).toUpperCase() + optionName.slice(1)
+  const [selected, setSelected] = useState(formattedOptionName ? formattedOptionName : 'Map')
 
   const selectOption = (text) => {
     setSelected(text)

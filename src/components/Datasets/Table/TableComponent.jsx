@@ -60,7 +60,7 @@ function TableComponent ({ data }) {
   const displayTableColumns = () => {
     return fields.map(f =>
       <TableHead
-        key={f._id}
+        key={f._id + f.fieldName}
         className='text-white'
         id={f.fieldName}
         onClick={selectField}

@@ -1,12 +1,16 @@
 import { useContext, useEffect, useState } from "react"
+import { useQuery } from "react-query"
 
 import BarPlot from '../components/Graphs/BarPlot/BarPlot'
 import PieChart from "../components/Graphs/PieChart/PieChart"
 import OptionsMenu from "../components/Graphs/OptionsMenu/OptionsMenu"
+import LoadingSpinner from "../components/LoadingSpinner/LoadingSpinner"
 import { Label } from "../components/ui/Label/Label"
 
 import { CollectionContext } from "../context/collectionContext"
 import { LayerContext } from "../context/layerContext"
+
+import { getPublicCollections } from "../services/collectionService"
 
 import {
   extractRegionNames,
@@ -16,30 +20,30 @@ import {
 } from "../helpers"
 
 function Statistics() {
-  const { collection } = useContext(CollectionContext)
+  const { collection, setCollection } = useContext(CollectionContext)
   const { mapDivision } = useContext(LayerContext)
 
-  let fields
-  let data
-  if (collection.length !== 0) {
-    data = collection[0]?.data
-    fields = extractNumericFields(data[0].fields)
-  }
-  let stringOptions
-  let booleanOptions
-  let optionsArr
-  if (data) {
-    stringOptions = extractStringOptions(data[0].fields)
-    booleanOptions = extractBooleanOptions(data[0].fields)
-    optionsArr = ['regions', ...stringOptions, ...booleanOptions]
-  }
+  useQuery('public', getPublicCollections, {
+    enabled: collection.length === 0,
+    onSuccess: (data) => {
+      if (data && data.result) {
+        setCollection(data.result)
+      }
+    }
+  })
+
+  const data = collection[0]?.data
+  const fields = data ? extractNumericFields(data[0]?.fields) : []
+  const stringOptions = data ? extractStringOptions(data[0]?.fields) : []
+  const booleanOptions = data ? extractBooleanOptions(data[0]?.fields) : []
+  const optionsArr = data ? ['regions', ...stringOptions, ...booleanOptions] : []
 
   const [width, setWidth] = useState(window.innerWidth)
   const [height, setHeight] = useState(window.innerHeight)
   const [chartType, setChartType] = useState('')
   const [aggregation, setAggregation] = useState('sum')
-  const [yAxis, setYAxis] = useState(fields[0].fieldName)
-  const [xAxis, setXAxis] = useState(optionsArr[0])
+  const [yAxis, setYAxis] = useState(fields.length > 0 ? fields[0].fieldName : '')
+  const [xAxis, setXAxis] = useState(optionsArr.length > 0 ? optionsArr[0] : '')
 
   const aggOptions = ['sum', 'avg', 'count', 'min', 'max']
 
@@ -122,7 +126,7 @@ function Statistics() {
     >
       {
         collection.length === 0 ?
-          'Loading...' :
+          <LoadingSpinner /> :
           <>
             {
               displayChart()
