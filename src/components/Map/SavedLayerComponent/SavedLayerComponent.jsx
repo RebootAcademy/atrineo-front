@@ -11,7 +11,6 @@ function SavedLayerComponent() {
   return (
     <>
       {layers.map((layer) => {
-        console.log(layer)
         return (
           <Card
             key={layer.id}

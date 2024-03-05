@@ -23,11 +23,12 @@ function App() {
 
   const [layers, setLayers] = useState([])
 
-  const storage = window.localStorage
   const collectionValue = { collection, setCollection }
-
+  
   const [selectedNameDistrict, setSelectedNameDistrict] = useState([])
   const [enableOption, setEnableOption] = useState(false)
+  
+  const storage = window.localStorage
 
   useEffect(() => {
     storage.clear()
@@ -40,10 +41,8 @@ function App() {
   const saveCurrentLayer = (obj) => {
     // Intentar cargar el arreglo de capas existente desde localStorage, o iniciar uno nuevo si no existe
     const existingLayers = JSON.parse(storage.getItem('layers')) || []
-
     // Determinar el próximo ID basado en el ID más alto existente
     const nextId = existingLayers.reduce((maxId, layer) => Math.max(maxId, layer.id), 0) + 1
-
     // Añadir la nueva capa al arreglo de capas existente
     const updatedLayers = [...existingLayers, {
       id: nextId,
