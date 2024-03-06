@@ -8,7 +8,7 @@ import { findMaxAndMinValues } from "../../../helpers"
 import L from 'leaflet'
 
 import PropTypes from 'prop-types'
-import SVGPatterns from "../PatternManager/PatternManager"
+
 
 function HeatmapLayer({ data, fieldName }) {
   const { mapDivision } = useContext(LayerContext)
@@ -74,13 +74,11 @@ function HeatmapLayer({ data, fieldName }) {
 
     return (
       <>
-        <SVGPatterns />
         <GeoJSON
           data={filteredData}
           style={(feature) => setStyle(feature)}
         />
       </>
-
     )
   } else {
     return null

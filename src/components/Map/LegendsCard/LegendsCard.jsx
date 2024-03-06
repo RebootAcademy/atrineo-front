@@ -9,7 +9,7 @@ import {
 
 function LegendsCard() {
   return (
-    <Card className='w-full flex flex-col border-0'>
+    <Card className='w-full flex flex-col border-0 overflow-y-auto max-h-[700px]'>
       <CardHeader>
         <CardTitle>Legends</CardTitle>
       </CardHeader>

@@ -1,15 +1,15 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useContext } from 'react'
-import { CollectionContext } from '../../../context/collectionContext'
-import { LayerContext } from '../../../context/layerContext'
+import { LayerContext } from '@/context/layerContext'
+import { CollectionContext } from '@/context/collectionContext'
 
-import StartupsComponent from '../StartupsComponent/StartupsComponent'
 import NumericLayer from '../NumericLayer/NumericLayer'
 import RegionsComponent from '../RegionsComponent/RegionsComponent'
-
-import { isWithinPolygon } from '../../../helpers'
+import StartupsComponent from '../StartupsComponent/StartupsComponent'
 import SelectedRegionComponent from '../SelectedRegionComponent/SelectedRegionComponent'
 
+import { isWithinPolygon } from '@/helpers'
+import { colorPaletteBlue, colorPaletteGreen, colorPaletteRed } from '@/helpers/colors'
 
 function LayersManager() {
   const { collection } = useContext(CollectionContext)
@@ -22,7 +22,7 @@ function LayersManager() {
     setLayers(storedLayers)
   }, [])
 
-  const colors = ['#E6437A', '#E6B743', '#436EE6', '#43E651', '#91815A', '#665158']
+  const colors = colorPaletteBlue
 
   const displayLayers = (filters, array) => {
     const elements = []

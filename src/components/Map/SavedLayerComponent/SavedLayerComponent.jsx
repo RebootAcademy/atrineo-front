@@ -6,7 +6,7 @@ import CircleLegend from '../../ui/Legend/CircleLegend'
 import PatternLegend from '../../ui/Legend/PatternLegend'
 
 function SavedLayerComponent() {
-  const { layers, clearLayerById, toggleLayerVisibility } = useContext(LayerContext)
+  const { layers, clearLayerById, toggleLayerVisibility, colorIndex } = useContext(LayerContext)
 
   return (
     <>
@@ -17,7 +17,7 @@ function SavedLayerComponent() {
             className='relative z-[9999999999] w-full flex flex-col justify-between items-center p-2 ml-1 mb-2 border-0'
           >
             <div>
-              <div className='w-[240px] flex justify-between'>
+              <div className='w-[240px] flex justify-between mb-1'>
                 <p className="font-bold text-sm">Filter Layer {layer.id}</p>
                 <div className='flex flex-cols gap-1'>
                   <button onClick={() => toggleLayerVisibility(layer.id)}>
@@ -28,6 +28,7 @@ function SavedLayerComponent() {
                   </button>
                 </div>
               </div>
+              <hr />
 
               <div className='text-sm mt-1'>
                 {layer.data.type === 'startups' ? (
@@ -35,7 +36,12 @@ function SavedLayerComponent() {
                     {Object.entries(layer.data).map(([key, value]) => {
                       // Filtramos para no mostrar el tipo, ya que ya sabemos que es 'startups'
                       if (key !== 'type') {
-                        return <p key={key}>{`${key}: ${value}`}</p>
+                        return (
+                          <div key={key} className='flex justify-between'>
+                            <p>{key}: </p>
+                            <p>{value}</p>
+                          </div>
+                        )
                       }
                       return null
                     })}
@@ -47,12 +53,12 @@ function SavedLayerComponent() {
                   <>
                     {Object.entries(layer.data).map(([key, value]) => {
                       if (key !== 'type' && key !== 'fieldName') {
-                        return <p key={key}>{`${value}`} by Region</p>
+                        return <p key={key}>{`${value}`} by Regions</p>
                       }
                       return null
                     })}
                     <div className='mb-4 mt-6'>
-                      <PatternLegend />
+                      <PatternLegend colorIndex={colorIndex} />
                     </div>
                   </>
                 )}

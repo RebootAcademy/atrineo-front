@@ -6,7 +6,6 @@ import { RouterProvider } from 'react-router-dom'
 
 import { LayerContext } from './context/layerContext'
 import { CollectionContext } from './context/collectionContext'
-import { polygon } from '@turf/turf'
 
 const queryClient = new QueryClient()
 
@@ -27,6 +26,8 @@ function App() {
   
   const [selectedNameDistrict, setSelectedNameDistrict] = useState([])
   const [enableOption, setEnableOption] = useState(false)
+
+  const [colorIndex, setColorIndex] = useState(0)
   
   const storage = window.localStorage
 
@@ -104,7 +105,8 @@ function App() {
     mapCenter,
     setMapCenter,
     enableOption,
-    setEnableOption
+    setEnableOption,
+    colorIndex,
   }
 
   return (
