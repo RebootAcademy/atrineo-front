@@ -27,7 +27,7 @@ function App() {
   const [selectedNameDistrict, setSelectedNameDistrict] = useState([])
   const [enableOption, setEnableOption] = useState(false)
 
-  const [colorIndex, setColorIndex] = useState(1)
+  const [colorIndex, setColorIndex] = useState(0)
   
   const storage = window.localStorage
 

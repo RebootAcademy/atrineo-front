@@ -172,7 +172,7 @@ function PatternLegend({ colorIndex }) {
 }
 
 PatternLegend.propTypes = {
-  colorIndex: PropTypes.string // Add this line to validate the 'color' prop
+  colorIndex: PropTypes.number
 }
 
 export default PatternLegend
