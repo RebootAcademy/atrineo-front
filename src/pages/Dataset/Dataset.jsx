@@ -1,7 +1,6 @@
 import { useContext } from "react"
 import { useQuery } from "react-query"
-
-import TableComponent from "../../components/Datasets/Table/TableComponent"
+// import TableComponent from "../../components/Datasets/Table/TableComponent"
 import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner"
 import UploadCSVComponent from "../../components/Datasets/UploadCSV/UploadCSVComponent"
 
@@ -28,7 +27,7 @@ function Dataset() {
           <LoadingSpinner /> :
           <div className='overflow-x-auto'>
             <UploadCSVComponent />
-            <TableComponent data={collection[0].data} />
+            {/* <TableComponent data={collection[0].data} /> */}
           </div>
       }
     </>
