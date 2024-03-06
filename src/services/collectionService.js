@@ -16,7 +16,6 @@ export const getOwnOrganizationCollections = async () => {
         token: localStorage.getItem('token')
       }
     })
-    console.log(data.result)
     return data.result
   } catch (error) {
     console.error(error)

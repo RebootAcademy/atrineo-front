@@ -69,7 +69,6 @@ function Barplot ({
           acc[name] = minValue
         }
       }
-      console.log(yAxis)
       const [value] = cur.fields.filter(d => d.fieldName === yAxis)
       acc[name] = checkAggregation(value, acc[name], aggregation )
       return acc

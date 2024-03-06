@@ -33,7 +33,6 @@ function Home () {
   } = useQuery('organizationCollections', getOwnOrganizationCollections, {
     enabled: collection.length === 0 && !!user.name,
     onSuccess: (data) => {
-      console.log(data)
       if (data && data[0]) {
         setCollection(data)
       }

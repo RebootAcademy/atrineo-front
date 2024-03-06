@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react"
+import { useContext, useEffect, useState, useMemo } from "react"
 import { useQuery } from "react-query"
 
 import BarPlot from '../components/Graphs/BarPlot/BarPlot'
@@ -38,7 +38,6 @@ function Statistics() {
   useQuery('organizationCollections', getOwnOrganizationCollections, {
     enabled: collection.length === 0 && user.name,
     onSuccess: (data) => {
-      console.log(data)
       if (data && data[0]) {
         setCollection(data)
       }
@@ -46,10 +45,22 @@ function Statistics() {
   })
 
   const data = collection[0]?.data
-  const fields = data ? extractNumericFields(data[0]?.fields) : []
-  const stringOptions = data ? extractStringOptions(data[0]?.fields) : []
-  const booleanOptions = data ? extractBooleanOptions(data[0]?.fields) : []
-  const optionsArr = data ? ['regions', ...stringOptions, ...booleanOptions] : []
+
+  const stringOptions = useMemo(() => {
+    return data ? extractStringOptions(data[0]?.fields) : []
+  }, [data])
+
+  const booleanOptions = useMemo(() => {
+    return data ? extractBooleanOptions(data[0]?.fields) : []
+  }, [data])
+
+  const fields = useMemo(() => {
+    return data ? extractNumericFields(data[0]?.fields) : []
+  }, [data])
+  
+  const optionsArr = useMemo(() => {
+    return data ? ['regions', ...stringOptions, ...booleanOptions] : []
+  }, [data, stringOptions, booleanOptions])
 
   const [width, setWidth] = useState(window.innerWidth)
   const [height, setHeight] = useState(window.innerHeight)
