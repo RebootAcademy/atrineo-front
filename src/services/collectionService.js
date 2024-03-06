@@ -8,3 +8,17 @@ export const getPublicCollections = async () => {
     console.error(error)
   }
 }
+
+export const getOwnOrganizationCollections = async () => {
+  try {
+    const { data } = await api.get("collection/organization", {
+      headers: {
+        token: localStorage.getItem('token')
+      }
+    })
+    console.log(data.result)
+    return data.result
+  } catch (error) {
+    console.error(error)
+  }
+}

@@ -5,7 +5,7 @@ import { useQuery } from 'react-query'
 import { UserContext } from '../context/userContext'
 import { CollectionContext } from '../context/collectionContext'
 
-import { getPublicCollections } from '../services/collectionService'
+import { getOwnOrganizationCollections } from '../services/collectionService'
 import { getOwnProfile } from '../services/userService'
 
 import { I18N } from '../i18n'
@@ -18,7 +18,7 @@ function Home () {
   const { user, setUser } = useContext(UserContext)
 
   useQuery('profile', getOwnProfile, {
-    enabled: !!user.name,
+    enabled: !user.name,
     onSuccess: (data) => {
       if (data && data.result) {
         setUser(data.result)
@@ -30,11 +30,12 @@ function Home () {
     isLoading,
     // data,
     // isSuccess
-  } = useQuery('public', getPublicCollections, {
+  } = useQuery('organizationCollections', getOwnOrganizationCollections, {
     enabled: collection.length === 0 && !!user.name,
     onSuccess: (data) => {
-      if (data && data.result) {
-        setCollection(data.result)
+      console.log(data)
+      if (data && data[0]) {
+        setCollection(data)
       }
     }
   })

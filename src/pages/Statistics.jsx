@@ -11,7 +11,7 @@ import { CollectionContext } from "../context/collectionContext"
 import { LayerContext } from "../context/layerContext"
 import { UserContext } from "../context/userContext"
 
-import { getPublicCollections } from "../services/collectionService"
+import { getOwnOrganizationCollections } from "../services/collectionService"
 import { getOwnProfile } from "../services/userService"
 
 import {
@@ -35,11 +35,12 @@ function Statistics() {
     }
   })
 
-  useQuery('getCollection', getPublicCollections, {
+  useQuery('organizationCollections', getOwnOrganizationCollections, {
     enabled: collection.length === 0 && user.name,
     onSuccess: (data) => {
-      if (data && data.result) {
-        setCollection(data.result)
+      console.log(data)
+      if (data && data[0]) {
+        setCollection(data)
       }
     }
   })
@@ -64,6 +65,17 @@ function Statistics() {
     setHeight(window.innerHeight)
   }, [width, height])
 
+  useEffect(() => {
+    if (fields.length > 0) {
+      setYAxis(fields[0].fieldName)
+    }
+  }, [fields])
+
+  useEffect(() => {
+    if (optionsArr.length > 0) {
+      setXAxis(optionsArr[0])
+    }
+  }, [optionsArr])
 
   const regionNames = extractRegionNames(collection, mapDivision)
 

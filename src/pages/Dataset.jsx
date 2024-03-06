@@ -7,7 +7,7 @@ import LoadingSpinner from "../components/LoadingSpinner/LoadingSpinner"
 import { CollectionContext } from "../context/collectionContext"
 import { UserContext } from "../context/userContext"
 
-import { getPublicCollections } from "../services/collectionService"
+import { getOwnOrganizationCollections } from "../services/collectionService"
 import { getOwnProfile } from "../services/userService"
 
 function Dataset() {
@@ -23,15 +23,15 @@ function Dataset() {
     }
   })
 
-  useQuery('getCollection', getPublicCollections, {
+  useQuery('organizationCollections', getOwnOrganizationCollections, {
     enabled: collection.length === 0 && user.name,
     onSuccess: (data) => {
-      if (data && data.result) {
-        setCollection(data.result)
+      console.log(data)
+      if (data && data[0]) {
+        setCollection(data)
       }
     }
   })
-
 
   return (
     <>
