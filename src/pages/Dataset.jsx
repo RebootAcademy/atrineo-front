@@ -7,15 +7,18 @@ import LoadingSpinner from "../components/LoadingSpinner/LoadingSpinner"
 import { CollectionContext } from "../context/collectionContext"
 import { UserContext } from "../context/userContext"
 
-import { getPublicCollections } from "../services/collectionService"
+import { 
+  getOwnOrganizationCollections, 
+  getPublicCollections
+} from "../services/collectionService"
 import { getOwnProfile } from "../services/userService"
 
 function Dataset() {
   const { collection, setCollection } = useContext(CollectionContext)
   const { user, setUser } = useContext(UserContext)
-
+  
   useQuery('profile', getOwnProfile, {
-    enabled: !!user.name,
+    enabled: !!user && !user.name,
     onSuccess: (data) => {
       if (data && data.result) {
         setUser(data.result)
@@ -23,15 +26,30 @@ function Dataset() {
     }
   })
 
-  useQuery('getCollection', getPublicCollections, {
-    enabled: collection.length === 0 && user.name,
+  useQuery('organizationCollections', getOwnOrganizationCollections, {
+    enabled: !!user && 
+      Object.keys(user).length > 0 
+      && collection.length === 0 && 
+      user.role && 
+      user.role !== 'wizard',
     onSuccess: (data) => {
-      if (data && data.result) {
-        setCollection(data.result)
+      if (data && data[0]) {
+        setCollection(data)
       }
     }
   })
 
+  useQuery('publicCollections', getPublicCollections, {
+    enabled: !!user && 
+      Object.keys(user).length > 0 && 
+      collection.length === 0 && 
+      user.role === 'wizard',
+    onSuccess: (data) => {
+      if (Object.keys(user).length > 0) {
+        setCollection(data.result)
+      }
+    }
+  })
 
   return (
     <>
@@ -39,6 +57,7 @@ function Dataset() {
         collection.length === 0 ?
           <LoadingSpinner /> :
           <div className='overflow-x-auto'>
+            { user?.role === 'wizard' ? 'Wizard section' : '' }
             <TableComponent data={collection[0].data} />
           </div>
       }
