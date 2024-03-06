@@ -7,7 +7,7 @@ export const getOwnProfile = async () => {
         token: localStorage.getItem('token')
       }
     })
-    return data  
+    return data
   } catch (error) {
     console.error(error)
   }

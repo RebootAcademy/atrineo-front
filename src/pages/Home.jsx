@@ -5,7 +5,10 @@ import { useQuery } from 'react-query'
 import { UserContext } from '../context/userContext'
 import { CollectionContext } from '../context/collectionContext'
 
-import { getPublicCollections } from '../services/collectionService'
+import { 
+  getOwnOrganizationCollections, 
+  getPublicCollections 
+} from '../services/collectionService'
 import { getOwnProfile } from '../services/userService'
 
 import { I18N } from '../i18n'
@@ -18,7 +21,7 @@ function Home () {
   const { user, setUser } = useContext(UserContext)
 
   useQuery('profile', getOwnProfile, {
-    enabled: !!user.name,
+    enabled: !!user && !user.name,
     onSuccess: (data) => {
       if (data && data.result) {
         setUser(data.result)
@@ -26,23 +29,41 @@ function Home () {
     }
   })
 
-  const {
-    isLoading,
-    // data,
-    // isSuccess
-  } = useQuery('public', getPublicCollections, {
-    enabled: collection.length === 0 && !!user.name,
+  useQuery('organizationCollections', getOwnOrganizationCollections, {
+    enabled: !!user && Object.keys(user).length > 0 && collection.length === 0 && user.role && user.role !== 'wizard',
     onSuccess: (data) => {
-      if (data && data.result) {
+      if (data && data[0]) {
+        setCollection(data)
+      }
+    }
+  })
+
+  useQuery('publicCollections', getPublicCollections, {
+    enabled: !!user && Object.keys(user).length > 0 && collection.length === 0 && user.role === 'wizard',
+    onSuccess: (data) => {
+      if (Object.keys(user).length > 0) {
         setCollection(data.result)
       }
     }
   })
 
+  // const {
+  //   isLoading,
+  //   // data,
+  //   // isSuccess
+  // } = useQuery('organizationCollections', getOwnOrganizationCollections, {
+  //   enabled: collection.length === 0 && !!user.name,
+  //   onSuccess: (data) => {
+  //     if (data && data[0]) {
+  //       setCollection(data)
+  //     }
+  //   }
+  // })
+
   return (
     <>
       {
-        isLoading ?
+        collection.length === 0 ?
           <LoadingSpinner /> :
           <MapComponent />
       }

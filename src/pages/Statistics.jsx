@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react"
+import { useContext, useEffect, useState, useMemo } from "react"
 import { useQuery } from "react-query"
 
 import BarPlot from '../components/Graphs/BarPlot/BarPlot'
@@ -11,7 +11,11 @@ import { CollectionContext } from "../context/collectionContext"
 import { LayerContext } from "../context/layerContext"
 import { UserContext } from "../context/userContext"
 
-import { getPublicCollections } from "../services/collectionService"
+import { 
+  getOwnOrganizationCollections, 
+  getPublicCollections 
+} from "../services/collectionService"
+
 import { getOwnProfile } from "../services/userService"
 
 import {
@@ -27,7 +31,7 @@ function Statistics() {
   const { user, setUser } = useContext(UserContext)
 
   useQuery('profile', getOwnProfile, {
-    enabled: !!user.name,
+    enabled: !!user && !user.name,
     onSuccess: (data) => {
       if (data && data.result) {
         setUser(data.result)
@@ -35,20 +39,41 @@ function Statistics() {
     }
   })
 
-  useQuery('getCollection', getPublicCollections, {
-    enabled: collection.length === 0 && user.name,
+  useQuery('organizationCollections', getOwnOrganizationCollections, {
+    enabled: !!user && Object.keys(user).length > 0 && collection.length === 0 && user.role && user.role !== 'wizard',
     onSuccess: (data) => {
-      if (data && data.result) {
+      if (data && data[0]) {
+        setCollection(data)
+      }
+    }
+  })
+
+  useQuery('publicCollections', getPublicCollections, {
+    enabled: !!user && Object.keys(user).length > 0 && collection.length === 0 && user.role === 'wizard',
+    onSuccess: (data) => {
+      if (Object.keys(user).length > 0) {
         setCollection(data.result)
       }
     }
   })
 
   const data = collection[0]?.data
-  const fields = data ? extractNumericFields(data[0]?.fields) : []
-  const stringOptions = data ? extractStringOptions(data[0]?.fields) : []
-  const booleanOptions = data ? extractBooleanOptions(data[0]?.fields) : []
-  const optionsArr = data ? ['regions', ...stringOptions, ...booleanOptions] : []
+
+  const stringOptions = useMemo(() => {
+    return data ? extractStringOptions(data[0]?.fields) : []
+  }, [data])
+
+  const booleanOptions = useMemo(() => {
+    return data ? extractBooleanOptions(data[0]?.fields) : []
+  }, [data])
+
+  const fields = useMemo(() => {
+    return data ? extractNumericFields(data[0]?.fields) : []
+  }, [data])
+  
+  const optionsArr = useMemo(() => {
+    return data ? ['regions', ...stringOptions, ...booleanOptions] : []
+  }, [data, stringOptions, booleanOptions])
 
   const [width, setWidth] = useState(window.innerWidth)
   const [height, setHeight] = useState(window.innerHeight)
@@ -64,6 +89,17 @@ function Statistics() {
     setHeight(window.innerHeight)
   }, [width, height])
 
+  useEffect(() => {
+    if (fields.length > 0) {
+      setYAxis(fields[0].fieldName)
+    }
+  }, [fields])
+
+  useEffect(() => {
+    if (optionsArr.length > 0) {
+      setXAxis(optionsArr[0])
+    }
+  }, [optionsArr])
 
   const regionNames = extractRegionNames(collection, mapDivision)
 
