@@ -11,6 +11,10 @@ export const english = {
     {
       text: 'Dataset',
       img: './dataset.svg'
+    },
+    {
+      text: 'Settings',
+      img: './settings.svg'
     }
   ]
 }
