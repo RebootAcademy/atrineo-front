@@ -9,8 +9,10 @@ import { Label } from "../components/ui/Label/Label"
 
 import { CollectionContext } from "../context/collectionContext"
 import { LayerContext } from "../context/layerContext"
+import { UserContext } from "../context/userContext"
 
 import { getPublicCollections } from "../services/collectionService"
+import { getOwnProfile } from "../services/userService"
 
 import {
   extractRegionNames,
@@ -22,9 +24,19 @@ import {
 function Statistics() {
   const { collection, setCollection } = useContext(CollectionContext)
   const { mapDivision } = useContext(LayerContext)
+  const { user, setUser } = useContext(UserContext)
 
-  useQuery('public', getPublicCollections, {
-    enabled: collection.length === 0,
+  useQuery('profile', getOwnProfile, {
+    enabled: !!user.name,
+    onSuccess: (data) => {
+      if (data && data.result) {
+        setUser(data.result)
+      }
+    }
+  })
+
+  useQuery('getCollection', getPublicCollections, {
+    enabled: collection.length === 0 && user.name,
     onSuccess: (data) => {
       if (data && data.result) {
         setCollection(data.result)

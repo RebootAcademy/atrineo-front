@@ -4,6 +4,7 @@ import { RouterProvider } from 'react-router-dom'
 
 import { LayerContext } from './context/layerContext'
 import { CollectionContext } from './context/collectionContext'
+import { UserContext } from './context/userContext'
 
 import { router } from './router'
 
@@ -16,15 +17,17 @@ function App() {
   const [searchPolygon, setSearchPolygon] = useState(null)
   const [selectedRegion, setSelectedRegion] = useState('')
   const [layers, setLayers] = useState([])
+  const [ user, setUser ] = useState({})
 
   const storage = window.localStorage
   const collectionValue = { collection, setCollection }
+  const userValue = { user, setUser }
   const [selectedNameDistrict, setSelectedNameDistrict] = useState([])
 
-  useEffect(() => {
+  /*useEffect(() => {
     storage.clear()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [])*/
 
   useEffect(() => {
   }, [searchPolygon])
@@ -99,11 +102,13 @@ function App() {
   return (
     <>
       <QueryClientProvider client={queryClient}>
-        <LayerContext.Provider value={value}>
-          <CollectionContext.Provider value={collectionValue}>
-            <RouterProvider router={router} />
-          </CollectionContext.Provider>
-        </LayerContext.Provider>
+        <UserContext.Provider value={userValue} >
+          <LayerContext.Provider value={value}>
+            <CollectionContext.Provider value={collectionValue}>
+              <RouterProvider router={router} />
+            </CollectionContext.Provider>
+          </LayerContext.Provider>
+        </UserContext.Provider>
       </QueryClientProvider>
     </>
   )

@@ -1,10 +1,15 @@
-import { useState } from "react"
+import { useState, useContext } from "react"
+
 import { useNavigate } from "react-router-dom"
 import { Input } from "../../components/ui/Input/input"
 import { Button } from "../../components/ui/Button/Button"
+
 import { login } from "../../services/auth"
 
+import { UserContext } from "../../context/userContext"
+
 function Login() {
+  const { setUser } = useContext(UserContext)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [errorMessage, setErrorMessage] = useState(false)
@@ -50,8 +55,8 @@ function Login() {
     try {
       const loginResponse = await login({ email, password })
       if (loginResponse) {
-        localStorage.setItem('token', loginResponse.result)
-        // localStorage.setItem('role', loginResponse.role)
+        localStorage.setItem('token', loginResponse.result.token)
+        await setUser(loginResponse.result.user)
         navigate('/map')
       }
     } catch (error) {

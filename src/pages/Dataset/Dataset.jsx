@@ -5,14 +5,26 @@ import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner"
 import UploadCSVComponent from "../../components/Datasets/UploadCSV/UploadCSVComponent"
 
 import { CollectionContext } from "../../context/collectionContext"
+import { UserContext } from "../context/userContext"
 
-import { getPublicCollections } from "../../services/collectionService"
+import { getPublicCollections } from "../services/collectionService"
+import { getOwnProfile } from "../services/userService"
 
 function Dataset() {
   const { collection, setCollection } = useContext(CollectionContext)
+  const { user, setUser } = useContext(UserContext)
 
-  useQuery('public', getPublicCollections, {
-    enabled: collection.length === 0,
+  useQuery('profile', getOwnProfile, {
+    enabled: !!user.name,
+    onSuccess: (data) => {
+      if (data && data.result) {
+        setUser(data.result)
+      }
+    }
+  })
+
+  useQuery('getCollection', getPublicCollections, {
+    enabled: collection.length === 0 && user.name,
     onSuccess: (data) => {
       if (data && data.result) {
         setCollection(data.result)
