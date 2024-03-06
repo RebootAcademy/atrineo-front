@@ -15,6 +15,7 @@ function Csv() {
 
   const uploadDataFile = async (data) => {
     try {
+      console.log(res)
       const res = await uploadCsv(data)
       if (res) {
         console.log(res)
@@ -26,7 +27,7 @@ function Csv() {
 
   return (
     <>
-      <div className='bg-red-400'>
+      <div className='bg-red-100'>
         <CSVReader
           onFileLoaded={handleCSVUpload}
           parserOptions={{ header: true, dynamicTyping: true, skipEmptyLines: true }}
