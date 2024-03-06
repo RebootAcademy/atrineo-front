@@ -5,10 +5,10 @@ import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner"
 import UploadCSVComponent from "../../components/Datasets/UploadCSV/UploadCSVComponent"
 
 import { CollectionContext } from "../../context/collectionContext"
-import { UserContext } from "../context/userContext"
+import { UserContext } from "../../context/userContext"
 
-import { getPublicCollections } from "../services/collectionService"
-import { getOwnProfile } from "../services/userService"
+import { getPublicCollections } from "../../services/collectionService"
+import { getOwnProfile } from "../../services/userService"
 
 function Dataset() {
   const { collection, setCollection } = useContext(CollectionContext)

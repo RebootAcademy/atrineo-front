@@ -1,7 +1,7 @@
 import CSVReader from 'react-csv-reader'
 import { uploadCsv } from '../../services/uploadData'
-import TableComponent from '../../components/Datasets/Table/TableComponent'
 import { useState } from 'react'
+//import TableComponent from '../../components/Datasets/Table/TableComponent'
 
 function Csv() {
   // eslint-disable-next-line no-unused-vars
@@ -24,15 +24,16 @@ function Csv() {
     }
   }
 
-
   return (
-    <div className='bg-red-400'>
-      <CSVReader
-        onFileLoaded={handleCSVUpload}
-        parserOptions={{ header: true, dynamicTyping: true, skipEmptyLines: true }}
-      />
-      {csvData && <TableComponent data={csvData} />}
-    </div>
+    <>
+      <div className='bg-red-400'>
+        <CSVReader
+          onFileLoaded={handleCSVUpload}
+          parserOptions={{ header: true, dynamicTyping: true, skipEmptyLines: true }}
+        />
+        {/* {csvData && <TableComponent data={csvData} />} */}
+      </div>
+    </>
   )
 }
 
