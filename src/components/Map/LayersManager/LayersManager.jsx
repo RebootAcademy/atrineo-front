@@ -9,7 +9,7 @@ import StartupsComponent from '../StartupsComponent/StartupsComponent'
 import SelectedRegionComponent from '../SelectedRegionComponent/SelectedRegionComponent'
 
 import { isWithinPolygon } from '@/helpers'
-import { colorPaletteBlue, colorPaletteGreen, colorPaletteRed } from '@/helpers/colors'
+import { colorPalette, colorPaletteBlue, colorPaletteGreen, colorPaletteRed } from '@/helpers/colors'
 
 function LayersManager() {
   const { collection } = useContext(CollectionContext)
@@ -22,7 +22,7 @@ function LayersManager() {
     setLayers(storedLayers)
   }, [])
 
-  const colors = colorPaletteBlue
+  const colors = colorPalette
 
   const displayLayers = (filters, array) => {
     const elements = []

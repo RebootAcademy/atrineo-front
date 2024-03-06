@@ -1,8 +1,8 @@
-import { colorPalette } from '../../../helpers/colors'
+import { colorPalette, colorPaletteBlue, colorPaletteGreen } from '../../../helpers/colors'
 import PropTypes from 'prop-types'
 
 function PatternManager({ colorIndex }) {
-  const color = colorPalette[colorIndex % colorPalette.length]
+  const color = colorPaletteGreen[colorIndex % colorPaletteGreen.length]
 
   return (
     <svg xmlns="http://www.w3.org/2000/svg" style={{ position: 'absolute', width: 0, height: 0 }}>

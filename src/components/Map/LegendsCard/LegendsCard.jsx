@@ -1,7 +1,5 @@
 import SavedLayerComponent from '../SavedLayerComponent/SavedLayerComponent'
 import {
-  Card,
-  CardContent,
   CardHeader,
   CardTitle
 } from '../../ui/Card/Card'
@@ -9,15 +7,14 @@ import {
 
 function LegendsCard() {
   return (
-    <Card className='w-full flex flex-col border-0 overflow-y-auto max-h-[700px]'>
+    <div className='w-full flex flex-col border-0'>
       <CardHeader>
         <CardTitle>Legends</CardTitle>
       </CardHeader>
-
-      <CardContent>
+      <div className='overflow-y-auto max-h-[700px]'>
         <SavedLayerComponent />
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   )
 }
 

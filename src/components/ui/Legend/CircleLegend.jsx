@@ -1,23 +1,16 @@
 function CircleLegend() {
   return (
     <svg width="200" height="136" viewBox="0 0 183 136" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M103.731 80.5C103.731 109.359 80.5634 132.75 51.9903 132.75C23.4172 132.75 0.25 109.359 0.25 80.5C0.25 51.6408 23.4172 28.25 51.9903 28.25C80.5634 28.25 103.731 51.6408 103.731 80.5Z" fill="#9747FF" fillOpacity="0.2" stroke="#9747FF" strokeWidth="0.5" />
-      <path d="M93.75 90.5C93.75 113.837 75.0551 132.75 52 132.75C28.9449 132.75 10.25 113.837 10.25 90.5C10.25 67.1632 28.9449 48.25 52 48.25C75.0551 48.25 93.75 67.1632 93.75 90.5Z" fill="#9747FF" fillOpacity="0.2" stroke="#9747FF" strokeWidth="0.5" />
-      <circle cx="52" cy="99" r="33.75" fill="#9747FF" fillOpacity="0.2" stroke="#9747FF" strokeWidth="0.5" />
-      <circle cx="52" cy="107" r="25.75" fill="#9747FF" fillOpacity="0.2" stroke="#9747FF" strokeWidth="0.5" />
-      <circle cx="52" cy="115" r="17.75" fill="#9747FF" fillOpacity="0.2" stroke="#9747FF" strokeWidth="0.5" />
+      <path d="M103.731 80.5C103.731 109.359 80.5634 132.75 51.9903 132.75C23.4172 132.75 0.25 109.359 0.25 80.5C0.25 51.6408 23.4172 28.25 51.9903 28.25C80.5634 28.25 103.731 51.6408 103.731 80.5Z" fill='var(--primary)' fillOpacity="0.2" stroke='var(--primary)' strokeWidth="0.5" />
+      <path d="M93.75 90.5C93.75 113.837 75.0551 132.75 52 132.75C28.9449 132.75 10.25 113.837 10.25 90.5C10.25 67.1632 28.9449 48.25 52 48.25C75.0551 48.25 93.75 67.1632 93.75 90.5Z" fill='var(--primary)' fillOpacity="0.2" stroke='var(--primary)' strokeWidth="0.5" />
+      <circle cx="52" cy="99" r="33.75" fill='var(--primary)' fillOpacity="0.2" stroke='var(--primary)' strokeWidth="0.5" />
+      <circle cx="52" cy="107" r="25.75" fill='var(--primary)' fillOpacity="0.2" stroke='var(--primary)' strokeWidth="0.5" />
+      <circle cx="52" cy="115" r="17.75" fill='var(--primary)' fillOpacity="0.2" stroke='var(--primary)' strokeWidth="0.5" />
       
       <text x="154" y="30" fill="#0F172A" fontSize="10">Max</text>
-      {/*       <text x="154" y="50" fill="#0F172A" fontSize="10">Value 4</text>
-      <text x="154" y="67" fill="#0F172A" fontSize="10">Value 3</text>
-      <text x="154" y="92" fill="#0F172A" fontSize="10">Value 2</text> */}
       <text x="154" y="134" fill="#0F172A" fontSize="10">Min</text>
 
       <line x1="52" y1="132.75" x2="143" y2="132.75" stroke="black" strokeWidth="0.5" strokeDasharray="1 1" />
-      {/*       <line x1="52" y1="96.75" x2="143" y2="96.75" stroke="black" strokeWidth="0.5" strokeDasharray="1 1" />
-      <line x1="52" y1="80.75" x2="143" y2="80.75" stroke="black" strokeWidth="0.5" strokeDasharray="1 1" />
-      <line x1="52" y1="64.75" x2="143" y2="64.75" stroke="black" strokeWidth="0.5" strokeDasharray="1 1" />
-      <line x1="52" y1="47.75" x2="143" y2="47.75" stroke="black" strokeWidth="0.5" strokeDasharray="1 1" /> */}
       <line x1="52" y1="27.75" x2="143" y2="27.75" stroke="black" strokeWidth="0.5" strokeDasharray="1 1" />
       
       <path d="M111 28L109.557 30.5L112.443 30.5L111 28ZM111 133L112.443 130.5L109.557 130.5L111 133ZM110.75 30.25L110.75 130.75L111.25 130.75L111.25 30.25L110.75 30.25Z" fill="black" />

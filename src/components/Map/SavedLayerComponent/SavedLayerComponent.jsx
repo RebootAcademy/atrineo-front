@@ -1,6 +1,5 @@
 import { useContext } from 'react'
 import { LayerContext } from '../../../context/layerContext'
-import { Card } from '../../ui/Card/Card'
 import { EyeIcon, EyeOffIcon, TrashIcon } from '../../ui/Icons/Icons'
 import CircleLegend from '../../ui/Legend/CircleLegend'
 import PatternLegend from '../../ui/Legend/PatternLegend'
@@ -12,13 +11,10 @@ function SavedLayerComponent() {
     <>
       {layers.map((layer) => {
         return (
-          <Card
-            key={layer.id}
-            className='relative z-[9999999999] w-full flex flex-col justify-between items-center p-2 ml-1 mb-2 border-0'
-          >
-            <div>
-              <div className='w-[240px] flex justify-between mb-1'>
-                <p className="font-bold text-sm">Filter Layer {layer.id}</p>
+          <div key={layer.id} className='relative w-[288px] flex flex-col justify-between p-2 ml-3 mb-2 border-0'>
+            <div className='mr-4'>
+              <div className='w-full flex justify-between mb-1 border-b-2'>
+                <p className="font-bold text-sm mb-1">Filter Layer {layer.id}</p>
                 <div className='flex flex-cols gap-1'>
                   <button onClick={() => toggleLayerVisibility(layer.id)}>
                     {layer.isVisible ? <EyeOffIcon /> : <EyeIcon />}
@@ -28,8 +24,7 @@ function SavedLayerComponent() {
                   </button>
                 </div>
               </div>
-              <hr />
-
+               
               <div className='text-sm mt-1'>
                 {layer.data.type === 'startups' ? (
                   <>
@@ -53,7 +48,7 @@ function SavedLayerComponent() {
                   <>
                     {Object.entries(layer.data).map(([key, value]) => {
                       if (key !== 'type' && key !== 'fieldName') {
-                        return <p key={key}>{`${value}`} by Regions</p>
+                        return <p key={key}>Total {`${value}`} per Region</p>
                       }
                       return null
                     })}
@@ -65,7 +60,7 @@ function SavedLayerComponent() {
 
               </div>
             </div>
-          </Card>
+          </div>
         )
       })}
     </>
