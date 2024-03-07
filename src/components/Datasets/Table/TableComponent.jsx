@@ -61,7 +61,7 @@ function TableComponent ({ data }) {
     return fields.map(f =>
       <TableHead
         key={f._id + f.fieldName}
-        className='text-white'
+        className='text-white font-bold text-center'
         id={f.fieldName}
         onClick={selectField}
       >
@@ -80,16 +80,20 @@ function TableComponent ({ data }) {
     return data.map(d => {
       return (
         <TableRow 
-          key={d._id} 
-          className='h-20'
+          key={d._id}
+          className=''
         >
           {
             d.fields.map((f, i) => {
+              const isNumeric = typeof f.fieldValue === 'number'
+              const isBool = typeof f.fieldValue === 'boolean'
+              let className = isNumeric ? 'text-right' : 'min-w-20'
+              className = isBool ? 'text-center' : className
               return (
                 <TableCell key={i}>
-                  {
-                    displayData(f.fieldValue)
-                  }
+                  <div className={className}>
+                    { displayData(f.fieldValue) }
+                  </div>
                 </TableCell>
               )
             })
@@ -101,8 +105,8 @@ function TableComponent ({ data }) {
 
   return (
     <Table>
-      <TableHeader className="bg-primary h-24">
-        <TableRow>
+      <TableHeader className="bg-primary sticky top-0 z-10">
+        <TableRow >
           {
             displayTableColumns()
           }
