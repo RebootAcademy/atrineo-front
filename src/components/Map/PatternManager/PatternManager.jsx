@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { colorPalette, colorPaletteBlue, colorPaletteGreen } from '../../../helpers/colors'
 import PropTypes from 'prop-types'
 

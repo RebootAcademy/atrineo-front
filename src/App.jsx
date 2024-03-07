@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useEffect, useState } from 'react'
 import { QueryClient, QueryClientProvider } from 'react-query'
 import { RouterProvider } from 'react-router-dom'
@@ -12,25 +13,24 @@ const queryClient = new QueryClient()
 
 function App() {
   const [mapDivision, setMapDivision] = useState('division3')
+  const [selectedNameDistrict, setSelectedNameDistrict] = useState([])
+  const [selectedRegion, setSelectedRegion] = useState('')
+  const [searchPolygon, setSearchPolygon] = useState(null)
   const [mapCenter, setMapCenter] = useState([48.6, 9])
   const [collection, setCollection] = useState([])
-  const [searchPolygon, setSearchPolygon] = useState(null)
-  const [selectedRegion, setSelectedRegion] = useState('')
   const [layers, setLayers] = useState([])
   const [ user, setUser ] = useState({})
-
-  const collectionValue = { collection, setCollection }
   const userValue = { user, setUser }
-  const [selectedNameDistrict, setSelectedNameDistrict] = useState([])
 
   const [colorIndex, setColorIndex] = useState(0)
+  const collectionValue = { collection, setCollection }
   
   const storage = window.localStorage
 
-  /*useEffect(() => {
+  /*   useEffect(() => {
     storage.clear()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])*/
+  }, []) */
 
   useEffect(() => {
   }, [searchPolygon])
@@ -98,8 +98,6 @@ function App() {
     setSelectedNameDistrict,
     mapCenter,
     setMapCenter,
-    enableOption,
-    setEnableOption,
     colorIndex,
   }
 
