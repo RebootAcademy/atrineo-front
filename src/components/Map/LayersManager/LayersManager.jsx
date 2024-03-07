@@ -1,4 +1,3 @@
-
 import { useEffect, useContext } from 'react'
 import { LayerContext } from '@/context/layerContext'
 import { CollectionContext } from '@/context/collectionContext'

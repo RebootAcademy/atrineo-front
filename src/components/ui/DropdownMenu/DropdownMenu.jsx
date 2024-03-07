@@ -1,4 +1,5 @@
 /* eslint-disable react/prop-types */
+/* eslint-disable no-unused-vars */
 import * as React from "react"
 import * as DropdownMenuPrimitive from "@radix-ui/react-dropdown-menu"
 import { Check, ChevronRight, Circle } from "lucide-react"
@@ -151,7 +152,7 @@ const DropdownMenuShortcut = ({
     (<span
       className={cn("ml-auto text-xs tracking-widest opacity-60", className)}
       {...props} />)
-  );
+  )
 }
 DropdownMenuShortcut.displayName = "DropdownMenuShortcut"
 

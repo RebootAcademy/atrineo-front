@@ -1,40 +1,36 @@
-/* eslint-disable no-unused-vars */
 import { useEffect, useState } from 'react'
 import { QueryClient, QueryClientProvider } from 'react-query'
-import { router } from './router'
 import { RouterProvider } from 'react-router-dom'
 
 import { LayerContext } from './context/layerContext'
 import { CollectionContext } from './context/collectionContext'
+import { UserContext } from './context/userContext'
+
+import { router } from './router'
 
 const queryClient = new QueryClient()
 
 function App() {
   const [mapDivision, setMapDivision] = useState('division3')
   const [mapCenter, setMapCenter] = useState([48.6, 9])
-
   const [collection, setCollection] = useState([])
-
   const [searchPolygon, setSearchPolygon] = useState(null)
-
-  const [companies, setCompanies] = useState([]) //??=??
   const [selectedRegion, setSelectedRegion] = useState('')
-
   const [layers, setLayers] = useState([])
+  const [ user, setUser ] = useState({})
 
   const collectionValue = { collection, setCollection }
-  
+  const userValue = { user, setUser }
   const [selectedNameDistrict, setSelectedNameDistrict] = useState([])
-  const [enableOption, setEnableOption] = useState(false)
 
   const [colorIndex, setColorIndex] = useState(0)
   
   const storage = window.localStorage
 
-  useEffect(() => {
+  /*useEffect(() => {
     storage.clear()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [])*/
 
   useEffect(() => {
   }, [searchPolygon])
@@ -89,8 +85,6 @@ function App() {
   const value = {
     searchPolygon,
     setSearchPolygon,
-    companies,
-    setCompanies,
     selectedRegion,
     setSelectedRegion,
     saveCurrentLayer,
@@ -112,11 +106,13 @@ function App() {
   return (
     <>
       <QueryClientProvider client={queryClient}>
-        <LayerContext.Provider value={value}>
-          <CollectionContext.Provider value={collectionValue}>
-            <RouterProvider router={router} />
-          </CollectionContext.Provider>
-        </LayerContext.Provider>
+        <UserContext.Provider value={userValue} >
+          <LayerContext.Provider value={value}>
+            <CollectionContext.Provider value={collectionValue}>
+              <RouterProvider router={router} />
+            </CollectionContext.Provider>
+          </LayerContext.Provider>
+        </UserContext.Provider>
       </QueryClientProvider>
     </>
   )

@@ -6,8 +6,11 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "lint": "eslint . --ext js,jsx --report-unused-disable-directives",
+    "lint:fix": "eslint . --fix --ext js,jsx --report-unused-disable-directives",
+    "preview": "vite preview",
+    "test": "lint-staged",
+    "prepare": "husky install"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.4",
@@ -28,6 +31,7 @@
     "cmdk": "^0.2.1",
     "d3": "^7.8.5",
     "dotenv": "^16.4.1",
+    "husky": "^9.0.11",
     "leaflet": "^1.9.4",
     "leaflet-draw": "^1.0.4",
     "lucide-react": "^0.319.0",

@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import { Marker } from 'react-leaflet'
 import { Icon } from 'leaflet'
 import PropTypes from 'prop-types'

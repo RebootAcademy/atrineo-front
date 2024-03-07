@@ -1,3 +1,5 @@
+/* eslint-disable react/prop-types */
+/* eslint-disable react/no-unknown-property */
 import * as React from "react"
 import { Command as CommandPrimitive } from "cmdk"
 import { Search } from "lucide-react"
@@ -29,7 +31,7 @@ const CommandDialog = ({
         </Command>
       </DialogContent>
     </Dialog>)
-  );
+  )
 }
 
 const CommandInput = React.forwardRef(({ className, ...props }, ref) => (
@@ -99,7 +101,7 @@ const CommandShortcut = ({
     (<span
       className={cn("ml-auto text-xs tracking-widest text-muted-foreground", className)}
       {...props} />)
-  );
+  )
 }
 CommandShortcut.displayName = "CommandShortcut"
 

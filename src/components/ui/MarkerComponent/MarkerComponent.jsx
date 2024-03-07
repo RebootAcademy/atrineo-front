@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import { Marker } from 'react-leaflet'
 import { Icon } from 'leaflet'
 import PropTypes from 'prop-types'
@@ -26,7 +25,8 @@ function MarkerComponent ({ coords, onClick, info }) {
 
 MarkerComponent.propTypes = {
   coords: PropTypes.object,
-  onClick: PropTypes.func
+  onClick: PropTypes.func,
+  info: PropTypes.string
 }
 
 export default MarkerComponent

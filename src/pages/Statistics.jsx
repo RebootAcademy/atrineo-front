@@ -1,12 +1,22 @@
-import { useContext, useEffect, useState } from "react"
+import { useContext, useEffect, useState, useMemo } from "react"
+import { useQuery } from "react-query"
 
 import BarPlot from '../components/Graphs/BarPlot/BarPlot'
 import PieChart from "../components/Graphs/PieChart/PieChart"
 import OptionsMenu from "../components/Graphs/OptionsMenu/OptionsMenu"
+import LoadingSpinner from "../components/LoadingSpinner/LoadingSpinner"
 import { Label } from "../components/ui/Label/Label"
 
 import { CollectionContext } from "../context/collectionContext"
 import { LayerContext } from "../context/layerContext"
+import { UserContext } from "../context/userContext"
+
+import { 
+  getOwnOrganizationCollections, 
+  getPublicCollections 
+} from "../services/collectionService"
+
+import { getOwnProfile } from "../services/userService"
 
 import {
   extractRegionNames,
@@ -16,30 +26,61 @@ import {
 } from "../helpers"
 
 function Statistics() {
-  const { collection } = useContext(CollectionContext)
+  const { collection, setCollection } = useContext(CollectionContext)
   const { mapDivision } = useContext(LayerContext)
+  const { user, setUser } = useContext(UserContext)
 
-  let fields
-  let data
-  if (collection.length !== 0) {
-    data = collection[0]?.data
-    fields = extractNumericFields(data[0].fields)
-  }
-  let stringOptions
-  let booleanOptions
-  let optionsArr
-  if (data) {
-    stringOptions = extractStringOptions(data[0].fields)
-    booleanOptions = extractBooleanOptions(data[0].fields)
-    optionsArr = ['regions', ...stringOptions, ...booleanOptions]
-  }
+  useQuery('profile', getOwnProfile, {
+    enabled: !!user && !user.name,
+    onSuccess: (data) => {
+      if (data && data.result) {
+        setUser(data.result)
+      }
+    }
+  })
+
+  useQuery('organizationCollections', getOwnOrganizationCollections, {
+    enabled: !!user && Object.keys(user).length > 0 && collection.length === 0 && user.role && user.role !== 'wizard',
+    onSuccess: (data) => {
+      if (data && data[0]) {
+        setCollection(data)
+      }
+    }
+  })
+
+  useQuery('publicCollections', getPublicCollections, {
+    enabled: !!user && Object.keys(user).length > 0 && collection.length === 0 && user.role === 'wizard',
+    onSuccess: (data) => {
+      if (Object.keys(user).length > 0) {
+        setCollection(data.result)
+      }
+    }
+  })
+
+  const data = collection[0]?.data
+
+  const stringOptions = useMemo(() => {
+    return data ? extractStringOptions(data[0]?.fields) : []
+  }, [data])
+
+  const booleanOptions = useMemo(() => {
+    return data ? extractBooleanOptions(data[0]?.fields) : []
+  }, [data])
+
+  const fields = useMemo(() => {
+    return data ? extractNumericFields(data[0]?.fields) : []
+  }, [data])
+  
+  const optionsArr = useMemo(() => {
+    return data ? ['regions', ...stringOptions, ...booleanOptions] : []
+  }, [data, stringOptions, booleanOptions])
 
   const [width, setWidth] = useState(window.innerWidth)
   const [height, setHeight] = useState(window.innerHeight)
   const [chartType, setChartType] = useState('')
   const [aggregation, setAggregation] = useState('sum')
-  const [yAxis, setYAxis] = useState(fields[0].fieldName)
-  const [xAxis, setXAxis] = useState(optionsArr[0])
+  const [yAxis, setYAxis] = useState(fields.length > 0 ? fields[0].fieldName : '')
+  const [xAxis, setXAxis] = useState(optionsArr.length > 0 ? optionsArr[0] : '')
 
   const aggOptions = ['sum', 'avg', 'count', 'min', 'max']
 
@@ -48,6 +89,17 @@ function Statistics() {
     setHeight(window.innerHeight)
   }, [width, height])
 
+  useEffect(() => {
+    if (fields.length > 0) {
+      setYAxis(fields[0].fieldName)
+    }
+  }, [fields])
+
+  useEffect(() => {
+    if (optionsArr.length > 0) {
+      setXAxis(optionsArr[0])
+    }
+  }, [optionsArr])
 
   const regionNames = extractRegionNames(collection, mapDivision)
 
@@ -67,36 +119,30 @@ function Statistics() {
     setYAxis(name)
   }
 
+  const commonProps = {
+    width: width * 0.75,
+    height: height * 0.75,
+    data: data,
+    regions: regionNames,
+    options: optionsArr,
+    division: mapDivision,
+    aggregation: aggregation,
+    xAxis: xAxis,
+    yAxis: yAxis,
+    changeXAxis: changeXAxis,
+    changeYAxis: changeYAxis
+  }
+
   const displayChart = () => {
     switch(chartType){
     case('bar'):
-      return <BarPlot
-        width={width * 0.75}
-        height={height * 0.75}
-        data={data}
-        regions={regionNames}
-        options={optionsArr}
-        division={mapDivision}
-        aggregation={aggregation}
-        xAxis={xAxis}
-        yAxis={yAxis}
-        changeXAxis={changeXAxis}
-        changeYAxis={changeYAxis}
+      return <BarPlot 
+        {...commonProps} 
       />
     case('pie'):
       return <PieChart
-        width={width * 0.75}
-        height={height * 0.75}
-        data={data}
-        regions={regionNames}
+        {...commonProps }
         fields={fields}
-        options={optionsArr}
-        division={mapDivision}
-        aggregation={aggregation}
-        xAxis={xAxis}
-        yAxis={yAxis}
-        changeXAxis={changeXAxis}
-        changeYAxis={changeYAxis}
       />
     default:
       return <div
@@ -122,7 +168,7 @@ function Statistics() {
     >
       {
         collection.length === 0 ?
-          'Loading...' :
+          <LoadingSpinner /> :
           <>
             {
               displayChart()

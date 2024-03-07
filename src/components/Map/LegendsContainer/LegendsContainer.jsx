@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import { useState } from 'react'
 import { LegendsIcon } from '../../ui/Icons/Icons'
 import {

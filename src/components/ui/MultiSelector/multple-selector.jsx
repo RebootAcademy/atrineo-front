@@ -1,4 +1,6 @@
 /* eslint-disable react/prop-types */
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable react-refresh/only-export-components */
 'use strict'
 
 import * as React from 'react'

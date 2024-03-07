@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import { useContext, useRef } from 'react'
 import CustomButton from '../../CustomButton/CustomButton'
 import {
@@ -17,6 +16,7 @@ import { CollectionContext } from "../../../context/collectionContext"
 
 function LayerCard({ onCloseMenu }) {
   const { collection } = useContext(CollectionContext)
+  console.log(collection)
   let collectionType
   if (collection.length !== 0) {
     collectionType = collection[0].collectionType

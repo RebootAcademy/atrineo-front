@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 import api from './config'
 
 const getAtrineoCollectionAPI = async () => {
@@ -7,7 +6,7 @@ const getAtrineoCollectionAPI = async () => {
   try {
     const { data } = await api.get(`/collection/${id}`, {
       headers: {
-        token: localStorage.getItem("token"),
+        token: localStorage.getItem("token")
       }
     })
     return data
