@@ -16,6 +16,7 @@ import { getOwnProfile } from "../../services/userService"
 function Dataset() {
   const { collection, setCollection } = useContext(CollectionContext)
   const { user, setUser } = useContext(UserContext)
+  
   useQuery('profile', getOwnProfile, {
     enabled: !!user && !user.name,
     onSuccess: (data) => {
@@ -26,7 +27,11 @@ function Dataset() {
   })
 
   useQuery('organizationCollections', getOwnOrganizationCollections, {
-    enabled: !!user && Object.keys(user).length > 0 && collection.length === 0 && user.role && user.role !== 'wizard',
+    enabled: !!user && 
+      Object.keys(user).length > 0 
+      && collection.length === 0 && 
+      user.role && 
+      user.role !== 'wizard',
     onSuccess: (data) => {
       if (data && data[0]) {
         setCollection(data)
@@ -35,7 +40,10 @@ function Dataset() {
   })
 
   useQuery('publicCollections', getPublicCollections, {
-    enabled: !!user && Object.keys(user).length > 0 && collection.length === 0 && user.role === 'wizard',
+    enabled: !!user && 
+      Object.keys(user).length > 0 && 
+      collection.length === 0 && 
+      user.role === 'wizard',
     onSuccess: (data) => {
       if (Object.keys(user).length > 0) {
         setCollection(data.result)
