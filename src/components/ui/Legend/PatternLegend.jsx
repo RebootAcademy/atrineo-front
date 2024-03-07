@@ -1,4 +1,4 @@
-import { colorPalette, colorPaletteBlue, colorPaletteGreen } from '../../../helpers/colors'
+import { colorPaletteGreen } from '../../../helpers/colors'
 import PropTypes from 'prop-types'
 
 function PatternLegend({ colorIndex }) {

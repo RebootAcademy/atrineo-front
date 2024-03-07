@@ -1,17 +1,17 @@
 import { useContext } from "react"
 import { useQuery } from "react-query"
-import TableComponent from "../../components/Datasets/Table/TableComponent"
-import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner"
-import UploadCSVComponent from "../../components/Datasets/UploadCSV/UploadCSVComponent"
+import TableComponent from "../components/Datasets/Table/TableComponent"
+import LoadingSpinner from "../components/LoadingSpinner/LoadingSpinner"
+import UploadCSVComponent from "../components/Datasets/UploadCSV/UploadCSVComponent"
 
-import { CollectionContext } from "../../context/collectionContext"
-import { UserContext } from "../../context/userContext"
+import { CollectionContext } from "../context/collectionContext"
+import { UserContext } from "../context/userContext"
 
 import { 
   getOwnOrganizationCollections, 
   getPublicCollections
-} from "../../services/collectionService"
-import { getOwnProfile } from "../../services/userService"
+} from "../services/collectionService"
+import { getOwnProfile } from "../services/userService"
 
 function Dataset() {
   const { collection, setCollection } = useContext(CollectionContext)

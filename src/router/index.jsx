@@ -1,7 +1,7 @@
 import { createBrowserRouter, redirect } from 'react-router-dom'
 import Home from "../pages/Home"
 import Statistics from "../pages/Statistics"
-import Dataset from "../pages/Dataset/Dataset"
+import Dataset from "../pages/Dataset"
 import Login from "../pages/Login/Login"
 import Layout from "../Layout/Layout"
 

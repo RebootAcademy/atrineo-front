@@ -11,9 +11,9 @@ import {
 } from "../../ui/Table/table"
 
 function TableComponent ({ data }) {
-  const fields = data[0].fields
+  const fields = data && data.length > 0 ? data[0].fields : []
 
-  const [sortField, setSortField] = useState(fields[0].fieldName)
+  const [sortField, setSortField] = useState(fields[0]?.fieldName)
   const [orderFirst, setOrderFirst] = useState(true)
 
   const checkValueType = (a,b) => {

@@ -1,24 +1,19 @@
 import { Checkbox } from "../../ui/Checkbox/Checkbox"
 import { RadioGroup, RadioGroupItem } from "../../ui/RadioGroup/radio-group"
-import SearchBar from "./SearchBar"
-import SearchFileButton from "./SearchFileButton"
-import UpdateButton from "./UpdateButton"
+import Csv from "./Csv"
 
 function UploadCSVComponent() {
   return (
     <>
-      <div className='flex flex-col items-center text-2xl mt-12 mb-4'>
+      <div className='w-full flex flex-col items-center text-2xl mt-12 mb-4'>
         Import CSV File
       </div>
-      <div>
-        <div className='flex justify-center mb-4'>
-          <SearchFileButton />
-          <SearchBar />
-          <UpdateButton/>
-        </div>
-        <div className='flex space-x-4 mb-6'>
-          <div>
-            <Checkbox className='ml-32 mr-2' />
+      <div className="flex flex-col">
+        <Csv />
+
+        <div className='flex justify-center space-x-4 mb-6 bg-red-200'>
+          <div className="">
+            <Checkbox />
             <label>Display all</label>
           </div>
           <div>Show data by:</div>

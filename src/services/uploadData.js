@@ -1,8 +1,13 @@
 import api from "./config"
 
 export const uploadCsv = async (data) => {
+  console.log(data)
   try {
-    const res = await api.post(`/data`, data, {
+    const payload = {
+      body: data,
+      collectionType: 'startups'
+    }
+    const res = await api.post(`/data/demo`, payload, {
       headers: {
         token: localStorage.getItem("token"),
       }
