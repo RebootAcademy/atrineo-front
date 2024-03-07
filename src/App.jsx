@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useEffect, useState } from 'react'
 import { QueryClient, QueryClientProvider } from 'react-query'
 import { RouterProvider } from 'react-router-dom'
@@ -12,22 +13,24 @@ const queryClient = new QueryClient()
 
 function App() {
   const [mapDivision, setMapDivision] = useState('division3')
+  const [selectedNameDistrict, setSelectedNameDistrict] = useState([])
+  const [selectedRegion, setSelectedRegion] = useState('')
+  const [searchPolygon, setSearchPolygon] = useState(null)
   const [mapCenter, setMapCenter] = useState([48.6, 9])
   const [collection, setCollection] = useState([])
-  const [searchPolygon, setSearchPolygon] = useState(null)
-  const [selectedRegion, setSelectedRegion] = useState('')
   const [layers, setLayers] = useState([])
   const [ user, setUser ] = useState({})
-
-  const storage = window.localStorage
-  const collectionValue = { collection, setCollection }
   const userValue = { user, setUser }
-  const [selectedNameDistrict, setSelectedNameDistrict] = useState([])
 
-  /*useEffect(() => {
+  const [colorIndex, setColorIndex] = useState(0)
+  const collectionValue = { collection, setCollection }
+  
+  const storage = window.localStorage
+
+  /*   useEffect(() => {
     storage.clear()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])*/
+  }, []) */
 
   useEffect(() => {
   }, [searchPolygon])
@@ -35,10 +38,8 @@ function App() {
   const saveCurrentLayer = (obj) => {
     // Intentar cargar el arreglo de capas existente desde localStorage, o iniciar uno nuevo si no existe
     const existingLayers = JSON.parse(storage.getItem('layers')) || []
-
     // Determinar el próximo ID basado en el ID más alto existente
     const nextId = existingLayers.reduce((maxId, layer) => Math.max(maxId, layer.id), 0) + 1
-
     // Añadir la nueva capa al arreglo de capas existente
     const updatedLayers = [...existingLayers, {
       id: nextId,
@@ -96,7 +97,8 @@ function App() {
     selectedNameDistrict,
     setSelectedNameDistrict,
     mapCenter,
-    setMapCenter
+    setMapCenter,
+    colorIndex,
   }
 
   return (
