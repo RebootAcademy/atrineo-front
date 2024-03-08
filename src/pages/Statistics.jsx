@@ -1,11 +1,9 @@
 import { useContext, useEffect, useState, useMemo } from "react"
 import { useQuery } from "react-query"
 
-import BarPlot from '../components/Graphs/BarPlot/BarPlot'
-import PieChart from "../components/Graphs/PieChart/PieChart"
 import OptionsMenu from "../components/Graphs/OptionsMenu/OptionsMenu"
 import LoadingSpinner from "../components/LoadingSpinner/LoadingSpinner"
-import { Label } from "../components/ui/Label/Label"
+import ChartsContainer from "@/components/Graphs/ChartsContainer/ChartsContainer"
 
 import { CollectionContext } from "../context/collectionContext"
 import { LayerContext } from "../context/layerContext"
@@ -133,46 +131,17 @@ function Statistics() {
     changeYAxis: changeYAxis
   }
 
-  const displayChart = () => {
-    switch(chartType){
-    case('bar'):
-      return <BarPlot 
-        {...commonProps} 
-      />
-    case('pie'):
-      return <PieChart
-        {...commonProps }
-        fields={fields}
-      />
-    default:
-      return <div
-        className="w-3/4
-          mr-4
-          border-solid 
-          border-gray 
-          border-[1px] 
-          rounded-md
-          pt-4
-          pl-4"
-      >
-        <Label className="text-lg">
-          Preview Chart
-        </Label>
-      </div>
-    }
-  }
-
   return (
-    <div
-      className="mt-[45px] h-4/5 w-full flex mx-8"
-    >
+    <div className="h-[calc(100vh-5.1rem)] w-screen px-8 py-16 flex">
       {
         collection.length === 0 ?
           <LoadingSpinner /> :
           <>
-            {
-              displayChart()
-            }
+            <ChartsContainer 
+              chartType={chartType}
+              commonProps={commonProps}
+              fields={fields}
+            />
             <OptionsMenu 
               onChange={changeChartType}
               fields={fields}
@@ -186,7 +155,6 @@ function Statistics() {
             />
           </>
       }
-
     </div>
   )
 }

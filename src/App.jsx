@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
 import { useEffect, useState } from 'react'
 import { QueryClient, QueryClientProvider } from 'react-query'
@@ -27,10 +28,10 @@ function App() {
   
   const storage = window.localStorage
 
-  /*   useEffect(() => {
-    storage.clear()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []) */
+  useEffect(() => {
+    storage.removeItem('layers')
+    setLayers([])
+  }, [])
 
   useEffect(() => {
   }, [searchPolygon])
@@ -46,11 +47,9 @@ function App() {
       isVisible: true,
       data: obj
     }]
-
     // Guardar el arreglo actualizado de capas en localStorage
     storage.setItem('layers', JSON.stringify(updatedLayers))
-    console.log(`Layer ${nextId} saved to localStorage with previous layers`, storage)
-
+    console.log(`Layer ${nextId} saved to localStorage with previous layers`, JSON.parse(storage.getItem('layers')))
     // Actualizar el estado de layers y nextLayerId
     setLayers(updatedLayers)
   }
@@ -64,9 +63,7 @@ function App() {
     storage.setItem('layers', JSON.stringify(updatedLayers))
     // Actualizar el estado de layers con el nuevo arreglo de capas
     setLayers(updatedLayers)
-
     console.log('Layer deleted')
-    console.log(storage)
   }
 
   const toggleLayerVisibility = (layerId) => {
