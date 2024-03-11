@@ -1,28 +1,45 @@
 import CSVReader from 'react-csv-reader'
+import { useRef, useState, useContext } from 'react'
+import { useQuery } from 'react-query'
+
 import { uploadCsv } from '../../../services/uploadData'
-import { useRef, useState } from 'react'
+
 import { Button } from '@/components/ui/Button/Button'
 
+import { CollectionContext } from '@/context/collectionContext'
+import { getPublicCollections } from '@/services/collectionService'
+
 function Csv() {
+  const { setCollection } = useContext(CollectionContext)
   const [fileName, setFileName] = useState('')
+  const [dataBody,setDataBody] = useState({})
+  const [fetchData, setFetchData] = useState(false)
   const fileInputRef = useRef(null)
 
   const handleButtonClick = () => {
     fileInputRef.current.click()
   }
 
+  useQuery('publicCollections', getPublicCollections, {
+    enabled: fetchData,
+    onSuccess: (data) => {
+      setCollection(data.result)
+      setFetchData(false)
+    }
+  })
+
   const handleCSVUpload = async (data, fileInfo) => {
     console.log("Data:", data)
     setFileName(fileInfo.name)
-    await uploadDataFile(data)
+    setDataBody(data)   
     console.log("File Information:", fileInfo)
   }
 
-  const uploadDataFile = async (data) => {
+  const uploadDataFile = async () => {
     try {
-      const res = await uploadCsv(data)
+      const res = await uploadCsv(dataBody)
       if (res) {
-        console.log(res)
+        setFetchData(true)
       }
     } catch (error) {
       console.error(error)

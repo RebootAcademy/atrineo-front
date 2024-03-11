@@ -17,6 +17,7 @@ function ChartsContainer({ chartType, commonProps, fields }) {
           <Label className="text-lg">
             Preview Chart
           </Label>
+          <BarPlot {...commonProps} />
         </div>
       )
     }
