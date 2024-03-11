@@ -1,7 +1,6 @@
 import api from "./config"
 
 export const uploadCsv = async (data) => {
-  console.log(data)
   try {
     const payload = {
       body: data,
