@@ -2,8 +2,8 @@ import PropTypes from 'prop-types'
 import { useMemo } from 'react'
 import * as d3 from "d3" // we will need d3.js
 
-const MARGIN = { top: 30, right: 50, bottom: 30, left: 80 }
-const BAR_PADDING = 0.3
+const MARGIN = { top: 60, right: 40, bottom: 80, left: 90 }
+const BAR_PADDING = 0.2
 
 import { createStringOptionsObject } from '../../../helpers'
 
@@ -26,6 +26,7 @@ function Barplot ({
   const boundsHeight = height - MARGIN.top - MARGIN.bottom
 
   const checkAggregation = (value, prev, agg) => {
+    if (!value) { return prev }
     switch (agg) {
     case ('sum'):
       return prev + value.fieldValue
@@ -69,8 +70,11 @@ function Barplot ({
           acc[name] = minValue
         }
       }
-      const [value] = cur.fields.filter(d => d.fieldName === yAxis)
-      acc[name] = checkAggregation(value, acc[name], aggregation )
+      const filteredValues = cur.fields.filter(d => d.fieldName === yAxis)
+      if (filteredValues.length > 0) {
+        const value = filteredValues[0]
+        acc[name] = checkAggregation(value, acc[name], aggregation )
+      }
       return acc
     }, {})
     if (aggregation === 'avg') {
@@ -82,9 +86,10 @@ function Barplot ({
   const maxSum = useMemo(() => Math.max(...summedData.map(d => d.sum)), [summedData])
 
   const xScale = useMemo(() => {
+    const domainValues = xFieldValues[xAxis] ? xFieldValues[xAxis].map(value => String(value)) : []
     return d3
       .scaleBand()
-      .domain(xFieldValues[xAxis].map(value=>String(value)))
+      .domain(domainValues)
       .range([0, boundsWidth])
       .padding(BAR_PADDING)
   }, [xAxis, boundsWidth, xFieldValues])
@@ -102,11 +107,11 @@ function Barplot ({
   const bars = useMemo(() => summedData.map((d, i) =>
     <rect
       key={i}
-      x={xScale(d.name)}
+      x={xScale(d.name) + 20}
       y={yScale(d.sum)}
-      width={xScale.bandwidth()}
+      width={xScale.bandwidth() - 40}
       height={boundsHeight - yScale(d.sum)}
-      fill="#ADFA1D"
+      fill={'var(--primary)'}
     />
   ), [xScale, yScale, summedData, boundsHeight])
 
@@ -114,22 +119,21 @@ function Barplot ({
     <>
       <svg 
         width={width} 
-        height={height + 24}
-        className='border-solid border-gray border-[1px] rounded-md h-full mr-4'
+        height={height}
+        className='bg-red-200'
       >
         {/*Legend*/ }
         <g 
-          transform={`translate(${boundsWidth + MARGIN.right - boundsWidth/2},${MARGIN.top})`}
-          className="legend"
+          transform={`translate(${boundsWidth + MARGIN.right - boundsWidth},${MARGIN.top - 18})`}
         >
           <g transform={`translate(0,0)`}>
-            <rect width={15} height={15} fill={"#ADFA1D"} />
-            <text x={15 + 5} y={17 - 5} style={{ fontSize: '0.8em' }}>
+            <rect width={15} height={15} fill={'var(--primary)'} />
+            <text x={15 + 5} y={17 - 5} style={{ fontSize: '0.8em', fontWeight: 'bold' }}>
               {yAxis}
             </text>
           </g>
         </g>
-        <g transform={`translate(${MARGIN.left},${MARGIN.top + 24})`}>
+        <g transform={`translate(${MARGIN.left},${MARGIN.top + 44})`}>
           {bars}
           {/* Render X Axis */}
           <g

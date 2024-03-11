@@ -157,10 +157,9 @@ const PieChart = ({
 
   return (
     <svg
-      className='border-solid border-gray border-[1px] rounded-md h-full mr-4'
       width={width} 
-      height={height} 
-      style={{ display: "inline-block" }}
+      height={height}
+      className='bg-red-200'
     >
       <g
         transform={`translate(${width / 2}, ${height / 2})`}

@@ -37,7 +37,6 @@ function DisplayFilters({ layerObj, type }) {
       }
       setActiveSwitch(target)
     }
-    console.log(layerObj.current)
   }
 
   let data

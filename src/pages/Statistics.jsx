@@ -73,19 +73,12 @@ function Statistics() {
     return data ? ['regions', ...stringOptions, ...booleanOptions] : []
   }, [data, stringOptions, booleanOptions])
 
-  const [width, setWidth] = useState(window.innerWidth)
-  const [height, setHeight] = useState(window.innerHeight)
   const [chartType, setChartType] = useState('')
   const [aggregation, setAggregation] = useState('sum')
   const [yAxis, setYAxis] = useState(fields.length > 0 ? fields[0].fieldName : '')
   const [xAxis, setXAxis] = useState(optionsArr.length > 0 ? optionsArr[0] : '')
 
   const aggOptions = ['sum', 'avg', 'count', 'min', 'max']
-
-  useEffect(() => {
-    setWidth(window.innerWidth)
-    setHeight(window.innerHeight)
-  }, [width, height])
 
   useEffect(() => {
     if (fields.length > 0) {
@@ -118,8 +111,8 @@ function Statistics() {
   }
 
   const commonProps = {
-    width: width * 0.75,
-    height: height * 0.75,
+    width: 900,
+    height: 500,
     data: data,
     regions: regionNames,
     options: optionsArr,
@@ -132,28 +125,32 @@ function Statistics() {
   }
 
   return (
-    <div className="h-[calc(100vh-5.1rem)] w-screen px-8 py-16 flex">
+    <div className="h-[calc(100vh-5.1rem)] w-screen px-8 py-16 flex flex-row">
       {
         collection.length === 0 ?
           <LoadingSpinner /> :
-          <>
-            <ChartsContainer 
-              chartType={chartType}
-              commonProps={commonProps}
-              fields={fields}
-            />
-            <OptionsMenu 
-              onChange={changeChartType}
-              fields={fields}
-              options={optionsArr}
-              aggOptions={aggOptions}
-              changeAggregation={changeAggregation}
-              changeXAxis={changeXAxis}
-              changeYAxis={changeYAxis}
-              xAxis={xAxis}
-              yAxis={yAxis}
-            />
-          </>
+          <div className="flex w-full">
+            <div className="flex-grow flex flex-wrap bg-blue-100 justify-center items-center">
+              <ChartsContainer 
+                chartType={chartType}
+                commonProps={commonProps}
+                fields={fields}
+              />
+            </div>
+            <aside className="w-1/4 bg-red-200 h-full">
+              <OptionsMenu 
+                onChange={changeChartType}
+                fields={fields}
+                options={optionsArr}
+                aggOptions={aggOptions}
+                changeAggregation={changeAggregation}
+                changeXAxis={changeXAxis}
+                changeYAxis={changeYAxis}
+                xAxis={xAxis}
+                yAxis={yAxis}
+              />
+            </aside>
+          </div>
       }
     </div>
   )
