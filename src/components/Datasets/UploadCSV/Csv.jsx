@@ -11,9 +11,11 @@ import { getPublicCollections } from '@/services/collectionService'
 
 function Csv() {
   const { setCollection } = useContext(CollectionContext)
+
   const [fileName, setFileName] = useState('')
   const [dataBody,setDataBody] = useState({})
   const [fetchData, setFetchData] = useState(false)
+
   const fileInputRef = useRef(null)
 
   const handleButtonClick = () => {
