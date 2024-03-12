@@ -30,6 +30,7 @@ function Barplot({
 
   const xScale = useMemo(() => {
     const domainValues = xFieldValues[xAxis] ? xFieldValues[xAxis].map(value => String(value)) : []
+    console.log('Bar', domainValues)
     return d3
       .scaleBand()
       .domain(domainValues)
