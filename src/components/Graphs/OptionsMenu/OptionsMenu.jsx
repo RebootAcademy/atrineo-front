@@ -21,46 +21,42 @@ function OptionsMenu({ onChange, fields, options, aggOptions, changeAggregation,
   ]
 
   const [chartName, setChartName] = useState('')
-
+  const [/* selectedXAxis */, setSelectedXAxis] = useState('')
+  const [/* selectedYAxis */, setSelectedYAxis] = useState('')
+ 
   fields = fields.map(f => f.fieldName)
 
   const handleChange = (value) => {
     onChange(value)
+    setChartName(value)
   }
 
   const displayChartOptions = (options) => {
-    return options.map((o, i) => 
-      <SelectItem
-        key={i}
-        value={o.name}
-      >
+    return options.map((option, i) => 
+      <SelectItem key={i} value={option.name}>
         <div className='flex'>
-          <img
-            src={o.img}
-            className='mr-2'
-          />
-          { o.name }
+          <img src={option.img} className='mr-2' />
+          { option.name }
         </div>
       </SelectItem>
     )
   }
 
-  const displayOptions = (options) => {
-    return options.map((o, i) =>
-      <SelectItem
-        key={i}
-        value={o}
-      >
-        {o}
+  /*   const displayOptions = (options) => {
+    return options.map((option, i) =>
+      <SelectItem key={i} value={option}>
+        {option} Hola
       </SelectItem>
     )
-  }
+  } */
 
   const handleYAxis = (value) => {
+    setSelectedYAxis(value)
     changeYAxis(value)
   }
 
   const handleXAxis = (value) => {
+    setSelectedXAxis(value)
     changeXAxis(value)
   }
 
@@ -71,20 +67,27 @@ function OptionsMenu({ onChange, fields, options, aggOptions, changeAggregation,
   const handleName = (e) => {
     setChartName(e.target.value)
   }
-
-  const displaySelect = (title, fn, arr) => {
+  
+  const displaySelect = (title, fn, arr, isNumeric = false) => {
+    let filteredOptions = arr
+    if (chartName === 'scatter' && isNumeric) {
+      filteredOptions = fields
+    } 
+      
     return (
       <>
         <Label className="self-start ml-4 mt-4">
           {title}
         </Label>
-        <Select
-          onValueChange={fn}
-        >
+        <Select onValueChange={fn}>
           <SelectTrigger className="w-5/6 mt-2">
             <SelectValue defaultValue={arr[0]} placeholder={arr[0]} />
             <SelectContent>
-              {displayOptions(arr)}
+              {filteredOptions.map((option, i) => (
+                <SelectItem key={i} value={option}>
+                  {option}
+                </SelectItem>
+              ))}
             </SelectContent>
           </SelectTrigger>
         </Select>
@@ -101,9 +104,7 @@ function OptionsMenu({ onChange, fields, options, aggOptions, changeAggregation,
         Chart Name:
       </Label>
       <Input className="w-5/6 m-3.5" value={chartName} onChange={handleName}/>
-      <Select
-        onValueChange={handleChange}
-      >
+      <Select onValueChange={handleChange}>
         <SelectTrigger className="w-5/6">
           <SelectValue placeholder="Select a chart type" />
         </SelectTrigger>
@@ -117,9 +118,8 @@ function OptionsMenu({ onChange, fields, options, aggOptions, changeAggregation,
       <Label className="self-start ml-4 mt-4">
         Axes:
       </Label>
-
-      { displaySelect('X axis:', handleXAxis, options) }
-      { displaySelect('Y axis:', handleYAxis, fields) }
+      { displaySelect('X axis:', handleXAxis, options, true) }
+      { displaySelect('Y axis:', handleYAxis, fields, true) }
     </Card>
   )
 }

@@ -1,7 +1,7 @@
 import { useMemo } from 'react'
 import PropTypes from 'prop-types'
 import * as d3 from 'd3'
-import { createStringOptionsObject, calcAggregatedData, extractNumericFields } from '@/helpers'
+import { /* calcAggregatedData, */ extractNumericFields } from '@/helpers'
 
 function ScatterPlot({ 
   width,
@@ -9,18 +9,13 @@ function ScatterPlot({
   data,
   xAxis,
   yAxis,
-  regions,
-  options,
-  aggregation,
-  division
+  /* options, */
+/*   aggregation,
+  division */
 }) {
 
-  const xFieldValues = createStringOptionsObject(options, data)
-  xFieldValues.regions = regions
-
-  const aggregatedData = useMemo(() => calcAggregatedData(data, xAxis, yAxis, division, aggregation), [data, xAxis, yAxis, division, aggregation]) 
-  const maxSum = useMemo(() => Math.max(...aggregatedData.map(d => d.sum)), [aggregatedData])
-  console.log(maxSum)
+  /*   const aggregatedData = useMemo(() => calcAggregatedData(data, xAxis, yAxis, division, aggregation), [data, xAxis, yAxis, division, aggregation]) 
+  const maxSum = useMemo(() => Math.max(...aggregatedData.map(d => d.sum)), [aggregatedData]) */
 
   const MARGIN = { top: 20, right: 20, bottom: 60, left: 70 }
   const boundsWidth = width - MARGIN.left - MARGIN.right
@@ -32,7 +27,7 @@ function ScatterPlot({
       acc[field.fieldName] = field.fieldValue
       return acc
     }, {})
-    console.log(numericFieldsObj)
+    // console.log(numericFieldsObj)
     return numericFieldsObj
   })
 

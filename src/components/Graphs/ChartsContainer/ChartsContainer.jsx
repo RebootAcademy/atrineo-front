@@ -14,10 +14,12 @@ function ChartsContainer({ chartType, commonProps, fields }) {
       return <PieChart {...commonProps} fields={fields} />
     case ('stack'):
       return <StackPlot {...commonProps} />
+    case ('scatter'):
+      return <ScatterPlot {...commonProps} />
     default:
       return (
         <>
-          <ScatterPlot {...commonProps} />
+          <BarPlot {...commonProps} />
         </>
       )
     }
