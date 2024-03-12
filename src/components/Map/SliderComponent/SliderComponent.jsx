@@ -10,7 +10,12 @@ function SliderComponent({ name, handleChange, minValue, maxValue }) {
 
   const handleInput = () => {
     setActive(prev => {
-      if (!prev === false) {
+      if (!prev) {
+        // Cuando el checkbox se activa, establece el valor actual al mínimo y emite el cambio.
+        setCurrent(minValue)
+        handleChange(minValue, name) // Asegúrate de llamar a handleChange con el valor mínimo.
+      } else {
+        // Cuando el checkbox se desactiva, opcionalmente puedes manejar la lógica para este caso.
         handleChange('remove', name)
         setCurrent(minValue)
       }
