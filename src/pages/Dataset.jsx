@@ -9,7 +9,7 @@ import { UserContext } from "../context/userContext"
 
 import { 
   getOwnOrganizationCollections, 
-  getPublicCollections
+  getDemoCollection
 } from "../services/collectionService"
 import { getOwnProfile } from "../services/userService"
 
@@ -39,7 +39,7 @@ function Dataset() {
     }
   })
 
-  useQuery('publicCollections', getPublicCollections, {
+  useQuery('publicCollections', getDemoCollection, {
     enabled: !!user && 
       Object.keys(user).length > 0 && 
       collection.length === 0 && 
@@ -58,7 +58,7 @@ function Dataset() {
           <LoadingSpinner /> :
           <div className='overflow-x-auto'>
             {user?.role === 'wizard' ? < UploadCSVComponent /> : '' }
-            <TableComponent data={collection[0].data} />
+            <TableComponent data={collection.data} />
           </div>
       }
     </>
