@@ -2,13 +2,15 @@ import PropTypes from 'prop-types'
 import { useMemo, useRef } from "react"
 import * as d3 from "d3"
 
+import { checkAggregation } from '@/helpers'
+
 const MARGIN_X = 150
 const MARGIN_Y = 50
 const INFLEXION_PADDING = 20
 
 const colors = ["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56"]
 
-const PieChart = ({ 
+function PieChart({ 
   width, 
   height, 
   data,
@@ -16,27 +18,10 @@ const PieChart = ({
   aggregation,
   xAxis,
   yAxis 
-}) => {
+}) {
   const ref = useRef(null)
 
-  const checkAggregation = (value, prev, agg) => {
-    switch (agg) {
-    case ('sum'):
-      return prev + value.fieldValue
-    case ('count'):
-      return ++prev
-    case ('avg'):
-      return { count: ++prev.count, sum: prev.sum + value.fieldValue }
-    case ('max'):
-      if (value.fieldValue > prev) return value.fieldValue
-      return prev
-    case ('min'):
-      if (value.fieldValue < prev) return value.fieldValue
-      return prev
-    }
-  }
-
-  const result = useMemo(() => {
+  const aggregatedData = useMemo(() => {
     const sums = data.reduce((acc, cur) => {
       let name
       if (xAxis === 'regions') {
@@ -46,27 +31,19 @@ const PieChart = ({
           .filter(f => f.fieldName === xAxis)
           .map(f => f.fieldValue)
       }
-
       if (!name) return acc
       if (!acc[name]) {
-        if (aggregation === 'avg') {
-          acc[name] = {
-            count: 0,
-            sum: 0
-          }
-        } else if (aggregation !== 'min') {
-          acc[name] = 0
-        } else {
-          const minValue = data[0].fields
-            .filter(f => f.fieldName === yAxis)
-            .map(i => i.fieldValue)
-          acc[name] = minValue
-        }
+        acc[name] = aggregation === 'min' ? Infinity : (aggregation === 'avg' ? { count: 0, sum: 0 } : 0)
       }
-      const [value] = cur.fields.filter(d => d.fieldName === yAxis)
-      acc[name] = checkAggregation(value, acc[name], aggregation)
+
+      const filteredValues = cur.fields.filter(d => d.fieldName === yAxis)
+      if (filteredValues.length > 0) {
+        const value = filteredValues[0]
+        acc[name] = checkAggregation(value, acc[name], aggregation)
+      }
       return acc
     }, {})
+
     if (aggregation === 'avg') {
       return Object.entries(sums).map(([name, info]) => ({ name, value: info.sum / info.count }))
     } else {
@@ -78,8 +55,8 @@ const PieChart = ({
 
   const pie = useMemo(() => {
     const pieGenerator = d3.pie().value((d) => d.value)
-    return pieGenerator(result)
-  }, [result])
+    return pieGenerator(aggregatedData)
+  }, [aggregatedData])
 
   const arcPathGenerator = d3.arc()
 

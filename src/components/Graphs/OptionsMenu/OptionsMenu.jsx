@@ -15,7 +15,9 @@ import { Input } from '../../ui/Input/input'
 function OptionsMenu({ onChange, fields, options, aggOptions, changeAggregation, changeXAxis, changeYAxis }) {
   const graphTypes = [
     {name:'bar', img: '/barChart.svg'}, 
-    {name:'pie', img: '/pieChart.svg'}
+    {name:'pie', img: '/pieChart.svg'},
+    {name: 'scatter', img: ''},
+    {name:'stack', img: ''}
   ]
 
   const [chartName, setChartName] = useState('')

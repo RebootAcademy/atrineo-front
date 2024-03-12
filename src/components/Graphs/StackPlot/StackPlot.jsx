@@ -6,13 +6,14 @@ import { UserContext } from "@/context/userContext"
 import { getPublicCollections } from "@/services/collectionService"
 
 import * as Plot from "@observablehq/plot"
+import LoadingSpinner from "@/components/LoadingSpinner/LoadingSpinner"
 
 function StackPlot() {
   const { collection, setCollection } = useContext(CollectionContext)
   const { user } = useContext(UserContext)
   const containerRef = useRef()
 
-  useQuery('publicCollections', getPublicCollections, {
+  const { isLoading, error } = useQuery('publicCollections', getPublicCollections, {
     enabled: !!user && Object.keys(user).length > 0 && collection.length === 0 && user.role === 'wizard',
     onSuccess: (data) => {
       if (Object.keys(user).length > 0) {
@@ -26,7 +27,8 @@ function StackPlot() {
   console.log(data)
 
   useEffect(() => {
-    if (data === undefined) return
+    if (!data || isLoading || error) return
+
     const plot = Plot.plot({
       y: {
         grid: true,
@@ -39,7 +41,7 @@ function StackPlot() {
           data,
           Plot.stackY(
           /*  { order, reverse }, */
-            { x: "districtPopulation", y: "districtPopulation", z: "format", fill: "group" }
+            { x: [1, 100], y: [1, 100], z: "format", fill: "group" }
           )
         ),
         Plot.ruleY([0])
@@ -47,7 +49,10 @@ function StackPlot() {
     })
     containerRef.current.innerHTML = '' // Limpia el contenedor antes de agregar el gráfico
     containerRef.current.appendChild(plot)
-  }, [data])
+  }, [data, isLoading, error])
+
+  if (isLoading) return <LoadingSpinner />
+  if (error) return <div>An error has ocurred</div>
 
 
   return (

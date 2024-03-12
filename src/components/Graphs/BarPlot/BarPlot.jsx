@@ -2,12 +2,9 @@ import PropTypes from 'prop-types'
 import { useMemo } from 'react'
 import * as d3 from "d3" // we will need d3.js
 
-const MARGIN = { top: 60, right: 40, bottom: 80, left: 90 }
-const BAR_PADDING = 0.2
+import { calcAggregatedData, createStringOptionsObject } from '@/helpers'
 
-import { createStringOptionsObject } from '../../../helpers'
-
-function Barplot ({ 
+function Barplot({ 
   width, 
   height, 
   data, 
@@ -19,71 +16,17 @@ function Barplot ({
   yAxis 
 }) {
   
-  const xFieldValues = createStringOptionsObject(options, data)
-  xFieldValues.regions = regions
-  
+  const MARGIN = { top: 60, right: 40, bottom: 80, left: 90 }
+  const BAR_PADDING = 0.2
   const boundsWidth = width - MARGIN.right - MARGIN.left
   const boundsHeight = height - MARGIN.top - MARGIN.bottom
+  
+  const xFieldValues = createStringOptionsObject(options, data)
+  xFieldValues.regions = regions
 
-  const checkAggregation = (value, prev, agg) => {
-    if (!value) { return prev }
-    switch (agg) {
-    case ('sum'):
-      return prev + value.fieldValue
-    case ('count'):
-      return ++prev
-    case ('avg'):
-      return { count: ++prev.count, sum: prev.sum + value.fieldValue }
-    case ('max'):
-      if (value.fieldValue > prev) return value.fieldValue
-      return prev
-    case ('min'):
-      if (value.fieldValue < prev) return value.fieldValue
-      return prev
-    }
-  }
-
-  const summedData = useMemo(() => {
-    const sums = data.reduce((acc, cur) => {
-      let name
-      if (xAxis === 'regions') {
-        name = cur.locationId[division]?.name
-      } else {
-        name = cur.fields
-          .filter(f => f.fieldName === xAxis)
-          .map(f => f.fieldValue)
-      }
-      
-      if (!name) return acc
-      if (!acc[name]) {
-        if (aggregation === 'avg') {
-          acc[name] = {
-            count: 0,
-            sum: 0
-          }
-        } else if (aggregation !== 'min') {
-          acc[name] = 0
-        } else {
-          const minValue = data[0].fields
-            .filter(f => f.fieldName === yAxis)
-            .map(i => i.fieldValue)
-          acc[name] = minValue
-        }
-      }
-      const filteredValues = cur.fields.filter(d => d.fieldName === yAxis)
-      if (filteredValues.length > 0) {
-        const value = filteredValues[0]
-        acc[name] = checkAggregation(value, acc[name], aggregation )
-      }
-      return acc
-    }, {})
-    if (aggregation === 'avg') {
-      return Object.entries(sums).map(([name, info]) => ({ name, sum: info.sum / info.count }))
-    } else {
-      return Object.entries(sums).map(([name, sum]) => ({ name, sum }))
-    }
-  }, [data, xAxis, yAxis, division, aggregation])
-  const maxSum = useMemo(() => Math.max(...summedData.map(d => d.sum)), [summedData])
+  const aggregatedData = useMemo(() => calcAggregatedData(data, xAxis, yAxis, division, aggregation), [data, xAxis, yAxis, division, aggregation]) 
+  
+  const maxSum = useMemo(() => Math.max(...aggregatedData.map(d => d.sum)), [aggregatedData])
 
   const xScale = useMemo(() => {
     const domainValues = xFieldValues[xAxis] ? xFieldValues[xAxis].map(value => String(value)) : []
@@ -104,7 +47,7 @@ function Barplot ({
   const xAxisInfo = useMemo(() => d3.axisBottom(xScale), [xScale])
   const yAxisInfo = useMemo(() => d3.axisLeft(yScale), [yScale])
 
-  const bars = useMemo(() => summedData.map((d, i) =>
+  const bars = useMemo(() => aggregatedData.map((d, i) =>
     <rect
       key={i}
       x={xScale(d.name) + 20}
@@ -113,7 +56,7 @@ function Barplot ({
       height={boundsHeight - yScale(d.sum)}
       fill={'var(--primary)'}
     />
-  ), [xScale, yScale, summedData, boundsHeight])
+  ), [xScale, yScale, aggregatedData, boundsHeight])
 
   return (
     <>
