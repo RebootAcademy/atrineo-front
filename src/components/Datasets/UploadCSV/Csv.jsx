@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/Button/Button'
 
 import { CollectionContext } from '@/context/collectionContext'
 import { getPublicCollections } from '@/services/collectionService'
+import UpdateSpinner from '@/components/LoadingSpinner/UpdateSpinner'
 
 function Csv() {
   const { setCollection } = useContext(CollectionContext)
@@ -15,6 +16,7 @@ function Csv() {
   const [fileName, setFileName] = useState('')
   const [dataBody,setDataBody] = useState({})
   const [fetchData, setFetchData] = useState(false)
+  const [showUpdateSpinner, setShowUpdateSpinner] = useState(false)
 
   const fileInputRef = useRef(null)
 
@@ -39,12 +41,15 @@ function Csv() {
 
   const uploadDataFile = async () => {
     try {
+      setShowUpdateSpinner(true)
       const res = await uploadCsv(dataBody)
       if (res) {
         setFetchData(true)
       }
     } catch (error) {
       console.error(error)
+    } finally {
+      setShowUpdateSpinner(false)
     }
   }
 
@@ -63,6 +68,11 @@ function Csv() {
         parserOptions={{ header: true, dynamicTyping: true, skipEmptyLines: true }}
         cssClass='hidden'
       />
+      {showUpdateSpinner && (
+        <div className='absolute inset-0 flex justify-center items-center bg-gray-500 bg-opacity-50 z-50'>
+          <UpdateSpinner/>
+        </div>
+      )}
     </div>
   )
 }
