@@ -96,8 +96,7 @@ export const calculateRadius = (value, minValue, maxValue) => {
 }
 
 export const extractRegionNames = (array, division) => {
-  const nameRegionFiltered = array
-    .flatMap((region) => region.data)
+  const nameRegionFiltered = array.data
     .filter((item) => item.locationId[division] !== null)
     .map((item) => {
       return {
