@@ -3,6 +3,7 @@ import { Input } from "@/components/ui/Input/input"
 import { Label } from "@/components/ui/Label/Label"
 import { useState, useContext } from "react"
 import { CollectionContext } from "@/context/collectionContext"
+import { updateCollection } from "@/services/collectionService"
 
 function LatitudeLongitudeComponent() {
   const [latitude, setLatitude] = useState("")
@@ -21,28 +22,29 @@ function LatitudeLongitudeComponent() {
     setLongitude(e.target.value)
   }
 
-  const handleLatLonUpdate = () => {
+  const handleLatLonUpdate = async () => {
     setCollection(prevCollection => ({
       ...prevCollection,
       latitude: latitude !== "" ? parseFloat(latitude) : prevCollection.latitude,
       longitude: longitude !== "" ? parseFloat(longitude) : prevCollection.longitude
     }))
+    await updateCollection(collection._id, latitude, longitude)
   }
 
   return (
     <>
       <div className="flex items-center mb-4">
         <Label className="mr-2">Latitude:</Label>
-        <Input 
+        <Input
           value={latitude}
           onChange={handleLatitudeChange}
         />
         <Label className="mr-2 ml-2">Longitude:</Label>
-        <Input 
+        <Input
           value={longitude}
           onChange={handleLongitudeChange}
         />
-        <Button 
+        <Button
           className="ml-2"
           onClick={handleLatLonUpdate}
         >Update</Button>

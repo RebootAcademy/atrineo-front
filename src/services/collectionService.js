@@ -49,3 +49,19 @@ export const getAllCollections = async () => {
     console.error(error)
   }
 }
+
+export const updateCollection = async (id, latitude, longitude) => {
+  try {
+    const { data } = await api.patch(`collection/${id}`, {
+      latitude: latitude,
+      longitude: longitude
+    }, { 
+      headers: {
+        token: localStorage.getItem("token"),
+      },
+    })
+    return data
+  } catch (error) {
+    console.error(error)
+  }
+}

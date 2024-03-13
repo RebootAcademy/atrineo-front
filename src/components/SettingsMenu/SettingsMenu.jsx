@@ -55,6 +55,9 @@ function SettingsMenu() {
                   >
                     Update CSV
                   </DropdownMenuItem>
+                  <DropdownMenuItem>
+                    User Management
+                  </DropdownMenuItem>
                 </>
               ) : (
                 <DropdownMenuItem>
