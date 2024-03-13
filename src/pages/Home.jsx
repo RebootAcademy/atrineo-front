@@ -7,7 +7,7 @@ import { CollectionContext } from '../context/collectionContext'
 
 import { 
   getOwnOrganizationCollections, 
-  getPublicCollections 
+  getDemoCollection
 } from '../services/collectionService'
 import { getOwnProfile } from '../services/userService'
 
@@ -29,20 +29,23 @@ function Home () {
     }
   })
 
+  // Login as worker or organization admin brings you organization's collections
   useQuery('organizationCollections', getOwnOrganizationCollections, {
-    enabled: !!user && Object.keys(user).length > 0 && collection.length === 0 && user.role && user.role !== 'wizard',
+    enabled: !!user && Object.keys(user).length > 0 && Object.keys(collection).length === 0 && user.role && user.role !== 'wizard',
     onSuccess: (data) => {
-      if (data && data[0]) {
-        setCollection(data)
+      // Right now there is only one collection, that is why we directly use data[0] in setCollection
+      if (data) {
+        setCollection(data[0])
       }
     }
   })
 
-  useQuery('publicCollections', getPublicCollections, {
+  // Login as wizard brings the demo collection
+  useQuery('demoCollection', getDemoCollection, {
     enabled: !!user && Object.keys(user).length > 0 && collection.length === 0 && user.role === 'wizard',
     onSuccess: (data) => {
       if (Object.keys(user).length > 0) {
-        setCollection(data.result)
+        setCollection(data)
       }
     }
   })

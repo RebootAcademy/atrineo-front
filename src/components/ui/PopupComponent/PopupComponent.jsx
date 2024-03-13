@@ -7,13 +7,13 @@ function PopupComponent ({ name }) {
   const { collection } = useContext(CollectionContext)
 
   // Primero miramos sin collection llega hasta data
-  if (!collection || !collection[0] || !collection[0].data) {
+  if (!collection || !collection || !collection.data) {
     return null
   }
 
   // Map sobre la colección y genera un Popup para cada startup
   const startUpNames = []
-  collection[0]?.data.map((startup) => (
+  collection?.data.map((startup) => (
     startUpNames.push(
       <Popup
         key={startup._id}>

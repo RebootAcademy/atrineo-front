@@ -7,60 +7,48 @@ import UploadCSVComponent from "../components/Datasets/UploadCSV/UploadCSVCompon
 import { CollectionContext } from "../context/collectionContext"
 import { UserContext } from "../context/userContext"
 
-import { getOwnProfile } from "../services/userService"
-import {
-  getOwnOrganizationCollections,
-  getPublicCollections
+import { 
+  getOwnOrganizationCollections, 
+  getDemoCollection
 } from "../services/collectionService"
 
 function Dataset() {
   const { collection, setCollection } = useContext(CollectionContext)
-  const { user, setUser } = useContext(UserContext)
+  const { user/* , setUser */ } = useContext(UserContext)
 
-  const { isLoading: isLoadingProfile } = useQuery('profile', getOwnProfile, {
-    enabled: !!user && !user.name,
+  useQuery('organizationCollections', getOwnOrganizationCollections, {
+    enabled: !!user && 
+      Object.keys(user).length > 0 
+      && Object.keys(collection).length === 0 && 
+      user.role && 
+      user.role !== 'wizard',
     onSuccess: (data) => {
-      if (data && data.result) {
-        setUser(data.result)
+      if (data) {
+        setCollection(data[0])
       }
     }
   })
 
-  const { isLoading: isLoadingOrgCollections } = useQuery('organizationCollections', getOwnOrganizationCollections, {
-    enabled: !!user &&
-      Object.keys(user).length > 0
-      && collection.length === 0 &&
-      user.role &&
-      user.role !== 'wizard',
+  useQuery('demoCollection', getDemoCollection, {
+    enabled: !!user && 
+      Object.keys(user).length > 0 && 
+      Object.keys(collection).length === 0 && 
+      user.role === 'wizard',
     onSuccess: (data) => {
-      if (data && data[0]) {
+      if (Object.keys(user).length > 0) {
         setCollection(data)
       }
     }
   })
-
-  const { isLoading: isLoadingPublicCollections } = useQuery('publicCollections', getPublicCollections, {
-    enabled: !!user &&
-      Object.keys(user).length > 0 &&
-      collection.length === 0 &&
-      user.role === 'wizard',
-    onSuccess: (data) => {
-      if (Object.keys(user).length > 0) {
-        setCollection(data.result)
-      }
-    }
-  })
-
-  const isLoading = isLoadingProfile || isLoadingOrgCollections || isLoadingPublicCollections
-
+  console.log(collection)
   return (
     <>
       {
-        isLoading ?
+        Object.keys(collection).length === 0 ?
           <LoadingSpinner /> :
           <div className='overflow-x-auto'>
-            {user?.role === 'wizard' && <UploadCSVComponent />}
-            <TableComponent data={collection[0].data} />
+            {user?.role === 'wizard' ? < UploadCSVComponent /> : '' }
+            <TableComponent data={collection.data} />
           </div>
       }
     </>

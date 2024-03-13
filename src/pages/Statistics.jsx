@@ -11,13 +11,13 @@ import { UserContext } from "../context/userContext"
 
 import { 
   getOwnOrganizationCollections, 
-  getPublicCollections 
+  getDemoCollection
 } from "../services/collectionService"
 
 import { getOwnProfile } from "../services/userService"
 
 import {
-  extractRegionNames,
+  // extractRegionNames,
   extractNumericFields,
   extractStringOptions,
   extractBooleanOptions
@@ -27,7 +27,7 @@ function Statistics() {
   const { collection, setCollection } = useContext(CollectionContext)
   const { mapDivision } = useContext(LayerContext)
   const { user, setUser } = useContext(UserContext)
-
+  console.log(collection)
   useQuery('profile', getOwnProfile, {
     enabled: !!user && !user.name,
     onSuccess: (data) => {
@@ -38,24 +38,24 @@ function Statistics() {
   })
 
   useQuery('organizationCollections', getOwnOrganizationCollections, {
-    enabled: !!user && Object.keys(user).length > 0 && collection.length === 0 && user.role && user.role !== 'wizard',
+    enabled: !!user && Object.keys(user).length > 0 && Object.keys(collection).length === 0 && user.role && user.role !== 'wizard',
     onSuccess: (data) => {
-      if (data && data[0]) {
+      if (data) {
+        setCollection(data[0])
+      }
+    }
+  })
+
+  useQuery('demoCollection', getDemoCollection, {
+    enabled: !!user && Object.keys(user).length > 0 && Object.keys(collection).length === 0 && user.role === 'wizard',
+    onSuccess: (data) => {
+      if (Object.keys(user).length > 0) {
         setCollection(data)
       }
     }
   })
 
-  useQuery('publicCollections', getPublicCollections, {
-    enabled: !!user && Object.keys(user).length > 0 && collection.length === 0 && user.role === 'wizard',
-    onSuccess: (data) => {
-      if (Object.keys(user).length > 0) {
-        setCollection(data.result)
-      }
-    }
-  })
-
-  const data = collection[0]?.data
+  const data = collection?.data
 
   const stringOptions = useMemo(() => {
     return data ? extractStringOptions(data[0]?.fields) : []
@@ -92,20 +92,19 @@ function Statistics() {
     }
   }, [optionsArr])
 
-  const regionNames = extractRegionNames(collection, mapDivision)
-
+  
   const changeChartType = (type) => {
     setChartType(type)
   }
-
+  
   const changeAggregation = (value) => {
     setAggregation(value)
   }
-
+  
   const changeXAxis = (name) => {
     setXAxis(name)
   }
-
+  
   const changeYAxis = (name) => {
     setYAxis(name)
   }
@@ -114,7 +113,7 @@ function Statistics() {
     width: 900,
     height: 500,
     data: data,
-    regions: regionNames,
+    // regions: regionNames,
     options: optionsArr,
     division: mapDivision,
     aggregation: aggregation,
@@ -127,7 +126,7 @@ function Statistics() {
   return (
     <div className="h-[calc(100vh-5.1rem)] w-screen px-8 py-16 flex flex-row">
       {
-        collection.length === 0 ?
+        Object.keys(collection).length === 0 ?
           <LoadingSpinner /> :
           <div className="flex w-full">
             <div className="flex-grow flex flex-wrap bg-blue-100 justify-center items-center">

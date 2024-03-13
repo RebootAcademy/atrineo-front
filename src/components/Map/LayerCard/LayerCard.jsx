@@ -18,7 +18,7 @@ function LayerCard({ onCloseMenu }) {
   const { collection } = useContext(CollectionContext)
   let collectionType
   if (collection.length !== 0) {
-    collectionType = collection[0].collectionType
+    collectionType = collection.collectionType
   }
 
   const { saveCurrentLayer } = useContext(LayerContext)

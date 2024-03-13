@@ -18,7 +18,7 @@ function App() {
   const [selectedRegion, setSelectedRegion] = useState('')
   const [searchPolygon, setSearchPolygon] = useState(null)
   const [mapCenter, setMapCenter] = useState([48.6, 9])
-  const [collection, setCollection] = useState([])
+  const [collection, setCollection] = useState({})
   const [layers, setLayers] = useState([])
   const [ user, setUser ] = useState({})
   
