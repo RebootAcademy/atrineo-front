@@ -96,6 +96,9 @@ export const calculateRadius = (value, minValue, maxValue) => {
 }
 
 export const extractRegionNames = (array, division) => {
+  if (!array || !Array.isArray(array.data)) {
+    return []
+  }
   const nameRegionFiltered = array.data
     .filter((item) => item.locationId[division] !== null)
     .map((item) => {
@@ -160,4 +163,17 @@ export const calcAggregatedData = (data, xAxis, yAxis, division, aggregation) =>
   } else {
     return Object.entries(sums).map(([name, sum]) => ({ name, sum }))
   }
+}
+
+export const formatNumber = (num) => {
+  if (num >= 1000000000) {
+    return (num / 1000000000).toFixed(1).replace(/\.0$/, '') + 'G'
+  }
+  if (num >= 1000000) {
+    return (num / 1000000).toFixed(1).replace(/\.0$/, '') + 'M'
+  }
+  if (num >= 1000) {
+    return (num / 1000).toFixed(1).replace(/\.0$/, '') + 'K'
+  }
+  return num.toString()
 }

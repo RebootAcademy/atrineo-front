@@ -17,7 +17,7 @@ import {
 import { getOwnProfile } from "../services/userService"
 
 import {
-  // extractRegionNames,
+  extractRegionNames,
   extractNumericFields,
   extractStringOptions,
   extractBooleanOptions
@@ -27,7 +27,7 @@ function Statistics() {
   const { collection, setCollection } = useContext(CollectionContext)
   const { mapDivision } = useContext(LayerContext)
   const { user, setUser } = useContext(UserContext)
-  console.log(collection)
+
   useQuery('profile', getOwnProfile, {
     enabled: !!user && !user.name,
     onSuccess: (data) => {
@@ -91,7 +91,6 @@ function Statistics() {
       setXAxis(optionsArr[0])
     }
   }, [optionsArr])
-
   
   const changeChartType = (type) => {
     setChartType(type)
@@ -109,11 +108,12 @@ function Statistics() {
     setYAxis(name)
   }
 
+  const regionNames = extractRegionNames(collection, mapDivision)
   const commonProps = {
     width: 900,
     height: 500,
     data: data,
-    // regions: regionNames,
+    regions: regionNames,
     options: optionsArr,
     division: mapDivision,
     aggregation: aggregation,

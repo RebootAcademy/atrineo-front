@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import {
   Select,
@@ -17,18 +17,50 @@ function OptionsMenu({ onChange, fields, options, aggOptions, changeAggregation,
     {name:'bar', img: '/barChart.svg'}, 
     {name:'pie', img: '/pieChart.svg'},
     {name: 'scatter', img: ''},
-    {name:'stack', img: ''}
   ]
 
   const [chartName, setChartName] = useState('')
-  const [/* selectedXAxis */, setSelectedXAxis] = useState('')
-  const [/* selectedYAxis */, setSelectedYAxis] = useState('')
+  const [selectedXAxis, setSelectedXAxis] = useState('')
+  const [selectedYAxis, setSelectedYAxis] = useState('')
+
+  useEffect(() => {
+    if (chartName === 'bar') {
+      setSelectedXAxis('')
+      setSelectedYAxis('')
+    }
+  }, [chartName])
  
   fields = fields.map(f => f.fieldName)
+
+  /*   const displayOptions = (options) => {
+    return options.map((option, i) =>
+    <SelectItem key={i} value={option}>
+    {option} Hola
+    </SelectItem>
+    )
+  } */
 
   const handleChange = (value) => {
     onChange(value)
     setChartName(value)
+  }
+  
+  const handleYAxis = (value) => {
+    setSelectedYAxis(value)
+    changeYAxis(value)
+  }
+  
+  const handleXAxis = (value) => {
+    setSelectedXAxis(value)
+    changeXAxis(value)
+  }
+  
+  const handleAggregation = (value) => {
+    changeAggregation(value)
+  }
+  
+  const handleName = (e) => {
+    setChartName(e.target.value)
   }
 
   const displayChartOptions = (options) => {
@@ -41,38 +73,15 @@ function OptionsMenu({ onChange, fields, options, aggOptions, changeAggregation,
       </SelectItem>
     )
   }
-
-  /*   const displayOptions = (options) => {
-    return options.map((option, i) =>
-      <SelectItem key={i} value={option}>
-        {option} Hola
-      </SelectItem>
-    )
-  } */
-
-  const handleYAxis = (value) => {
-    setSelectedYAxis(value)
-    changeYAxis(value)
-  }
-
-  const handleXAxis = (value) => {
-    setSelectedXAxis(value)
-    changeXAxis(value)
-  }
-
-  const handleAggregation = (value) => {
-    changeAggregation(value)
-  }
-
-  const handleName = (e) => {
-    setChartName(e.target.value)
-  }
   
-  const displaySelect = (title, fn, arr, isNumeric = false) => {
-    let filteredOptions = arr
+  const displaySelect = (title, fn, arr, isNumeric = false, excludeOption = '') => {
+    let filteredOptions = arr.filter(option => option !== excludeOption)
+
     if (chartName === 'scatter' && isNumeric) {
-      filteredOptions = fields
+      filteredOptions = fields.filter(option => option !== excludeOption)
     } 
+
+    const placeholder = title !== 'Aggregation:' ? arr[0] : 'Select option'
       
     return (
       <>
@@ -81,8 +90,8 @@ function OptionsMenu({ onChange, fields, options, aggOptions, changeAggregation,
         </Label>
         <Select onValueChange={fn}>
           <SelectTrigger className="w-5/6 mt-2">
-            <SelectValue defaultValue={arr[0]} placeholder={arr[0]} />
-            <SelectContent>
+            <SelectValue placeholder={placeholder} defaultValue={arr[0]} />
+            <SelectContent key={`select-content-${title}`}>
               {filteredOptions.map((option, i) => (
                 <SelectItem key={i} value={option}>
                   {option}
@@ -106,7 +115,7 @@ function OptionsMenu({ onChange, fields, options, aggOptions, changeAggregation,
       <Input className="w-5/6 m-3.5" value={chartName} onChange={handleName}/>
       <Select onValueChange={handleChange}>
         <SelectTrigger className="w-5/6">
-          <SelectValue placeholder="Select a chart type" />
+          <SelectValue placeholder="Select chart type" />
         </SelectTrigger>
         <SelectContent>
           { displayChartOptions(graphTypes) }
@@ -118,8 +127,8 @@ function OptionsMenu({ onChange, fields, options, aggOptions, changeAggregation,
       <Label className="self-start ml-4 mt-4">
         Axes:
       </Label>
-      { displaySelect('X axis:', handleXAxis, options, true) }
-      { displaySelect('Y axis:', handleYAxis, fields, true) }
+      { displaySelect('X axis:', handleXAxis, options, true, selectedYAxis) }
+      { displaySelect('Y axis:', handleYAxis, fields, true, selectedXAxis)   }
     </Card>
   )
 }

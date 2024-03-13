@@ -50,7 +50,7 @@ function Barplot({
   const bars = useMemo(() => aggregatedData.map((d, i) =>
     <rect
       key={i}
-      x={xScale(d.name) + 20}
+      x={(xScale(d.name) || 0) + 20}
       y={yScale(d.sum)}
       width={xScale.bandwidth() - 40}
       height={boundsHeight - yScale(d.sum)}
