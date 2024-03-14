@@ -11,10 +11,20 @@ import {
   getOwnOrganizationCollections, 
   getDemoCollection
 } from "../services/collectionService"
+import { getOwnProfile } from "../services/userService"
 
 function Dataset() {
   const { collection, setCollection } = useContext(CollectionContext)
-  const { user/* , setUser */ } = useContext(UserContext)
+  const { user, setUser } = useContext(UserContext)
+
+  useQuery('profile', getOwnProfile, {
+    enabled: !!user && !user.name,
+    onSuccess: (data) => {
+      if (data && data.result) {
+        setUser(data.result)
+      }
+    }
+  })
 
   useQuery('organizationCollections', getOwnOrganizationCollections, {
     enabled: !!user && 
@@ -29,7 +39,7 @@ function Dataset() {
     }
   })
 
-  useQuery('demoCollection', getDemoCollection, {
+  const { refetch } = useQuery('demoCollection', getDemoCollection, {
     enabled: !!user && 
       Object.keys(user).length > 0 && 
       Object.keys(collection).length === 0 && 
@@ -40,14 +50,17 @@ function Dataset() {
       }
     }
   })
-  console.log(collection)
+
   return (
     <>
       {
         Object.keys(collection).length === 0 ?
           <LoadingSpinner /> :
           <div className='overflow-x-auto'>
-            {user?.role === 'wizard' ? < UploadCSVComponent /> : '' }
+            {user?.role === 'wizard' ? 
+              < UploadCSVComponent 
+                reloadData={ refetch }
+              /> : '' }
             <TableComponent data={collection.data} />
           </div>
       }

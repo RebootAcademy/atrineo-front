@@ -9,8 +9,8 @@ import { CollectionContext } from "../context/collectionContext"
 import { LayerContext } from "../context/layerContext"
 import { UserContext } from "../context/userContext"
 
-import { 
-  getOwnOrganizationCollections, 
+import {
+  getOwnOrganizationCollections,
   getDemoCollection
 } from "../services/collectionService"
 
@@ -68,7 +68,7 @@ function Statistics() {
   const fields = useMemo(() => {
     return data ? extractNumericFields(data[0]?.fields) : []
   }, [data])
-  
+
   const optionsArr = useMemo(() => {
     return data ? ['regions', ...stringOptions, ...booleanOptions] : []
   }, [data, stringOptions, booleanOptions])
@@ -91,19 +91,19 @@ function Statistics() {
       setXAxis(optionsArr[0])
     }
   }, [optionsArr])
-  
+
   const changeChartType = (type) => {
     setChartType(type)
   }
-  
+
   const changeAggregation = (value) => {
     setAggregation(value)
   }
-  
+
   const changeXAxis = (name) => {
     setXAxis(name)
   }
-  
+
   const changeYAxis = (name) => {
     setYAxis(name)
   }
@@ -130,14 +130,14 @@ function Statistics() {
           <LoadingSpinner /> :
           <div className="flex w-full">
             <div className="flex-grow flex flex-wrap bg-blue-100 justify-center items-center">
-              <ChartsContainer 
+              <ChartsContainer
                 chartType={chartType}
                 commonProps={commonProps}
                 fields={fields}
               />
             </div>
             <aside className="w-1/4 bg-red-200 h-full">
-              <OptionsMenu 
+              <OptionsMenu
                 onChange={changeChartType}
                 fields={fields}
                 options={optionsArr}
