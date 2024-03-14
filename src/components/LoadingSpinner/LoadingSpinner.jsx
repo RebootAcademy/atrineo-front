@@ -1,12 +1,13 @@
+import PropTypes from 'prop-types'
 import { cn } from "@/lib/utils"
 
-function LoadingSpinner() {
+function LoadingSpinner({ width, height }) {
   return (
     <div className="w-full h-5/6 flex flex-col justify-center items-center">
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        width="100"
-        height="100"
+        width={ width }
+        height={ height }
         viewBox="0 0 24 24"
         fill="none"
         stroke="#006AB6"
@@ -19,6 +20,11 @@ function LoadingSpinner() {
       </svg>
     </div>
   )
+}
+
+LoadingSpinner.propTypes = {
+  width: PropTypes.string,
+  height: PropTypes.string
 }
 
 export default LoadingSpinner

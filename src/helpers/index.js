@@ -96,6 +96,9 @@ export const calculateRadius = (value, minValue, maxValue) => {
 }
 
 export const extractRegionNames = (array, division) => {
+  if (!array || !Array.isArray(array.data)) {
+    return []
+  }
   const nameRegionFiltered = array.data
     .filter((item) => item.locationId[division] !== null)
     .map((item) => {
@@ -110,4 +113,67 @@ export const extractRegionNames = (array, division) => {
   }, [])
 
   return  nameRegion.map((region) => region.name)
+}
+
+export const checkAggregation = (value, prev, agg) => {
+  if (!value) { return prev }
+  switch (agg) {
+  case ('sum'):
+    return prev + value.fieldValue
+  case ('count'):
+    return ++prev
+  case ('avg'):
+    return { count: ++prev.count, sum: prev.sum + value.fieldValue }
+  case ('max'):
+    if (value.fieldValue > prev) return value.fieldValue
+    return prev
+  case ('min'):
+    if (value.fieldValue < prev) return value.fieldValue
+    return prev
+  default:
+    return prev
+  }
+}
+
+export const calcAggregatedData = (data, xAxis, yAxis, division, aggregation) => {
+  const sums = data.reduce((acc, cur) => {
+    let name
+    if (xAxis === 'regions') {
+      name = cur.locationId[division]?.name
+    } else {
+      name = cur.fields
+        .filter(f => f.fieldName === xAxis)
+        .map(f => f.fieldValue)
+    }
+    if (!name) return acc
+    if (!acc[name]) {
+      acc[name] = aggregation === 'min' ? Infinity : (aggregation === 'avg' ? { count: 0, sum: 0 } : 0)
+    }
+
+    const filteredValues = cur.fields.filter(d => d.fieldName === yAxis)
+    if (filteredValues.length > 0) {
+      const value = filteredValues[0]
+      acc[name] = checkAggregation(value, acc[name], aggregation)
+    }
+    return acc
+  }, {})
+
+  if (aggregation === 'avg') {
+    return Object.entries(sums).map(([name, info]) => ({ name, sum: info.sum / info.count }))
+  } else {
+    return Object.entries(sums).map(([name, sum]) => ({ name, sum }))
+  }
+}
+
+export const formatNumber = (num) => {
+  if (num >= 1000000000) {
+    return (num / 1000000000).toFixed(1).replace(/\.0$/, '') + 'G'
+  }
+  if (num >= 1000000) {
+    return (num / 1000000).toFixed(1).replace(/\.0$/, '') + 'M'
+  }
+  if (num >= 1000) {
+    return (num / 1000).toFixed(1).replace(/\.0$/, '') + 'K'
+  }
+  return num.toString()
 }

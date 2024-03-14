@@ -12,15 +12,18 @@ import LayersManager from '../LayersManager/LayersManager'
 import LegendsContainer from '../LegendsContainer/LegendsContainer'
 
 import { LayerContext } from "../../../context/layerContext"
+import { CollectionContext } from '@/context/collectionContext'
 import { MapContainer } from "react-leaflet"
 
 function MapComponent() {
-  const { mapDivision, mapCenter } = useContext(LayerContext)
+  const { mapDivision } = useContext(LayerContext)
+  const { collection } = useContext(CollectionContext)
 
   return (
+    
     <section>
       <MapContainer
-        center={mapCenter}
+        center={[collection?.latitude, collection?.longitude]}
         zoom={2}
         minZoom={9}
         doubleClickZoom={false}

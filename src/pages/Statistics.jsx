@@ -1,22 +1,20 @@
 import { useContext, useEffect, useState, useMemo } from "react"
 import { useQuery } from "react-query"
 
-import BarPlot from '../components/Graphs/BarPlot/BarPlot'
-import PieChart from "../components/Graphs/PieChart/PieChart"
 import OptionsMenu from "../components/Graphs/OptionsMenu/OptionsMenu"
 import LoadingSpinner from "../components/LoadingSpinner/LoadingSpinner"
-import { Label } from "../components/ui/Label/Label"
+import ChartsContainer from "@/components/Graphs/ChartsContainer/ChartsContainer"
 
 import { CollectionContext } from "../context/collectionContext"
 import { LayerContext } from "../context/layerContext"
 import { UserContext } from "../context/userContext"
 
-import { 
-  getOwnOrganizationCollections, 
-  getDemoCollection 
+import {
+  getOwnOrganizationCollections,
+  getDemoCollection
 } from "../services/collectionService"
 
-import { getOwnProfile } from "../services/userService"
+import { useUser } from "@/hooks/useUser"
 
 import {
   extractRegionNames,
@@ -28,16 +26,9 @@ import {
 function Statistics() {
   const { collection, setCollection } = useContext(CollectionContext)
   const { mapDivision } = useContext(LayerContext)
-  const { user, setUser } = useContext(UserContext)
-  console.log(collection)
-  useQuery('profile', getOwnProfile, {
-    enabled: !!user && !user.name,
-    onSuccess: (data) => {
-      if (data && data.result) {
-        setUser(data.result)
-      }
-    }
-  })
+  const { user } = useContext(UserContext)
+
+  useUser()
 
   useQuery('organizationCollections', getOwnOrganizationCollections, {
     enabled: !!user && Object.keys(user).length > 0 && Object.keys(collection).length === 0 && user.role && user.role !== 'wizard',
@@ -70,24 +61,17 @@ function Statistics() {
   const fields = useMemo(() => {
     return data ? extractNumericFields(data[0]?.fields) : []
   }, [data])
-  
+
   const optionsArr = useMemo(() => {
     return data ? ['regions', ...stringOptions, ...booleanOptions] : []
   }, [data, stringOptions, booleanOptions])
 
-  const [width, setWidth] = useState(window.innerWidth)
-  const [height, setHeight] = useState(window.innerHeight)
   const [chartType, setChartType] = useState('')
   const [aggregation, setAggregation] = useState('sum')
   const [yAxis, setYAxis] = useState(fields.length > 0 ? fields[0].fieldName : '')
   const [xAxis, setXAxis] = useState(optionsArr.length > 0 ? optionsArr[0] : '')
 
   const aggOptions = ['sum', 'avg', 'count', 'min', 'max']
-
-  useEffect(() => {
-    setWidth(window.innerWidth)
-    setHeight(window.innerHeight)
-  }, [width, height])
 
   useEffect(() => {
     if (fields.length > 0) {
@@ -101,92 +85,65 @@ function Statistics() {
     }
   }, [optionsArr])
 
-  
   const changeChartType = (type) => {
     setChartType(type)
   }
-  
+
   const changeAggregation = (value) => {
     setAggregation(value)
   }
-  
+
   const changeXAxis = (name) => {
     setXAxis(name)
   }
-  
+
   const changeYAxis = (name) => {
     setYAxis(name)
   }
-  
-  
-  const displayChart = () => {
-    const regionNames = extractRegionNames(collection, mapDivision)
-    const commonProps = {
-      width: width * 0.75,
-      height: height * 0.75,
-      data: data,
-      regions: regionNames,
-      options: optionsArr,
-      division: mapDivision,
-      aggregation: aggregation,
-      xAxis: xAxis,
-      yAxis: yAxis,
-      changeXAxis: changeXAxis,
-      changeYAxis: changeYAxis
-    }
-    switch(chartType){
-    case('bar'):
-      return <BarPlot 
-        {...commonProps} 
-      />
-    case('pie'):
-      return <PieChart
-        {...commonProps }
-        fields={fields}
-      />
-    default:
-      return <div
-        className="w-3/4
-          mr-4
-          border-solid 
-          border-gray 
-          border-[1px] 
-          rounded-md
-          pt-4
-          pl-4"
-      >
-        <Label className="text-lg">
-          Preview Chart
-        </Label>
-      </div>
-    }
+
+  const regionNames = extractRegionNames(collection, mapDivision)
+  const commonProps = {
+    width: 900,
+    height: 500,
+    data: data,
+    regions: regionNames,
+    options: optionsArr,
+    division: mapDivision,
+    aggregation: aggregation,
+    xAxis: xAxis,
+    yAxis: yAxis,
+    changeXAxis: changeXAxis,
+    changeYAxis: changeYAxis
   }
 
   return (
-    <div
-      className="mt-[45px] h-4/5 w-full flex mx-8"
-    >
+    <div className="h-[calc(100vh-5.1rem)] w-screen px-8 py-16 flex flex-row">
       {
         Object.keys(collection).length === 0 ?
-          <LoadingSpinner /> :
-          <>
-            {
-              displayChart()
-            }
-            <OptionsMenu 
-              onChange={changeChartType}
-              fields={fields}
-              options={optionsArr}
-              aggOptions={aggOptions}
-              changeAggregation={changeAggregation}
-              changeXAxis={changeXAxis}
-              changeYAxis={changeYAxis}
-              xAxis={xAxis}
-              yAxis={yAxis}
-            />
-          </>
+          <LoadingSpinner width="100" height="100" /> :
+          <div className="flex w-full">
+            <div className="flex-grow flex flex-wrap bg-blue-100 justify-center items-center">
+              <ChartsContainer
+                chartType={chartType}
+                commonProps={commonProps}
+                fields={fields}
+              />
+            </div>
+            <aside className="w-1/4 bg-red-200 h-full">
+              <OptionsMenu
+                onChange={changeChartType}
+                fields={fields}
+                options={optionsArr}
+                aggOptions={aggOptions}
+                changeAggregation={changeAggregation}
+                changeXAxis={changeXAxis}
+                changeYAxis={changeYAxis}
+                xAxis={xAxis}
+                yAxis={yAxis}
+              />
+            </aside>
+          </div>
       }
-
     </div>
   )
 }

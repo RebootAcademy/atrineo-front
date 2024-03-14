@@ -43,8 +43,8 @@ function TableComponent ({ data }) {
   data.sort((a,b) => {
     const [fieldA] = a.fields.filter(f => f.fieldName === sortField)
     const [fieldB] = b.fields.filter(f => f.fieldName === sortField)
-    const valueA = fieldA.fieldValue
-    const valueB = fieldB.fieldValue
+    const valueA = fieldA?.fieldValue
+    const valueB = fieldB?.fieldValue
 
     return checkValueType(valueA, valueB)
   })

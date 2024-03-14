@@ -1,56 +1,44 @@
+import PropTypes from 'prop-types'
 import CSVReader from 'react-csv-reader'
-import { useRef, useState, useContext } from 'react'
-import { useQuery } from 'react-query'
+import { useRef, useState } from 'react'
 
-import { uploadCsv } from '../../../services/uploadData'
+import LoadingSpinner from '../../LoadingSpinner/LoadingSpinner'
 
 import { Button } from '@/components/ui/Button/Button'
 
-import { CollectionContext } from '@/context/collectionContext'
-import { getOwnOrganizationCollections } from '@/services/collectionService/'
-import UpdateSpinner from '@/components/LoadingSpinner/UpdateSpinner'
+import { uploadCsv } from '../../../services/uploadData'
 
-function Csv() {
-  const { setCollection } = useContext(CollectionContext)
-
+function Csv({ dataType, reloadData }) {
+  const fileInputRef = useRef(null)
   const [fileName, setFileName] = useState('')
   const [dataBody, setDataBody] = useState({})
-  const [fetchData, setFetchData] = useState(false)
   const [showUpdateSpinner, setShowUpdateSpinner] = useState(false)
 
-  const fileInputRef = useRef(null)
 
   const handleButtonClick = () => {
     fileInputRef.current.click()
   }
 
-  useQuery('publicCollections', getOwnOrganizationCollections, {
-    enabled: fetchData,
-    onSuccess: (data) => {
-      setCollection(data.result)
-      setFetchData(false)
-    }
-  })
-
-  const handleCSVUpload = async (data, fileInfo) => {
-    console.log("Data:", data)
-    setFileName(fileInfo.name)
-    setDataBody(data)
-    console.log("File Information:", fileInfo)
-  }
-
   const uploadDataFile = async () => {
     try {
       setShowUpdateSpinner(true)
-      const res = await uploadCsv(dataBody)
+      const res = await uploadCsv(dataBody, dataType, fileName)
       if (res) {
-        setFetchData(true)
+        console.log(res)
+        reloadData()
       }
     } catch (error) {
       console.error(error)
     } finally {
       setShowUpdateSpinner(false)
     }
+  }
+
+  const handleCSVUpload = async (data, fileInfo) => {
+    console.log("Data:", data)
+    setFileName(fileInfo.name)
+    setDataBody(data)
+    console.log("File Information:", fileInfo)
   }
 
   return (
@@ -68,13 +56,20 @@ function Csv() {
         parserOptions={{ header: true, dynamicTyping: true, skipEmptyLines: true }}
         cssClass='hidden'
       />
-      {showUpdateSpinner && (
-        <div className='absolute inset-0 flex justify-center items-center bg-gray-500 bg-opacity-50 z-50'>
-          <UpdateSpinner />
-        </div>
-      )}
+      {
+        showUpdateSpinner && (
+          <div className='absolute inset-0 flex justify-center items-center bg-gray-500 bg-opacity-50 z-50'>
+            <LoadingSpinner width="50" height="50" />
+          </div>
+        )
+      }
     </div>
   )
+}
+
+Csv.propTypes = {
+  dataType: PropTypes.string,
+  reloadData: PropTypes.func
 }
 
 export default Csv

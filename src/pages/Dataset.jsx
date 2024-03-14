@@ -1,5 +1,6 @@
 import { useContext } from "react"
 import { useQuery } from "react-query"
+
 import TableComponent from "../components/Datasets/Table/TableComponent"
 import LoadingSpinner from "../components/LoadingSpinner/LoadingSpinner"
 import UploadCSVComponent from "../components/Datasets/UploadCSV/UploadCSVComponent"
@@ -11,25 +12,14 @@ import {
   getOwnOrganizationCollections, 
   getDemoCollection
 } from "../services/collectionService"
-import { getOwnProfile } from "../services/userService"
+
+import { useUser } from "@/hooks/useUser"
 
 function Dataset() {
   const { collection, setCollection } = useContext(CollectionContext)
+  const { user } = useContext(UserContext)
 
-  const value = useContext(CollectionContext)
-  console.log(value)
-
-  console.log(collection)
-  const { user, setUser } = useContext(UserContext)
-
-  useQuery('profile', getOwnProfile, {
-    enabled: !!user && !user.name,
-    onSuccess: (data) => {
-      if (data && data.result) {
-        setUser(data.result)
-      }
-    }
-  })
+  useUser()
 
   useQuery('organizationCollections', getOwnOrganizationCollections, {
     enabled: !!user && 
@@ -44,7 +34,7 @@ function Dataset() {
     }
   })
 
-  useQuery('demoCollection', getDemoCollection, {
+  const { refetch } = useQuery('demoCollection', getDemoCollection, {
     enabled: !!user && 
       Object.keys(user).length > 0 && 
       Object.keys(collection).length === 0 && 
@@ -55,14 +45,17 @@ function Dataset() {
       }
     }
   })
-  console.log(collection)
+
   return (
     <>
       {
         Object.keys(collection).length === 0 ?
-          <LoadingSpinner /> :
-          <div className='overflow-x-auto'>
-            {user?.role === 'wizard' ? < UploadCSVComponent /> : '' }
+          <LoadingSpinner width="100" height="100" /> :
+          <div className='relative h-full'>
+            {user?.role === 'wizard' ? 
+              < UploadCSVComponent 
+                reloadData={ refetch }
+              /> : '' }
             <TableComponent data={collection.data} />
           </div>
       }

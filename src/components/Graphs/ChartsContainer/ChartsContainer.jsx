@@ -1,8 +1,8 @@
 import BarPlot from '@/components/Graphs/BarPlot/BarPlot'
 import PieChart from '@/components/Graphs/PieChart/PieChart'
+import ScatterPlot from '../ScatterPlot/ScatterPlot'
 
 import PropTypes from 'prop-types'
-import StackPlot from '../StackPlot/StackPlot'
 
 function ChartsContainer({ chartType, commonProps, fields }) {
   const displayChart = () => {
@@ -11,10 +11,12 @@ function ChartsContainer({ chartType, commonProps, fields }) {
       return <BarPlot {...commonProps} />
     case ('pie'):
       return <PieChart {...commonProps} fields={fields} />
+    case ('scatter'):
+      return <ScatterPlot {...commonProps} />
     default:
       return (
         <>
-          <StackPlot {...commonProps} />
+          <BarPlot {...commonProps} />
         </>
       )
     }

@@ -9,25 +9,19 @@ import {
   getOwnOrganizationCollections, 
   getDemoCollection
 } from '../services/collectionService'
-import { getOwnProfile } from '../services/userService'
+
 
 import { I18N } from '../i18n'
 import MapComponent from '../components/Map/MapComponent/MapComponent'
 import LoadingSpinner from '../components/LoadingSpinner/LoadingSpinner'
+import { useUser } from '@/hooks/useUser'
 
 function Home () {
   const { example } = I18N
   const { collection, setCollection } = useContext(CollectionContext)
-  const { user, setUser } = useContext(UserContext)
+  const { user } = useContext(UserContext)
 
-  useQuery('profile', getOwnProfile, {
-    enabled: !!user && !user.name,
-    onSuccess: (data) => {
-      if (data && data.result) {
-        setUser(data.result)
-      }
-    }
-  })
+  useUser()
 
   // Login as worker or organization admin brings you organization's collections
   useQuery('organizationCollections', getOwnOrganizationCollections, {
@@ -42,7 +36,7 @@ function Home () {
 
   // Login as wizard brings the demo collection
   useQuery('demoCollection', getDemoCollection, {
-    enabled: !!user && Object.keys(user).length > 0 && collection.length === 0 && user.role === 'wizard',
+    enabled: !!user && Object.keys(user).length > 0 && Object.keys(collection).length === 0 && user.role === 'wizard',
     onSuccess: (data) => {
       if (Object.keys(user).length > 0) {
         setCollection(data)
@@ -66,8 +60,8 @@ function Home () {
   return (
     <>
       {
-        collection.length === 0 ?
-          <LoadingSpinner /> :
+        Object.keys(collection).length === 0 ?
+          <LoadingSpinner width="100" height="100" /> :
           <MapComponent />
       }
     </>
