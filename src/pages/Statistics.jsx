@@ -25,6 +25,7 @@ import {
 
 function Statistics() {
   const { collection, setCollection } = useContext(CollectionContext)
+
   const { mapDivision } = useContext(LayerContext)
   const { user, setUser } = useContext(UserContext)
 
@@ -73,6 +74,7 @@ function Statistics() {
     return data ? ['regions', ...stringOptions, ...booleanOptions] : []
   }, [data, stringOptions, booleanOptions])
 
+  const [chartName, setChartName] = useState('')
   const [chartType, setChartType] = useState('')
   const [aggregation, setAggregation] = useState('sum')
   const [yAxis, setYAxis] = useState(fields.length > 0 ? fields[0].fieldName : '')
@@ -91,6 +93,10 @@ function Statistics() {
       setXAxis(optionsArr[0])
     }
   }, [optionsArr])
+
+  const changeChartName = (name) => {
+    setChartName(name)
+  }
   
   const changeChartType = (type) => {
     setChartType(type)
@@ -109,6 +115,7 @@ function Statistics() {
   }
 
   const regionNames = extractRegionNames(collection, mapDivision)
+
   const commonProps = {
     width: 900,
     height: 500,
@@ -116,6 +123,9 @@ function Statistics() {
     regions: regionNames,
     options: optionsArr,
     division: mapDivision,
+  }
+  
+  const ownProps = {
     aggregation: aggregation,
     xAxis: xAxis,
     yAxis: yAxis,
@@ -130,18 +140,23 @@ function Statistics() {
           <LoadingSpinner /> :
           <div className="flex w-full">
             <div className="flex-grow flex flex-wrap bg-blue-100 justify-center items-center">
-              <ChartsContainer 
+              <ChartsContainer
                 chartType={chartType}
-                commonProps={commonProps}
                 fields={fields}
+                commonProps={commonProps}
               />
             </div>
             <aside className="w-1/4 bg-red-200 h-full">
-              <OptionsMenu 
+              <OptionsMenu
+                ownProps={ownProps}
+                chartType={chartType}
                 onChange={changeChartType}
                 fields={fields}
                 options={optionsArr}
                 aggOptions={aggOptions}
+                chartName={chartName}
+                changeChartName={changeChartName}
+                aggregation={aggregation}
                 changeAggregation={changeAggregation}
                 changeXAxis={changeXAxis}
                 changeYAxis={changeYAxis}

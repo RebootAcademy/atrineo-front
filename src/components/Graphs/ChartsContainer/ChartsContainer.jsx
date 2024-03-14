@@ -3,27 +3,33 @@ import PieChart from '@/components/Graphs/PieChart/PieChart'
 import ScatterPlot from '../ScatterPlot/ScatterPlot'
 
 import PropTypes from 'prop-types'
+import { useContext } from 'react'
+import { GraphContext } from '@/context/graphContext'
 
-function ChartsContainer({ chartType, commonProps, fields }) {
-  const displayChart = () => {
-    switch (chartType) {
+function ChartsContainer({ commonProps }) {
+  const { graphs } = useContext(GraphContext)
+
+  console.log(graphs)
+
+  const displayChart = (obj) => {
+    switch (obj.data.chartType) {
     case ('bar'):
-      return <BarPlot {...commonProps} />
+      return <BarPlot key={obj.id} { ...obj.data.ownProps} {...commonProps} />
     case ('pie'):
-      return <PieChart {...commonProps} fields={fields} />
+      return <PieChart key={obj.id} {...obj.data.ownProps} {...commonProps} fields={obj.data.fields} />
     case ('scatter'):
-      return <ScatterPlot {...commonProps} />
+      return <ScatterPlot key={obj.id} {...obj.data.ownProps} {...commonProps} />
     default:
       return (
         <>
-          <BarPlot {...commonProps} />
+          {/*           <BarPlot {...commonProps} /> */}
         </>
       )
     }
   }
   return (
     <>
-      {displayChart()}
+      {graphs.map((obj, index) => displayChart(obj, index))}
     </>
   )
 }

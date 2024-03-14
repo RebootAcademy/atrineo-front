@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import { useMemo } from 'react'
 import * as d3 from "d3" // we will need d3.js
 
-import { calcAggregatedData, createStringOptionsObject } from '@/helpers'
+import { calcAggregatedData, createStringOptionsObject, formatNumber } from '@/helpers'
 
 function Barplot({ 
   width, 
@@ -45,7 +45,7 @@ function Barplot({
   }, [maxSum, boundsHeight])
 
   const xAxisInfo = useMemo(() => d3.axisBottom(xScale), [xScale])
-  const yAxisInfo = useMemo(() => d3.axisLeft(yScale), [yScale])
+  const yAxisInfo = useMemo(() => d3.axisLeft(yScale).tickFormat(d => formatNumber(d)), [yScale])
 
   const bars = useMemo(() => aggregatedData.map((d, i) =>
     <rect
