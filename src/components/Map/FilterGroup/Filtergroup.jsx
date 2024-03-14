@@ -1,7 +1,6 @@
 import { useState } from 'react'
-import LayerItem from './LayerItem'
 import { Card, CardContent } from '../../ui/Card/Card'
-
+import LayerItem from './LayerItem'
 import DisplayFilters from "../DisplayFilters/DisplayFilters"
 
 import PropTypes from 'prop-types'

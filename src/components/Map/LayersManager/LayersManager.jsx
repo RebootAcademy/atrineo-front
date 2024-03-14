@@ -39,7 +39,7 @@ const displayLayers = (filters, array, searchPolygon, colorIndex) => {
 
 function LayersManager() {
   const { collection } = useContext(CollectionContext)
-  const { searchPolygon, layers, setLayers } = useContext(LayerContext)
+  const { searchPolygon, layers, setLayers, mapDivision } = useContext(LayerContext)
 
   useEffect(() => {
     const storedLayers = JSON.parse(window.localStorage.getItem('layers')) || []
@@ -50,21 +50,20 @@ function LayersManager() {
 
   return (
     <div>
-      {layers.filter(layer => layer.isVisible).map((layer) => {
+      {Object.keys(collection).length !== 0 && layers.filter(layer => layer.isVisible).map((layer) => {
         const field = Object.keys(layer.data).find(key => key !== 'type' && key !== 'fieldName')
-        const filteredData = collection.flatMap(item =>
-          item.data
-            .filter(dataItem => isWithinPolygon(dataItem, searchPolygon))
-            .filter(row => {
-              let valid = row.fields.every(item =>
-                layer.data[item.fieldName] === undefined || checkValue(item.fieldValue, item.fieldName, layer)
-              )
-              if (layer.data.regions) {
-                valid = valid && layer.data.regions.includes(row.locationId?.name)
-              }
-              return valid
-            })
-        )
+        const filteredData = collection?.data
+          .filter(dataItem => isWithinPolygon(dataItem, searchPolygon))
+          .filter(row => {
+            let valid = row.fields.every(item =>
+              layer.data[item.fieldName] === undefined || checkValue(item.fieldValue, item.fieldName, layer)
+            )
+
+            if (layer.data.regions) {
+              valid = valid && layer.data.regions.includes(row.locationId[mapDivision]?.name)
+            }
+            return valid
+          })
 
         colorIndex++
 

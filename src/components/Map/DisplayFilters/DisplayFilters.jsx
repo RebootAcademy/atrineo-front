@@ -1,5 +1,4 @@
 //SUSTITUIRÍA A FILTEROPTIONS
-// import { v4 as uuidv4 } from 'uuid'
 import { useContext, useState } from "react"
 import PropTypes from 'prop-types'
 
@@ -18,6 +17,7 @@ import {
 
 function DisplayFilters({ layerObj, type }) {
   const { collection } = useContext(CollectionContext)
+  console.log(collection)
   const [activeSwitch, setActiveSwitch] = useState(null)
 
   const handleRegionChange = (value) => {
@@ -38,13 +38,12 @@ function DisplayFilters({ layerObj, type }) {
       }
       setActiveSwitch(target)
     }
-    console.log(layerObj.current)
   }
 
   let data
   let fields
   if (collection) {
-    data = collection[0]?.data
+    data = collection?.data
     fields = data[0].fields
   }
 
@@ -54,7 +53,7 @@ function DisplayFilters({ layerObj, type }) {
   const stringOptions = extractStringOptions(fields) //Filtra las columnas que van a usarse como radio buttons
 
   // Almacena las distintas opciones posibles para cada grupo de radio buttons
-  const optionsObj = createStringOptionsObject(stringOptions, collection[0]?.data)
+  const optionsObj = createStringOptionsObject(stringOptions, collection?.data)
 
   const displayStrings = (arr) => {
     return arr?.map((option, index) => {

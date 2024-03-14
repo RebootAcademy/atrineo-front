@@ -51,6 +51,10 @@ function Login() {
     setErrorMessage(false)
   }
 
+  const onContactUs = () => {
+    navigate('/contactus')
+  }
+
   async function onLogin() {
     try {
       const loginResponse = await login({ email, password })
@@ -67,75 +71,85 @@ function Login() {
 
   return (
     <>
-      <div className='w-full h-screen flex flex-col lg:flex-row md:flex-col justify-center items-center space-y-12 lg:space-y-12 md:space-x-24 lg:space-x-24 mx-auto'>
-        <div className='sm:w-1/6 md:w-1/3 lg:w-1/4 xl:w-1/4 2xl:w-1/6'>
+      <div className='w-full h-screen flex flex-row md-flex-col justify-center items-center'>
+        <div className='sm:w-1/6 md:w-1/3 lg:w-1/4 xl:w-1/4 2xl:w-1/6 relative'>
           <img
             src='./atrineo_icon-removebg-preview.png'
             alt='Atrineo icon'
             className='w-full'
           />
         </div>
-        <div className='border-2 border-grey-700 rounded w-full sm:w-1/2 md:w-1/2 lg:w-1/2 xl:w-1/3 2xl:w-1/6'>
-          <div className='p-8'>
-            <div className='text-center'>
-              <p style={{ fontSize: "32px" }}>Login</p>
-            </div>
-            <div
-              className='flex flex-col'
-            >
-              <label
-                className='mb-2 font-bold'
-                htmlFor='email'
+        <div className='sm:w-5/6 md:w-2/3 lg:w-2/3 xl:w-1/3 2xl:w-2/6 flex flex-col justify-center items-center'>
+          <div className='border-2 border-gray-200 rounded-xl w-full sm:w-5/6 md:w-2/3 lg:w-2/3 xl:w-2/3 2xl:w-5/6'>
+            <div className='p-8'>
+              <div className='text-center'>
+                <p style={{ fontSize: "32px" }}>Login</p>
+              </div>
+              <div
+                className='flex flex-col'
+              >
+                <label
+                  className='mb-2 font-bold'
+                  htmlFor='email'
 
-              >
-                Email:
-              </label>
-            </div>
-            <Input
-              type='text'
-              id='email'
-              name='email'
-              placeholder='Enter your email'
-              className='border p-2 rounded'
-              onKeyDown={handleKeyPress}
-              onChange={handleEmail}
-            />
-            <div className='flex flex-col mt-4'>
-              <label
-                className='mb-2 font-bold'
-                htmlFor='password'
-              >
-                Password:
-              </label>
-            </div>
-            <div className='relative'>
+                >
+                  Email:
+                </label>
+              </div>
               <Input
-                type={showPassword ? 'text' : 'password'}
-                id='password'
-                name='password'
-                placeholder='Enter your password'
+                type='text'
+                id='email'
+                name='email'
+                placeholder='Enter your email'
                 className='border p-2 rounded'
                 onKeyDown={handleKeyPress}
-                onChange={handlePassword}
+                onChange={handleEmail}
               />
-              <div
-                className='absolute top-3 right-4 cursor-pointer'
-                onClick={() => setShowPassword(!showPassword)}
-              >
-                {showPassword ? openEye : closeEye}
+              <div className='flex flex-col mt-4'>
+                <label
+                  className='mb-2 font-bold'
+                  htmlFor='password'
+                >
+                  Password:
+                </label>
               </div>
-              <div className='flex justify-center mt-4'>
-                {errorMessage && <p style={{ fontSize: "14px" }}>Credentials are wrong</p>}
+              <div className='relative'>
+                <Input
+                  type={showPassword ? 'text' : 'password'}
+                  id='password'
+                  name='password'
+                  placeholder='Enter your password'
+                  className='border p-2 rounded'
+                  onKeyDown={handleKeyPress}
+                  onChange={handlePassword}
+                />
+                <div
+                  className='absolute top-3 right-4 cursor-pointer'
+                  onClick={() => setShowPassword(!showPassword)}
+                >
+                  {showPassword ? openEye : closeEye}
+                </div>
+                <div className='flex justify-center mt-4'>
+                  {errorMessage && <p style={{ fontSize: "14px" }}>Credentials are wrong</p>}
+                </div>
+              </div>
+              <div className='flex justify-center'>
+                <Button
+                  className='mt-4 w-full'
+                  onClick={() => onLogin()}
+                >
+                  Login
+                </Button>
               </div>
             </div>
-            <div className='flex justify-center'>
-              <Button
-                className='mt-4 w-full'
-                onClick={() => onLogin()}
-              >
-                Login
-              </Button>
-            </div>
+          </div>
+          <div 
+            className='flex mt-2 border-2 border-gray-200 rounded-xl w-full h-12 sm:w-5/6 md:w-2/3 lg:w-2/3 xl:w-2/3 2xl:w-5/6 text-grey'
+            onClick={onContactUs}
+          >
+            <button className='w-full py-2 text-gray-400 font-semibold underline underline-offset-3 text-xs rounded-lg'>
+              Contact Us
+            </button>
           </div>
         </div>
       </div>

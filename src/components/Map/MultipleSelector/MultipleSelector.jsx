@@ -16,8 +16,7 @@ function MultipleSelectorComponent({ onValueChange }) {
   }
 
   const dislayMultipleSelector = () => {
-    const nameRegionFiltered = collection
-      .flatMap((region) => region.data)
+    const nameRegionFiltered = collection.data
       .filter((item) => item.locationId[mapDivision] !== null)
       .map(item => {
         return { id: item.locationId[mapDivision]?._id, name: item.locationId[mapDivision]?.name }
