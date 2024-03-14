@@ -56,7 +56,7 @@ function Dataset() {
       {
         Object.keys(collection).length === 0 ?
           <LoadingSpinner /> :
-          <div className='overflow-x-auto'>
+          <div className='relative h-full'>
             {user?.role === 'wizard' ? 
               < UploadCSVComponent 
                 reloadData={ refetch }
