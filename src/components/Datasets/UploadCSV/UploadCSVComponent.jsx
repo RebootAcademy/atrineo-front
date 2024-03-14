@@ -5,7 +5,6 @@ import ControlPanel from "@/components/ControlPanelComponent/ControlPanel"
 import Csv from "./Csv"
 import LatitudeLongitudeComponent from "./LatitudeLongitudeComponent"
 
-
 function UploadCSVComponent({ reloadData }) {
   const [dataType, setDataType] = useState('startups')
 

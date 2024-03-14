@@ -42,7 +42,7 @@ function Home () {
 
   // Login as wizard brings the demo collection
   useQuery('demoCollection', getDemoCollection, {
-    enabled: !!user && Object.keys(user).length > 0 && collection.length === 0 && user.role === 'wizard',
+    enabled: !!user && Object.keys(user).length > 0 && Object.keys(collection).length === 0 && user.role === 'wizard',
     onSuccess: (data) => {
       if (Object.keys(user).length > 0) {
         setCollection(data)
@@ -66,7 +66,7 @@ function Home () {
   return (
     <>
       {
-        collection.length === 0 ?
+        Object.keys(collection).length === 0 ?
           <LoadingSpinner /> :
           <MapComponent />
       }

@@ -6,13 +6,9 @@ import { CollectionContext } from "@/context/collectionContext"
 import { updateCollection } from "@/services/collectionService"
 
 function LatitudeLongitudeComponent() {
-  const [latitude, setLatitude] = useState("")
-  console.log(latitude)
-  const [longitude, setLongitude] = useState("")
-  console.log(longitude)
   const { collection, setCollection } = useContext(CollectionContext)
-  console.log(collection.latitude)
-  console.log(collection.longitude)
+  const [latitude, setLatitude] = useState(collection?.latitude)
+  const [longitude, setLongitude] = useState(collection?.longitude)
 
   const handleLatitudeChange = (e) => {
     setLatitude(e.target.value)

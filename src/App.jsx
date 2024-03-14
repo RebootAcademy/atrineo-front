@@ -17,7 +17,6 @@ function App() {
   const [selectedNameDistrict, setSelectedNameDistrict] = useState([])
   const [selectedRegion, setSelectedRegion] = useState('')
   const [searchPolygon, setSearchPolygon] = useState(null)
-  const [mapCenter, setMapCenter] = useState([48.6, 9])
   const [collection, setCollection] = useState({})
   const [layers, setLayers] = useState([])
   const [ user, setUser ] = useState({})
@@ -101,8 +100,6 @@ function App() {
     toggleLayerVisibility,
     selectedNameDistrict,
     setSelectedNameDistrict,
-    mapCenter,
-    setMapCenter,
     colorIndex,
   }
 
