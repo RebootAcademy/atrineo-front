@@ -35,12 +35,11 @@ function UserManagement() {
         <div className="flex flex-col">
           {users.map((userData, index) => (
             <>
-              <div>
-                <Card
-                  key={index}
-                  className="border mt-6 relative w-96 p-4 bg-slate-50"
-                >
-                  <EditInfoModalComponent />
+              <div key={index}>
+                <Card className="border mt-6 relative w-96 p-4 bg-slate-50">
+                  <div className="absolute top-0 right-0">
+                    <EditInfoModalComponent />
+                  </div>
                   <div>
                     <p>{userData.name}</p>
                     <p>Email: {userData.email}</p>
