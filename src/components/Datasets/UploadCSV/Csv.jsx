@@ -11,6 +11,13 @@ function Csv() {
     fileInputRef.current.click()
   }
 
+  const handleKeyPress = (e) => {
+    console.log(e.key)
+    if (e.key == 'Enter'){
+      handleCSVUpload()
+    }
+  }
+
   const handleCSVUpload = async (data, fileInfo) => {
     console.log("Data:", data)
     setFileName(fileInfo.name)
@@ -37,7 +44,7 @@ function Csv() {
           {fileName ? fileName : "File not found"}
         </div>
       </div>
-      <Button onClick={uploadDataFile} className='font-semibold'>Update</Button>
+      <Button onClick={uploadDataFile} onKeyDown={handleKeyPress} className='font-semibold'>Update</Button>
       <CSVReader
         ref={fileInputRef}
         onFileLoaded={handleCSVUpload}

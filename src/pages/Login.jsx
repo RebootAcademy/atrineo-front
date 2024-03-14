@@ -1,12 +1,12 @@
 import { useState, useContext } from "react"
 
 import { useNavigate } from "react-router-dom"
-import { Input } from "../../components/ui/Input/input"
-import { Button } from "../../components/ui/Button/Button"
+import { Input } from "../components/ui/Input/input"
+import { Button } from "../components/ui/Button/Button"
 
-import { login } from "../../services/auth"
+import { login } from "../services/auth"
 
-import { UserContext } from "../../context/userContext"
+import { UserContext } from "../context/userContext"
 
 function Login() {
   const { setUser } = useContext(UserContext)
@@ -143,7 +143,7 @@ function Login() {
               </div>
             </div>
           </div>
-          <div 
+          <div
             className='flex mt-2 border-2 border-gray-200 rounded-xl w-full h-12 sm:w-5/6 md:w-2/3 lg:w-2/3 xl:w-2/3 2xl:w-5/6 text-grey'
             onClick={onContactUs}
           >

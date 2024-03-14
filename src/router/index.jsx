@@ -2,8 +2,10 @@ import { createBrowserRouter, redirect } from 'react-router-dom'
 import Home from "../pages/Home"
 import Statistics from "../pages/Statistics"
 import Dataset from "../pages/Dataset"
-import Login from "../pages/Login/Login"
+import Login from "../pages/Login"
 import ContactUs from '../pages/ContactUs'
+import AdminProfile from '@/pages/AdminProfile'
+import UserManagement from '@/pages/UserManagement'
 import Layout from "../Layout/Layout"
 
 const isAuthenticated = () => {
@@ -28,7 +30,7 @@ export const router = createBrowserRouter([
     children: [
       {
         path: '/contactus',
-        element: <ContactUs/>
+        element: <ContactUs />
       },
       {
         path: '/map',
@@ -43,6 +45,16 @@ export const router = createBrowserRouter([
       {
         path: '/dataset',
         element: <Dataset />,
+        loader: authLoader
+      },
+      {
+        path: '/adminProfile',
+        element: <AdminProfile/>,
+        loader: authLoader
+      },
+      {
+        path: '/userManagement',
+        element: <UserManagement />,
         loader: authLoader
       }
     ]

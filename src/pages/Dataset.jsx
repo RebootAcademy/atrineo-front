@@ -15,6 +15,11 @@ import { getOwnProfile } from "../services/userService"
 
 function Dataset() {
   const { collection, setCollection } = useContext(CollectionContext)
+
+  const value = useContext(CollectionContext)
+  console.log(value)
+
+  console.log(collection)
   const { user, setUser } = useContext(UserContext)
 
   useQuery('profile', getOwnProfile, {

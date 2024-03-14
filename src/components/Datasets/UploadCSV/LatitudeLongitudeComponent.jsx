@@ -7,12 +7,8 @@ import { updateCollection } from "@/services/collectionService"
 
 function LatitudeLongitudeComponent() {
   const [latitude, setLatitude] = useState("")
-  console.log(latitude)
   const [longitude, setLongitude] = useState("")
-  console.log(longitude)
   const { collection, setCollection } = useContext(CollectionContext)
-  console.log(collection.latitude)
-  console.log(collection.longitude)
 
   const handleLatitudeChange = (e) => {
     setLatitude(e.target.value)
@@ -31,6 +27,13 @@ function LatitudeLongitudeComponent() {
     await updateCollection(collection._id, latitude, longitude)
   }
 
+  const handleKeyPress = (e) => {
+    console.log(e.key)
+    if (e.key == 'Enter') {
+      handleLatLonUpdate()
+    }
+  }
+
   return (
     <>
       <div className="flex items-center mb-4">
@@ -47,6 +50,7 @@ function LatitudeLongitudeComponent() {
         <Button
           className="ml-2"
           onClick={handleLatLonUpdate}
+          onKeyDown={handleKeyPress}
         >Update</Button>
       </div>
     </>

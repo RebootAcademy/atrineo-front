@@ -20,20 +20,20 @@ function App() {
   const [mapCenter, setMapCenter] = useState([48.6, 9])
   const [collection, setCollection] = useState({})
   const [layers, setLayers] = useState([])
-  const [ user, setUser ] = useState({})
-  
+  const [user, setUser] = useState({})
+
   const [colorIndex, setColorIndex] = useState(0)
-    
+
   const storage = window.localStorage
-  
+
   useEffect(() => {
     storage.removeItem('layers')
     setLayers([])
   }, [])
-  
+
   useEffect(() => {
   }, [searchPolygon])
-  
+
   const saveCurrentLayer = (obj) => {
     // Intentar cargar el arreglo de capas existente desde localStorage, o iniciar uno nuevo si no existe
     const existingLayers = JSON.parse(storage.getItem('layers')) || []
@@ -51,7 +51,7 @@ function App() {
     // Actualizar el estado de layers y nextLayerId
     setLayers(updatedLayers)
   }
-  
+
   const clearLayerById = (layerId) => {
     // Cargar el arreglo de capas existente desde localStorage
     const existingLayers = JSON.parse(storage.getItem('layers')) || []
@@ -63,7 +63,7 @@ function App() {
     setLayers(updatedLayers)
     console.log('Layer deleted')
   }
-  
+
   const toggleLayerVisibility = (layerId) => {
     const existingLayers = JSON.parse(storage.getItem('layers')) || []
     const updatedLayers = existingLayers.map(layer => {
@@ -76,14 +76,15 @@ function App() {
     setLayers(updatedLayers)
     console.log(`Layer ${layerId} visibility toggled`)
   }
-  
-  const userValue = { 
-    user, 
-    setUser 
-  }
 
-  const collectionValue = { 
-    collection, 
+  const userValue = {
+    user,
+    setUser
+  }
+  console.log(userValue)
+
+  const collectionValue = {
+    collection,
     setCollection,
   }
 
