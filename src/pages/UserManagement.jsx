@@ -18,18 +18,22 @@ function UserManagement() {
   })
 
   return (
-    <div>
-      <h1>User Management</h1>
-      <div>
-        {users.map((userData, index) => (
-          <div key={index}>
-            <h2>{userData.name}</h2>
-            <p>Email: {userData.email}</p>
-            <p>Role: {userData.role}</p>
-          </div>
-        ))}
+    <>
+      <div className="border">User Management</div>
+      <div className="bg-slate-200 w-full h-screen flex flex-col justify-center">
+        <div className="bg-slate-50 border">
+          {users.map((userData, index) => (
+            <div key={index} className="border">
+              <div>
+                <h2>{userData.name}</h2>
+                <p>Email: {userData.email}</p>
+                <p>Role: {userData.role}</p>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
-    </div>
+    </>
   )
 }
 
