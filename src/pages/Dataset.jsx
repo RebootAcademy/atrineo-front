@@ -1,5 +1,7 @@
 import { useContext } from "react"
 import { useQuery } from "react-query"
+import { useNavigate } from "react-router-dom"
+
 import TableComponent from "../components/Datasets/Table/TableComponent"
 import LoadingSpinner from "../components/LoadingSpinner/LoadingSpinner"
 import UploadCSVComponent from "../components/Datasets/UploadCSV/UploadCSVComponent"
@@ -14,6 +16,7 @@ import {
 import { getOwnProfile } from "../services/userService"
 
 function Dataset() {
+  const navigate = useNavigate()
   const { collection, setCollection } = useContext(CollectionContext)
   const { user, setUser } = useContext(UserContext)
 
@@ -23,6 +26,10 @@ function Dataset() {
       if (data && data.result) {
         setUser(data.result)
       }
+    },
+    onError: () => {
+      localStorage.removeItem('token')
+      navigate('/')
     }
   })
 
@@ -55,7 +62,7 @@ function Dataset() {
     <>
       {
         Object.keys(collection).length === 0 ?
-          <LoadingSpinner /> :
+          <LoadingSpinner width="100" height="100" /> :
           <div className='relative h-full'>
             {user?.role === 'wizard' ? 
               < UploadCSVComponent 

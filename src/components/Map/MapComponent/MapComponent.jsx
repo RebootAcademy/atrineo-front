@@ -18,8 +18,9 @@ import { MapContainer } from "react-leaflet"
 function MapComponent() {
   const { mapDivision } = useContext(LayerContext)
   const { collection } = useContext(CollectionContext)
-  
+
   return (
+    
     <section>
       <MapContainer
         center={[collection?.latitude, collection?.longitude]}

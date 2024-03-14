@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 import { useContext } from 'react'
 import { useQuery } from 'react-query'
+import { useNavigate } from 'react-router-dom'
 
 import { UserContext } from '../context/userContext'
 import { CollectionContext } from '../context/collectionContext'
@@ -17,6 +18,7 @@ import LoadingSpinner from '../components/LoadingSpinner/LoadingSpinner'
 
 function Home () {
   const { example } = I18N
+  const navigate = useNavigate()
   const { collection, setCollection } = useContext(CollectionContext)
   const { user, setUser } = useContext(UserContext)
 
@@ -26,6 +28,10 @@ function Home () {
       if (data && data.result) {
         setUser(data.result)
       }
+    },
+    onError: () => {
+      localStorage.removeItem('token')
+      navigate('/')
     }
   })
 
@@ -67,7 +73,7 @@ function Home () {
     <>
       {
         Object.keys(collection).length === 0 ?
-          <LoadingSpinner /> :
+          <LoadingSpinner width="100" height="100" /> :
           <MapComponent />
       }
     </>

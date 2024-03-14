@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import CSVReader from 'react-csv-reader'
 import { useRef, useState } from 'react'
 
-import UpdateSpinner from '@/components/LoadingSpinner/UpdateSpinner'
+import LoadingSpinner from '../../LoadingSpinner/LoadingSpinner'
 
 import { Button } from '@/components/ui/Button/Button'
 
@@ -59,7 +59,7 @@ function Csv({ dataType, reloadData }) {
       {
         showUpdateSpinner && (
           <div className='absolute inset-0 flex justify-center items-center bg-gray-500 bg-opacity-50 z-50'>
-            <UpdateSpinner />
+            <LoadingSpinner width="50" height="50" />
           </div>
         )
       }

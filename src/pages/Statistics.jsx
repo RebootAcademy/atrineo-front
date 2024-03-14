@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState, useMemo } from "react"
 import { useQuery } from "react-query"
+import { useNavigate } from "react-router-dom"
 
 import OptionsMenu from "../components/Graphs/OptionsMenu/OptionsMenu"
 import LoadingSpinner from "../components/LoadingSpinner/LoadingSpinner"
@@ -24,6 +25,7 @@ import {
 } from "../helpers"
 
 function Statistics() {
+  const navigate = useNavigate()
   const { collection, setCollection } = useContext(CollectionContext)
   const { mapDivision } = useContext(LayerContext)
   const { user, setUser } = useContext(UserContext)
@@ -34,6 +36,10 @@ function Statistics() {
       if (data && data.result) {
         setUser(data.result)
       }
+    },
+    onError: () => {
+      localStorage.removeItem('token')
+      navigate('/')
     }
   })
 
@@ -127,7 +133,7 @@ function Statistics() {
     <div className="h-[calc(100vh-5.1rem)] w-screen px-8 py-16 flex flex-row">
       {
         Object.keys(collection).length === 0 ?
-          <LoadingSpinner /> :
+          <LoadingSpinner width="100" height="100" /> :
           <div className="flex w-full">
             <div className="flex-grow flex flex-wrap bg-blue-100 justify-center items-center">
               <ChartsContainer
