@@ -1,6 +1,5 @@
 import { useContext, useEffect, useState, useMemo } from "react"
 import { useQuery } from "react-query"
-import { useNavigate } from "react-router-dom"
 
 import OptionsMenu from "../components/Graphs/OptionsMenu/OptionsMenu"
 import LoadingSpinner from "../components/LoadingSpinner/LoadingSpinner"
@@ -15,7 +14,7 @@ import {
   getDemoCollection
 } from "../services/collectionService"
 
-import { getOwnProfile } from "../services/userService"
+import { useUser } from "@/hooks/useUser"
 
 import {
   extractRegionNames,
@@ -25,23 +24,11 @@ import {
 } from "../helpers"
 
 function Statistics() {
-  const navigate = useNavigate()
   const { collection, setCollection } = useContext(CollectionContext)
   const { mapDivision } = useContext(LayerContext)
-  const { user, setUser } = useContext(UserContext)
+  const { user } = useContext(UserContext)
 
-  useQuery('profile', getOwnProfile, {
-    enabled: !!user && !user.name,
-    onSuccess: (data) => {
-      if (data && data.result) {
-        setUser(data.result)
-      }
-    },
-    onError: () => {
-      localStorage.removeItem('token')
-      navigate('/')
-    }
-  })
+  useUser()
 
   useQuery('organizationCollections', getOwnOrganizationCollections, {
     enabled: !!user && Object.keys(user).length > 0 && Object.keys(collection).length === 0 && user.role && user.role !== 'wizard',

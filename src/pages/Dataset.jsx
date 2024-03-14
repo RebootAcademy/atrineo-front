@@ -1,6 +1,5 @@
 import { useContext } from "react"
 import { useQuery } from "react-query"
-import { useNavigate } from "react-router-dom"
 
 import TableComponent from "../components/Datasets/Table/TableComponent"
 import LoadingSpinner from "../components/LoadingSpinner/LoadingSpinner"
@@ -13,25 +12,14 @@ import {
   getOwnOrganizationCollections, 
   getDemoCollection
 } from "../services/collectionService"
-import { getOwnProfile } from "../services/userService"
+
+import { useUser } from "@/hooks/useUser"
 
 function Dataset() {
-  const navigate = useNavigate()
   const { collection, setCollection } = useContext(CollectionContext)
-  const { user, setUser } = useContext(UserContext)
+  const { user } = useContext(UserContext)
 
-  useQuery('profile', getOwnProfile, {
-    enabled: !!user && !user.name,
-    onSuccess: (data) => {
-      if (data && data.result) {
-        setUser(data.result)
-      }
-    },
-    onError: () => {
-      localStorage.removeItem('token')
-      navigate('/')
-    }
-  })
+  useUser()
 
   useQuery('organizationCollections', getOwnOrganizationCollections, {
     enabled: !!user && 

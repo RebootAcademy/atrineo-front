@@ -1,7 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { useContext } from 'react'
 import { useQuery } from 'react-query'
-import { useNavigate } from 'react-router-dom'
 
 import { UserContext } from '../context/userContext'
 import { CollectionContext } from '../context/collectionContext'
@@ -10,30 +9,19 @@ import {
   getOwnOrganizationCollections, 
   getDemoCollection
 } from '../services/collectionService'
-import { getOwnProfile } from '../services/userService'
+
 
 import { I18N } from '../i18n'
 import MapComponent from '../components/Map/MapComponent/MapComponent'
 import LoadingSpinner from '../components/LoadingSpinner/LoadingSpinner'
+import { useUser } from '@/hooks/useUser'
 
 function Home () {
   const { example } = I18N
-  const navigate = useNavigate()
   const { collection, setCollection } = useContext(CollectionContext)
-  const { user, setUser } = useContext(UserContext)
+  const { user } = useContext(UserContext)
 
-  useQuery('profile', getOwnProfile, {
-    enabled: !!user && !user.name,
-    onSuccess: (data) => {
-      if (data && data.result) {
-        setUser(data.result)
-      }
-    },
-    onError: () => {
-      localStorage.removeItem('token')
-      navigate('/')
-    }
-  })
+  useUser()
 
   // Login as worker or organization admin brings you organization's collections
   useQuery('organizationCollections', getOwnOrganizationCollections, {
