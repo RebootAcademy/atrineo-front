@@ -1,5 +1,4 @@
 import { useContext, useEffect, useState, useMemo } from "react"
-import { useQuery } from "react-query"
 
 import OptionsMenu from "../components/Graphs/OptionsMenu/OptionsMenu"
 import LoadingSpinner from "../components/LoadingSpinner/LoadingSpinner"
@@ -9,12 +8,8 @@ import { CollectionContext } from "../context/collectionContext"
 import { LayerContext } from "../context/layerContext"
 import { UserContext } from "../context/userContext"
 
-import {
-  getOwnOrganizationCollections,
-  getDemoCollection
-} from "../services/collectionService"
-
 import { useUser } from "@/hooks/useUser"
+import { useCollectionFetch } from "@/hooks/useCollectionFetch"
 
 import {
   extractRegionNames,
@@ -29,24 +24,11 @@ function Statistics() {
   const { user } = useContext(UserContext)
 
   useUser()
-
-  useQuery('organizationCollections', getOwnOrganizationCollections, {
-    enabled: !!user && Object.keys(user).length > 0 && Object.keys(collection).length === 0 && user.role && user.role !== 'wizard',
-    onSuccess: (data) => {
-      if (data) {
-        setCollection(data[0])
-      }
-    }
-  })
-
-  useQuery('demoCollection', getDemoCollection, {
-    enabled: !!user && Object.keys(user).length > 0 && Object.keys(collection).length === 0 && user.role === 'wizard',
-    onSuccess: (data) => {
-      if (Object.keys(user).length > 0) {
-        setCollection(data)
-      }
-    }
-  })
+  useCollectionFetch(
+    user,
+    setCollection,
+    collection
+  )
 
   const data = collection?.data
 

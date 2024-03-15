@@ -11,7 +11,6 @@ import api from './config'
 // }
 
 export const getOwnOrganizationCollections = async () => {
-  console.log('organziations')
   try {
     const { data } = await api.get("collection/organization", {
       headers: {

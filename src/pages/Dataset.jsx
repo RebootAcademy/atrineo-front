@@ -1,5 +1,4 @@
 import { useContext } from "react"
-import { useQuery } from "react-query"
 
 import TableComponent from "../components/Datasets/Table/TableComponent"
 import LoadingSpinner from "../components/LoadingSpinner/LoadingSpinner"
@@ -8,49 +7,30 @@ import UploadCSVComponent from "../components/Datasets/UploadCSV/UploadCSVCompon
 import { CollectionContext } from "../context/collectionContext"
 import { UserContext } from "../context/userContext"
 
-import { 
-  getOwnOrganizationCollections, 
-  getDemoCollection
-} from "../services/collectionService"
-
 import { useUser } from "@/hooks/useUser"
+import { useCollectionFetch } from "@/hooks/useCollectionFetch"
 
 function Dataset() {
   const { collection, setCollection } = useContext(CollectionContext)
   const { user } = useContext(UserContext)
 
+  // Fetch user profile in case page reload
   useUser()
-
-  useQuery('organizationCollections', getOwnOrganizationCollections, {
-    enabled: !!user && 
-      Object.keys(user).length > 0 
-      && Object.keys(collection).length === 0 && 
-      user.role && 
-      user.role !== 'wizard',
-    onSuccess: (data) => {
-      if (data) {
-        setCollection(data[0])
-      }
-    }
-  })
-
-  const { refetch } = useQuery('demoCollection', getDemoCollection, {
-    enabled: !!user && 
-      Object.keys(user).length > 0 && 
-      Object.keys(collection).length === 0 && 
-      user.role === 'wizard',
-    onSuccess: (data) => {
-      if (Object.keys(user).length > 0) {
-        setCollection(data)
-      }
-    }
-  })
+  // The refetch function is passed as a prop to CSV component, to refetch data once the user has uploaded a new data file
+  const { refetch } = useCollectionFetch(
+    user, 
+    setCollection, 
+    collection
+  )
 
   return (
     <>
       {
         Object.keys(collection).length === 0 ?
-          <LoadingSpinner width="100" height="100" /> :
+          <LoadingSpinner 
+            width="100" 
+            height="100" 
+          /> :
           <div className='relative h-full'>
             {user?.role === 'wizard' ? 
               < UploadCSVComponent 
