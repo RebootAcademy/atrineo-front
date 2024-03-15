@@ -94,10 +94,17 @@ function App() {
     }
 
     const updatedGraphs = [...existingGraphs, newGraph]
-
     storage.setItem('graphs', JSON.stringify(updatedGraphs))
     console.log(`Graph configuration ${nextId} saved`, JSON.parse(storage.getItem('graphs')))
     setGraphs(updatedGraphs)
+  }
+
+  const deleteGraphById = (graphId) => {
+    const existingGraphs = JSON.parse(storage.getItem('graphs')) || []
+    const updatedGraphs = existingGraphs.filter(graph => graph.id !== graphId)
+    storage.setItem('graphs', JSON.stringify(updatedGraphs))
+    setGraphs(updatedGraphs)
+    console.log('Graph deleted', storage.getItem('graphs'))
   }
   
   const userValue = { 
@@ -112,7 +119,8 @@ function App() {
 
   const graphsValue = {
     graphs,
-    saveCurrentGraph
+    saveCurrentGraph,
+    deleteGraphById
   }
 
   const value = {
