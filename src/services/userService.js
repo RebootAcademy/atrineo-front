@@ -40,3 +40,16 @@ export const getOneUser = async (id) => {
     console.error(error)
   }
 }
+
+export const updateUser = async (id, body) => {
+  try {
+    const { data } = await api.patch(`/user/${id}`, body, {
+      headers: {
+        token: localStorage.getItem('token')
+      }
+    })
+    return data
+  } catch (error) {
+    console.error(error)
+  }
+}

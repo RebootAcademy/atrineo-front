@@ -15,7 +15,7 @@ function LatitudeLongitudeComponent() {
   const { collection, setCollection } = useContext(CollectionContext)
   const [latitude, setLatitude] = useState(collection?.latitude)
   const [longitude, setLongitude] = useState(collection?.longitude)
-  const [ loading, setLoading ] = useState(false)
+  const [loading, setLoading] = useState(false)
 
   const handleLatitudeChange = (e) => {
     setLatitude(e.target.value)

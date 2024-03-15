@@ -6,28 +6,27 @@ import { useContext, useState } from "react"
 import { useQuery } from "react-query"
 
 function UserManagement() {
-  const { user: userContext, setUser: setUserContext } = useContext(UserContext)
+  // const { user: userContext, setUser: setUserContext } = useContext(UserContext)
   const [users, setUsers] = useState([])
 
   useQuery('user', getAllUsers, {
-    enabled: !!userContext && !userContext.name,
     onSuccess: (data) => {
       if (data && data.result && Array.isArray(data.result)) {
-        setUserContext(data.result)
+        // setUserContext(data.result)
         setUsers(data.result)
       }
     }
   })
 
-  useQuery('user', getOneUser, {
-    enabled: !!userContext && !userContext.name,
-    onSuccess: (data) => {
-      if (data && data.result && Array.isArray(data.result)) {
-        setUserContext(data.result)
-        setUsers(data.result)
-      }
-    }
-  })
+  // useQuery('user', getOneUser, {
+  //   enabled: !!userContext && !userContext.name,
+  //   onSuccess: (data) => {
+  //     if (data && data.result && Array.isArray(data.result)) {
+  //       setUserContext(data.result)
+  //       setUsers(data.result)
+  //     }
+  //   }
+  // })
 
   return (
     <>
@@ -38,7 +37,7 @@ function UserManagement() {
               <div key={index}>
                 <Card className="border mt-6 relative w-96 p-4 bg-slate-50">
                   <div className="absolute top-0 right-0">
-                    <EditInfoModalComponent />
+                    <EditInfoModalComponent userData={userData} />
                   </div>
                   <div>
                     <p>{userData.name}</p>

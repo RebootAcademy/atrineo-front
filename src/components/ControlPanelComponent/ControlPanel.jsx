@@ -7,7 +7,7 @@ import { RadioGroup, RadioGroupItem } from "../ui/RadioGroup/radio-group"
 function ControlPanel({ changeType }) {
   return (
     <div className='flex justify-start gap-4 my-4 text-sm'>
-      <div className="flex items-center">
+      <div className="flex items-center ml-1">
         <Checkbox />
         <label className="ml-2 mr-2">Display all</label>
       </div>
