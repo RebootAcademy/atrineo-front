@@ -1,11 +1,13 @@
 import api from "./config"
 
-export const uploadCsv = async (data) => {
+export const uploadCsv = async (data, type, name) => {
   try {
     const payload = {
       body: data,
-      collectionType: 'startups'
+      collectionType: type,
+      name
     }
+
     const res = await api.post(`/data/demo`, payload, {
       headers: {
         token: localStorage.getItem("token"),

@@ -9,12 +9,12 @@ import { CollectionContext } from "../context/collectionContext"
 import { LayerContext } from "../context/layerContext"
 import { UserContext } from "../context/userContext"
 
-import { 
-  getOwnOrganizationCollections, 
+import {
+  getOwnOrganizationCollections,
   getDemoCollection
 } from "../services/collectionService"
 
-import { getOwnProfile } from "../services/userService"
+import { useUser } from "@/hooks/useUser"
 
 import {
   extractRegionNames,
@@ -27,16 +27,9 @@ import { useDimensions } from "@/hooks/useDimensions"
 function Statistics() {
   const { collection, setCollection } = useContext(CollectionContext)
   const { mapDivision } = useContext(LayerContext)
-  const { user, setUser } = useContext(UserContext)
+  const { user } = useContext(UserContext)
 
-  useQuery('profile', getOwnProfile, {
-    enabled: !!user && !user.name,
-    onSuccess: (data) => {
-      if (data && data.result) {
-        setUser(data.result)
-      }
-    }
-  })
+  useUser()
 
   useQuery('organizationCollections', getOwnOrganizationCollections, {
     enabled: !!user && Object.keys(user).length > 0 && Object.keys(collection).length === 0 && user.role && user.role !== 'wizard',
@@ -71,7 +64,7 @@ function Statistics() {
   const fields = useMemo(() => {
     return data ? extractNumericFields(data[0]?.fields) : []
   }, [data])
-  
+
   const optionsArr = useMemo(() => {
     return data ? ['regions', ...stringOptions, ...booleanOptions] : []
   }, [data, stringOptions, booleanOptions])
@@ -103,15 +96,15 @@ function Statistics() {
   const changeChartType = (type) => {
     setChartType(type)
   }
-  
+
   const changeAggregation = (value) => {
     setAggregation(value)
   }
-  
+
   const changeXAxis = (name) => {
     setXAxis(name)
   }
-  
+
   const changeYAxis = (name) => {
     setYAxis(name)
   }
@@ -146,7 +139,7 @@ function Statistics() {
     <div className="h-[calc(100vh-5.1rem)] w-screen px-8 py-16 flex flex-row">
       {
         Object.keys(collection).length === 0 ?
-          <LoadingSpinner /> :
+          <LoadingSpinner width="100" height="100" /> :
           <div className="flex w-full">
             <div className="flex-grow flex flex-wrap justify-center items-center gap-12" ref={containerRef}>
               <ChartsContainer

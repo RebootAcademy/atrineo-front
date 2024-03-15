@@ -3,6 +3,7 @@ import Home from "../pages/Home"
 import Statistics from "../pages/Statistics"
 import Dataset from "../pages/Dataset"
 import Login from "../pages/Login/Login"
+import ContactUs from '../pages/ContactUs'
 import Layout from "../Layout/Layout"
 
 const isAuthenticated = () => {
@@ -25,6 +26,10 @@ export const router = createBrowserRouter([
     path: '/',
     element: <Layout />,
     children: [
+      {
+        path: '/contactus',
+        element: <ContactUs/>
+      },
       {
         path: '/map',
         element: <Home />,
