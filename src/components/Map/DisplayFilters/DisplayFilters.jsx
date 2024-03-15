@@ -17,7 +17,6 @@ import {
 
 function DisplayFilters({ layerObj, type }) {
   const { collection } = useContext(CollectionContext)
-  console.log(collection)
   const [activeSwitch, setActiveSwitch] = useState(null)
 
   const handleRegionChange = (value) => {

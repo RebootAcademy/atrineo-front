@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState, useMemo } from "react"
+import { useContext, useEffect, useState, useMemo, useRef } from "react"
 
 import OptionsMenu from "../components/Graphs/OptionsMenu/OptionsMenu"
 import LoadingSpinner from "../components/LoadingSpinner/LoadingSpinner"
@@ -17,6 +17,7 @@ import {
   extractStringOptions,
   extractBooleanOptions
 } from "../helpers"
+import { useDimensions } from "@/hooks/useDimensions"
 
 function Statistics() {
   const { collection, setCollection } = useContext(CollectionContext)
@@ -31,6 +32,8 @@ function Statistics() {
   )
 
   const data = collection?.data
+  const aggOptions = ['sum', 'avg', 'count', 'min', 'max']
+  const regionNames = extractRegionNames(collection, mapDivision)
 
   const stringOptions = useMemo(() => {
     return data ? extractStringOptions(data[0]?.fields) : []
@@ -48,12 +51,12 @@ function Statistics() {
     return data ? ['regions', ...stringOptions, ...booleanOptions] : []
   }, [data, stringOptions, booleanOptions])
 
+  const [chartName, setChartName] = useState('')
   const [chartType, setChartType] = useState('')
   const [aggregation, setAggregation] = useState('sum')
   const [yAxis, setYAxis] = useState(fields.length > 0 ? fields[0].fieldName : '')
   const [xAxis, setXAxis] = useState(optionsArr.length > 0 ? optionsArr[0] : '')
 
-  const aggOptions = ['sum', 'avg', 'count', 'min', 'max']
 
   useEffect(() => {
     if (fields.length > 0) {
@@ -66,6 +69,11 @@ function Statistics() {
       setXAxis(optionsArr[0])
     }
   }, [optionsArr])
+
+
+  const changeChartName = (name) => {
+    setChartName(name)
+  }
 
   const changeChartType = (type) => {
     setChartType(type)
@@ -83,14 +91,25 @@ function Statistics() {
     setYAxis(name)
   }
 
-  const regionNames = extractRegionNames(collection, mapDivision)
+  const containerRef = useRef(null)
+  const { width: containerWidth } = useDimensions(containerRef)
+  const numGraphsPerRow = 2
+  const graphMargin = 2
+  const aspectRatio = 16 / 9
+
+  const calculatedGraphWidth = (containerWidth - (graphMargin * (numGraphsPerRow - 1))) / numGraphsPerRow
+  const calculatedGraphHeight = calculatedGraphWidth / aspectRatio
+
   const commonProps = {
-    width: 900,
-    height: 500,
+    width: calculatedGraphWidth,
+    height: calculatedGraphHeight,
     data: data,
     regions: regionNames,
     options: optionsArr,
     division: mapDivision,
+  }
+
+  const ownProps = {
     aggregation: aggregation,
     xAxis: xAxis,
     yAxis: yAxis,
@@ -104,19 +123,24 @@ function Statistics() {
         Object.keys(collection).length === 0 ?
           <LoadingSpinner width="100" height="100" /> :
           <div className="flex w-full">
-            <div className="flex-grow flex flex-wrap bg-blue-100 justify-center items-center">
+            <div className="flex-grow flex flex-wrap justify-center items-center gap-12" ref={containerRef}>
               <ChartsContainer
                 chartType={chartType}
-                commonProps={commonProps}
                 fields={fields}
+                commonProps={commonProps}
               />
             </div>
-            <aside className="w-1/4 bg-red-200 h-full">
+            <aside className="min-w-80 max-w-96 h-full">
               <OptionsMenu
+                ownProps={ownProps}
+                chartType={chartType}
                 onChange={changeChartType}
                 fields={fields}
                 options={optionsArr}
                 aggOptions={aggOptions}
+                chartName={chartName}
+                changeChartName={changeChartName}
+                aggregation={aggregation}
                 changeAggregation={changeAggregation}
                 changeXAxis={changeXAxis}
                 changeYAxis={changeYAxis}

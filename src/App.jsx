@@ -4,9 +4,10 @@ import { useEffect, useState } from 'react'
 import { QueryClient, QueryClientProvider } from 'react-query'
 import { RouterProvider } from 'react-router-dom'
 
-import { LayerContext } from './context/layerContext'
 import { CollectionContext } from './context/collectionContext'
+import { LayerContext } from './context/layerContext'
 import { UserContext } from './context/userContext'
+import { GraphContext } from './context/graphContext'
 
 import { router } from './router'
 
@@ -23,10 +24,13 @@ function App() {
 
   const [colorIndex, setColorIndex] = useState(0)
 
+  const [graphs, setGraphs] = useState([])
+
   const storage = window.localStorage
 
   useEffect(() => {
     storage.removeItem('layers')
+    storage.removeItem('graphs')
     setLayers([])
   }, [])
 
@@ -76,15 +80,46 @@ function App() {
     console.log(`Layer ${layerId} visibility toggled`)
   }
 
+  const saveCurrentGraph = (obj, ownProps) => {
+    const existingGraphs = JSON.parse(storage.getItem('graphs')) || []
+    const nextId = existingGraphs.reduce((maxId, config) => Math.max(maxId, config.id), 0) + 1
+
+    const newGraph = {
+      id: nextId,
+      data: {
+        ...obj,
+        ownProps: ownProps
+      }
+    }
+
+    const updatedGraphs = [...existingGraphs, newGraph]
+    storage.setItem('graphs', JSON.stringify(updatedGraphs))
+    console.log(`Graph configuration ${nextId} saved`, JSON.parse(storage.getItem('graphs')))
+    setGraphs(updatedGraphs)
+  }
+
+  const deleteGraphById = (graphId) => {
+    const existingGraphs = JSON.parse(storage.getItem('graphs')) || []
+    const updatedGraphs = existingGraphs.filter(graph => graph.id !== graphId)
+    storage.setItem('graphs', JSON.stringify(updatedGraphs))
+    setGraphs(updatedGraphs)
+    console.log('Graph deleted', storage.getItem('graphs'))
+  }
+
   const userValue = {
     user,
     setUser
   }
-  console.log(userValue)
 
   const collectionValue = {
     collection,
     setCollection,
+  }
+
+  const graphsValue = {
+    graphs,
+    saveCurrentGraph,
+    deleteGraphById
   }
 
   const value = {
@@ -104,14 +139,17 @@ function App() {
     colorIndex,
   }
 
+
   return (
     <>
       <QueryClientProvider client={queryClient}>
         <UserContext.Provider value={userValue} >
           <LayerContext.Provider value={value}>
-            <CollectionContext.Provider value={collectionValue}>
-              <RouterProvider router={router} />
-            </CollectionContext.Provider>
+            <GraphContext.Provider value={graphsValue}>
+              <CollectionContext.Provider value={collectionValue}>
+                <RouterProvider router={router} />
+              </CollectionContext.Provider>
+            </GraphContext.Provider>
           </LayerContext.Provider>
         </UserContext.Provider>
       </QueryClientProvider>
