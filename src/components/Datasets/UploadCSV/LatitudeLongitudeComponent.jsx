@@ -15,7 +15,7 @@ function LatitudeLongitudeComponent() {
   const { collection, setCollection } = useContext(CollectionContext)
   const [latitude, setLatitude] = useState(collection?.latitude)
   const [longitude, setLongitude] = useState(collection?.longitude)
-  const [ loading, setLoading ] = useState(false)
+  const [loading, setLoading] = useState(false)
 
   const handleLatitudeChange = (e) => {
     setLatitude(e.target.value)
@@ -34,6 +34,13 @@ function LatitudeLongitudeComponent() {
     }))
     await updateCollection(collection._id, latitude, longitude)
     setLoading(false)
+  }
+
+  const handleKeyPress = (e) => {
+    console.log(e.key)
+    if (e.key == 'Enter') {
+      handleLatLonUpdate()
+    }
   }
 
   return (

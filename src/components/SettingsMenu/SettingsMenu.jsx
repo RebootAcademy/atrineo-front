@@ -32,6 +32,14 @@ function SettingsMenu() {
     navigate('/dataset')
   }
 
+  const onUserManagement = () => {
+    navigate('/userManagement')
+  }
+
+  const onAdminProfile = () => {
+    navigate('/adminProfile')
+  }
+
   return (
     <>
       <div className="w-32 flex items-center">
@@ -47,7 +55,8 @@ function SettingsMenu() {
             <DropdownMenuGroup>
               {user?.role === 'wizard' ? (
                 <>
-                  <DropdownMenuItem>
+                  <DropdownMenuItem
+                    onClick={onAdminProfile}>
                     Admin Profile
                   </DropdownMenuItem>
                   <DropdownMenuItem
@@ -55,7 +64,8 @@ function SettingsMenu() {
                   >
                     Update CSV
                   </DropdownMenuItem>
-                  <DropdownMenuItem>
+                  <DropdownMenuItem
+                    onClick={onUserManagement}>
                     User Management
                   </DropdownMenuItem>
                 </>

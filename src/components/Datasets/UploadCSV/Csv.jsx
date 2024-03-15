@@ -42,14 +42,14 @@ function Csv({ dataType, reloadData }) {
   }
 
   return (
-    <div className='flex justify-between'>
+    <div className='flex justify-center'>
       <div className='flex mr-2 border rounded-md'>
-        <button onClick={handleButtonClick} className='rounded-l-md bg-primary text-white px-4 text-sm font-semibold'>Search File</button>
+        <button onClick={handleButtonClick} className='rounded-l-md bg-primary text-white px-4 text-sm'>Search File</button>
         <div className='w-[600px] rounded-r-md flex items-center pl-3 text-sm'>
           {fileName ? fileName : "File not found"}
         </div>
       </div>
-      <Button onClick={uploadDataFile} className='font-semibold'>Update</Button>
+      <Button onClick={uploadDataFile}>Update</Button>
       <CSVReader
         ref={fileInputRef}
         onFileLoaded={handleCSVUpload}
