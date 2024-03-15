@@ -9,8 +9,6 @@ import { GraphContext } from '@/context/graphContext'
 function ChartsContainer({ commonProps }) {
   const { graphs } = useContext(GraphContext)
 
-  console.log(graphs)
-
   const displayChart = (obj) => {
     switch (obj.data.chartType) {
     case ('bar'):

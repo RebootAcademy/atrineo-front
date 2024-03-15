@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState, useMemo } from "react"
+import { useContext, useEffect, useState, useMemo, useRef } from "react"
 import { useQuery } from "react-query"
 
 import OptionsMenu from "../components/Graphs/OptionsMenu/OptionsMenu"
@@ -22,10 +22,10 @@ import {
   extractStringOptions,
   extractBooleanOptions
 } from "../helpers"
+import { useDimensions } from "@/hooks/useDimensions"
 
 function Statistics() {
   const { collection, setCollection } = useContext(CollectionContext)
-
   const { mapDivision } = useContext(LayerContext)
   const { user, setUser } = useContext(UserContext)
 
@@ -57,6 +57,8 @@ function Statistics() {
   })
 
   const data = collection?.data
+  const aggOptions = ['sum', 'avg', 'count', 'min', 'max']
+  const regionNames = extractRegionNames(collection, mapDivision)
 
   const stringOptions = useMemo(() => {
     return data ? extractStringOptions(data[0]?.fields) : []
@@ -80,20 +82,20 @@ function Statistics() {
   const [yAxis, setYAxis] = useState(fields.length > 0 ? fields[0].fieldName : '')
   const [xAxis, setXAxis] = useState(optionsArr.length > 0 ? optionsArr[0] : '')
 
-  const aggOptions = ['sum', 'avg', 'count', 'min', 'max']
-
+  
   useEffect(() => {
     if (fields.length > 0) {
       setYAxis(fields[0].fieldName)
     }
   }, [fields])
-
+  
   useEffect(() => {
     if (optionsArr.length > 0) {
       setXAxis(optionsArr[0])
     }
   }, [optionsArr])
-
+  
+  
   const changeChartName = (name) => {
     setChartName(name)
   }
@@ -113,12 +115,19 @@ function Statistics() {
   const changeYAxis = (name) => {
     setYAxis(name)
   }
+  
+  const containerRef = useRef(null)
+  const { width: containerWidth } = useDimensions(containerRef)
+  const numGraphsPerRow = 2
+  const graphMargin = 2
+  const aspectRatio = 16 / 9
 
-  const regionNames = extractRegionNames(collection, mapDivision)
+  const calculatedGraphWidth = (containerWidth - (graphMargin * (numGraphsPerRow - 1))) / numGraphsPerRow
+  const calculatedGraphHeight = calculatedGraphWidth / aspectRatio
 
   const commonProps = {
-    width: 900,
-    height: 500,
+    width: calculatedGraphWidth,
+    height: calculatedGraphHeight,
     data: data,
     regions: regionNames,
     options: optionsArr,
@@ -139,14 +148,14 @@ function Statistics() {
         Object.keys(collection).length === 0 ?
           <LoadingSpinner /> :
           <div className="flex w-full">
-            <div className="flex-grow flex flex-wrap bg-blue-100 justify-center items-center">
+            <div className="flex-grow flex flex-wrap justify-center items-center gap-12" ref={containerRef}>
               <ChartsContainer
                 chartType={chartType}
                 fields={fields}
                 commonProps={commonProps}
               />
             </div>
-            <aside className="w-1/4 bg-red-200 h-full">
+            <aside className="min-w-80 max-w-96 h-full">
               <OptionsMenu
                 ownProps={ownProps}
                 chartType={chartType}

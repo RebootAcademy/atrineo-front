@@ -131,7 +131,9 @@ function OptionsMenu({ onChange, fields, options, aggOptions, changeAggregation,
       { displaySelect('X axis:', handleXAxisChange, options, true, selectedYAxis, selectedXAxis) }
       { displaySelect('Y axis:', handleYAxisChange, fields, true, selectedXAxis, selectedYAxis)  }
 
-      <CustomButton text='Save' fn={handleSaveGraph} variant='' />
+      <div className='mt-12 ml-40'>
+        <CustomButton text='Save' fn={handleSaveGraph} variant='' />
+      </div>
     </Card>
   )
 }

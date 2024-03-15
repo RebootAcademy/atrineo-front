@@ -63,7 +63,7 @@ function ScatterPlot({
     <svg 
       width={width} 
       height={height} 
-      className='bg-red-200'
+      className='border'
     >
       <g transform={`translate(${MARGIN.left},${MARGIN.top})`}>
         {circles}
