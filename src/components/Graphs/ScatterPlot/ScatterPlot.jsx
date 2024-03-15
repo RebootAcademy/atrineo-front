@@ -9,7 +9,8 @@ function ScatterPlot({
   height,
   data,
   xAxis,
-  yAxis
+  yAxis,
+  zAxis
 }) {
 
   const MARGIN = { top: 20, right: 20, bottom: 60, left: 70 }
@@ -41,16 +42,26 @@ function ScatterPlot({
       .nice()
   }, [filteredData, yAxis, boundsHeight])
 
+  const zScale = useMemo(() => {
+    if (!zAxis) return null
+    const [min, max] = d3.extent(filteredData, d => d[zAxis])
+    return d3.scaleLinear()
+      .domain([min, max])
+      .range([1, 20])
+  }, [filteredData, zAxis])
+
   const xAxisCall = d3.axisBottom(xScale).tickFormat(d => formatNumber(d))
   const yAxisCall = d3.axisLeft(yScale).tickFormat(d => formatNumber(d))
 
   const circles = filteredData.map((d, i) => {
+    const radius = zScale(d[zAxis])
+    console.log(radius)
     return (
       <circle
         key={i}
         cx={xScale(d[xAxis])}
         cy={yScale(d[yAxis])}
-        r={8}
+        r={radius}
         fill={'var(--primary)'}
         fillOpacity={0.5}
         stroke='black'
@@ -98,10 +109,7 @@ ScatterPlot.propTypes = {
   data: PropTypes.array,
   xAxis: PropTypes.string,
   yAxis: PropTypes.string,
-  regions: PropTypes.array,
-  options: PropTypes.array,
-  aggregation: PropTypes.string,
-  division: PropTypes.string,
+  zAxis: PropTypes.string
 }
 
 export default ScatterPlot

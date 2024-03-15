@@ -16,9 +16,10 @@ import CustomButton from '@/components/CustomButton/CustomButton'
 import PropTypes from 'prop-types'
 import { GraphContext } from '@/context/graphContext'
 
-function OptionsMenu({ onChange, fields, options, aggOptions, changeAggregation, changeXAxis, changeYAxis, chartType, chartName, changeChartName, ownProps }) {
+function OptionsMenu({ onChange, fields, options, aggOptions, changeAggregation, changeXAxis, changeYAxis, changeZAxis, chartType, chartName, changeChartName, ownProps }) {
   const [selectedXAxis, setSelectedXAxis] = useState('')
   const [selectedYAxis, setSelectedYAxis] = useState('')
+  const [selectedZAxis, setSelectedZAxis] = useState('')
 
   const { saveCurrentGraph } = useContext(GraphContext)
 
@@ -26,6 +27,7 @@ function OptionsMenu({ onChange, fields, options, aggOptions, changeAggregation,
     {name:'bar', img: '/barChart.svg'}, 
     {name:'pie', img: '/pieChart.svg'},
     {name: 'scatter', img: '/scatter-chart.svg'},
+    {name: 'heatmap', img: ''}
   ]
  
   fields = fields.map(f => f.fieldName)
@@ -42,6 +44,11 @@ function OptionsMenu({ onChange, fields, options, aggOptions, changeAggregation,
   const handleYAxisChange = (value) => {
     setSelectedYAxis(value)
     changeYAxis(value)
+  }
+
+  const handleZAxisChange = (value) => {
+    setSelectedZAxis(value)
+    changeZAxis(value)
   }
   
   const handleAggregationChange = (value) => {
@@ -73,14 +80,18 @@ function OptionsMenu({ onChange, fields, options, aggOptions, changeAggregation,
     )
   }
   
-  const displaySelect = (title, fn, arr, isNumeric = false, excludeOption = '', currentValue) => {
-    let filteredOptions = arr.filter(option => option !== excludeOption)
+  const displaySelect = (title, fn, arr, isNumeric = false, excludeOptions = [], currentValue) => {
+    let filteredOptions = arr.filter(option => !excludeOptions.includes(option))
 
     if (chartType === 'scatter' && isNumeric) {
-      filteredOptions = fields.filter(option => option !== excludeOption)
+      filteredOptions = fields.filter(option => !excludeOptions.includes(option))
+    }
+
+    if (chartType === 'heatmap' && isNumeric) {
+      filteredOptions = fields.filter(option => !excludeOptions.includes(option))
     } 
 
-    const placeholder = title !== 'Aggregation:' ? arr[0] : 'Select option'
+    const placeholder = title === 'Aggregation:' ? arr[0] : 'Please select an option'
       
     return (
       <>
@@ -121,15 +132,22 @@ function OptionsMenu({ onChange, fields, options, aggOptions, changeAggregation,
         </SelectContent>
       </Select>
 
-      {chartType !== 'scatter' && (
+      {chartType !== 'scatter' && chartType !== 'heatmap' && (
         displaySelect('Aggregation:', handleAggregationChange, aggOptions)
       )}
 
       <Label className="self-start ml-4 mt-4">
         Axes:
       </Label>
-      { displaySelect('X axis:', handleXAxisChange, options, true, selectedYAxis, selectedXAxis) }
-      { displaySelect('Y axis:', handleYAxisChange, fields, true, selectedXAxis, selectedYAxis)  }
+      { displaySelect('X axis:', handleXAxisChange, options, true, [selectedYAxis, selectedZAxis], selectedXAxis) }
+      { displaySelect('Y axis:', handleYAxisChange, fields, true, [selectedXAxis, selectedZAxis], selectedYAxis)  }
+
+      {chartType === 'scatter' && (
+        displaySelect('Z axis:', handleZAxisChange, options, true, [selectedXAxis, selectedYAxis], selectedZAxis)
+      )}
+      {chartType === 'heatmap' && (
+        displaySelect('Z axis:', handleZAxisChange, options, true, [selectedXAxis, selectedYAxis], selectedZAxis)
+      )}
 
       <div className='mt-12 ml-40'>
         <CustomButton text='Save' fn={handleSaveGraph} variant='' />
@@ -147,9 +165,10 @@ OptionsMenu.propTypes = {
   changeAggregation: PropTypes.func,
   changeXAxis: PropTypes.func,
   changeYAxis: PropTypes.func,
-  chartType: PropTypes.string, // Adjust based on actual requirement (isRequired or not)
-  chartName: PropTypes.string, // Adjust based on actual requirement
-  changeChartName: PropTypes.func, // Assuming it's a function, adjust as needed
+  changeZAxis: PropTypes.func,
+  chartType: PropTypes.string, 
+  chartName: PropTypes.string, 
+  changeChartName: PropTypes.func, 
   ownProps: PropTypes.object
 }
 

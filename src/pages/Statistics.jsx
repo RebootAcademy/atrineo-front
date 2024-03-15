@@ -56,6 +56,7 @@ function Statistics() {
   const [aggregation, setAggregation] = useState('sum')
   const [yAxis, setYAxis] = useState(fields.length > 0 ? fields[0].fieldName : '')
   const [xAxis, setXAxis] = useState(optionsArr.length > 0 ? optionsArr[0] : '')
+  const [zAxis, setZAxis] = useState('')
 
 
   useEffect(() => {
@@ -91,6 +92,10 @@ function Statistics() {
     setYAxis(name)
   }
 
+  const changeZAxis = (name) => {
+    setZAxis(name)
+  }
+
   const containerRef = useRef(null)
   const { width: containerWidth } = useDimensions(containerRef)
   const numGraphsPerRow = 2
@@ -113,8 +118,10 @@ function Statistics() {
     aggregation: aggregation,
     xAxis: xAxis,
     yAxis: yAxis,
+    zAxis: zAxis,
     changeXAxis: changeXAxis,
-    changeYAxis: changeYAxis
+    changeYAxis: changeYAxis,
+    changeZAxis: changeZAxis
   }
 
   return (
@@ -140,12 +147,10 @@ function Statistics() {
                 aggOptions={aggOptions}
                 chartName={chartName}
                 changeChartName={changeChartName}
-                aggregation={aggregation}
                 changeAggregation={changeAggregation}
                 changeXAxis={changeXAxis}
                 changeYAxis={changeYAxis}
-                xAxis={xAxis}
-                yAxis={yAxis}
+                changeZAxis={changeZAxis}
               />
             </aside>
           </div>

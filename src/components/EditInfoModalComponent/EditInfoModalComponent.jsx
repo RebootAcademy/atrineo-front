@@ -19,13 +19,13 @@ import { updateUser } from "@/services/userService"
 import LoadingButton from "../LoadingButton/LoadingButton"
 
 function EditInfoModalComponent({ userData }) {
-  const [selectedTab, setSelectedTab] = useState('user')
+  const [/* selectedTab, */ setSelectedTab] = useState('user')
   const [showPassword, setShowPassword] = useState(false)
   const [showRepeatPassword, setShowRepeatPassword] = useState(false)
   const [username, setUsername] = useState(userData.name)
   const [email, setEmail] = useState(userData.email)
-  const [password, setPassword] = useState('')
-  const [repeatPassword, setRepeatPassword] = useState('')
+  const [password/* , setPassword */] = useState('')
+  const [repeatPassword/* , setRepeatPassword */] = useState('')
   const [loading, setLoading] = useState(false)
 
   const togglePasswordVisibility = () => {

@@ -1,8 +1,8 @@
 import EditInfoModalComponent from "@/components/EditInfoModalComponent/EditInfoModalComponent"
 import { Card } from "@/components/ui/Card/Card"
-import { UserContext } from "@/context/userContext"
-import { getAllUsers, getOneUser } from "@/services/userService"
-import { useContext, useState } from "react"
+// import { UserContext } from "@/context/userContext"
+import { getAllUsers/* , getOneUser */ } from "@/services/userService"
+import { /* useContext, */ useState } from "react"
 import { useQuery } from "react-query"
 
 function UserManagement() {
