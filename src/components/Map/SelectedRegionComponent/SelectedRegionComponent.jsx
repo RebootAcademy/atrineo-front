@@ -5,7 +5,7 @@ import { selectedStyle, defaultStyle } from "./Style"
 import { LayerContext } from "../../../context/layerContext"
 
 // eslint-disable-next-line react/prop-types
-const RegionsSelected = ({ onRegionSelected }) => {
+const RegionsSelected = () => {
   const {
     layers,
     mapDivision
@@ -37,7 +37,7 @@ const RegionsSelected = ({ onRegionSelected }) => {
     }
   }
 
-  const onEachFeature = (feature, layer) => {
+  /*   const onEachFeature = (feature, layer) => {
     layer.on("click", () => {
       if (mapDivision == "country") {
         setSelectedRegion((prevSelectedRegion) => {
@@ -84,7 +84,7 @@ const RegionsSelected = ({ onRegionSelected }) => {
         }
       }
     })
-  }
+  } */
 
   const filteredRegions = (regionName) => {
     return mapData?.features.filter(
@@ -101,7 +101,7 @@ const RegionsSelected = ({ onRegionSelected }) => {
     return (
       <GeoJSON
         data={filteredData}
-        onEachFeature={onEachFeature}
+        /* onEachFeature={onEachFeature} */
         style={(feature) => setStyle(feature)}
       />
     )
