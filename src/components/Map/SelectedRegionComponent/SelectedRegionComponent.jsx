@@ -4,7 +4,7 @@ import { useGeoJsonData } from "../../../hooks/useGeoJsonData"
 import { selectedStyle, defaultStyle } from "./Style"
 import { LayerContext } from "../../../context/layerContext"
 
-// eslint-disable-next-line react/prop-types
+ 
 const RegionsSelected = () => {
   const {
     layers,
