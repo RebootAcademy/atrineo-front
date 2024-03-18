@@ -5,7 +5,7 @@ import { CollectionContext } from '@/context/collectionContext'
 import NumericLayer from '../NumericLayer/NumericLayer'
 import RegionsComponent from '../RegionsComponent/RegionsComponent'
 import StartupsComponent from '../StartupsComponent/StartupsComponent'
-import SelectedRegionComponent from '../SelectedRegionComponent/SelectedRegionComponent'
+/* import SelectedRegionComponent from '../SelectedRegionComponent/SelectedRegionComponent' */
 
 import { isWithinPolygon } from '@/helpers'
 import { colorPalette } from '@/helpers/colors'
@@ -72,7 +72,7 @@ function LayersManager() {
             {layer.data.type === 'startups' && (
               <>
                 <StartupsComponent data={filteredData} />
-                <SelectedRegionComponent data={filteredData} />
+                {/* <SelectedRegionComponent data={filteredData} /> */}
               </>
             )}
             {layer.data.type === 'regions' && <RegionsComponent data={filteredData} fieldName={field} />}

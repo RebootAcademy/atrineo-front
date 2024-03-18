@@ -5,14 +5,26 @@ import { useContext } from 'react'
 import { LayerContext } from '../../../context/layerContext'
 
 function RegionsComponent({ data, fieldName }) {
-  const { colorIndex } = useContext(LayerContext)
+  const { colorIndex, mapDivision } = useContext(LayerContext)
 
   if (!Array.isArray(data) || data.length === 0) {
     return console.log('No hay datos disponibles para mostrar')
   }
 
+  // Función para determinar el ID de geojson basado en el nivel de división actual
+  const getGeojsonIdByDivision = (item) => {
+    switch (mapDivision) {
+    case 'division1':
+      return item.locationId.division1 ? item.locationId.division1.geojsonId : 'noDivision1'
+    case 'division2':
+      return item.locationId.division2 ? item.locationId.division2.geojsonId : 'noDivision2'
+    default: // 'division3' o cualquier otro caso
+      return item.locationId.division3 ? item.locationId.division3.geojsonId : 'noDivision3'
+    }
+  }
+
   const groupedByGeojsonId = data.reduce((acc, item) => {
-    const geojsonId = item.locationId.division3 ? item.locationId.division3.geojsonId : 'noDivision3'
+    const geojsonId = getGeojsonIdByDivision(item)
 
     if (!acc[geojsonId]) {
       acc[geojsonId] = []
@@ -27,7 +39,6 @@ function RegionsComponent({ data, fieldName }) {
         if (field.fieldName === 'latitude' || field.fieldName === 'longitude' || field.fieldName === 'districtId') {
           return
         }
-
         if (field.fieldType === 'number') {
           if (!acc[field.fieldName]) {
             acc[field.fieldName] = 0
@@ -63,33 +74,3 @@ RegionsComponent.propTypes = {
 }
 
 export default RegionsComponent
-
-//console.log(groupedByGeojsonId)
-
-/*   function groupByDivision3(groupedByGeojsonId) {
-  const grouped = {
-    noDivision3: []
-  }
- 
-  // Iterar sobre cada grupo de datos
-  Object.values(groupedByGeojsonId).forEach(group => {
-    group.forEach(item => {
-      const division3Id = item.locationId.division3 ? item.locationId.division3.geojsonId : 'noDivision3'
-      const districtName = item.fields.find(field => field.fieldName === 'districtName').fieldValue
- 
-      if (division3Id === 'noDivision3') {
-        grouped.noDivision3.push(districtName)
-      } else {
-        if (!grouped[division3Id]) {
-          grouped[division3Id] = []
-        }
-        grouped[division3Id].push(districtName)
-      }
-    })
-  })
- 
-  return grouped
-}
- 
-const groupedDistricts = groupByDivision3(groupedByGeojsonId)
-console.log(JSON.stringify(groupedDistricts, null, 2)) */

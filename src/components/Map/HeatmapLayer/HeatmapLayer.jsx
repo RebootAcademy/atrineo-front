@@ -45,8 +45,7 @@ function HeatmapLayer({ data, fieldName }) {
 
     console.log(divisionIdProperty)
 
-    const currentGroupId = data.find(d => d.geojsonId === feature.properties.ID_3?.toString())
-    console.log(feature.properties)
+    const currentGroupId = data.find(d => d.geojsonId === feature.properties[divisionIdProperty]?.toString())
     const value = currentGroupId?.sums.find(sum => sum.fieldName === fieldName)?.total
 
     if (value !== undefined) {
@@ -68,12 +67,10 @@ function HeatmapLayer({ data, fieldName }) {
     const filteredData = { ...mapData }
 
     return (
-      <>
-        <GeoJSON
-          data={filteredData}
-          style={(feature) => setStyle(feature)}
-        />
-      </>
+      <GeoJSON
+        data={filteredData}
+        style={(feature) => setStyle(feature)}
+      />
     )
   } else {
     return null
