@@ -14,7 +14,7 @@ import { router } from './router'
 const queryClient = new QueryClient()
 
 function App() {
-  const [mapDivision, setMapDivision] = useState('division3')
+  const [mapDivision, setMapDivision] = useState('')
   const [selectedNameDistrict, setSelectedNameDistrict] = useState([])
   const [selectedRegion, setSelectedRegion] = useState('')
   const [searchPolygon, setSearchPolygon] = useState(null)
@@ -38,31 +38,22 @@ function App() {
   }, [searchPolygon])
 
   const saveCurrentLayer = (obj) => {
-    // Intentar cargar el arreglo de capas existente desde localStorage, o iniciar uno nuevo si no existe
     const existingLayers = JSON.parse(storage.getItem('layers')) || []
-    // Determinar el próximo ID basado en el ID más alto existente
     const nextId = existingLayers.reduce((maxId, layer) => Math.max(maxId, layer.id), 0) + 1
-    // Añadir la nueva capa al arreglo de capas existente
     const updatedLayers = [...existingLayers, {
       id: nextId,
       isVisible: true,
       data: obj
     }]
-    // Guardar el arreglo actualizado de capas en localStorage
     storage.setItem('layers', JSON.stringify(updatedLayers))
     console.log(`Layer ${nextId} saved to localStorage with previous layers`, JSON.parse(storage.getItem('layers')))
-    // Actualizar el estado de layers y nextLayerId
     setLayers(updatedLayers)
   }
 
   const clearLayerById = (layerId) => {
-    // Cargar el arreglo de capas existente desde localStorage
     const existingLayers = JSON.parse(storage.getItem('layers')) || []
-    // Filtrar el arreglo para eliminar la capa con el id especificado
     const updatedLayers = existingLayers.filter(layer => layer.id !== layerId)
-    // Guardar el arreglo actualizado de capas en localStorage
     storage.setItem('layers', JSON.stringify(updatedLayers))
-    // Actualizar el estado de layers con el nuevo arreglo de capas
     setLayers(updatedLayers)
     console.log('Layer deleted')
   }

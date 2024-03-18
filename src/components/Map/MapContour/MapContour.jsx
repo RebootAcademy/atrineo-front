@@ -1,9 +1,8 @@
+import { useContext, useEffect } from "react"
 import { GeoJSON } from 'react-leaflet'
 import { useGeoJsonData } from '../../../hooks/useGeoJsonData'
-
-import PropTypes from 'prop-types'
-import { useContext } from "react"
 import { LayerContext } from "../../../context/layerContext"
+import PropTypes from 'prop-types'
 
 const style = {
   opacity: 0.8,
@@ -14,19 +13,20 @@ const style = {
 }
 
 function ContourLayer() {
-  const { mapDivision } = useContext(LayerContext)
-  const data = useGeoJsonData(mapDivision)
-
-  const filteredDivision = () => {
-    return data && data.features.filter((division) => division.properties.NAME_1 === 'Baden-Württemberg')
-  }
-
+  const { mapDivision, isLoading, isError, error } = useContext(LayerContext)
+  const { data } = useGeoJsonData(mapDivision)
+  
+  useEffect(() => {
+  }, [mapDivision])  
+  
+  if (isLoading) return <div>Loading...</div>
+  if (isError) return <div>Error: {error.message}</div>
   if (data) {
-    const filteredData = { ...data, features: filteredDivision() }
     return (
       <section>
         <GeoJSON
-          data={(mapDivision === 'country' || mapDivision === 'division1') ? data : filteredData}
+          key={mapDivision}
+          data={data}
           style={style}
         />
       </section>

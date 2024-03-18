@@ -1,36 +1,18 @@
-import { useContext, useEffect } from "react"
-import { GeoJSON, useMap } from "react-leaflet"
+import { useContext } from "react"
+import { GeoJSON } from "react-leaflet"
 import { useGeoJsonData } from '../../../hooks/useGeoJsonData'
 import { defaultStyle } from './Styles'
 import { LayerContext } from "../../../context/layerContext"
 import { findMaxAndMinValues } from "../../../helpers"
 
-import L from 'leaflet'
-
 import PropTypes from 'prop-types'
-
 
 function HeatmapLayer({ data, fieldName }) {
   const { mapDivision } = useContext(LayerContext)
-  const mapData = useGeoJsonData(mapDivision)
+  const { data: mapData, isLoading, isError, error } = useGeoJsonData(mapDivision)
 
-  const map = useMap()
-
-  useEffect(() => {
-    if (!map) return
-
-    const geoJsonLayer = L.geoJSON(data, {
-      style: () => ({
-        fillColor: `url(#patternId)`,
-      }),
-    }).addTo(map)
-
-    return () => {
-      if (map) {
-        map.removeLayer(geoJsonLayer)
-      }
-    }
-  }, [map, data])
+  console.log(data)
+  console.log(mapData)
 
   const adjustedData = data.map(group => ({
     fields: group.sums.map(sum => ({
@@ -49,7 +31,22 @@ function HeatmapLayer({ data, fieldName }) {
   }
 
   const setStyle = (feature) => {
-    const currentGroupId = data.find(d => d.geojsonId === feature.properties.ID_3.toString())
+    let divisionIdProperty
+    if (mapDivision === 'division3') {
+      divisionIdProperty = 'ID_3'
+    } else if (mapDivision === 'division2') {
+      divisionIdProperty = 'ID_2'
+    } else if (mapDivision === 'division1') {
+      divisionIdProperty = 'ID_1'
+    } else {
+      // Manejar otros casos o establecer un valor por defecto
+      divisionIdProperty = 'ID' // Asumiendo que hay un ID genérico si no es una división específica
+    }
+
+    console.log(divisionIdProperty)
+
+    const currentGroupId = data.find(d => d.geojsonId === feature.properties.ID_3?.toString())
+    console.log(feature.properties)
     const value = currentGroupId?.sums.find(sum => sum.fieldName === fieldName)?.total
 
     if (value !== undefined) {
@@ -65,12 +62,10 @@ function HeatmapLayer({ data, fieldName }) {
     return defaultStyle
   }
 
-  const filteredRegions = () => {
-    return mapData?.features.filter((region) => region.properties.NAME_1 === 'Baden-Württemberg')
-  }
-
+  if (isLoading) return <div>Loading...</div>
+  if (isError) return <div>Error loading data: {error.message}</div>
   if (mapData) {
-    const filteredData = { ...mapData, features: filteredRegions() }
+    const filteredData = { ...mapData }
 
     return (
       <>
