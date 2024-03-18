@@ -31,7 +31,12 @@ function SliderComponent({ name, handleChange, minValue, maxValue }) {
   return (
     <>
       <div>
-        <input type="checkbox" className="mr-2" onChange={handleInput} />
+        <input 
+          type="checkbox" 
+          className="mr-2" 
+          onChange={handleInput} 
+          checked={active}
+        />
         <Label htmlFor={name}>
           {name}
         </Label>

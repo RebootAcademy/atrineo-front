@@ -19,6 +19,8 @@ function DisplayFilters({ layerObj, type }) {
   const { collection } = useContext(CollectionContext)
   const [activeSwitch, setActiveSwitch] = useState(null)
 
+  console.log(activeSwitch)
+
   const handleRegionChange = (value) => {
     layerObj.current.type = type
     const names = value.map(name => name.value)
@@ -28,7 +30,14 @@ function DisplayFilters({ layerObj, type }) {
   const handleFilterChange = (value, target) => {
     layerObj.current.type = type
     if (value === 'remove') {
-      delete layerObj.current[target]
+      const { [target]: removed, ...rest } = layerObj.current
+      console.log(removed)
+      layerObj.current = { ...rest }
+
+      if (layerObj.current.fieldName === target) {
+        delete layerObj.current.fieldName
+      }
+      setActiveSwitch(null)
     } else {
       if (type === 'startups') {
         layerObj.current = { ...layerObj.current, [target]: value }
@@ -84,11 +93,15 @@ function DisplayFilters({ layerObj, type }) {
     } else {
       return numericFields.map((field, index) => {
         const isActive = activeSwitch === field.fieldName
+        const toggleSwitch = ()  => {
+          const newValue = !isActive ? field.fieldName : 'remove'
+          handleFilterChange(newValue, field.fieldName)
+        }
         return (
           <SwitchComponent
             key={index}
             name={field.fieldName}
-            handleChange={() => handleFilterChange(!isActive ? field.fieldName : 'remove', field.fieldName)}
+            handleChange={toggleSwitch}
             isActive={isActive}
           />
         )
@@ -98,11 +111,13 @@ function DisplayFilters({ layerObj, type }) {
 
   const displayBooleanFields = () => {
     return booleanFields?.map((field, index) => {
+      const isActive = activeSwitch === field.fieldName
       return (
         <SwitchComponent
           key={index}
           name={field.fieldName}
-          handleChange={handleFilterChange}
+          handleChange={() => handleFilterChange(!isActive ? field.fieldName : 'remove', field.fieldName)}
+          isActive={isActive}
         />
       )
     })

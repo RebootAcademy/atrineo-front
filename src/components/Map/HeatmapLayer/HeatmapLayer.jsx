@@ -11,9 +11,6 @@ function HeatmapLayer({ data, fieldName }) {
   const { mapDivision } = useContext(LayerContext)
   const { data: mapData, isLoading, isError, error } = useGeoJsonData(mapDivision)
 
-  console.log(data)
-  console.log(mapData)
-
   const adjustedData = data.map(group => ({
     fields: group.sums.map(sum => ({
       fieldName: sum.fieldName,
@@ -39,11 +36,8 @@ function HeatmapLayer({ data, fieldName }) {
     } else if (mapDivision === 'division1') {
       divisionIdProperty = 'ID_1'
     } else {
-      // Manejar otros casos o establecer un valor por defecto
       divisionIdProperty = 'ID' // Asumiendo que hay un ID genérico si no es una división específica
     }
-
-    console.log(divisionIdProperty)
 
     const currentGroupId = data.find(d => d.geojsonId === feature.properties[divisionIdProperty]?.toString())
     const value = currentGroupId?.sums.find(sum => sum.fieldName === fieldName)?.total

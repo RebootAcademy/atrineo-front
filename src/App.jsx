@@ -38,16 +38,24 @@ function App() {
   }, [searchPolygon])
 
   const saveCurrentLayer = (obj) => {
-    const existingLayers = JSON.parse(storage.getItem('layers')) || []
-    const nextId = existingLayers.reduce((maxId, layer) => Math.max(maxId, layer.id), 0) + 1
-    const updatedLayers = [...existingLayers, {
-      id: nextId,
-      isVisible: true,
-      data: obj
-    }]
-    storage.setItem('layers', JSON.stringify(updatedLayers))
-    console.log(`Layer ${nextId} saved to localStorage with previous layers`, JSON.parse(storage.getItem('layers')))
-    setLayers(updatedLayers)
+    const hasActiveFilters = Object.keys(obj).some(key =>
+      obj[key] !== null && key !== 'type' && key !== 'id' && key !== 'isVisible'
+    )
+
+    if (hasActiveFilters) {
+      const existingLayers = JSON.parse(storage.getItem('layers')) || []
+      const nextId = existingLayers.reduce((maxId, layer) => Math.max(maxId, layer.id), 0) + 1
+      const updatedLayers = [...existingLayers, {
+        id: nextId,
+        isVisible: true,
+        data: obj
+      }]
+      storage.setItem('layers', JSON.stringify(updatedLayers))
+      console.log(`Layer ${nextId} saved to localStorage with previous layers`, JSON.parse(storage.getItem('layers')))
+      setLayers(updatedLayers)
+    } else {
+      console.log("No active filters found. Layer not saved.")
+    }
   }
 
   const clearLayerById = (layerId) => {

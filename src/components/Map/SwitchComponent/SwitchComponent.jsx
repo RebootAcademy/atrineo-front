@@ -23,14 +23,17 @@ function SwitchComponent({ name, handleChange, isActive }) {
   }
 
   return (
-    <>
-      <div>
-        <input type="checkbox" checked={active} className="mr-2" onChange={handleInput}/>
-        <Label htmlFor={name}>
-          {name}
-        </Label>
-      </div>
-    </>
+    <div>
+      <input 
+        type="checkbox" 
+        checked={active} 
+        className="mr-2" 
+        onChange={handleInput}
+      />
+      <Label htmlFor={name}>
+        {name}
+      </Label>
+    </div>
   )
 }
 
