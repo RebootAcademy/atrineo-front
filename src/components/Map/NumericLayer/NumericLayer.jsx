@@ -18,7 +18,7 @@ function NumericLayer({ field, data, color }) {
         <Circle
           key={index}
           center={[latitude, longitude]}
-          pathOptions={{ fillColor: color, fillOpacity: 0.3, stroke: true, color: color, opacity: 0.5, weight: 2 }}
+          pathOptions={{ fillColor: color, fillOpacity: 0.1, stroke: true, color: color, opacity: 0.6, weight: 1.5 }}
           radius={calculateRadius(value, minValue, maxValue)}
         />
       )
