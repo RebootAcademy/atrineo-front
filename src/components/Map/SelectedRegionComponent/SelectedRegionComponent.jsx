@@ -3,12 +3,15 @@ import { GeoJSON } from "react-leaflet"
 import { useGeoJsonData } from "../../../hooks/useGeoJsonData"
 import { selectedStyle, defaultStyle } from "./Style"
 import { LayerContext } from "../../../context/layerContext"
+import { isWithinPolygon } from "@/helpers"
 
 // eslint-disable-next-line react/prop-types
-const RegionsSelected = ({ onRegionSelected }) => {
+const SelectedRegionComponent = ({ data }) => {
+  console.log(data)
   const {
-    layers,
-    mapDivision
+    //layers,
+    mapDivision,
+    searchPolygon
   } = useContext(LayerContext)
 
   const mapData = useGeoJsonData(mapDivision)
@@ -20,16 +23,11 @@ const RegionsSelected = ({ onRegionSelected }) => {
   }, [mapDivision])
 
   const setStyle = (feature) => {
-    //const currentGroupId = feature.properties.ID_3
     const currentDistrict = feature.properties.NAME_3
-
+    console.log(data)
     if (
-      layers?.find((layer) => layer.data.regions?.includes(currentDistrict) && layer.isVisible)
-      // (selectedNameDistrict.length === 1 && selectedNameDistrict[0].value === 'All') ||
-      //selectedNameDistrict.includes(currentDistrict)
-      //la linea de abajo comentada es para activar que al hacer click en el mapa se pinte la zona donde se hace click
-      //(selectedRegion && selectedRegion.feature.properties.ID_3 === currentGroupId) ||
-      //(selectedNameDistrict && selectedNameDistrict.some(district => district.value === currentDistrict))
+      // eslint-disable-next-line react/prop-types
+      data?.regions?.includes(currentDistrict)
     ) {
       return selectedStyle
     } else {
@@ -37,58 +35,9 @@ const RegionsSelected = ({ onRegionSelected }) => {
     }
   }
 
-  const onEachFeature = (feature, layer) => {
-    layer.on("click", () => {
-      if (mapDivision == "country") {
-        setSelectedRegion((prevSelectedRegion) => {
-          return prevSelectedRegion &&
-            prevSelectedRegion.feature.properties.ID_0 ===
-            feature.properties.ID_0
-            ? null
-            : layer
-        })
-        if (onRegionSelected) {
-          onRegionSelected(feature.properties.NAME_0)
-        }
-      } else if (mapDivision == "division1") {
-        setSelectedRegion((prevSelectedRegion) => {
-          return prevSelectedRegion &&
-            prevSelectedRegion.feature.properties.id === feature.properties.id
-            ? null
-            : layer
-        })
-        if (onRegionSelected) {
-          onRegionSelected(feature.properties.NAME_1)
-        }
-      } else if (mapDivision == "division2") {
-        setSelectedRegion((prevSelectedRegion) => {
-          return prevSelectedRegion &&
-            prevSelectedRegion.feature.properties.ID_2 ===
-            feature.properties.ID_2
-            ? null
-            : layer
-        })
-        if (onRegionSelected) {
-          onRegionSelected(feature.properties.NAME_2)
-        }
-      } else {
-        setSelectedRegion((prevSelectedRegion) => {
-          return prevSelectedRegion &&
-            prevSelectedRegion.feature.properties.ID_3 ===
-            feature.properties.ID_3
-            ? null
-            : layer
-        })
-        if (onRegionSelected) {
-          onRegionSelected(feature.properties.NAME_3)
-        }
-      }
-    })
-  }
-
   const filteredRegions = (regionName) => {
     return mapData?.features.filter(
-      (region) => region.properties.NAME_1 === regionName
+      (region) => region.properties.NAME_1 === regionName && isWithinPolygon(region, searchPolygon)
     )
   }
 
@@ -101,7 +50,7 @@ const RegionsSelected = ({ onRegionSelected }) => {
     return (
       <GeoJSON
         data={filteredData}
-        onEachFeature={onEachFeature}
+        // onEachFeature={onEachFeature}
         style={(feature) => setStyle(feature)}
       />
     )
@@ -110,4 +59,4 @@ const RegionsSelected = ({ onRegionSelected }) => {
   }
 }
 
-export default RegionsSelected
+export default SelectedRegionComponent

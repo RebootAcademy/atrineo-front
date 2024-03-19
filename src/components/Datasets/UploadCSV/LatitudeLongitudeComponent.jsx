@@ -36,12 +36,12 @@ function LatitudeLongitudeComponent() {
     setLoading(false)
   }
 
-  const handleKeyPress = (e) => {
-    console.log(e.key)
-    if (e.key == 'Enter') {
-      handleLatLonUpdate()
-    }
-  }
+  // const handleKeyPress = (e) => {
+  //   console.log(e.key)
+  //   if (e.key == 'Enter') {
+  //     handleLatLonUpdate()
+  //   }
+  // }
 
   return (
     <>
@@ -59,7 +59,7 @@ function LatitudeLongitudeComponent() {
           onChange={handleLongitudeChange}
         />
         {
-          loading ? 
+          loading ?
             <LoadingButton /> :
             <Button
               className="ml-2"

@@ -12,8 +12,8 @@ export const isWithinPolygon = (dataItem, searchPolygon) => {
   if (!searchPolygon || !Array.isArray(searchPolygon) || searchPolygon.length === 0 || !Array.isArray(searchPolygon[0])) return true
 
   // Encuentra los objetos de latitud y longitud
-  const latObj = dataItem.fields.find(field => field.fieldName === 'latitude')
-  const lonObj = dataItem.fields.find(field => field.fieldName === 'longitude')
+  const latObj = dataItem?.fields?.find(field => field.fieldName === 'latitude')
+  const lonObj = dataItem?.fields?.find(field => field.fieldName === 'longitude')
 
   // Verifica si ambos están presentes y son válidos
   const hasValidCoordinates = latObj != null && lonObj != null && latObj.fieldValue != null && lonObj.fieldValue != null

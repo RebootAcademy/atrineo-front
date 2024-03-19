@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react"
+/* eslint-disable no-unused-vars */
+import { useState } from "react"
 import PropTypes from 'prop-types'
 import { EditIcon } from "@/components/ui/Icons/Icons"
 import { EyeIcon, EyeOffIcon } from "lucide-react"
