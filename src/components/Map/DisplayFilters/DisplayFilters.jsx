@@ -1,12 +1,10 @@
-//SUSTITUIRÍA A FILTEROPTIONS
 import { useContext, useState } from "react"
-import PropTypes from 'prop-types'
+import { CollectionContext } from "../../../context/collectionContext"
 
 import RadioComponent from '../RadioComponent/RadioComponent'
 import SwitchComponent from '../SwitchComponent/SwitchComponent'
 import SliderComponent from '../SliderComponent/SliderComponent'
 import MultipleSelectorComponent from "../MultipleSelector/MultipleSelector"
-import { CollectionContext } from "../../../context/collectionContext"
 
 import {
   extractNumericFields,
@@ -14,6 +12,8 @@ import {
   createStringOptionsObject,
   findMaxAndMinValues
 } from '../../../helpers'
+
+import PropTypes from 'prop-types'
 
 function DisplayFilters({ layerObj, type }) {
   const { collection } = useContext(CollectionContext)
@@ -37,9 +37,10 @@ function DisplayFilters({ layerObj, type }) {
       }
       setActiveSwitch(null)
     } else {
-      layerObj.current = { ...layerObj.current, [target]: value, fieldName: target }
+      layerObj.current = { ...layerObj.current, [target]: value, /* fieldName: target */ }
       setActiveSwitch(target)
     }
+    console.log(layerObj.current)
   }
 
   let data
@@ -87,7 +88,7 @@ function DisplayFilters({ layerObj, type }) {
     } else {
       return numericFields.map((field, index) => {
         const isActive = activeSwitch === field.fieldName
-        const toggleSwitch = ()  => {
+        const toggleSwitch = () => {
           const newValue = !isActive ? field.fieldName : 'remove'
           handleFilterChange(newValue, field.fieldName)
         }

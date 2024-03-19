@@ -3,36 +3,26 @@ import { Label } from "../../ui/Label/Label"
 import PropTypes from 'prop-types'
 
 function SwitchComponent({ name, handleChange, isActive }) {
-  const [active, setActive] = useState(isActive)
+  const [isChecked, setIsChecked] = useState(isActive)
 
   useEffect(() => {
-    setActive(active)
-  }, [active])
+    setIsChecked(isActive)
+  }, [isActive])
 
   const handleCheck = () => {
-    setActive(prev => !prev)
-    handleInput()
-  }
-
-  const handleInput = () => {
-    if (active) {
-      handleChange('remove', name)
-    } else {
-      handleChange(!active, name)
-    }
+    setIsChecked(!isChecked)
+    handleChange(!isChecked ? name : 'remove', name)
   }
 
   return (
     <div>
-      <input 
-        type="checkbox" 
-        checked={active} 
-        className="mr-2" 
+      <input
+        type="checkbox"
+        checked={isChecked}
+        className="mr-2"
         onChange={handleCheck}
       />
-      <Label htmlFor={name}>
-        {name}
-      </Label>
+      <Label htmlFor={name}>{name}</Label>
     </div>
   )
 }
