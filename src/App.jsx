@@ -53,6 +53,10 @@ function App() {
       storage.setItem('layers', JSON.stringify(updatedLayers))
       console.log(`Layer ${nextId} saved to localStorage with previous layers`, JSON.parse(storage.getItem('layers')))
       setLayers(updatedLayers)
+
+      if (obj.type === 'regions') {
+        setMapDivision('division3')
+      }
     } else {
       console.log("No active filters found. Layer not saved.")
     }

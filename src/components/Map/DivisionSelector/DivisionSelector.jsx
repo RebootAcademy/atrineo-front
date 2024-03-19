@@ -10,7 +10,7 @@ import {
 import { LayerContext } from '@/context/layerContext'
 
 function DivisionSelector() {
-  const { setMapDivision } = useContext(LayerContext)
+  const { mapDivision, setMapDivision } = useContext(LayerContext)
 
   const options = [
     { value: 'country', label: 'Country' },
@@ -25,7 +25,7 @@ function DivisionSelector() {
 
   return (
     <div className='relative top-4 left-4 z-[9999999999]'>
-      <Select onValueChange={handleChange}>
+      <Select value={mapDivision} onValueChange={handleChange}>
         <SelectTrigger className="w-[180px]">
           <SelectValue placeholder="Pick a division"/>
         </SelectTrigger>

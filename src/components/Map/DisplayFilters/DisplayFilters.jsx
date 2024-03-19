@@ -26,7 +26,6 @@ function DisplayFilters({ layerObj, type }) {
   }
 
   const handleFilterChange = (value, target) => {
-    console.log(value, target)
     layerObj.current.type = type
     if (value === 'remove') {
       const { [target]: removed, ...rest } = layerObj.current
@@ -41,7 +40,6 @@ function DisplayFilters({ layerObj, type }) {
       layerObj.current = { ...layerObj.current, [target]: value, fieldName: target }
       setActiveSwitch(target)
     }
-    console.log(layerObj.current)
   }
 
   let data

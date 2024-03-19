@@ -61,10 +61,12 @@ function HeatmapLayer({ data, fieldName }) {
     const filteredData = { ...mapData }
 
     return (
-      <GeoJSON
-        data={filteredData}
-        style={(feature) => setStyle(feature)}
-      />
+      <>
+        <GeoJSON
+          data={filteredData}
+          style={(feature) => setStyle(feature)}
+        />
+      </>
     )
   } else {
     return null
