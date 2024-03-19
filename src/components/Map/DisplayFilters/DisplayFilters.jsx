@@ -17,9 +17,7 @@ import {
 
 function DisplayFilters({ layerObj, type }) {
   const { collection } = useContext(CollectionContext)
-  const [activeSwitch, setActiveSwitch] = useState(null)
-
-  console.log(activeSwitch)
+  const [activeSwitch, setActiveSwitch] = useState(false)
 
   const handleRegionChange = (value) => {
     layerObj.current.type = type
@@ -28,6 +26,7 @@ function DisplayFilters({ layerObj, type }) {
   }
 
   const handleFilterChange = (value, target) => {
+    console.log(value, target)
     layerObj.current.type = type
     if (value === 'remove') {
       const { [target]: removed, ...rest } = layerObj.current
@@ -39,13 +38,10 @@ function DisplayFilters({ layerObj, type }) {
       }
       setActiveSwitch(null)
     } else {
-      if (type === 'startups') {
-        layerObj.current = { ...layerObj.current, [target]: value }
-      } else {
-        layerObj.current = { ...layerObj.current, [target]: value, fieldName: target }
-      }
+      layerObj.current = { ...layerObj.current, [target]: value, fieldName: target }
       setActiveSwitch(target)
     }
+    console.log(layerObj.current)
   }
 
   let data
@@ -110,14 +106,12 @@ function DisplayFilters({ layerObj, type }) {
   }
 
   const displayBooleanFields = () => {
-    return booleanFields?.map((field, index) => {
-      const isActive = activeSwitch === field.fieldName
+    return booleanFields.map((field, index) => {
       return (
         <SwitchComponent
           key={index}
           name={field.fieldName}
-          handleChange={() => handleFilterChange(!isActive ? field.fieldName : 'remove', field.fieldName)}
-          isActive={isActive}
+          handleChange={handleFilterChange}
         />
       )
     })

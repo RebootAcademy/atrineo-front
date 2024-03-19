@@ -16,7 +16,7 @@ const queryClient = new QueryClient()
 function App() {
   const [mapDivision, setMapDivision] = useState('')
   const [selectedNameDistrict, setSelectedNameDistrict] = useState([])
-  const [selectedRegion, setSelectedRegion] = useState('')
+  const [selectedRegion, setSelectedRegion] = useState(null)
   const [searchPolygon, setSearchPolygon] = useState(null)
   const [collection, setCollection] = useState({})
   const [layers, setLayers] = useState([])

@@ -6,20 +6,20 @@ function SwitchComponent({ name, handleChange, isActive }) {
   const [active, setActive] = useState(isActive)
 
   useEffect(() => {
-    setActive(isActive)
-  }, [isActive])
+    setActive(active)
+  }, [active])
 
-  const emitChange = (value) => {
-    handleChange(value, name)
+  const handleCheck = () => {
+    setActive(prev => !prev)
+    handleInput()
   }
 
   const handleInput = () => {
-    setActive(prev => {
-      const newValue = !prev
-      handleChange(newValue ? 'add' : 'remove', name)
-      emitChange(newValue)
-      return !prev
-    })
+    if (active) {
+      handleChange('remove', name)
+    } else {
+      handleChange(!active, name)
+    }
   }
 
   return (
@@ -28,7 +28,7 @@ function SwitchComponent({ name, handleChange, isActive }) {
         type="checkbox" 
         checked={active} 
         className="mr-2" 
-        onChange={handleInput}
+        onChange={handleCheck}
       />
       <Label htmlFor={name}>
         {name}

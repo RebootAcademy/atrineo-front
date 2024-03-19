@@ -4,6 +4,7 @@
 'use strict'
 
 import * as React from 'react'
+import { useEffect } from 'react'
 import { X } from 'lucide-react'
 
 import {
@@ -14,7 +15,6 @@ import {
   CommandList,
 } from '../../ui/MultiSelector/command'
 import { Command as CommandPrimitive } from 'cmdk'
-import { useEffect } from 'react'
 import { Badge } from '../../ui/MultiSelector/badge'
 import { cn } from '../../../lib/utils'
 

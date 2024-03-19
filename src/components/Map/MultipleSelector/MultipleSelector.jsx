@@ -1,12 +1,10 @@
-import PropTypes from 'prop-types'
 import { useContext, useState } from "react"
-
 import { LayerContext } from "../../../context/layerContext"
 import { CollectionContext } from "../../../context/collectionContext"
-
 import MultipleSelector from "../../ui/MultiSelector/multple-selector"
+import PropTypes from 'prop-types'
+
 function MultipleSelectorComponent({ onValueChange }) {
- 
   const { mapDivision } = useContext(LayerContext)
   const { collection } = useContext(CollectionContext)
   const [active, setActive] = useState(false)
@@ -15,17 +13,13 @@ function MultipleSelectorComponent({ onValueChange }) {
     onValueChange(districts)
   }
 
-  const dislayMultipleSelector = () => {
+  const displayMultipleSelector = () => {
     const nameRegionFiltered = collection.data
       .filter((item) => item.locationId[mapDivision] !== null)
-      .map(item => {
-        return { id: item.locationId[mapDivision]?._id, name: item.locationId[mapDivision]?.name }
-      })
+      .map((item) => ({ id: item.locationId[mapDivision]?._id, name: item.locationId[mapDivision]?.name }))
     const nameRegion = nameRegionFiltered.reduce((prev, curr) => {
       return prev.find((item) => item.id === curr.id) ? prev : [...prev, curr]
     }, [])
-
-    // const sortedRegion = nameRegion.sort((region1, region2) => region1.name.localeCompare(region2.name))
 
     const districtNames = [
       ...nameRegion.map((filteredRegion) => (
@@ -38,7 +32,7 @@ function MultipleSelectorComponent({ onValueChange }) {
     return districtNames
   }
 
-  const defaultDistictOptions = dislayMultipleSelector()
+  const defaultDistrictOptions = displayMultipleSelector()
 
   const handleCheckboxChange = () => {
     setActive((prev) => !prev)
@@ -60,7 +54,7 @@ function MultipleSelectorComponent({ onValueChange }) {
           <MultipleSelector
             placeholder="Select Region..."
             onChange={onDistrictNameChange}
-            defaultOptions={defaultDistictOptions}
+            defaultOptions={defaultDistrictOptions}
           />
         )}
       </>
