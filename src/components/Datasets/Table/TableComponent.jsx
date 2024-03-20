@@ -11,9 +11,8 @@ import {
 } from "../../ui/Table/table"
 
 import { UpArrow, DownArrow } from '../../ui/Icons/Icons'
-import ColumnsModal from '../ColumnsModal/ColumnsModal'
 
-function TableComponent({ data }) {
+function TableComponent({ data, hiddenColumns }) {
   const fields = data && data.length > 0 ? data[0].fields : []
   const [sortField, setSortField] = useState(fields[0]?.fieldName)
   const [orderFirst, setOrderFirst] = useState(true)
@@ -60,20 +59,23 @@ function TableComponent({ data }) {
   }
 
   const displayTableColumns = () => {
-    return fields.map(f =>
-      <TableHead
-        key={f._id + f.fieldName}
-        className='text-white font-bold text-center'
-        id={f.fieldName}
-        onClick={selectField}
-      >
-        <>
-          <div className='flex'>
-            {sortField === f.fieldName && orderFirst ? <UpArrow /> : <DownArrow />}
-            {f.fieldName}
-          </div>
-        </>
-      </TableHead>
+    return fields.map(f => {
+      if (!hiddenColumns.includes(f.fieldName)) {
+        <TableHead
+          key={f._id + f.fieldName}
+          className='text-white font-bold text-center'
+          id={f.fieldName}
+          onClick={selectField}
+        >
+          <>
+            <div className='flex'>
+              {sortField === f.fieldName && orderFirst ? <UpArrow /> : <DownArrow />}
+              {f.fieldName}
+            </div>
+          </>
+        </TableHead>
+      } 
+    }
     )
   }
 
@@ -92,17 +94,19 @@ function TableComponent({ data }) {
         >
           {
             d.fields.map((f, i) => {
-              const isNumeric = typeof f.fieldValue === 'number'
-              const isBool = typeof f.fieldValue === 'boolean'
-              let className = isNumeric ? 'text-right' : 'min-w-20'
-              className = isBool ? 'text-center' : className
-              return (
-                <TableCell key={i}>
-                  <div className={className}>
-                    {displayData(f.fieldValue)}
-                  </div>
-                </TableCell>
-              )
+              if(!hiddenColumns.includes(f.fieldName)) {
+                const isNumeric = typeof f.fieldValue === 'number'
+                const isBool = typeof f.fieldValue === 'boolean'
+                let className = isNumeric ? 'text-right' : 'min-w-20'
+                className = isBool ? 'text-center' : className
+                return (
+                  <TableCell key={i}>
+                    <div className={className}>
+                      {displayData(f.fieldValue)}
+                    </div>
+                  </TableCell>
+                )
+              }
             })
           }
         </TableRow>
@@ -126,14 +130,14 @@ function TableComponent({ data }) {
           }
         </TableBody>
       </Table>
-      <ColumnsModal columnNames={fields.map(f => f.fieldName)} />
     </>
   )
 }
 
 TableComponent.propTypes = {
   data: PropTypes.array,
-  columnNames: PropTypes.array
+  columnNames: PropTypes.array,
+  hiddenColumns: PropTypes.array
 }
 
 export default TableComponent

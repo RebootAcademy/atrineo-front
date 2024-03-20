@@ -1,4 +1,5 @@
-import { useContext, useState, useEffect, useRef } from "react"
+import PropTypes from 'prop-types'
+import { useState, useEffect, useRef } from "react"
 import {
   Card,
   CardHeader,
@@ -10,17 +11,11 @@ import { EyeOffIconColumns } from "@/components/ui/Icons/Icons"
 import { Button } from "@/components/ui/Button/Button"
 import { DropdownMenu, DropdownMenuTrigger } from "@/components/ui/DropDown/DropdownMenu"
 import { Checkbox } from "@/components/ui/Checkbox/Checkbox"
-import { CollectionContext } from "@/context/collectionContext"
-import CustomButton from "@/components/CustomButton/CustomButton"
 
-function ColumnsModal() {
-  const { collection } = useContext(CollectionContext)
+
+function ColumnsModal({ columnNames, hiddenColumns, setHiddenColumns }) {
   const [isOpen, setIsOpen] = useState(false)
-  const [hiddenColumns, setHiddenColumns] = useState([])
   const cardRef = useRef(null)
-
-  const fields = collection.data && collection.data.length > 0 ? collection.data[0].fields : []
-  const columnNames = fields.map(f => f.fieldName)
 
   useEffect(() => {
     function handleClickOutside(event) {
@@ -50,15 +45,14 @@ function ColumnsModal() {
   }
 
   const handleAccept = () => {
-    const updatedData = collection.data.map(item => {
-      const updatedFields = item.fields.filter(field => !hiddenColumns.includes(field.fieldName))
-      return { ...item, fields: updatedFields }
-    })
-    setHiddenColumns(updatedData)
-    console.log('Columnas ocultas:', hiddenColumns)
+    console.log('Accept clicked')
     setIsOpen(false)
   }
 
+  const handleCancel = () => {
+    console.log('Cancel clicked')
+    setIsOpen(false)
+  }
 
   return (
     <div className="relative text-center">
@@ -84,7 +78,8 @@ function ColumnsModal() {
                   <div key={index} className="flex items-center">
                     <Checkbox
                       className="mr-2"
-                      onChange={() => toggleColumnVisibility(columnName)}
+                      onCheckedChange={() => toggleColumnVisibility(columnName)}
+                      checked={hiddenColumns.includes(columnName)}
                     />
                     <span>{columnName}</span>
                   </div>
@@ -95,14 +90,16 @@ function ColumnsModal() {
               <Button
                 className="w-24 mr-2"
                 variant="outline"
-                onClick={() => setIsOpen(false)}
+                onClick={handleCancel}
               >
                 Cancel
               </Button>
-              <CustomButton
-                text="Accept"
+              <Button
+                text='Accept'
                 onClick={handleAccept}
-              />
+              >
+                Accept
+              </Button>
             </CardFooter>
           </Card>
         </div>
@@ -110,5 +107,12 @@ function ColumnsModal() {
     </div>
   )
 }
+
+ColumnsModal.propTypes = {
+  hiddenColumns: PropTypes.array,
+  setHiddenColumns: PropTypes.func,
+  columnNames: PropTypes.array
+}
+
 
 export default ColumnsModal
