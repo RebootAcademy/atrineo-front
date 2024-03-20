@@ -61,20 +61,22 @@ function TableComponent({ data, hiddenColumns }) {
   const displayTableColumns = () => {
     return fields.map(f => {
       if (!hiddenColumns.includes(f.fieldName)) {
-        <TableHead
-          key={f._id + f.fieldName}
-          className='text-white font-bold text-center'
-          id={f.fieldName}
-          onClick={selectField}
-        >
-          <>
-            <div className='flex'>
-              {sortField === f.fieldName && orderFirst ? <UpArrow /> : <DownArrow />}
-              {f.fieldName}
-            </div>
-          </>
-        </TableHead>
-      } 
+        return (
+          <TableHead
+            key={f._id + f.fieldName}
+            className='text-white font-bold text-center'
+            id={f.fieldName}
+            onClick={selectField}
+          >
+            <>
+              <div className='flex'>
+                {sortField === f.fieldName && orderFirst ? <UpArrow /> : <DownArrow />}
+                {f.fieldName}
+              </div>
+            </>
+          </TableHead>
+        )
+      }
     }
     )
   }
@@ -94,7 +96,7 @@ function TableComponent({ data, hiddenColumns }) {
         >
           {
             d.fields.map((f, i) => {
-              if(!hiddenColumns.includes(f.fieldName)) {
+              if (!hiddenColumns.includes(f.fieldName)) {
                 const isNumeric = typeof f.fieldValue === 'number'
                 const isBool = typeof f.fieldValue === 'boolean'
                 let className = isNumeric ? 'text-right' : 'min-w-20'
