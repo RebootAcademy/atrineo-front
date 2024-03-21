@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable no-unused-vars */
+ 
 import { useEffect, useState } from 'react'
 import { QueryClient, QueryClientProvider } from 'react-query'
 import { RouterProvider } from 'react-router-dom'
@@ -140,6 +140,7 @@ function App() {
     selectedNameDistrict,
     setSelectedNameDistrict,
     colorIndex,
+    setColorIndex
   }
 
 
