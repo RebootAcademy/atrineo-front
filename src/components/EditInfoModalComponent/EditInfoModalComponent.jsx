@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useState } from "react"
 import PropTypes from 'prop-types'
 import { EditIcon } from "@/components/ui/Icons/Icons"
@@ -19,7 +20,7 @@ import { updateUser } from "@/services/userService"
 import LoadingButton from "../LoadingButton/LoadingButton"
 
 function EditInfoModalComponent({ userData }) {
-  const [/* selectedTab, */ setSelectedTab] = useState('user')
+  const [selectedTab, setSelectedTab] = useState('')
   const [showPassword, setShowPassword] = useState(false)
   const [showRepeatPassword, setShowRepeatPassword] = useState(false)
   const [username, setUsername] = useState(userData.name)
@@ -27,6 +28,8 @@ function EditInfoModalComponent({ userData }) {
   const [password/* , setPassword */] = useState('')
   const [repeatPassword/* , setRepeatPassword */] = useState('')
   const [loading, setLoading] = useState(false)
+
+  const [userInfo, setUserInfo] = useState(userData)
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword)
@@ -40,16 +43,17 @@ function EditInfoModalComponent({ userData }) {
     setLoading(true)
 
     const updateFiels = {}
-    if (username !== userData.name) {
+    if (username !== userInfo.name) {
       updateFiels.name = username
     }
-    if (email !== userData.email) {
+    if (email !== userInfo.email) {
       updateFiels.email = email
     }
     if (password !== '' && password === repeatPassword) {
       updateFiels.password = password
     }
-    await updateUser(userData._id, updateFiels)
+    const { result } = await updateUser(userInfo._id, updateFiels)
+    setUserInfo(result)
     setLoading(false)
   }
 
@@ -84,11 +88,15 @@ function EditInfoModalComponent({ userData }) {
                     id="name"
                     className="w-full border-2"
                     placeholder={userData.name}
-                    onClick={() => setUsername('')}
+                    onClick={() => {
+                      if (username === '') {
+                        setUsername(userData.name || '')
+                      }
+                    }}
                     onChange={(e) => setUsername(e.target.value)}
                     onBlur={(e) => {
                       if (e.target.value === '') {
-                        setUsername('')
+                        setUsername(userData.name || '')
                       }
                     }}
                   />
@@ -101,7 +109,7 @@ function EditInfoModalComponent({ userData }) {
                     id="email"
                     className="w-full border-2"
                     placeholder={userData.email}
-                    onClick={() => setEmail('')}
+                    onClick={() => setEmail(userData.name || '')}
                     onChange={(e) => setEmail(e.target.value)}
                   />
                 </div>
@@ -156,11 +164,13 @@ function EditInfoModalComponent({ userData }) {
         </Tabs>
         {
           loading ? <LoadingButton /> :
-            <DialogFooter>
+            <DialogFooter className='flex justify-center'>
               <Button
                 type="submit"
                 onClick={handleSubmit}
-              >Submit</Button>
+              >
+                Submit
+              </Button>
             </DialogFooter>
         }
       </DialogContent>

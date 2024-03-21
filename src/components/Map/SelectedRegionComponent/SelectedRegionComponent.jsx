@@ -4,14 +4,14 @@ import { useGeoJsonData } from "../../../hooks/useGeoJsonData"
 import { selectedStyle, defaultStyle } from "./Style"
 import { LayerContext } from "../../../context/layerContext"
 
- 
+
 const RegionsSelected = () => {
   const {
     layers,
     mapDivision
   } = useContext(LayerContext)
 
-  const mapData = useGeoJsonData(mapDivision)
+  const {data:mapData} = useGeoJsonData(mapDivision)
   // eslint-disable-next-line no-unused-vars
   const [selectedRegion, setSelectedRegion] = useState(null)
 
@@ -87,6 +87,7 @@ const RegionsSelected = () => {
   } */
 
   const filteredRegions = (regionName) => {
+    console.log(mapData)
     return mapData?.features.filter(
       (region) => region.properties.NAME_1 === regionName
     )

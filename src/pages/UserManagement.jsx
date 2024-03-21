@@ -1,32 +1,19 @@
 import EditInfoModalComponent from "@/components/EditInfoModalComponent/EditInfoModalComponent"
 import { Card } from "@/components/ui/Card/Card"
-// import { UserContext } from "@/context/userContext"
-import { getAllUsers/* , getOneUser */ } from "@/services/userService"
-import { /* useContext, */ useState } from "react"
+import { getAllUsers } from "@/services/userService"
+import { useState } from "react"
 import { useQuery } from "react-query"
 
 function UserManagement() {
-  // const { user: userContext, setUser: setUserContext } = useContext(UserContext)
   const [users, setUsers] = useState([])
 
   useQuery('user', getAllUsers, {
     onSuccess: (data) => {
       if (data && data.result && Array.isArray(data.result)) {
-        // setUserContext(data.result)
         setUsers(data.result)
       }
     }
   })
-
-  // useQuery('user', getOneUser, {
-  //   enabled: !!userContext && !userContext.name,
-  //   onSuccess: (data) => {
-  //     if (data && data.result && Array.isArray(data.result)) {
-  //       setUserContext(data.result)
-  //       setUsers(data.result)
-  //     }
-  //   }
-  // })
 
   return (
     <>

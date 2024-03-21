@@ -8,24 +8,30 @@ import LatitudeLongitudeComponent from "./LatitudeLongitudeComponent"
 function UploadCSVComponent({ reloadData }) {
   const [dataType, setDataType] = useState('startups')
 
+
+
   const handleTypeChange = (value) => {
     setDataType(value)
   }
-
   return (
-    <div className="flex flex-col justify-center items-center">
-      <div className='w-full text-center text-2xl mt-12 mb-4'>
-        Import CSV File
+    <>
+
+      <div className='flex flex-col items-end mt-2 mr-4'>
       </div>
-      <div className="w-[812px] flex flex-col">
-        <Csv 
-          dataType={ dataType }
-          reloadData = { reloadData }
-        />
-        <ControlPanel changeType={ handleTypeChange }/>
-        <LatitudeLongitudeComponent/>
-      </div >
-    </div>
+      <div className="flex flex-col items-center justify-between items-center">
+        <div className='w-full text-center text-2xl mt-6 mb-4'>
+          Import CSV File
+        </div>
+        <div className="w-[812px] flex flex-col">
+          <Csv
+            dataType={dataType}
+            reloadData={reloadData}
+          />
+          <ControlPanel changeType={handleTypeChange} />
+          <LatitudeLongitudeComponent />
+        </div >
+      </div>
+    </>
   )
 }
 
