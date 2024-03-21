@@ -16,6 +16,7 @@ import { Checkbox } from "@/components/ui/Checkbox/Checkbox"
 function ColumnsModal({ columnNames, hiddenColumns, setHiddenColumns }) {
   const [isOpen, setIsOpen] = useState(false)
   const [pendingHiddenColumns, setPendingColumns] = useState([...hiddenColumns])
+  const initialHiddenColumns = useRef([...hiddenColumns])
   const cardRef = useRef(null)
 
   useEffect(() => {
@@ -49,7 +50,8 @@ function ColumnsModal({ columnNames, hiddenColumns, setHiddenColumns }) {
   }
 
   const handleCancel = () => {
-    setPendingColumns([...hiddenColumns])
+    setPendingColumns([...initialHiddenColumns.current])
+    setHiddenColumns([...initialHiddenColumns.current])
     setIsOpen(false)
   }
 
@@ -113,6 +115,4 @@ ColumnsModal.propTypes = {
   columnNames: PropTypes.array
 }
 
-
 export default ColumnsModal
-
