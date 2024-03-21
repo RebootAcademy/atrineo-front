@@ -56,7 +56,7 @@ function ColumnsModal({ columnNames, hiddenColumns, setHiddenColumns }) {
   }
 
   return (
-    <div className="relative text-center">
+    <div className="text-center flex justify-end">
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button onClick={toggleMenu} className="z-10">
@@ -68,7 +68,7 @@ function ColumnsModal({ columnNames, hiddenColumns, setHiddenColumns }) {
         </DropdownMenuTrigger>
       </DropdownMenu>
       {isOpen && (
-        <div className="absolute top-10 right-0 z-20" ref={cardRef}>
+        <div className="absolute top-14 right-0 z-20" ref={cardRef}>
           <Card className="w-96 bg-white p-6">
             <CardHeader className='flex justify-center'>
               <CardTitle className="text-cyan-800">Select the columns you want to hide</CardTitle>

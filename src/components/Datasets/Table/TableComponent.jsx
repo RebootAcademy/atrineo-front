@@ -119,7 +119,7 @@ function TableComponent({ data, hiddenColumns }) {
   return (
     <>
       <Table>
-        <TableHeader className="bg-primary sticky top-0 z-10">
+        <TableHeader className="bg-primary sticky top-96 z-10">
           <TableRow >
             {
               displayTableColumns()

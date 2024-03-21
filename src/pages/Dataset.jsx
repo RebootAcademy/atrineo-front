@@ -55,7 +55,7 @@ function Dataset() {
   return (
     <>
       <div className="relative">
-        <div className="absolute top-0 right-0 mr-4 mt-4 z-50">
+        <div className="fixed w-24 md:w-24 top-24 right-0 mr-4 z-50">
           <ColumnsModal columnNames={columnNames} hiddenColumns={hiddenColumns} setHiddenColumns={setHiddenColumns} />
         </div>
       </div>
