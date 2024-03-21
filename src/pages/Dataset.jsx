@@ -25,7 +25,7 @@ function Dataset() {
   const columnNames = fields.map(f => f.fieldName)
 
   useUser()
-  console.log({hiddenColumns})
+  console.log({ hiddenColumns })
 
   useQuery('organizationCollections', getOwnOrganizationCollections, {
     enabled: !!user &&
@@ -54,11 +54,15 @@ function Dataset() {
 
   return (
     <>
+      <div className="relative">
+        <div className="absolute top-0 right-0 mr-4 mt-4 z-50">
+          <ColumnsModal columnNames={columnNames} hiddenColumns={hiddenColumns} setHiddenColumns={setHiddenColumns} />
+        </div>
+      </div>
       {
         Object.keys(collection).length === 0 ?
           <LoadingSpinner width="100" height="100" /> :
           <div className='relative h-full'>
-            <ColumnsModal columnNames={columnNames} hiddenColumns={hiddenColumns} setHiddenColumns={setHiddenColumns} />
             {user?.role === 'wizard' ?
               < UploadCSVComponent
                 reloadData={refetch}

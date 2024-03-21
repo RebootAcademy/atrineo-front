@@ -15,6 +15,7 @@ import { Checkbox } from "@/components/ui/Checkbox/Checkbox"
 
 function ColumnsModal({ columnNames, hiddenColumns, setHiddenColumns }) {
   const [isOpen, setIsOpen] = useState(false)
+  const [pendingHiddenColumns, setPendingColumns] = useState([...hiddenColumns])
   const cardRef = useRef(null)
 
   useEffect(() => {
@@ -35,22 +36,20 @@ function ColumnsModal({ columnNames, hiddenColumns, setHiddenColumns }) {
   }
 
   const toggleColumnVisibility = (columnName) => {
-    setHiddenColumns(prevHiddenColumns => {
-      if (prevHiddenColumns.includes(columnName)) {
-        return prevHiddenColumns.filter(col => col !== columnName)
-      } else {
-        return [...prevHiddenColumns, columnName]
-      }
-    })
+    if (pendingHiddenColumns.includes(columnName)){
+      setPendingColumns(prevHiddenColumns => prevHiddenColumns.filter(col => col !== columnName))
+    } else {
+      setPendingColumns(prevHiddenColumns => [...prevHiddenColumns, columnName])
+    }
   }
 
   const handleAccept = () => {
-    console.log('Accept clicked')
+    setHiddenColumns([...pendingHiddenColumns])
     setIsOpen(false)
   }
 
   const handleCancel = () => {
-    console.log('Cancel clicked')
+    setPendingColumns([...hiddenColumns])
     setIsOpen(false)
   }
 
@@ -67,7 +66,7 @@ function ColumnsModal({ columnNames, hiddenColumns, setHiddenColumns }) {
         </DropdownMenuTrigger>
       </DropdownMenu>
       {isOpen && (
-        <div className="absolute top-0 right-0 z-20" ref={cardRef}>
+        <div className="absolute top-10 right-0 z-20" ref={cardRef}>
           <Card className="w-96 bg-white p-6">
             <CardHeader className='flex justify-center'>
               <CardTitle className="text-cyan-800">Select the columns you want to hide</CardTitle>
@@ -79,7 +78,7 @@ function ColumnsModal({ columnNames, hiddenColumns, setHiddenColumns }) {
                     <Checkbox
                       className="mr-2"
                       onCheckedChange={() => toggleColumnVisibility(columnName)}
-                      checked={hiddenColumns.includes(columnName)}
+                      checked={pendingHiddenColumns.includes(columnName)}
                     />
                     <span>{columnName}</span>
                   </div>
@@ -116,3 +115,4 @@ ColumnsModal.propTypes = {
 
 
 export default ColumnsModal
+
