@@ -4,8 +4,8 @@ import PatternManager from '../PatternManager/PatternManager'
 import { useContext } from 'react'
 import { LayerContext } from '../../../context/layerContext'
 
-function RegionsComponent({ data, fieldName }) {
-  const { colorIndex, mapDivision } = useContext(LayerContext)
+function RegionsComponent({ data, fieldName, color }) {
+  const { mapDivision } = useContext(LayerContext)
 
   if (!Array.isArray(data) || data.length === 0) {
     return console.log('No hay datos disponibles para mostrar')
@@ -63,14 +63,15 @@ function RegionsComponent({ data, fieldName }) {
   return (
     <>
       <HeatmapLayer data={filteredData} fieldName={fieldName} />
-      <PatternManager colorIndex={colorIndex} />
+      <PatternManager color={color} />
     </>
   )
 }
 
 RegionsComponent.propTypes = {
   data: PropTypes.array.isRequired,
-  fieldName: PropTypes.string
+  fieldName: PropTypes.string,
+  color: PropTypes.string
 }
 
 export default RegionsComponent

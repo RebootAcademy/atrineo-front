@@ -1,10 +1,7 @@
-/* eslint-disable no-unused-vars */
-import { colorPalette, colorPaletteBlue, colorPaletteGreen } from '../../../helpers/colors'
+ 
 import PropTypes from 'prop-types'
 
-function PatternManager({ colorIndex }) {
-  const color = colorPaletteGreen[colorIndex % colorPaletteGreen.length]
-
+function PatternManager({ color }) {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" style={{ position: 'absolute', width: 0, height: 0 }}>
       <defs>
@@ -31,7 +28,7 @@ function PatternManager({ colorIndex }) {
 }
 
 PatternManager.propTypes = {
-  colorIndex: PropTypes.number // Add this line to validate the 'color' prop
+  color: PropTypes.string // Add this line to validate the 'color' prop
 }
 
 export default PatternManager

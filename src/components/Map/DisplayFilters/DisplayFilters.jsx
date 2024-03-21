@@ -6,6 +6,7 @@ import SwitchComponent from '../SwitchComponent/SwitchComponent'
 import SliderComponent from '../SliderComponent/SliderComponent'
 import MultipleSelectorComponent from "../MultipleSelector/MultipleSelector"
 
+import { getNextColor } from "@/helpers/colors"
 import {
   extractNumericFields,
   extractStringOptions,
@@ -26,20 +27,29 @@ function DisplayFilters({ layerObj, type }) {
   }
 
   const handleFilterChange = (value, target) => {
-    layerObj.current.type = type
-    if (value === 'remove') {
-      const { [target]: removed, ...rest } = layerObj.current
-      console.log(removed)
-      layerObj.current = { ...rest }
+    let newState = { ...layerObj.current }
 
-      if (layerObj.current.fieldName === target) {
-        delete layerObj.current.fieldName
+    if (value === 'remove') {
+      delete newState[target]
+      const keys = Object.keys(newState).filter(key => key !== 'type')
+      if (keys.length === 0) {
+        delete newState['type']
+      } else {
+        if (newState.type === 'startups' && keys.length > 0) {
+          newState.type = 'startups'
+        }
       }
-      setActiveSwitch(null)
     } else {
-      layerObj.current = { ...layerObj.current, [target]: value, /* fieldName: target */ }
-      setActiveSwitch(target)
+      const color = getNextColor()
+      if (type === 'regions') {
+        newState = { type: 'regions', [target]: value, color }
+      } else if (type === 'startups') {
+        newState[target] = value
+        newState.color = color
+      }
     }
+    layerObj.current = newState
+    setActiveSwitch(value !== 'remove' ? target : null)
     console.log(layerObj.current)
   }
 
