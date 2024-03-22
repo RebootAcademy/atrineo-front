@@ -31,9 +31,9 @@ function LayersManager() {
         }
         return valid
       })
+    console.log(filteredData)
     return { layer, filteredData, field }
   }), [collection, layers, searchPolygon, mapDivision])
-
   const displayLayers = (filters, array, searchPolygon) => {
     console.log(filters)
     return Object.keys(filters)

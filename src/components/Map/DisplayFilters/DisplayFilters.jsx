@@ -46,6 +46,7 @@ function DisplayFilters({ layerObj, type }) {
       } else if (type === 'startups') {
         newState[target] = value
         newState.color = color
+        newState.type = type
       }
     }
     layerObj.current = newState
