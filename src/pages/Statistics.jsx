@@ -98,7 +98,7 @@ function Statistics() {
 
   const containerRef = useRef(null)
   const { width: containerWidth } = useDimensions(containerRef)
-  const numGraphsPerRow = 2
+  const numGraphsPerRow = 3
   const graphMargin = 2
   const aspectRatio = 16 / 9
 
