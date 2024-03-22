@@ -5,7 +5,6 @@ import { CollectionContext } from '@/context/collectionContext'
 import NumericLayer from '../NumericLayer/NumericLayer'
 import RegionsComponent from '../RegionsComponent/RegionsComponent'
 import StartupsComponent from '../StartupsComponent/StartupsComponent'
-/* import SelectedRegionComponent from '../SelectedRegionComponent/SelectedRegionComponent' */
 
 import { isWithinPolygon, checkValue } from '@/helpers'
 

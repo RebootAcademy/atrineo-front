@@ -1,13 +1,11 @@
-import { colorPaletteGreen } from '../../../helpers/colors'
 import PropTypes from 'prop-types'
 
-function PatternLegend({ colorIndex }) {
-  const color = colorPaletteGreen[colorIndex % colorPaletteGreen.length]
+function PatternLegend({ layer }) {
+  const { color } = layer.data
 
   return (
     <div className='ml-4'>
       <svg width="203" height="112" viewBox="0 0 203 112" fill="none" xmlns="http://www.w3.org/2000/svg">
-
         <g clipPath="url(#clip0_2140_57350)">
           <path fillRule="evenodd" clipRule="evenodd" d="M3.64023 1.27792L3.41594 1.05363L2.66008 1.80949L1.9043 1.05371L1.68001 1.278L2.43579 2.03378L1.68001 2.78956L1.9043 3.01385L2.66008 2.25807L3.41594 3.01393L3.64023 2.78963L2.88437 2.03378L3.64023 1.27792Z" fill={color} />
           <path fillRule="evenodd" clipRule="evenodd" d="M7.38632 1.27792L7.16203 1.05363L6.40617 1.80949L5.65039 1.05371L5.4261 1.278L6.18188 2.03378L5.4261 2.78956L5.65039 3.01385L6.40617 2.25807L7.16203 3.01393L7.38632 2.78963L6.63047 2.03378L7.38632 1.27792Z" fill={color} />
@@ -165,14 +163,14 @@ function PatternLegend({ colorIndex }) {
             <rect x="1" y="26" width="27" height="18" fill="white" />
           </clipPath>
         </defs>
-        
+
       </svg>
     </div>
   )
 }
 
 PatternLegend.propTypes = {
-  colorIndex: PropTypes.number
+  layer: PropTypes.object,
 }
 
 export default PatternLegend

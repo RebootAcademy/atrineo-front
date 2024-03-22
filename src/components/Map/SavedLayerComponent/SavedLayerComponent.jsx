@@ -5,7 +5,7 @@ import CircleLegend from '../../ui/Legend/CircleLegend'
 import PatternLegend from '../../ui/Legend/PatternLegend'
 
 function SavedLayerComponent() {
-  const { layers, clearLayerById, toggleLayerVisibility, colorIndex } = useContext(LayerContext)
+  const { layers, clearLayerById, toggleLayerVisibility } = useContext(LayerContext)
 
   return (
     <>
@@ -53,7 +53,7 @@ function SavedLayerComponent() {
                       return null
                     })}
                     <div className='mb-4 mt-6'>
-                      <PatternLegend colorIndex={colorIndex} />
+                      <PatternLegend layer={layer} />
                     </div>
                   </>
                 )}

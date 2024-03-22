@@ -6,7 +6,6 @@ import SwitchComponent from '../SwitchComponent/SwitchComponent'
 import SliderComponent from '../SliderComponent/SliderComponent'
 import MultipleSelectorComponent from "../MultipleSelector/MultipleSelector"
 
-import { getNextColor } from "@/helpers/colors"
 import {
   extractNumericFields,
   extractStringOptions,
@@ -15,9 +14,12 @@ import {
 } from '../../../helpers'
 
 import PropTypes from 'prop-types'
+import { LayerContext } from "@/context/layerContext"
 
 function DisplayFilters({ layerObj, type }) {
   const { collection } = useContext(CollectionContext)
+  const { getNextColor } = useContext(LayerContext)
+
   const [activeSwitch, setActiveSwitch] = useState(false)
 
   const handleRegionChange = (value) => {
@@ -40,12 +42,12 @@ function DisplayFilters({ layerObj, type }) {
         }
       }
     } else {
-      const color = getNextColor()
+      const newColor = getNextColor()
       if (type === 'regions') {
-        newState = { type: 'regions', [target]: value, color }
+        newState = { type: 'regions', [target]: value, color: newColor }
       } else if (type === 'startups') {
         newState[target] = value
-        newState.color = color
+        newState.color = newColor
         newState.type = type
       }
     }

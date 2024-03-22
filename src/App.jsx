@@ -8,6 +8,7 @@ import { CollectionContext } from './context/collectionContext'
 import { LayerContext } from './context/layerContext'
 import { UserContext } from './context/userContext'
 import { GraphContext } from './context/graphContext'
+import { colorPalette } from './helpers/colors'
 
 import { router } from './router'
 
@@ -23,6 +24,7 @@ function App() {
   const [user, setUser] = useState({})
 
   const [colorIndex, setColorIndex] = useState(0)
+  const [color, setColor] = useState(colorPalette[colorIndex])
 
   const [graphs, setGraphs] = useState([])
 
@@ -36,6 +38,13 @@ function App() {
 
   useEffect(() => {
   }, [searchPolygon])
+
+  const getNextColor = () => {
+    const newIndex = (colorIndex + 1) % colorPalette.length
+    setColorIndex(newIndex)
+    setColor(colorPalette[newIndex])
+    return colorPalette[newIndex]
+  }
 
   const saveCurrentLayer = (obj) => {
     const hasActiveFilters = Object.keys(obj).some(key =>
@@ -139,8 +148,9 @@ function App() {
     toggleLayerVisibility,
     selectedNameDistrict,
     setSelectedNameDistrict,
-    colorIndex,
-    setColorIndex
+    color,
+    setColor,
+    getNextColor
   }
 
 
