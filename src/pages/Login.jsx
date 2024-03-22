@@ -1,6 +1,8 @@
 import { useState, useContext } from "react"
-
 import { useNavigate } from "react-router-dom"
+
+import LoadingSpinner from "@/components/LoadingSpinner/LoadingSpinner"
+
 import { Input } from "../components/ui/Input/input"
 import { Button } from "../components/ui/Button/Button"
 import { EyeOffIcon, EyeIcon } from "@/components/ui/Icons/Icons"
@@ -13,13 +15,13 @@ function Login() {
   const { setUser } = useContext(UserContext)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [ loading, setLoading ] = useState(false)
   const [errorMessage, setErrorMessage] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
 
   const navigate = useNavigate()
 
   const handleKeyPress = (event) => {
-    console.log(event.key)
     if (event.key == 'Enter') {
       onLogin()
     }
@@ -41,15 +43,34 @@ function Login() {
 
   async function onLogin() {
     try {
-      const loginResponse = await login({ email, password })
+      setLoading(true)
+
+      //Promise to manage request timeout
+      const timeoutPromise = new Promise((resolve, reject) => {
+        setTimeout(() => reject(new Error('Request timeout')), 10000)
+      })
+
+      const loginRequest = () => login({ email, password })
+
+      // Using Promise.race to race the login attempt against the timeout
+      const loginResponse = await Promise.race([loginRequest(), timeoutPromise])
+      console.log(loginResponse)
       if (loginResponse) {
         localStorage.setItem('token', loginResponse.result.token)
         await setUser(loginResponse.result.user)
+        setLoading(false)
         navigate('/map')
       }
     } catch (error) {
-      setErrorMessage(true)
-      console.error('Credenciales incorrectas', error)
+      if (error.message === 'Request timeout') {
+        console.log('Login request timed out. Retrying...')
+        onLogin() // Retry login
+      } else {
+        setErrorMessage(true)
+        console.error('Credenciales incorrectas:', error)
+      }
+    } finally {
+      setLoading(false) // Ensure loading is set to false in case of timeout
     }
   }
 
@@ -118,12 +139,16 @@ function Login() {
                 </div>
               </div>
               <div className='flex justify-center'>
-                <Button
-                  className='mt-4 w-full'
-                  onClick={() => onLogin()}
-                >
-                  Login
-                </Button>
+                {
+                  loading ? 
+                    <LoadingSpinner width="34px" height="34px" /> :
+                    <Button
+                      className='mt-4 w-full'
+                      onClick={() => onLogin()}
+                    >
+                      Login
+                    </Button>
+                }
               </div>
             </div>
           </div>
