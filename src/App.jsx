@@ -60,7 +60,6 @@ function App() {
         data: obj
       }]
       storage.setItem('layers', JSON.stringify(updatedLayers))
-      console.log(`Layer ${nextId} saved to localStorage with previous layers`, JSON.parse(storage.getItem('layers')))
       setLayers(updatedLayers)
 
       if (obj.type === 'regions') {

@@ -2,6 +2,8 @@ import { useEffect, useContext, useMemo } from 'react'
 import { LayerContext } from '@/context/layerContext'
 import { CollectionContext } from '@/context/collectionContext'
 
+import { v4 } from 'uuid'
+
 import NumericLayer from '../NumericLayer/NumericLayer'
 import RegionsComponent from '../RegionsComponent/RegionsComponent'
 import StartupsComponent from '../StartupsComponent/StartupsComponent'
@@ -18,7 +20,7 @@ function LayersManager() {
   }, [setLayers])
 
   const filteredLayers = useMemo(() => layers.filter(layer => layer.isVisible).map(layer => {
-    const field = Object.keys(layer.data).find(key => key !== 'type' && key !== 'fieldName')
+    const fields = Object.keys(layer.data).filter(key => key !== 'type')
     const filteredData = collection?.data
       .filter(dataItem => isWithinPolygon(dataItem, searchPolygon))
       .filter(row => {
@@ -31,12 +33,13 @@ function LayersManager() {
         return valid
       })
 
-    return { layer, filteredData, field }
+    return { layer, filteredData, fields }
   }), [collection, layers, searchPolygon, mapDivision])
+
   const displayLayers = (filters, array, searchPolygon) => {
-    return Object.keys(filters)
-      .filter(key => typeof filters[key] === 'number')
-      .map(key => {
+    return Object.entries(filters)
+      .filter(([ , value]) => typeof value.value === 'number')
+      .map(([key, value]) => {
         return (
           <NumericLayer
             key={key}
@@ -44,7 +47,7 @@ function LayersManager() {
             field={key}
             data={array}
             searchPolygon={searchPolygon}
-            color={filters.color}
+            color={value.color}
           />
         )
       })
@@ -52,25 +55,27 @@ function LayersManager() {
 
   return (
     <div>
-      {filteredLayers.map(({ layer, filteredData, field }) => {
-        return (
-          <div key={layer.id}>
-            {layer.data.type === 'startups' && (
-              <StartupsComponent 
-                data={filteredData} 
-                color={layer.data.color}
-              />
-            )}
-            {layer.data.type === 'regions' && (
-              <RegionsComponent 
-                data={filteredData} 
-                fieldName={field} 
-                color={layer.data.color}
-              /> 
-            )}
-            {displayLayers(layer.data, filteredData, searchPolygon)}
-          </div>
-        )
+      {filteredLayers.map(({ layer, filteredData, fields }) => {
+        return fields.map(field => {
+          return (
+            <div key={v4()}>
+              {layer.data.type === 'startups' && (
+                <StartupsComponent 
+                  data={filteredData} 
+                  color={layer.data.color}
+                />
+              )}
+              {layer.data.type === 'regions' && (
+                <RegionsComponent 
+                  data={filteredData} 
+                  fieldName={field} 
+                  color={layer.data.color}
+                /> 
+              )}
+              {displayLayers(layer.data, filteredData, searchPolygon)}
+            </div>
+          )
+        })
       })
       }
     </div>
