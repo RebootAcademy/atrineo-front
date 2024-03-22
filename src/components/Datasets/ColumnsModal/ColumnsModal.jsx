@@ -1,9 +1,5 @@
 import PropTypes from 'prop-types'
-<<<<<<< HEAD
-import { useContext, useState, useEffect, useRef } from "react"
-=======
 import { useState, useEffect, useRef } from "react"
->>>>>>> 7f69724ac0601561bfdcb45371cc831f06d4be9c
 import {
   Card,
   CardHeader,
@@ -15,22 +11,12 @@ import { EyeOffIconColumns } from "@/components/ui/Icons/Icons"
 import { Button } from "@/components/ui/Button/Button"
 import { DropdownMenu, DropdownMenuTrigger } from "@/components/ui/DropDown/DropdownMenu"
 import { Checkbox } from "@/components/ui/Checkbox/Checkbox"
-<<<<<<< HEAD
-import { CollectionContext } from "@/context/collectionContext"
-// import CustomButton from "@/components/CustomButton/CustomButton"
-
-function ColumnsModal({ hiddenColumns, setHiddenColumns }) {
-  const { collection } = useContext(CollectionContext)
-  const [isOpen, setIsOpen] = useState(false)
-
-=======
 
 
 function ColumnsModal({ columnNames, hiddenColumns, setHiddenColumns }) {
   const [isOpen, setIsOpen] = useState(false)
   const [pendingHiddenColumns, setPendingColumns] = useState([...hiddenColumns])
   const initialHiddenColumns = useRef([...hiddenColumns])
->>>>>>> 7f69724ac0601561bfdcb45371cc831f06d4be9c
   const cardRef = useRef(null)
 
   useEffect(() => {
@@ -48,16 +34,6 @@ function ColumnsModal({ columnNames, hiddenColumns, setHiddenColumns }) {
 
   const toggleMenu = () => {
     setIsOpen(!isOpen)
-  }
-
-  const handleAccept = () => {
-    console.log('Accept clicked')
-    setIsOpen(false)
-  }
-  
-  const handleCancel = () => {
-    console.log('Cancel clicked')
-    setIsOpen(false)
   }
 
   const toggleColumnVisibility = (columnName) => {
