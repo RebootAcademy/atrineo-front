@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import { useContext, useState, useEffect, useRef } from "react"
 import {
   Card,
@@ -11,12 +12,12 @@ import { Button } from "@/components/ui/Button/Button"
 import { DropdownMenu, DropdownMenuTrigger } from "@/components/ui/DropDown/DropdownMenu"
 import { Checkbox } from "@/components/ui/Checkbox/Checkbox"
 import { CollectionContext } from "@/context/collectionContext"
-import CustomButton from "@/components/CustomButton/CustomButton"
+// import CustomButton from "@/components/CustomButton/CustomButton"
 
-function ColumnsModal() {
+function ColumnsModal({ hiddenColumns, setHiddenColumns }) {
   const { collection } = useContext(CollectionContext)
   const [isOpen, setIsOpen] = useState(false)
-  const [hiddenColumns, setHiddenColumns] = useState([])
+
   const cardRef = useRef(null)
 
   const fields = collection.data && collection.data.length > 0 ? collection.data[0].fields : []
@@ -39,6 +40,16 @@ function ColumnsModal() {
     setIsOpen(!isOpen)
   }
 
+  const handleAccept = () => {
+    console.log('Accept clicked')
+    setIsOpen(false)
+  }
+  
+  const handleCancel = () => {
+    console.log('Cancel clicked')
+    setIsOpen(false)
+  }
+
   const toggleColumnVisibility = (columnName) => {
     setHiddenColumns(prevHiddenColumns => {
       if (prevHiddenColumns.includes(columnName)) {
@@ -49,22 +60,14 @@ function ColumnsModal() {
     })
   }
 
-  const handleAccept = () => {
-    const updatedData = collection.data.map(item => {
-      const updatedFields = item.fields.filter(field => !hiddenColumns.includes(field.fieldName))
-      return { ...item, fields: updatedFields }
-    })
-    setHiddenColumns(updatedData)
-    console.log('Columnas ocultas:', hiddenColumns)
-    setIsOpen(false)
-  }
-
-
   return (
     <div className="relative text-center">
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button onClick={toggleMenu} className="z-10">
+          <Button
+            onClick={toggleMenu}
+            className="z-10"
+          >
             <div className="flex items-center">
               <EyeOffIconColumns />
               <p>Columns</p>
@@ -73,7 +76,7 @@ function ColumnsModal() {
         </DropdownMenuTrigger>
       </DropdownMenu>
       {isOpen && (
-        <div className="absolute top-0 right-0 z-20" ref={cardRef}>
+        <div className="absolute top-0 right-0 z-20 mt-11" ref={cardRef}>
           <Card className="w-96 bg-white p-6">
             <CardHeader className='flex justify-center'>
               <CardTitle className="text-cyan-800">Select the columns you want to hide</CardTitle>
@@ -85,6 +88,7 @@ function ColumnsModal() {
                     <Checkbox
                       className="mr-2"
                       onChange={() => toggleColumnVisibility(columnName)}
+                      checked={hiddenColumns?.includes(columnName)}
                     />
                     <span>{columnName}</span>
                   </div>
@@ -95,20 +99,27 @@ function ColumnsModal() {
               <Button
                 className="w-24 mr-2"
                 variant="outline"
-                onClick={() => setIsOpen(false)}
+                onClick={handleCancel}
               >
                 Cancel
               </Button>
-              <CustomButton
-                text="Accept"
+              <button
+                className="w-24"
                 onClick={handleAccept}
-              />
+              >
+                Accept
+              </button>
             </CardFooter>
           </Card>
         </div>
       )}
     </div>
   )
+}
+
+ColumnsModal.propTypes = {
+  hiddenColumns: PropTypes.array,
+  setHiddenColumns: PropTypes.func
 }
 
 export default ColumnsModal
