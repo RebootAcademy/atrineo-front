@@ -87,7 +87,6 @@ const RegionsSelected = () => {
   } */
 
   const filteredRegions = (regionName) => {
-    console.log(mapData)
     return mapData?.features.filter(
       (region) => region.properties.NAME_1 === regionName
     )

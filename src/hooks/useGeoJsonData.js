@@ -10,8 +10,10 @@ const urls = {
 
 // Función para realizar la solicitud HTTP
 const fetchGeoJsonData = async (type) => {
-  const { data } = await axios.get(urls[type])
-  return data
+  if (type) {
+    const { data } = await axios.get(urls[type])
+    return data
+  }
 }
 
 export const useGeoJsonData = (type) => {
