@@ -42,8 +42,29 @@ function Header() {
     })
   }
 
+  // return (
+  //   <header className="relative border-b border-gray-200 shadow-md">
+  //     <div className="absolute bottom-0 left-0 w-full h-[1px] bg-gradient-to-b from-gray-300 to-transparent"></div>
+  //     <main className="h-20 flex items-center justify-between">
+  //       <div className="flex w-full">
+  //         <button>
+  //           <img
+  //             src="./atrineo_icon-removebg-preview.png"
+  //             alt="Atrineo icon"
+  //             className="p-4 w-32 md:w-32"
+  //           />
+  //         </button>
+  //         <div className="flex flex-grow justify-center items-center space-x-[26px] space-x-26">
+  //           {displayOptions()}
+  //         </div>
+  //         <SettingsMenu />
+  //       </div>
+  //     </main>
+  //   </header>
+  // )
+
   return (
-    <header className="relative border-b border-gray-200 shadow-md">
+    <header className="fixed top-0 left-0 z-50 w-full bg-white border-b border-gray-200 shadow-md">
       <div className="absolute bottom-0 left-0 w-full h-[1px] bg-gradient-to-b from-gray-300 to-transparent"></div>
       <main className="h-20 flex items-center justify-between">
         <div className="flex w-full">

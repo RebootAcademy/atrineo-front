@@ -4,9 +4,8 @@ import { useState } from "react"
 import ControlPanel from "@/components/ControlPanelComponent/ControlPanel"
 import Csv from "./Csv"
 import LatitudeLongitudeComponent from "./LatitudeLongitudeComponent"
-import ColumnsModal from '../ColumnsModal/ColumnsModal'
 
-function UploadCSVComponent({ reloadData, columnNames }) {
+function UploadCSVComponent({ reloadData }) {
   const [dataType, setDataType] = useState('startups')
 
   const handleTypeChange = (value) => {
@@ -14,29 +13,29 @@ function UploadCSVComponent({ reloadData, columnNames }) {
   }
   return (
     <>
-      <div className='flex flex-col items-end mt-2 mr-4'>
-        <ColumnsModal columnNames={columnNames}/>
-      </div>
-      <div className="flex flex-col items-center justify-between items-center">
-        <div className='w-full text-center text-2xl mt-6 mb-4'>
-          Import CSV File
+      <div className="fixed top-20 left-0 w-full bg-white border-b border-gray-200 shadow-md">
+        <div className='flex flex-col items-end mt-2 mr-4'>
         </div>
-        <div className="w-[812px] flex flex-col">
-          <Csv
-            dataType={dataType}
-            reloadData={reloadData}
-          />
-          <ControlPanel changeType={handleTypeChange} />
-          <LatitudeLongitudeComponent />
-        </div >
+        <div className="flex flex-col items-center justify-between items-center">
+          <div className='w-full text-center text-2xl mt-20 mb-4'>
+            Import CSV File
+          </div>
+          <div className="w-[812px] flex flex-col">
+            <Csv
+              dataType={dataType}
+              reloadData={reloadData}
+            />
+            <ControlPanel changeType={handleTypeChange} />
+            <LatitudeLongitudeComponent />
+          </div >
+        </div>
       </div>
     </>
   )
 }
 
 UploadCSVComponent.propTypes = {
-  reloadData: PropTypes.func,
-  columnNames: PropTypes.string
+  reloadData: PropTypes.func
 }
 
 export default UploadCSVComponent
