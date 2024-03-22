@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types'
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 
 import {
   Table,
@@ -11,11 +11,15 @@ import {
 } from "../../ui/Table/table"
 
 import { UpArrow, DownArrow } from '../../ui/Icons/Icons'
+import { UserContext } from '@/context/userContext'
+import { Input } from '@/components/ui/Input/input'
 
 function TableComponent({ data, hiddenColumns }) {
   const fields = data && data.length > 0 ? data[0].fields : []
   const [sortField, setSortField] = useState(fields[0]?.fieldName)
   const [orderFirst, setOrderFirst] = useState(true)
+  const [searchItem, setSearchItem] = useState('')
+  const { user } = useContext(UserContext)
 
   const checkValueType = (a, b) => {
     if (typeof a === 'string') {
@@ -58,6 +62,16 @@ function TableComponent({ data, hiddenColumns }) {
     }
   }
 
+  const handleSearchChange = (e) => {
+    setSearchItem(e.target.value)
+  }
+
+  const displayData = (value) => {
+    return typeof value !== 'boolean' ?
+      value :
+      value ? 'true' : 'false'
+  }
+
   const displayTableColumns = () => {
     return fields.map(f => {
       if (!hiddenColumns.includes(f.fieldName)) {
@@ -77,25 +91,21 @@ function TableComponent({ data, hiddenColumns }) {
           </TableHead>
         )
       }
-    }
-    )
-  }
-
-  const displayData = (value) => {
-    return typeof value !== 'boolean' ?
-      value :
-      value ? 'true' : 'false'
+    })
   }
 
   const displayTableRows = () => {
     return data.map(d => {
-      return (
-        <TableRow
-          key={d._id}
-          className=''
-        >
-          {
-            d.fields.map((f, i) => {
+      const isMatch = d.fields.some(f => {
+        return Object.values(f).some(value => {
+          return value.toString().toLowerCase().includes(searchItem.toLowerCase())
+        })
+      })
+
+      if (isMatch) {
+        return (
+          <TableRow key={d._id} className=''>
+            {d.fields.map((f, i) => {
               if (!hiddenColumns.includes(f.fieldName)) {
                 const isNumeric = typeof f.fieldValue === 'number'
                 const isBool = typeof f.fieldValue === 'boolean'
@@ -109,29 +119,48 @@ function TableComponent({ data, hiddenColumns }) {
                   </TableCell>
                 )
               }
-            })
-          }
-        </TableRow>
-      )
+            })}
+          </TableRow>
+        )
+      }
     })
   }
 
   return (
     <>
-      <Table>
-        <TableHeader className="bg-primary sticky top-0 z-10">
-          <TableRow >
-            {
-              displayTableColumns()
-            }
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {
-            displayTableRows()
-          }
-        </TableBody>
-      </Table>
+      {user?.role === 'wizard' ? (
+        <div className='mt-96 max-h-[calc(100vh-12rem)] overflow-y-auto'>
+          <div className='flex justify-center'>
+            <Input className='w-48' onChange={handleSearchChange} />
+          </div>
+          <Table>
+            <TableHeader className="bg-primary sticky z-10">
+              <TableRow >
+                {displayTableColumns()}
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {displayTableRows()}
+            </TableBody>
+          </Table>
+        </div>
+      ) : (
+        <div className='mt-48 max-h-[calc(100vh-12rem)] overflow-y-auto'>
+          <div className='flex justify-center'>
+            <Input className='w-48' onChange={handleSearchChange} />
+          </div>
+          <Table>
+            <TableHeader className="bg-primary sticky top-0 z-10">
+              <TableRow >
+                {displayTableColumns()}
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {displayTableRows()}
+            </TableBody>
+          </Table>
+        </div>
+      )}
     </>
   )
 }
