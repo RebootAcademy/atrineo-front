@@ -37,7 +37,7 @@ function ColumnsModal({ columnNames, hiddenColumns, setHiddenColumns }) {
   }
 
   const toggleColumnVisibility = (columnName) => {
-    if (pendingHiddenColumns.includes(columnName)){
+    if (pendingHiddenColumns.includes(columnName)) {
       setPendingColumns(prevHiddenColumns => prevHiddenColumns.filter(col => col !== columnName))
     } else {
       setPendingColumns(prevHiddenColumns => [...prevHiddenColumns, columnName])
@@ -56,59 +56,61 @@ function ColumnsModal({ columnNames, hiddenColumns, setHiddenColumns }) {
   }
 
   return (
-    <div className="text-center flex justify-end">
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Button
-            onClick={toggleMenu}
-            className="z-10"
-          >
-            <div className="flex items-center">
-              <EyeOffIconColumns />
-              <p>Columns</p>
-            </div>
-          </Button>
-        </DropdownMenuTrigger>
-      </DropdownMenu>
-      {isOpen && (
-        <div className="absolute top-14 right-0 z-20" ref={cardRef}>
-          <Card className="w-96 bg-white p-6">
-            <CardHeader className='flex justify-center'>
-              <CardTitle className="text-cyan-800">Select the columns you want to hide</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-2">
-                {columnNames?.map((columnName, index) => (
-                  <div key={index} className="flex items-center">
-                    <Checkbox
-                      className="mr-2"
-                      onCheckedChange={() => toggleColumnVisibility(columnName)}
-                      checked={pendingHiddenColumns.includes(columnName)}
-                    />
-                    <span>{columnName}</span>
-                  </div>
-                ))}
+    <>
+      <div className="text-center flex justify-between">
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button
+              onClick={toggleMenu}
+              className="z-10"
+            >
+              <div className="flex items-center">
+                <EyeOffIconColumns />
+                <p>Columns</p>
               </div>
-            </CardContent>
-            <CardFooter className='mt-4 flex justify-between'>
-              <Button
-                className="w-24 mr-2"
-                variant="outline"
-                onClick={handleCancel}
-              >
-                Cancel
-              </Button>
-              <Button
-                text='Accept'
-                onClick={handleAccept}
-              >
-                Accept
-              </Button>
-            </CardFooter>
-          </Card>
-        </div>
-      )}
-    </div>
+            </Button>
+          </DropdownMenuTrigger>
+        </DropdownMenu>
+        {isOpen && (
+          <div className="absolute top-14 right-0 z-20" ref={cardRef}>
+            <Card className="w-96 bg-white p-6">
+              <CardHeader className='flex justify-center'>
+                <CardTitle className="text-cyan-800">Select the columns you want to hide</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-2">
+                  {columnNames?.map((columnName, index) => (
+                    <div key={index} className="flex items-center">
+                      <Checkbox
+                        className="mr-2"
+                        onCheckedChange={() => toggleColumnVisibility(columnName)}
+                        checked={pendingHiddenColumns.includes(columnName)}
+                      />
+                      <span>{columnName}</span>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+              <CardFooter className='mt-4 flex justify-between'>
+                <Button
+                  className="w-24 mr-2"
+                  variant="outline"
+                  onClick={handleCancel}
+                >
+                  Cancel
+                </Button>
+                <Button
+                  text='Accept'
+                  onClick={handleAccept}
+                >
+                  Accept
+                </Button>
+              </CardFooter>
+            </Card>
+          </div>
+        )}
+      </div>
+    </>
   )
 }
 
