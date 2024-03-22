@@ -37,11 +37,3 @@ export const colorPaletteRed = [
   '#E25822'
 ]
 
-let colorIndex = 0
-
-export const getNextColor = () => {
-  const color = colorPalette[colorIndex % colorPalette.length]
-  colorIndex++
-  return color
-}
-
