@@ -46,14 +46,11 @@ function DisplayFilters({ layerObj, type }) {
       if (type === 'regions') {
         newState = { type: 'regions', [target]: value, color: newColor }
       } else if (type === 'startups') {
-        newState[target] = value
-        newState.color = newColor
-        newState.type = type
+        newState = { type: 'startups', ...newState, [target]: { value, color: newColor }}
       }
     }
     layerObj.current = newState
     setActiveSwitch(value !== 'remove' ? target : null)
-    console.log(layerObj.current)
   }
 
   let data

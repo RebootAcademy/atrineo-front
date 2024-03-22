@@ -1,12 +1,11 @@
 import { useContext } from 'react'
 import { LayerContext } from '../../../context/layerContext'
-import { EyeIcon, EyeOffIcon, TrashIcon } from '../../ui/Icons/Icons'
+import { ColorRectangleIcon, EyeIcon, EyeOffIcon, TrashIcon } from '../../ui/Icons/Icons'
 import CircleLegend from '../../ui/Legend/CircleLegend'
 import PatternLegend from '../../ui/Legend/PatternLegend'
 
 function SavedLayerComponent() {
-  const { layers, clearLayerById, toggleLayerVisibility } = useContext(LayerContext)
-
+  const { layers, clearLayerById, toggleLayerVisibility, mapDivision } = useContext(LayerContext)
   return (
     <>
       {layers.map((layer) => {
@@ -28,18 +27,19 @@ function SavedLayerComponent() {
               <div className='text-sm mt-1'>
                 {layer.data.type === 'startups' ? (
                   <>
-                    {Object.entries(layer.data).map(([key, value]) => {
-                      // Filtramos para no mostrar el tipo, ya que ya sabemos que es 'startups'
-                      if (key !== 'type') {
-                        return (
+                    {
+                      Object.entries(layer.data)
+                        .filter(([key, ]) => key !== 'type')
+                        .map(([key, value]) => (
                           <div key={key} className='flex justify-between'>
-                            <p>{key}: </p>
-                            <p>{value}</p>
+                            <div className='flex mt-1'>
+                              <ColorRectangleIcon color={value.color} />
+                              <p className='ml-2'>{key}: </p>
+                            </div>
+                            <p>{value.value}</p>
                           </div>
-                        )
-                      }
-                      return null
-                    })}
+                        ))
+                    }
                     <div className='mb-4'>
                       <CircleLegend />
                     </div>
@@ -47,12 +47,11 @@ function SavedLayerComponent() {
                 ) : (
                   <>
                     {Object.entries(layer.data).map(([key, value]) => {
-                      if (key !== 'type' && key !== 'fieldName') {
-                        return <p key={key}>Total {`${value}`} per Region</p>
+                      if (key !== 'type' && key !== 'color') {
+                        return <p key={key}>Total {`${value}`} per {mapDivision}</p>
                       }
-                      return null
                     })}
-                    <div className='mb-4 mt-6'>
+                    <div className='mb-4 mt-4'>
                       <PatternLegend layer={layer} />
                     </div>
                   </>
