@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types'
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 
 import {
   Table,
@@ -11,11 +11,13 @@ import {
 } from "../../ui/Table/table"
 
 import { UpArrow, DownArrow } from '../../ui/Icons/Icons'
+import { UserContext } from '@/context/userContext'
 
 function TableComponent({ data, hiddenColumns }) {
   const fields = data && data.length > 0 ? data[0].fields : []
   const [sortField, setSortField] = useState(fields[0]?.fieldName)
   const [orderFirst, setOrderFirst] = useState(true)
+  const { user } = useContext(UserContext)
 
   const checkValueType = (a, b) => {
     if (typeof a === 'string') {
@@ -117,22 +119,33 @@ function TableComponent({ data, hiddenColumns }) {
   }
 
   return (
-    <>
-      <Table>
-        <TableHeader className="bg-primary sticky top-96 z-10">
-          <TableRow >
-            {
-              displayTableColumns()
-            }
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {
-            displayTableRows()
-          }
-        </TableBody>
-      </Table>
-    </>
+    (
+      <>
+        {user?.role === 'wizard' ? (
+          <Table>
+            <TableHeader className="bg-primary sticky top-96 z-10">
+              <TableRow >
+                {displayTableColumns()}
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {displayTableRows()}
+            </TableBody>
+          </Table>
+        ) : (<div className='mt-48 max-h-[calc(100vh-12rem)] overflow-y-auto'>
+          <Table>
+            <TableHeader className="bg-primary sticky top-0 z-10">
+              <TableRow >
+                {displayTableColumns()}
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {displayTableRows()}
+            </TableBody>
+          </Table>
+        </div>)}
+      </>
+    )
   )
 }
 
