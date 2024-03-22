@@ -129,12 +129,12 @@ function TableComponent({ data, hiddenColumns }) {
   return (
     <>
       {user?.role === 'wizard' ? (
-        <div className='mt-96 max-h-[calc(100vh-12rem)] overflow-y-auto'>
-          <div className='flex justify-center'>
+        <div className='mt-18 max-h-[calc(100vh-12rem)] overflow-y-auto'>
+          <div className='flex justify-center bg-red-200'>
             <Input className='w-48' onChange={handleSearchChange} />
           </div>
           <Table>
-            <TableHeader className="bg-primary sticky z-10">
+            <TableHeader className="bg-primary sticky top-8 z-10">
               <TableRow >
                 {displayTableColumns()}
               </TableRow>
@@ -150,7 +150,7 @@ function TableComponent({ data, hiddenColumns }) {
             <Input className='w-48' onChange={handleSearchChange} />
           </div>
           <Table>
-            <TableHeader className="bg-primary sticky top-0 z-10">
+            <TableHeader className="bg-primary sticky z-10">
               <TableRow >
                 {displayTableColumns()}
               </TableRow>
