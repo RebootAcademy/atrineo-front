@@ -137,10 +137,14 @@ function Statistics() {
         Object.keys(collection).length === 0 ?
           <LoadingSpinner width="100" height="100" /> :
           <div className="flex w-full">
-            <CustomButton 
-              text="NEW CHART +"
-              fn={displayOptions}
-            />
+            {
+              !showOptions &&
+              <CustomButton 
+                text="NEW CHART +"
+                fn={displayOptions}
+              />
+
+            }
             <div className="flex-grow flex flex-wrap justify-center items-center gap-12" ref={containerRef}>
               <ChartsContainer
                 chartType={chartType}
