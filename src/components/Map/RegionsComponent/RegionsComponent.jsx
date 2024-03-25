@@ -50,7 +50,7 @@ function RegionsComponent({ data, fieldName, color }) {
     }, {})
     return sums
   }
-  console.log(groupedByGeojsonId)
+
   const filteredData = Object.entries(groupedByGeojsonId).map(([geojsonId, items]) => {
     const sums = sumNumericFields(items)
     const detailedSums = Object.entries(sums).map(([fieldName, total]) => ({
@@ -59,7 +59,7 @@ function RegionsComponent({ data, fieldName, color }) {
     }))
     return { geojsonId, sums: detailedSums }
   })
-  console.log(filteredData)
+
   return (
     <>
       <HeatmapLayer data={filteredData} fieldName={fieldName} />
