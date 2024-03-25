@@ -13,8 +13,9 @@
 .leaflet-draw-toolbar a {
   width: 38px !important;
   height: 38px !important;
-  background-size: 300px;
-  background-position: -26px !important;
+  background-size: 25px;
+  background-position: 7px !important;
+  background-image: url('/pen.svg');
 }
 
 .leaflet-draw-toolbar a:nth-child(2) {
