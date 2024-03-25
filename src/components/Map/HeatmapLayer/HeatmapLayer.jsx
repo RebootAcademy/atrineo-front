@@ -39,9 +39,15 @@ function HeatmapLayer({ data, fieldName }) {
       divisionIdProperty = 'ID' // Asumiendo que hay un ID genérico si no es una división específica
     }
 
-    const currentGroupId = data.find(d => d.geojsonId === feature.properties[divisionIdProperty]?.toString())
-    const value = currentGroupId?.sums.find(sum => sum.fieldName === fieldName)?.total
+    let currentGroupId
+    if (divisionIdProperty === 'ID_1') {
+      //En los division1 la estructura del objeto es distinta. Además, su id es un número menor que el que tiene en la Base de Datos
+      currentGroupId = data.find(d => d.geojsonId === (feature.id + 1).toString())
+    } else {
+      currentGroupId = data.find(d => d.geojsonId === feature.properties[divisionIdProperty]?.toString())
+    }
 
+    const value = currentGroupId?.sums.find(sum => sum.fieldName === fieldName)?.total
     if (value !== undefined) {
       const percentage = ((value - minValue) / (maxValue - minValue)) * 100
       return {
