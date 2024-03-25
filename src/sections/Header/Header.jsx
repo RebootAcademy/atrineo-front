@@ -43,7 +43,7 @@ function Header() {
   }
 
   return (
-    <header className="relative border-b border-gray-200 shadow-md">
+    <header className="relative border-b border-gray-200 w-full shadow-md">
       <div className="absolute bottom-0 left-0 w-full h-[1px] bg-gradient-to-b from-gray-300 to-transparent"></div>
       <main className="h-20 flex items-center justify-between">
         <div className="flex w-full">
