@@ -1,6 +1,7 @@
 import { useState, useLayoutEffect } from "react"
 
 export const useDimensions = (targetRef) => {
+  console.log(targetRef)
   const [dimensions, setDimensions] = useState({ width: 1300, height: 600 })
 
   useLayoutEffect(() => {
@@ -14,7 +15,6 @@ export const useDimensions = (targetRef) => {
       observer.observe(targetRef.current)
       return () => observer.disconnect()
     }
-    
   }, [targetRef])
 
   return dimensions

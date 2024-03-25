@@ -3,6 +3,7 @@ import { useContext, useEffect, useState, useMemo, useRef } from "react"
 import OptionsMenu from "../components/Graphs/OptionsMenu/OptionsMenu"
 import LoadingSpinner from "../components/LoadingSpinner/LoadingSpinner"
 import ChartsContainer from "@/components/Graphs/ChartsContainer/ChartsContainer"
+import CustomButton from "@/components/CustomButton/CustomButton"
 
 import { CollectionContext } from "../context/collectionContext"
 import { LayerContext } from "../context/layerContext"
@@ -23,6 +24,8 @@ function Statistics() {
   const { collection, setCollection } = useContext(CollectionContext)
   const { mapDivision } = useContext(LayerContext)
   const { user } = useContext(UserContext)
+
+
 
   useUser()
   useCollectionFetch(
@@ -57,7 +60,7 @@ function Statistics() {
   const [yAxis, setYAxis] = useState(fields.length > 0 ? fields[0].fieldName : '')
   const [xAxis, setXAxis] = useState(optionsArr.length > 0 ? optionsArr[0] : '')
   const [zAxis, setZAxis] = useState('')
-
+  const [ showOptions, setShowOptions ] = useState(true)
 
   useEffect(() => {
     if (fields.length > 0) {
@@ -98,7 +101,7 @@ function Statistics() {
 
   const containerRef = useRef(null)
   const { width: containerWidth } = useDimensions(containerRef)
-  const numGraphsPerRow = 3
+  const numGraphsPerRow = 2
   const graphMargin = 2
   const aspectRatio = 16 / 9
 
@@ -124,12 +127,20 @@ function Statistics() {
     changeZAxis: changeZAxis
   }
 
+  const displayOptions = () => {
+    setShowOptions(true)
+  }
+
   return (
     <div className="h-[calc(100vh-5.1rem)] w-screen px-8 py-16 flex flex-row">
       {
         Object.keys(collection).length === 0 ?
           <LoadingSpinner width="100" height="100" /> :
           <div className="flex w-full">
+            <CustomButton 
+              text="NEW CHART +"
+              fn={displayOptions}
+            />
             <div className="flex-grow flex flex-wrap justify-center items-center gap-12" ref={containerRef}>
               <ChartsContainer
                 chartType={chartType}
@@ -137,22 +148,26 @@ function Statistics() {
                 commonProps={commonProps}
               />
             </div>
-            <aside className="min-w-80 max-w-96 h-full">
-              <OptionsMenu
-                ownProps={ownProps}
-                chartType={chartType}
-                onChange={changeChartType}
-                fields={fields}
-                options={optionsArr}
-                aggOptions={aggOptions}
-                chartName={chartName}
-                changeChartName={changeChartName}
-                changeAggregation={changeAggregation}
-                changeXAxis={changeXAxis}
-                changeYAxis={changeYAxis}
-                changeZAxis={changeZAxis}
-              />
-            </aside>
+            {
+              showOptions &&
+              <aside className="min-w-80 max-w-96 h-full">
+                <OptionsMenu
+                  ownProps={ownProps}
+                  chartType={chartType}
+                  onChange={changeChartType}
+                  fields={fields}
+                  options={optionsArr}
+                  aggOptions={aggOptions}
+                  chartName={chartName}
+                  changeChartName={changeChartName}
+                  changeAggregation={changeAggregation}
+                  changeXAxis={changeXAxis}
+                  changeYAxis={changeYAxis}
+                  changeZAxis={changeZAxis}
+                  toggleDisplay={setShowOptions}
+                />
+              </aside>
+            }
           </div>
       }
     </div>

@@ -54,7 +54,7 @@ function Login() {
 
       // Using Promise.race to race the login attempt against the timeout
       const loginResponse = await Promise.race([loginRequest(), timeoutPromise])
-      console.log(loginResponse)
+
       if (loginResponse) {
         setLoading(false)
         localStorage.setItem('token', loginResponse.result.token)

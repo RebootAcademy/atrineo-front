@@ -88,7 +88,7 @@ function ColumnsModal({ columnNames, hiddenColumns, setHiddenColumns }) {
                       <Checkbox
                         className="mr-2"
                         onCheckedChange={() => toggleColumnVisibility(columnName)}
-                        checked={pendingHiddenColumns.includes(columnName)}
+                        checked={!pendingHiddenColumns.includes(columnName)}
                       />
                       <span>{columnName}</span>
                     </div>
@@ -108,7 +108,7 @@ function ColumnsModal({ columnNames, hiddenColumns, setHiddenColumns }) {
                   variant="outline"
                   onClick={handleCancel}
                 >
-                  Cancel
+                  Reset
                 </Button>
                 <Button
                   text='Accept'

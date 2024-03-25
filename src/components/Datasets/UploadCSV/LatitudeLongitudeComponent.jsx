@@ -69,6 +69,9 @@ function LatitudeLongitudeComponent() {
             </Button>
         }
       </div>
+      <div className="text-center text-xs">
+        <p>Set the starting coordinates of the map</p>
+      </div>
     </>
   )
 }

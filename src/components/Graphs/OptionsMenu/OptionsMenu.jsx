@@ -16,7 +16,7 @@ import CustomButton from '@/components/CustomButton/CustomButton'
 import PropTypes from 'prop-types'
 import { GraphContext } from '@/context/graphContext'
 
-function OptionsMenu({ onChange, fields, options, aggOptions, changeAggregation, changeXAxis, changeYAxis, changeZAxis, chartType, chartName, changeChartName, ownProps }) {
+function OptionsMenu({ onChange, fields, options, aggOptions, changeAggregation, changeXAxis, changeYAxis, changeZAxis, chartType, chartName, changeChartName, ownProps, toggleDisplay }) {
   const [selectedXAxis, setSelectedXAxis] = useState('')
   const [selectedYAxis, setSelectedYAxis] = useState('')
   const [selectedZAxis, setSelectedZAxis] = useState('')
@@ -67,6 +67,7 @@ function OptionsMenu({ onChange, fields, options, aggOptions, changeAggregation,
       selectedYAxis
     }
     saveCurrentGraph(graphConfigurationObj, ownProps)
+    hideOptions()
   }
 
   const displayChartOptions = (options) => {
@@ -114,6 +115,10 @@ function OptionsMenu({ onChange, fields, options, aggOptions, changeAggregation,
     )
   }
 
+  const hideOptions = () => {
+    toggleDisplay(false)
+  }
+
   return (
     <Card className='flex flex-col h-full items-center rounded-sm'>
       <CardHeader className="font-medium self-start">
@@ -149,8 +154,16 @@ function OptionsMenu({ onChange, fields, options, aggOptions, changeAggregation,
         displaySelect('Z axis:', handleZAxisChange, options, true, [selectedXAxis, selectedYAxis], selectedZAxis)
       )}
 
-      <div className='mt-12 ml-40'>
-        <CustomButton text='Save' fn={handleSaveGraph} variant='' />
+      <div className='mt-12 w-full flex justify-around'>
+        <CustomButton 
+          text="Cancel" 
+          variant="outline"
+          fn={ hideOptions }
+        />
+        <CustomButton 
+          text='Save' 
+          fn={handleSaveGraph} 
+        />
       </div>
     </Card>
   )
@@ -169,7 +182,8 @@ OptionsMenu.propTypes = {
   chartType: PropTypes.string, 
   chartName: PropTypes.string, 
   changeChartName: PropTypes.func, 
-  ownProps: PropTypes.object
+  ownProps: PropTypes.object,
+  toggleDisplay: PropTypes.func
 }
 
 export default OptionsMenu
