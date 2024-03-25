@@ -27,7 +27,7 @@ function OptionsMenu({ onChange, fields, options, aggOptions, changeAggregation,
     {name:'bar', img: '/barChart.svg'}, 
     {name:'pie', img: '/pieChart.svg'},
     {name: 'scatter', img: '/scatter-chart.svg'},
-    {name: 'heatmap', img: ''}
+    {name: 'heatmap', img: '/heatMap.svg'}
   ]
  
   fields = fields.map(f => f.fieldName)

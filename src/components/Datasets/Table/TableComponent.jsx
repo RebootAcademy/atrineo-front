@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types'
-import { useState, useContext } from 'react'
+import { useState } from 'react'
 
 import {
   Table,
@@ -11,15 +11,11 @@ import {
 } from "../../ui/Table/table"
 
 import { UpArrow, DownArrow } from '../../ui/Icons/Icons'
-import { UserContext } from '@/context/userContext'
-import { Input } from '@/components/ui/Input/input'
 
-function TableComponent({ data, hiddenColumns }) {
+function TableComponent({ data, hiddenColumns, searchItem='' }) {
   const fields = data && data.length > 0 ? data[0].fields : []
   const [sortField, setSortField] = useState(fields[0]?.fieldName)
   const [orderFirst, setOrderFirst] = useState(true)
-  const [searchItem, setSearchItem] = useState('')
-  const { user } = useContext(UserContext)
 
   const checkValueType = (a, b) => {
     if (typeof a === 'string') {
@@ -60,10 +56,6 @@ function TableComponent({ data, hiddenColumns }) {
     } else {
       setSortField(e.target.innerText)
     }
-  }
-
-  const handleSearchChange = (e) => {
-    setSearchItem(e.target.value)
   }
 
   const displayData = (value) => {
@@ -128,39 +120,18 @@ function TableComponent({ data, hiddenColumns }) {
 
   return (
     <>
-      {user?.role === 'wizard' ? (
-        <div className='mt-18 max-h-[calc(100vh-12rem)] overflow-y-auto'>
-          <div className='flex justify-center bg-red-200'>
-            <Input className='w-48' onChange={handleSearchChange} />
-          </div>
-          <Table>
-            <TableHeader className="bg-primary sticky top-8 z-10">
-              <TableRow >
-                {displayTableColumns()}
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {displayTableRows()}
-            </TableBody>
-          </Table>
-        </div>
-      ) : (
-        <div className='mt-48 max-h-[calc(100vh-12rem)] overflow-y-auto'>
-          <div className='flex justify-center'>
-            <Input className='w-48' onChange={handleSearchChange} />
-          </div>
-          <Table>
-            <TableHeader className="bg-primary sticky z-10">
-              <TableRow >
-                {displayTableColumns()}
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {displayTableRows()}
-            </TableBody>
-          </Table>
-        </div>
-      )}
+      <div className='overflow-y-auto'>
+        <Table>
+          <TableHeader className="bg-primary sticky">
+            <TableRow >
+              {displayTableColumns()}
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {displayTableRows()}
+          </TableBody>
+        </Table>
+      </div>
     </>
   )
 }
@@ -168,7 +139,8 @@ function TableComponent({ data, hiddenColumns }) {
 TableComponent.propTypes = {
   data: PropTypes.array,
   columnNames: PropTypes.array,
-  hiddenColumns: PropTypes.array
+  hiddenColumns: PropTypes.array,
+  searchItem: PropTypes.string
 }
 
 export default TableComponent

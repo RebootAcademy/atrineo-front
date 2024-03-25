@@ -4,6 +4,7 @@ import TableComponent from "../components/Datasets/Table/TableComponent"
 import LoadingSpinner from "../components/LoadingSpinner/LoadingSpinner"
 import UploadCSVComponent from "../components/Datasets/UploadCSV/UploadCSVComponent"
 import ColumnsModal from "@/components/Datasets/ColumnsModal/ColumnsModal"
+import { Input } from '@/components/ui/Input/input'
 
 import { CollectionContext } from "../context/collectionContext"
 import { UserContext } from "../context/userContext"
@@ -15,8 +16,12 @@ function Dataset() {
   const { collection, setCollection } = useContext(CollectionContext)
   const { user } = useContext(UserContext)
   const [hiddenColumns, setHiddenColumns] = useState([])
+  const [searchItem, setSearchItem] = useState('')
 
-  const fields = collection.data && collection.data.length > 0 ? collection.data[0].fields : []
+  const fields = collection.data && 
+    collection.data.length > 0 ? 
+    collection.data[0].fields : 
+    []
   const columnNames = fields.map(f => f.fieldName)
 
   // Fetch user profile in case page reload
@@ -28,13 +33,12 @@ function Dataset() {
     collection
   )
 
+  const handleSearchChange = (e) => {
+    setSearchItem(e.target.value)
+  }
+
   return (
     <>
-      <div className="relative">
-        <div className="absolute top-0 right-0 mr-4 mt-4 z-50">
-          <ColumnsModal columnNames={columnNames} hiddenColumns={hiddenColumns} setHiddenColumns={setHiddenColumns} />
-        </div>
-      </div>
       {
         Object.keys(collection).length === 0 ?
           <LoadingSpinner 
@@ -46,7 +50,23 @@ function Dataset() {
               < UploadCSVComponent
                 reloadData={refetch}
               /> : ''}
-            <TableComponent data={collection.data} hiddenColumns={hiddenColumns} />
+            <div className='flex m-2 relative my-8'>
+              <Input 
+                className='w-2/4 border-black mr-4' 
+                onChange={handleSearchChange}
+                placeholder={'Search...'}
+              />
+              <ColumnsModal 
+                columnNames={columnNames} 
+                hiddenColumns={hiddenColumns} 
+                setHiddenColumns={setHiddenColumns} 
+              />
+            </div>
+            <TableComponent 
+              data={collection.data} 
+              hiddenColumns={hiddenColumns}
+              searchItem={searchItem}
+            />
           </div>
       }
     </>

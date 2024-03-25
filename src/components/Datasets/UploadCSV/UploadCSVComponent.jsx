@@ -18,7 +18,7 @@ function UploadCSVComponent({ reloadData }) {
 
       <div className='flex flex-col items-end mt-2 mr-4'>
       </div>
-      <div className="flex flex-col items-center justify-between items-center">
+      <div className="flex flex-col items-center justify-between">
         <div className='w-full text-center text-2xl mt-6 mb-4'>
           Import CSV File
         </div>

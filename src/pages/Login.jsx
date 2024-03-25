@@ -47,7 +47,7 @@ function Login() {
 
       //Promise to manage request timeout
       const timeoutPromise = new Promise((resolve, reject) => {
-        setTimeout(() => reject(new Error('Request timeout')), 10000)
+        setTimeout(() => reject(new Error('Request timeout')), 60000)
       })
 
       const loginRequest = () => login({ email, password })
@@ -56,6 +56,7 @@ function Login() {
       const loginResponse = await Promise.race([loginRequest(), timeoutPromise])
       console.log(loginResponse)
       if (loginResponse) {
+        setLoading(false)
         localStorage.setItem('token', loginResponse.result.token)
         await setUser(loginResponse.result.user)
         setLoading(false)
@@ -69,8 +70,6 @@ function Login() {
         setErrorMessage(true)
         console.error('Credenciales incorrectas:', error)
       }
-    } finally {
-      setLoading(false) // Ensure loading is set to false in case of timeout
     }
   }
 

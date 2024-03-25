@@ -72,13 +72,15 @@ function ColumnsModal({ columnNames, hiddenColumns, setHiddenColumns }) {
           </DropdownMenuTrigger>
         </DropdownMenu>
         {isOpen && (
-          <div className="absolute top-14 right-0 z-20" ref={cardRef}>
+          <div className="absolute top-0 z-20" ref={cardRef}>
             <Card className="w-96 bg-white p-6">
               <CardHeader className='flex justify-center'>
-                <CardTitle className="text-cyan-800">Select the columns you want to hide</CardTitle>
+                <CardTitle className="text-cyan-800">
+                  Select the columns you want to hide
+                </CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="grid grid-cols-2">
+                <div className="grid grid-cols-1 md:grid-cols-2">
                   {columnNames?.map((columnName, index) => (
                     <div key={index} className="flex items-center">
                       <Checkbox
@@ -91,7 +93,14 @@ function ColumnsModal({ columnNames, hiddenColumns, setHiddenColumns }) {
                   ))}
                 </div>
               </CardContent>
-              <CardFooter className='mt-4 flex justify-between'>
+              <CardFooter 
+                className='mt-4 
+                flex 
+                flex-col 
+                items-start 
+                md:justify-between 
+                md:flex-row'
+              >
                 <Button
                   className="w-24 mr-2"
                   variant="outline"
