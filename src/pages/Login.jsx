@@ -75,8 +75,8 @@ function Login() {
 
   return (
     <>
-      <div className='w-full h-screen flex flex-row md-flex-col justify-center items-center'>
-        <div className='sm:w-1/6 md:w-1/3 lg:w-1/4 xl:w-1/4 2xl:w-1/6 relative'>
+      <div className='w-full h-screen flex md:flex-row flex-col justify-center items-center'>
+        <div className='w-3/4 md:w-1/3 lg:w-1/4 xl:w-1/4 2xl:w-1/6 relative mb-8 md:mb-0'>
           <img
             src='./atrineo_icon-removebg-preview.png'
             alt='Atrineo icon'
