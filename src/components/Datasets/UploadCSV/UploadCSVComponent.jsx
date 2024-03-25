@@ -22,7 +22,7 @@ function UploadCSVComponent({ reloadData }) {
         <div className='w-full text-center text-2xl mt-6 mb-4'>
           Import CSV File
         </div>
-        <div className="w-[812px] flex flex-col">
+        <div className="w-3/4 flex flex-col">
           <Csv
             dataType={dataType}
             reloadData={reloadData}

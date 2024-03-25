@@ -42,8 +42,8 @@ function Csv({ dataType, reloadData }) {
   }
 
   return (
-    <div className='flex justify-center'>
-      <div className='flex mr-2 border rounded-md'>
+    <div className='flex justify-center w-full'>
+      <div className='flex mr-2 border rounded-md w-full mx-8'>
         <button onClick={handleButtonClick} className='rounded-l-md bg-primary text-white px-4 text-sm'>Search File</button>
         <div className='w-[600px] rounded-r-md flex items-center pl-3 text-sm'>
           {fileName ? fileName : "File not found"}

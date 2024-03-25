@@ -64,8 +64,10 @@ function ColumnsModal({ columnNames, hiddenColumns, setHiddenColumns }) {
               onClick={toggleMenu}
               className="z-10"
             >
-              <div className="flex items-center">
-                <EyeOffIconColumns />
+              <div className="flex items-center align-baseline">
+                <div className='mt-2'>
+                  <EyeOffIconColumns/>
+                </div>
                 <p>Columns</p>
               </div>
             </Button>
