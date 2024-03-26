@@ -4,7 +4,6 @@ import { useNavigate, useLocation } from "react-router-dom"
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuItem,
   DropdownMenuGroup,
   DropdownMenuTrigger,
 } from "@/components/ui/DropdownMenu/DropdownMenu"
