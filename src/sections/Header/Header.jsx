@@ -82,6 +82,7 @@ function Header() {
       <main className="h-20 flex items-center justify-between">
         {
           width >= 600 ?
+          // Menu for large devices
             <div className="flex w-full">
               <button>
                 <img
@@ -95,6 +96,7 @@ function Header() {
               </div>
               <SettingsMenu />
             </div> :
+            // Menu for phones
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <div className="mx-4 h-1/4" onClick={toggleMenu}>
