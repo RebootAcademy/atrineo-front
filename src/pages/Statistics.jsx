@@ -25,8 +25,6 @@ function Statistics() {
   const { mapDivision } = useContext(LayerContext)
   const { user } = useContext(UserContext)
 
-
-
   useUser()
   useCollectionFetch(
     user,
@@ -102,7 +100,10 @@ function Statistics() {
   const containerRef = useRef(null)
   const { width: containerWidth } = useDimensions(containerRef)
 
-  const localArr = JSON.parse(localStorage.graphs)
+  const localInfo = localStorage.graphs
+  let localArr = []
+
+  if (localInfo) localArr = JSON.parse(localInfo)
   
   const countGraphs = () => {
     return localArr?.length > 1
