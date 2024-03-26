@@ -50,7 +50,7 @@ function Dataset() {
               < UploadCSVComponent
                 reloadData={refetch}
               /> : ''}
-            <div className='flex m-2 relative my-8'>
+            <div className='flex m-2 relative my-8 mx-4'>
               <Input 
                 className='w-2/4 border-black mr-4' 
                 onChange={handleSearchChange}

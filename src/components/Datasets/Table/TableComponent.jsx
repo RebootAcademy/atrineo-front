@@ -120,7 +120,7 @@ function TableComponent({ data, hiddenColumns, searchItem='' }) {
 
   return (
     <>
-      <div className='overflow-x-auto'>
+      <div className='overflow-x-auto mx-4'>
         <Table>
           <TableHeader className="bg-primary sticky top-0">
             <TableRow >

@@ -17,23 +17,21 @@ function UserManagement() {
 
   return (
     <>
-      <div className="bg-slate-200 w-full h-screen flex justify-center">
-        <div className="flex flex-col">
+      <div className="bg-slate-200 w-full h-full flex justify-center">
+        <div className="flex flex-col h-full justify-center">
           {users.map((userData, index) => (
-            <>
-              <div key={index}>
-                <Card className="border mt-6 relative w-96 p-4 bg-slate-50">
-                  <div className="absolute top-0 right-0">
-                    <EditInfoModalComponent userData={userData} />
-                  </div>
-                  <div>
-                    <p>{userData.name}</p>
-                    <p>Email: {userData.email}</p>
-                    <p>Role: {userData.role}</p>
-                  </div>
-                </Card>
-              </div>
-            </>
+            <div key={index}>
+              <Card className="border mt-6 relative w-96 p-4 bg-slate-50">
+                <div className="absolute top-0 right-0">
+                  <EditInfoModalComponent userData={userData} />
+                </div>
+                <div>
+                  <p>{userData.name}</p>
+                  <p>Email: {userData.email}</p>
+                  <p>Role: {userData.role}</p>
+                </div>
+              </Card>
+            </div>
           ))}
         </div>
       </div>
