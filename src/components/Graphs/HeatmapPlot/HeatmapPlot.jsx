@@ -24,8 +24,6 @@ function HeatmapPlot({
     return numericFieldsObj
   }), [data])
 
-  console.log(filteredData)
-
   useEffect(() => {
     if (filteredData) {
       const yStep = 5
@@ -78,7 +76,7 @@ function HeatmapPlot({
   }, [filteredData, xAxis, yAxis, zAxis, height, width])
 
   return (
-    <div ref={containerRef}></div>
+    <div className='border rounded-md border-gray px-4' ref={containerRef}></div>
   )
 
   

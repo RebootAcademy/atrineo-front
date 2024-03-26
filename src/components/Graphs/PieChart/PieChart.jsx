@@ -136,7 +136,7 @@ function PieChart({
     <svg
       width={width} 
       height={height}
-      className='border'
+      className='border rounded-md border-gray'
     >
       <g
         transform={`translate(${width / 2}, ${height / 2})`}

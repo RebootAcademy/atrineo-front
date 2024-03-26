@@ -55,7 +55,6 @@ function ScatterPlot({
 
   const circles = filteredData.map((d, i) => {
     const radius = zScale(d[zAxis])
-    console.log(radius)
     return (
       <circle
         key={i}
@@ -74,7 +73,7 @@ function ScatterPlot({
     <svg 
       width={width} 
       height={height} 
-      className='border'
+      className='border rounded-md border-gray'
     >
       <g transform={`translate(${MARGIN.left},${MARGIN.top})`}>
         {circles}

@@ -63,7 +63,7 @@ function Barplot({
       <svg 
         width={width} 
         height={height}
-        className='border'
+        className='border rounded-md border-gray'
       >
         {/*Legend*/ }
         <g 

@@ -101,11 +101,28 @@ function Statistics() {
 
   const containerRef = useRef(null)
   const { width: containerWidth } = useDimensions(containerRef)
-  const numGraphsPerRow = 2
-  const graphMargin = 2
+
+  const localArr = JSON.parse(localStorage.graphs)
+  
+  const countGraphs = () => {
+    return localArr?.length > 1
+  }
+
+  const checkWidth = () => {
+    return containerWidth > 500
+  }
+
+  //For devices less than 500px wide, show one chart per row.
+  // For bigger devices, check how many charts have to be displayed
+  // If there is only one chart, take the whole screen
+  const numGraphsPerRow = checkWidth() ?
+    countGraphs() ? 2 : 
+      1 : 1
+  const graphMargin = 10
   const aspectRatio = 16 / 9
 
-  const calculatedGraphWidth = (containerWidth - (graphMargin * (numGraphsPerRow - 1))) / numGraphsPerRow
+
+  const calculatedGraphWidth = ((checkWidth() ? containerWidth - 200 : containerWidth) - (graphMargin * (numGraphsPerRow))) / numGraphsPerRow
   const calculatedGraphHeight = calculatedGraphWidth / aspectRatio
 
   const commonProps = {
@@ -132,47 +149,50 @@ function Statistics() {
   }
 
   return (
-    <div className="h-[calc(100vh-5.1rem)] w-screen px-8 py-16 flex flex-row">
+    <div className="h-[calc(100vh-5.1rem)] w-screen p-8 flex flex-col">
       {
         Object.keys(collection).length === 0 ?
           <LoadingSpinner width="100" height="100" /> :
-          <div className="flex w-full">
-            {
-              !showOptions &&
-              <CustomButton 
-                text="NEW CHART +"
-                fn={displayOptions}
-              />
-
-            }
-            <div className="flex-grow flex flex-wrap justify-center items-center gap-12" ref={containerRef}>
-              <ChartsContainer
-                chartType={chartType}
-                fields={fields}
-                commonProps={commonProps}
-              />
-            </div>
-            {
-              showOptions &&
-              <aside className="min-w-80 max-w-96 h-full">
-                <OptionsMenu
-                  ownProps={ownProps}
-                  chartType={chartType}
-                  onChange={changeChartType}
-                  fields={fields}
-                  options={optionsArr}
-                  aggOptions={aggOptions}
-                  chartName={chartName}
-                  changeChartName={changeChartName}
-                  changeAggregation={changeAggregation}
-                  changeXAxis={changeXAxis}
-                  changeYAxis={changeYAxis}
-                  changeZAxis={changeZAxis}
-                  toggleDisplay={setShowOptions}
+          <>
+            <div className="mb-4">
+              {
+                !showOptions &&
+                <CustomButton 
+                  text="NEW CHART +"
+                  fn={displayOptions}
                 />
-              </aside>
-            }
-          </div>
+              }
+            </div>
+            <div className="flex w-full h-full">
+              <div className="flex-grow flex flex-wrap justify-center items-center gap-12" ref={containerRef}>
+                <ChartsContainer
+                  chartType={chartType}
+                  fields={fields}
+                  commonProps={commonProps}
+                />
+              </div>
+              {
+                showOptions &&
+                <aside className="min-w-80 max-w-96 h-full">
+                  <OptionsMenu
+                    ownProps={ownProps}
+                    chartType={chartType}
+                    onChange={changeChartType}
+                    fields={fields}
+                    options={optionsArr}
+                    aggOptions={aggOptions}
+                    chartName={chartName}
+                    changeChartName={changeChartName}
+                    changeAggregation={changeAggregation}
+                    changeXAxis={changeXAxis}
+                    changeYAxis={changeYAxis}
+                    changeZAxis={changeZAxis}
+                    toggleDisplay={setShowOptions}
+                  />
+                </aside>
+              }
+            </div>
+          </>
       }
     </div>
   )
