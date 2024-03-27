@@ -25,10 +25,10 @@ function EditInfoModalComponent({ userData }) {
   const [showRepeatPassword, setShowRepeatPassword] = useState(false)
   const [username, setUsername] = useState(userData.name)
   const [email, setEmail] = useState(userData.email)
-  const [password/* , setPassword */] = useState('')
-  const [repeatPassword/* , setRepeatPassword */] = useState('')
+  const [password, setPassword] = useState('')
+  const [repeatPassword, setRepeatPassword] = useState('')
+  const [showError,setShowError] = useState(false)
   const [loading, setLoading] = useState(false)
-
   const [userInfo, setUserInfo] = useState(userData)
 
   const togglePasswordVisibility = () => {
@@ -42,23 +42,39 @@ function EditInfoModalComponent({ userData }) {
   const handleUserUpdate = async () => {
     setLoading(true)
 
-    const updateFiels = {}
+    const updateFields = {}
     if (username !== userInfo.name) {
-      updateFiels.name = username
+      updateFields.name = username
     }
     if (email !== userInfo.email) {
-      updateFiels.email = email
+      updateFields.email = email
     }
     if (password !== '' && password === repeatPassword) {
-      updateFiels.password = password
+      updateFields.password = password
     }
-    const { result } = await updateUser(userInfo._id, updateFiels)
-    setUserInfo(result)
-    setLoading(false)
+
+    if (!showError) {
+      const { result } = await updateUser(userInfo._id, updateFields)
+      setUserInfo(result)
+      setLoading(false)
+    }
   }
 
   const handleSubmit = () => {
     handleUserUpdate()
+  }
+
+  const handlePasswordChange =(e) => {
+    setPassword(e.target.value)
+  }
+
+  const handleRepeatChange = (e) => {
+    setRepeatPassword(e.target.value)
+    if (password !== '' && password !== e.target.value) {
+      setShowError(true)
+    } else {
+      setShowError(false)
+    }
   }
 
   return (
@@ -109,7 +125,7 @@ function EditInfoModalComponent({ userData }) {
                     id="email"
                     className="w-full border-2"
                     placeholder={userData.email}
-                    onClick={() => setEmail(userData.name || '')}
+                    onClick={() => setEmail(userData.email || '')}
                     onChange={(e) => setEmail(e.target.value)}
                   />
                 </div>
@@ -133,6 +149,7 @@ function EditInfoModalComponent({ userData }) {
                       id="password"
                       type={showPassword ? 'text' : 'password'}
                       className="w-full border-2"
+                      onChange={handlePasswordChange}
                     />
                     <div className="absolute inset-y-0 right-0 flex items-center pr-3">
                       <button type="button" onClick={togglePasswordVisibility}>
@@ -150,6 +167,7 @@ function EditInfoModalComponent({ userData }) {
                       id="repeat-password"
                       type={showRepeatPassword ? 'text' : 'password'}
                       className="w-full border-2"
+                      onChange={handleRepeatChange}
                     />
                     <div className="absolute inset-y-0 right-0 flex items-center pr-3">
                       <button type="button" onClick={toggleRepeatPasswordVisibility}>
@@ -157,6 +175,12 @@ function EditInfoModalComponent({ userData }) {
                       </button>
                     </div>
                   </div>
+                  {
+                    showError &&
+                    <p className="text-red-600 flex justify-center mt-4">
+                      Passwords must be equal
+                    </p>
+                  }
                 </div>
               </div>
             </div>
@@ -168,6 +192,7 @@ function EditInfoModalComponent({ userData }) {
               <Button
                 type="submit"
                 onClick={handleSubmit}
+                disabled={showError}
               >
                 Submit
               </Button>
