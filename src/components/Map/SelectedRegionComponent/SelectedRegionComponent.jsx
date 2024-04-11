@@ -24,7 +24,7 @@ const RegionsSelected = () => {
     const currentDistrict = feature.properties.NAME_3
 
     if (
-      layers?.find((layer) => layer.data.regions.names?.includes(currentDistrict) && layer.isVisible)
+      layers?.find((layer) => layer.data.regions?.names?.includes(currentDistrict) && layer.isVisible)
       // (selectedNameDistrict.length === 1 && selectedNameDistrict[0].value === 'All') ||
       //selectedNameDistrict.includes(currentDistrict)
       //la linea de abajo comentada es para activar que al hacer click en el mapa se pinte la zona donde se hace click
