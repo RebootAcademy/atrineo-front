@@ -27,12 +27,13 @@ function LayersManager() {
         let valid = row.fields.every(item => 
           layer.data[item.fieldName] === undefined || checkValue(item.fieldValue, item.fieldName, layer)
         )
-        if (layer.data.regions) {
-          valid = valid && layer.data.regions.includes(row.locationId[mapDivision]?.name)
+
+        if (layer.data.regions.names) {
+          valid = valid && layer.data.regions.names.includes(row.locationId[layer.data.regions.division]?.name)
         }
         return valid
       })
-
+    console.log(filteredData)
     return { layer, filteredData, fields }
   }), [collection, layers, searchPolygon, mapDivision])
 
