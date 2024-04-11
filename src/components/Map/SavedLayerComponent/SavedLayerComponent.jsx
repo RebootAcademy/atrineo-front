@@ -91,4 +91,4 @@ function SavedLayerComponent() {
   )
 }
 
-export default SavedLayerComponent;
+export default SavedLayerComponent
