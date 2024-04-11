@@ -28,7 +28,7 @@ function DivisionSelector() {
     <div className='relative top-4 left-4 z-[9999999999]'>
       <Select value={mapDivision} onValueChange={handleChange}>
         <SelectTrigger className="w-[180px]">
-          <SelectValue placeholder="Pick a division"/>
+          <SelectValue placeholder="Pick a division" />
         </SelectTrigger>
         <SelectContent>
           {options.map((option, idx) => (

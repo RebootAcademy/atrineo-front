@@ -17,7 +17,7 @@ function PieChart({
   division, 
   aggregation,
   xAxis,
-  yAxis 
+  yAxis
 }) {
   const ref = useRef(null)
 
