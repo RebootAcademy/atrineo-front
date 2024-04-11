@@ -17,6 +17,7 @@ function DivisionSelector() {
     { value: 'division1', label: 'Division 1' },
     { value: 'division2', label: 'Division 2' },
     { value: 'division3', label: 'Division 3' },
+    { value: 'division4', label: 'Division 4' }
   ]
 
   const handleChange = (value) => {

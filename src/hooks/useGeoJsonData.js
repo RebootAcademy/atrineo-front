@@ -10,7 +10,7 @@ const urls = {
 
 // Función para realizar la solicitud HTTP
 const fetchGeoJsonData = async (type) => {
-  if (type) {
+  if (type && type !== 'division4') {
     const { data } = await axios.get(urls[type])
     return data
   }
