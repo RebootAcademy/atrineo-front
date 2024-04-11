@@ -12,7 +12,7 @@ import { isWithinPolygon, checkValue } from '@/helpers'
 
 function LayersManager() {
   const { collection } = useContext(CollectionContext)
-  const { searchPolygon, layers, setLayers, mapDivision } = useContext(LayerContext)
+  const { searchPolygon, layers, setLayers } = useContext(LayerContext)
 
   useEffect(() => {
     const storedLayers = JSON.parse(window.localStorage.getItem('layers')) || []
@@ -27,14 +27,15 @@ function LayersManager() {
         let valid = row.fields.every(item => 
           layer.data[item.fieldName] === undefined || checkValue(item.fieldValue, item.fieldName, layer)
         )
-        if (layer.data.regions) {
-          valid = valid && layer.data.regions.includes(row.locationId[mapDivision]?.name)
+
+        if (layer.data.regions?.names) {
+          valid = valid && layer.data.regions.names.includes(row.locationId[layer.data.regions.division]?.name)
         }
         return valid
       })
 
     return { layer, filteredData, fields }
-  }), [collection, layers, searchPolygon, mapDivision])
+  }), [collection, layers, searchPolygon])
 
   const displayLayers = (filters, array, searchPolygon) => {
     return Object.entries(filters)

@@ -18,16 +18,15 @@ import { LayerContext } from "@/context/layerContext"
 
 function DisplayFilters({ layerObj, type }) {
   const { collection } = useContext(CollectionContext)
-  const { getNextColor } = useContext(LayerContext)
+  const { getNextColor, mapDivision } = useContext(LayerContext)
 
   const [activeSwitch, setActiveSwitch] = useState(false)
 
   const handleRegionChange = (value) => {
     layerObj.current.type = type
     const names = value.map(name => name.value)
-    layerObj.current.regions = names
+    layerObj.current.regions = { names, division: mapDivision }
   }
-
   const handleFilterChange = (value, target) => {
     let newState = { ...layerObj.current }
 

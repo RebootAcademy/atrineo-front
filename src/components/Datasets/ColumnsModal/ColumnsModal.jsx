@@ -74,8 +74,8 @@ function ColumnsModal({ columnNames, hiddenColumns, setHiddenColumns }) {
           </DropdownMenuTrigger>
         </DropdownMenu>
         {isOpen && (
-          <div className="absolute top-0 z-20" ref={cardRef}>
-            <Card className="w-96 bg-white p-6">
+          <div className="absolute w-fit top-0 z-20" ref={cardRef}>
+            <Card className="w-fit bg-white p-6">
               <CardHeader className='flex justify-center'>
                 <CardTitle className="text-cyan-800">
                   Select the columns you want to hide
