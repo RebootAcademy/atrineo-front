@@ -20,7 +20,6 @@ function MultipleSelectorComponent({ onValueChange }) {
     const nameRegion = nameRegionFiltered.reduce((prev, curr) => {
       return prev.find((item) => item.id === curr.id) ? prev : [...prev, curr]
     }, [])
-    console.log(nameRegion)
 
     const districtNames = [
       ...nameRegion.map((filteredRegion) => (
