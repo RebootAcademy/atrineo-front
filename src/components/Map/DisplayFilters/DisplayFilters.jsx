@@ -57,10 +57,14 @@ function DisplayFilters({ layerObj, type }) {
   let fields
   if (collection) {
     data = collection?.data
-    fields = data[0].fields
+    fields = []
+    fields
+    let columnsObj = collection.columnTypes
+    for (const key in columnsObj) {
+      fields.push({ fieldName: key, fieldType: columnsObj[key] })
+    }
   }
 
-  //hacer variable con los distritos de la nueva base de datos - que no se exactamente cual es
   const booleanFields = fields?.filter(field => field.fieldType === 'boolean')
   const numericFields = extractNumericFields(fields)
   const stringOptions = extractStringOptions(fields) //Filtra las columnas que van a usarse como radio buttons
