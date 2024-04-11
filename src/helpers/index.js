@@ -86,11 +86,21 @@ export const findMaxAndMinValues = (arr, name) => {
 }
 
 export const calculateRadius = (value, minValue, maxValue) => {
-  const range = [1, 10000] 
+  const range = [1, 3000]
+  if (isNaN(value) || isNaN(minValue) || isNaN(maxValue) || minValue === maxValue) {
+    return 1
+  }
+  if (minValue > maxValue) {
+    return 1
+  }
   const sqrtScale = d3.scaleSqrt()
     .domain([minValue, maxValue])
     .range(range)
-  return sqrtScale(value)
+  const calculatedRadius = sqrtScale(value)
+  if (isNaN(calculatedRadius)) {
+    return 1
+  } 
+  return calculatedRadius
 }
 
 export const extractRegionNames = (array, division) => {
