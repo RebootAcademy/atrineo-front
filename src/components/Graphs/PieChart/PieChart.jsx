@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import { useMemo, useRef, useContext } from "react"
 import * as d3 from "d3"
 
-import { checkAggregation } from '@/helpers'
+import { calcAggregatedData } from '@/helpers'
 
 import { LocationContext } from '@/context/locationContext'
 
@@ -23,51 +23,14 @@ function PieChart({
 }) {
   const ref = useRef(null)
   const { locations } = useContext(LocationContext)
-
   const adjustedDivision = division === 'division4' ? 'division3' : division
 
-  const aggregatedData = useMemo(() => {
-    const sums = data.reduce((acc, cur) => {
-      let name
-      if (xAxis === "regions") {
-        name = (locations[adjustedDivision].find(d => d._id === cur.locationId[adjustedDivision]))?.name
-      } else {
-        name = cur.fields
-          .filter((f) => f.fieldName === xAxis)
-          .map((f) => f.fieldValue)
-      }
-      if (!name) return acc
-      if (!acc[name]) {
-        acc[name] =
-          aggregation === "min"
-            ? Infinity
-            : aggregation === "avg"
-              ? { count: 0, sum: 0 }
-              : 0
-      }
-
-      const filteredValues = cur.fields.filter((d) => d.fieldName === yAxis)
-      if (filteredValues.length > 0) {
-        const value = filteredValues[0]
-        acc[name] = checkAggregation(value, acc[name], aggregation)
-      }
-      return acc
-    }, {})
-
-    if (aggregation === "avg") {
-      return Object.entries(sums).map(([name, info]) => ({
-        name,
-        value: info.sum / info.count,
-      }))
-    } else {
-      return Object.entries(sums).map(([name, value]) => ({ name, value }))
-    }
-  }, [data, xAxis, yAxis, adjustedDivision, aggregation, locations])
+  const aggregatedData = useMemo(() => calcAggregatedData(data, xAxis, yAxis, adjustedDivision, aggregation, locations[adjustedDivision]), [data, xAxis, yAxis, aggregation, locations, adjustedDivision])
 
   const radius = Math.min(width - 2 * MARGIN_X, height - 2 * MARGIN_Y) / 2
 
   const pie = useMemo(() => {
-    const pieGenerator = d3.pie().value((d) => d.value)
+    const pieGenerator = d3.pie().value((d) => d.sum)
     return pieGenerator(aggregatedData)
   }, [aggregatedData])
 
