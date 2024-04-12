@@ -1,12 +1,14 @@
 import { useContext, useState } from "react"
 import { LayerContext } from "../../../context/layerContext"
 import { CollectionContext } from "../../../context/collectionContext"
+import { LocationContext } from "@/context/locationContext"
 import MultipleSelector from "../../ui/MultiSelector/multple-selector"
 import PropTypes from 'prop-types'
 
 function MultipleSelectorComponent({ onValueChange }) {
   const { mapDivision } = useContext(LayerContext)
   const { collection } = useContext(CollectionContext)
+  const { locations } = useContext(LocationContext)
   const [active, setActive] = useState(false)
 
   const onDistrictNameChange = (districts) => {
@@ -14,21 +16,30 @@ function MultipleSelectorComponent({ onValueChange }) {
   }
 
   const displayMultipleSelector = () => {
-    const nameRegionFiltered = collection.data
-      .filter((item) => item.locationId[mapDivision] !== null)
-      .map((item) => ({ id: item.locationId[mapDivision]?._id, name: item.locationId[mapDivision]?.name }))
-    const nameRegion = nameRegionFiltered.reduce((prev, curr) => {
-      return prev.find((item) => item.id === curr.id) ? prev : [...prev, curr]
-    }, [])
+    // Create a set to track unique location IDs to avoid duplicates.
+    const uniqueLocations = new Set()
 
-    const districtNames = [
-      ...nameRegion.map((filteredRegion) => (
-        {
-          value: filteredRegion.name,
-          label: filteredRegion.name
+    // Perform all operations in a single pass.
+    const districtNames = collection.data
+      // Filter items where the specific location ID exists.
+      .filter(item => item.locationId[mapDivision])
+      // Map to a new structure while checking for uniqueness.
+      .map(item => {
+        const locationId = item.locationId[mapDivision]
+        const locationName = locations[mapDivision].find(l => l._id === locationId)?.name
+
+        // If the location is unique and has a name, add it to the set and return the necessary structure.
+        if (locationName && !uniqueLocations.has(locationId)) {
+          uniqueLocations.add(locationId)
+          return { value: locationName, label: locationName }
         }
-      ))
-    ]
+        return null
+      })
+      // Filter out any null entries resulting from duplicates or missing names.
+      .filter(item => item !== null)
+      // Sort by name using localeCompare.
+      .sort((a, b) => a.label.localeCompare(b.label))
+
     return districtNames
   }
 

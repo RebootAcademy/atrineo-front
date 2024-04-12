@@ -11,7 +11,7 @@ function DistrictSelection() {
   const {
     collection
   } = useContext(CollectionContext)
-  console.log(collection.data)
+
   //se hace el filtro primero para poder filtar por los item que contenga algo diferente a null y los devuelve
   const nameRegionFiltered = collection?.data
     .filter((item) => item.locationId[mapDivision] !== null)

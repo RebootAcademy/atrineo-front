@@ -14,28 +14,28 @@ export const useDivisions = () => {
 
   const countriesQuery = useQuery("countries", getAllCountries, {
     onSuccess: (countries) => {
-      setLocations((prev) => ({ ...prev, countries }))
+      setLocations((prev) => ({ ...prev, countries: countries.result }))
     }
   })
 
   const division1Query = useQuery("division1", getAllDivision1, {
     onSuccess: (division1) => {
-      setLocations((prev) => ({ ...prev, division1 }))
+      setLocations((prev) => ({ ...prev, division1: division1.result }))
     }
   })
   const division2Query = useQuery("division2", getAllDivision2, {
     onSuccess: (division2) => {
-      setLocations((prev) => ({ ...prev, division2 }))
+      setLocations((prev) => ({ ...prev, division2: division2.result }))
     }
   })
   const division3Query = useQuery("division3", getAllDivision3, {
     onSuccess: (division3) => {
-      setLocations((prev) => ({ ...prev, division3 }))
+      setLocations((prev) => ({ ...prev, division3: division3.result }))
     }
   })
   const division4Query = useQuery("division4", getAllDivision4, {
     onSuccess: (division4) => {
-      setLocations((prev) => ({ ...prev, division4 }))
+      setLocations((prev) => ({ ...prev, division4: division4.result }))
     }
   })
 
