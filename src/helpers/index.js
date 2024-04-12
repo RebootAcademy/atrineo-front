@@ -174,6 +174,9 @@ export const calcAggregatedData = (data, xAxis, yAxis, division, aggregation) =>
 }
 
 export const formatNumber = (num) => {
+  if (num === null || isNaN(num)) {
+    return null
+  }
   if (num >= 1000000000) {
     return (num / 1000000000).toFixed(1).replace(/\.0$/, '') + 'G'
   }

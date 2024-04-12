@@ -26,49 +26,56 @@ function HeatmapPlot({
 
   useEffect(() => {
     if (filteredData) {
-      const yStep = 5
-      const yValues = [...new Set(filteredData.map(d => d[yAxis]))]
+      const validData = filteredData.filter(d => d[zAxis] !== null && d[zAxis] !== 0)
+
+      const yStep = 10
+      const yValues = [...new Set(validData.map((d) => d[yAxis]))]
         .sort((a, b) => b - a)
         .filter((_, index) => index % yStep === 0)
-      const xStep = 2
-      const xValues = filteredData.map(d => d[xAxis])
+      const xStep = 50
+      const xValues = validData
+        .map((d) => d[xAxis])
+        .sort((a, b) => a - b)
         .filter((_, index) => index % xStep === 0)
+
       const plot = Plot.plot({
         width: width,
         height: height,
         marginLeft: 60,
         marginBottom: 60,
         padding: 0,
-        y: { 
+        y: {
           label: yAxis,
           domain: yValues,
-          tickFormat: formatNumber, 
+          tickFormat: formatNumber,
         },
         x: {
           label: xAxis,
           domain: xValues,
           tickRotate: -45,
           tickSize: 5,
-          tickFormat: formatNumber 
+          tickFormat: formatNumber,
         },
-        color: { 
+        color: {
           scheme: "Blues",
           legend: true,
-          zero: true,
+          zero: false,
         },
         marks: [
           Plot.cell(
-            filteredData,
+            validData,
             Plot.group(
               { fill: "sum" }, // Sustituir por aggregation
-              { x: (d) => d[xAxis],
-                y: (d) => d[yAxis], 
-                fill: (d) => d[zAxis], 
-                inset: 0.5, 
-                sort: { y: "fill" } }
+              {
+                x: (d) => d[xAxis],
+                y: (d) => d[yAxis],
+                fill: (d) => d[zAxis],
+                inset: 0.5,
+                sort: { y: "fill" },
+              }
             )
-          )
-        ]
+          ),
+        ],
       })
       containerRef.current.innerHTML = ''
       containerRef.current.appendChild(plot)
@@ -78,8 +85,6 @@ function HeatmapPlot({
   return (
     <div className='border rounded-md border-gray px-4' ref={containerRef}></div>
   )
-
-  
 }
 
 HeatmapPlot.propTypes = {
