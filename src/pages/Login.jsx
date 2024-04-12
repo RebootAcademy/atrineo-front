@@ -11,6 +11,8 @@ import { login } from "../services/auth"
 
 import { UserContext } from "../context/userContext"
 
+import { useDivisions } from "@/hooks/useDivisions"
+
 function Login() {
   const { setUser } = useContext(UserContext)
   const [email, setEmail] = useState('')
@@ -20,6 +22,8 @@ function Login() {
   const [showPassword, setShowPassword] = useState(false)
 
   const navigate = useNavigate()
+
+  useDivisions()
 
   const handleKeyPress = (event) => {
     if (event.key == 'Enter') {

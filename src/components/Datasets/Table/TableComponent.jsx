@@ -1,54 +1,56 @@
 import PropTypes from 'prop-types'
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
+import { FixedSizeList as List } from 'react-window'
 
 import {
   Table,
   TableBody,
   TableCell,
   TableHead,
-  TableHeader,
   TableRow
 } from "../../ui/Table/table"
 
 import { UpArrow, DownArrow } from '../../ui/Icons/Icons'
+
+import './TableComponent.css'
 
 function TableComponent({ data, hiddenColumns, searchItem='' }) {
   const fields = data && data.length > 0 ? data[0].fields : []
   const [sortField, setSortField] = useState(fields[0]?.fieldName)
   const [orderFirst, setOrderFirst] = useState(true)
 
-  const checkValueType = (a, b) => {
-    if (typeof a === 'string') {
-      return orderStringsByFirstOrLast(a, b)
-    } else {
-      return orderByFirstOrLast(a, b)
+  const sortedData = useMemo(() => {
+    const orderByFirstOrLast = (a, b) => {
+      if (orderFirst) {
+        return a - b
+      } else {
+        return b - a
+      }
     }
-  }
 
-  const orderByFirstOrLast = (a, b) => {
-    if (orderFirst) {
-      return a - b
-    } else {
-      return b - a
+    const orderStringsByFirstOrLast = (a, b) => {
+      if (orderFirst) {
+        return a.localeCompare(b)
+      } else {
+        return b.localeCompare(a)
+      }
     }
-  }
-
-  const orderStringsByFirstOrLast = (a, b) => {
-    if (orderFirst) {
-      return a.localeCompare(b) - b.localeCompare(a)
-    } else {
-      return b.localeCompare(a) - a.localeCompare(b)
+    const checkValueType = (a, b) => {
+      if (typeof a === 'string') {
+        return orderStringsByFirstOrLast(a, b)
+      } else {
+        return orderByFirstOrLast(a, b)
+      }
     }
-  }
 
-  data.sort((a, b) => {
-    const [fieldA] = a.fields.filter(f => f.fieldName === sortField)
-    const [fieldB] = b.fields.filter(f => f.fieldName === sortField)
-    const valueA = fieldA?.fieldValue
-    const valueB = fieldB?.fieldValue
-
-    return checkValueType(valueA, valueB)
-  })
+    return data.sort((a, b) => {
+      const [fieldA] = a.fields.filter(f => f.fieldName === sortField)
+      const [fieldB] = b.fields.filter(f => f.fieldName === sortField)
+      const valueA = fieldA?.fieldValue
+      const valueB = fieldB?.fieldValue
+      return checkValueType(valueA, valueB)
+    })
+  }, [data, sortField, orderFirst])
 
   const selectField = (e) => {
     if (e.target.innerText === sortField) {
@@ -64,71 +66,78 @@ function TableComponent({ data, hiddenColumns, searchItem='' }) {
       value ? 'true' : 'false'
   }
 
-  const displayTableColumns = () => {
-    return fields.map(f => {
-      if (!hiddenColumns.includes(f.fieldName)) {
-        return (
-          <TableHead
-            key={f._id + f.fieldName}
-            className='text-white font-bold text-center'
-            id={f.fieldName}
-            onClick={selectField}
-          >
-            <>
-              <div className='flex'>
-                {sortField === f.fieldName && orderFirst ? <UpArrow /> : <DownArrow />}
-                {f.fieldName}
-              </div>
-            </>
-          </TableHead>
-        )
-      }
+  const Row = ({ index }) => {
+    const d = sortedData[index]
+    const isMatch = d.fields.some(f => {
+      return Object.values(f).some(value => {
+        return value?.toString().toLowerCase().includes(searchItem.toLowerCase())
+      })
     })
+
+    if (!isMatch) return null
+
+    return (
+      <>
+        {
+          index === 0 &&
+          !hiddenColumns.includes(d.fieldName) &&
+          fields.map(f => {
+            return (
+              <TableHead
+                key={f._id + f.fieldName}
+                className='text-white font-bold text-center bg-primary sticky top-0'
+                id={f.fieldName}
+                onClick={selectField}
+              >
+                <>
+                  <div className='flex w-48'>
+                    {sortField === f.fieldName && orderFirst ? <UpArrow /> : <DownArrow />}
+                    {f.fieldName}
+                  </div>
+                </>
+              </TableHead>
+            )
+          })
+        }
+        <TableRow>
+          {d.fields.map((f, i) => {
+            if (!hiddenColumns.includes(f.fieldName)) {
+              const isNumeric = typeof f.fieldValue === 'number'
+              const isBool = typeof f.fieldValue === 'boolean'
+              let className = isNumeric ? 'text-right' : 'min-w-20'
+              className = isBool ? 'text-center' : className
+              return (
+                <TableCell key={i} className="min-w-48">
+                  <div className={className}>
+                    {displayData(f.fieldValue)}
+                  </div>
+                </TableCell>
+              )
+            }
+          })}
+        </TableRow>
+      </>
+    )
   }
 
-  const displayTableRows = () => {
-    return data.map(d => {
-      const isMatch = d.fields.some(f => {
-        return Object.values(f).some(value => {
-          return value.toString().toLowerCase().includes(searchItem.toLowerCase())
-        })
-      })
-
-      if (isMatch) {
-        return (
-          <TableRow key={d._id} className=''>
-            {d.fields.map((f, i) => {
-              if (!hiddenColumns.includes(f.fieldName)) {
-                const isNumeric = typeof f.fieldValue === 'number'
-                const isBool = typeof f.fieldValue === 'boolean'
-                let className = isNumeric ? 'text-right' : 'min-w-20'
-                className = isBool ? 'text-center' : className
-                return (
-                  <TableCell key={i}>
-                    <div className={className}>
-                      {displayData(f.fieldValue)}
-                    </div>
-                  </TableCell>
-                )
-              }
-            })}
-          </TableRow>
-        )
-      }
-    })
+  Row.propTypes = {
+    index: PropTypes.number,
+    style: PropTypes.object
   }
 
   return (
     <>
-      <div className='overflow-x-auto mx-4'>
+      <div className='overflow-x-auto  mx-4 w-screen'>
         <Table>
-          <TableHeader className="bg-primary sticky top-0">
-            <TableRow >
-              {displayTableColumns()}
-            </TableRow>
-          </TableHeader>
           <TableBody>
-            {displayTableRows()}
+            <List
+              className='w-full'
+              height={500}
+              itemCount={sortedData.length}
+              itemSize={35}
+            >
+              {Row}
+            </List>
           </TableBody>
         </Table>
       </div>

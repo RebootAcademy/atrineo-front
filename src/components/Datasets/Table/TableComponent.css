@@ -1,0 +1,16 @@
+.sticky {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+}
+
+.scrollable-headers {
+  display: flex;
+  overflow-x: auto;
+  width: calc(100% - 100px);
+}
+
+.scrollable-rows {
+  display: flex;
+  overflow-x: auto;
+}

@@ -1,4 +1,5 @@
-import { useContext, useState } from "react"
+import { useContext, useState, useMemo } from "react"
+import { debounce } from "lodash"
 
 import TableComponent from "../components/Datasets/Table/TableComponent"
 import LoadingSpinner from "../components/LoadingSpinner/LoadingSpinner"
@@ -18,11 +19,8 @@ function Dataset() {
   const [hiddenColumns, setHiddenColumns] = useState([])
   const [searchItem, setSearchItem] = useState('')
 
-  const fields = collection.data && 
-    collection.data.length > 0 ? 
-    collection.data[0].fields : 
-    []
-  const columnNames = fields.map(f => f.fieldName)
+  const fields = useMemo(() => collection.data && collection.data.length > 0 ? collection.data[0].fields : [], [collection.data])
+  const columnNames = useMemo(() => fields.map(f => f.fieldName), [fields])
 
   // Fetch user profile in case page reload
   useUser()
@@ -33,9 +31,9 @@ function Dataset() {
     collection
   )
 
-  const handleSearchChange = (e) => {
+  const handleSearchChange = debounce((e) => {
     setSearchItem(e.target.value)
-  }
+  }, 500)
 
   return (
     <>

@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from 'react-query'
 import { RouterProvider } from 'react-router-dom'
 
 import { CollectionContext } from './context/collectionContext'
+import { LocationContext } from './context/locationContext'
 import { LayerContext } from './context/layerContext'
 import { UserContext } from './context/userContext'
 import { GraphContext } from './context/graphContext'
@@ -20,6 +21,7 @@ function App() {
   const [selectedRegion, setSelectedRegion] = useState(null)
   const [searchPolygon, setSearchPolygon] = useState(null)
   const [collection, setCollection] = useState({})
+  const [locations, setLocations] = useState({})
   const [layers, setLayers] = useState([])
   const [user, setUser] = useState({})
 
@@ -127,6 +129,11 @@ function App() {
     setCollection,
   }
 
+  const locationValue = {
+    locations,
+    setLocations
+  }
+
   const graphsValue = {
     graphs,
     saveCurrentGraph,
@@ -152,16 +159,17 @@ function App() {
     getNextColor
   }
 
-
   return (
     <>
       <QueryClientProvider client={queryClient}>
         <UserContext.Provider value={userValue} >
           <LayerContext.Provider value={value}>
             <GraphContext.Provider value={graphsValue}>
-              <CollectionContext.Provider value={collectionValue}>
-                <RouterProvider router={router} />
-              </CollectionContext.Provider>
+              <LocationContext.Provider value={locationValue}>
+                <CollectionContext.Provider value={collectionValue}>
+                  <RouterProvider router={router} />
+                </CollectionContext.Provider>
+              </LocationContext.Provider>
             </GraphContext.Provider>
           </LayerContext.Provider>
         </UserContext.Provider>
