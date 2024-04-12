@@ -3,23 +3,25 @@ import HeatmapLayer from '../HeatmapLayer/HeatmapLayer'
 import PatternManager from '../PatternManager/PatternManager'
 import { useContext } from 'react'
 import { LayerContext } from '../../../context/layerContext'
+import { LocationContext } from '@/context/locationContext'
 
 function RegionsComponent({ data, fieldName, color }) {
   const { mapDivision } = useContext(LayerContext)
+  const { locations } = useContext(LocationContext)
 
   if (!Array.isArray(data) || data.length === 0) {
     return console.log('No hay datos disponibles para mostrar')
   }
-
   // Función para determinar el ID de geojson basado en el nivel de división actual
   const getGeojsonIdByDivision = (item) => {
+    const location = locations[mapDivision].find(l => l._id === item.locationId[mapDivision])
     switch (mapDivision) {
     case 'division1':
-      return item.locationId.division1 ? item.locationId.division1.geojsonId : 'noDivision1'
+      return location ? location.geojsonId : 'noDivision1'
     case 'division2':
-      return item.locationId.division2 ? item.locationId.division2.geojsonId : 'noDivision2'
+      return location ? location.geojsonId : 'noDivision2'
     default: // 'division3' o cualquier otro caso
-      return item.locationId.division3 ? item.locationId.division3.geojsonId : 'noDivision3'
+      return location ? location.geojsonId : 'noDivision3'
     }
   }
 
