@@ -16,7 +16,7 @@ import { router } from './router'
 const queryClient = new QueryClient()
 
 function App() {
-  const [mapDivision, setMapDivision] = useState('division4')
+  const [mapDivision, setMapDivision] = useState('division3')
   const [selectedNameDistrict, setSelectedNameDistrict] = useState([])
   const [selectedRegion, setSelectedRegion] = useState(null)
   const [searchPolygon, setSearchPolygon] = useState(null)

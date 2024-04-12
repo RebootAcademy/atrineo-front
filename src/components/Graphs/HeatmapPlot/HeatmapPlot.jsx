@@ -10,7 +10,7 @@ function HeatmapPlot({
   data, 
   xAxis, 
   yAxis, 
-  zAxis 
+  zAxis, 
 }) {
 
   const containerRef = useRef()
@@ -24,53 +24,96 @@ function HeatmapPlot({
     return numericFieldsObj
   }), [data])
 
+  /*   const xStep = 18
+  const yStep = 18 */
+
   useEffect(() => {
     if (filteredData) {
-      const yStep = 5
-      const yValues = [...new Set(filteredData.map(d => d[yAxis]))]
-        .sort((a, b) => b - a)
-        .filter((_, index) => index % yStep === 0)
-      const xStep = 2
-      const xValues = filteredData.map(d => d[xAxis])
-        .filter((_, index) => index % xStep === 0)
+      const validData = filteredData.filter((d) => d[zAxis] !== null && d[zAxis] !== 0)
+
+      const xRange =
+        Math.max(...validData.map((d) => d[xAxis])) -
+        Math.min(...validData.map((d) => d[xAxis]))
+      const yRange =
+        Math.max(...validData.map((d) => d[yAxis])) -
+        Math.min(...validData.map((d) => d[yAxis]))
+
+      // Ajustar xStep e yStep basado en el rango
+      const xStep = Math.ceil(xRange / 50) // Ajusta este divisor según sea necesario
+      const yStep = Math.ceil(yRange / 50) // Ajusta este divisor según sea necesario
+
+      const groupedData = {}
+      validData.forEach((d) => {
+        const xGroup = Math.floor(d[xAxis] / xStep) * xStep
+        const yGroup = Math.floor(d[yAxis] / yStep) * yStep
+        const key = `${xGroup}-${yGroup}`
+
+        if (!groupedData[key]) {
+          groupedData[key] = {
+            ...d,
+            [xAxis]: xGroup,
+            [yAxis]: yGroup,
+            [zAxis]: 0,
+            count: 0,
+          }
+        }
+        groupedData[key][zAxis] += d[zAxis]
+        groupedData[key].count += 1
+      })
+
+      const dataForPlotting = Object.values(groupedData).map((group) => ({
+        ...group,
+        [zAxis]: group[zAxis] / group.count,
+      }))
+
+      const xValues = [...new Set(dataForPlotting.map((d) => d[xAxis]))].sort(
+        (a, b) => a - b
+      )
+      const yValues = [...new Set(dataForPlotting.map((d) => d[yAxis]))].sort(
+        (a, b) => b - a
+      )
+
       const plot = Plot.plot({
         width: width,
         height: height,
         marginLeft: 60,
         marginBottom: 60,
         padding: 0,
-        y: { 
+        y: {
           label: yAxis,
           domain: yValues,
-          tickFormat: formatNumber, 
+          tickFormat: formatNumber,
         },
         x: {
           label: xAxis,
           domain: xValues,
           tickRotate: -45,
           tickSize: 5,
-          tickFormat: formatNumber 
+          tickFormat: formatNumber,
         },
-        color: { 
+        color: {
           scheme: "Blues",
           legend: true,
-          zero: true,
+          zero: false,
+          label: zAxis
         },
         marks: [
           Plot.cell(
-            filteredData,
+            dataForPlotting,
             Plot.group(
               { fill: "sum" }, // Sustituir por aggregation
-              { x: (d) => d[xAxis],
-                y: (d) => d[yAxis], 
-                fill: (d) => d[zAxis], 
-                inset: 0.5, 
-                sort: { y: "fill" } }
+              {
+                x: (d) => d[xAxis],
+                y: (d) => d[yAxis],
+                fill: (d) => d[zAxis],
+                inset: 0.5,
+                sort: { y: "fill" },
+              }
             )
-          )
-        ]
+          ),
+        ],
       })
-      containerRef.current.innerHTML = ''
+      containerRef.current.innerHTML = ""
       containerRef.current.appendChild(plot)
     }
   }, [filteredData, xAxis, yAxis, zAxis, height, width])
@@ -78,8 +121,6 @@ function HeatmapPlot({
   return (
     <div className='border rounded-md border-gray px-4' ref={containerRef}></div>
   )
-
-  
 }
 
 HeatmapPlot.propTypes = {

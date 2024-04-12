@@ -6,7 +6,6 @@ import { FeatureGroup } from 'react-leaflet'
 import 'leaflet/dist/leaflet.css'
 import 'leaflet-draw/dist/leaflet.draw.css'
 import './Style.css'
-import RegionsSelected from '../SelectedRegionComponent/SelectedRegionComponent'
 
 function DrawComponent() {
   const { searchPolygon, setSearchPolygon } = useContext(LayerContext)
@@ -84,7 +83,6 @@ function DrawComponent() {
             : false
         }}
       />
-      <RegionsSelected/>
     </FeatureGroup>
   )
 }

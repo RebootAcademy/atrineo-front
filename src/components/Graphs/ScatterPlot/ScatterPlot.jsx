@@ -17,14 +17,19 @@ function ScatterPlot({
   const boundsWidth = width - MARGIN.left - MARGIN.right
   const boundsHeight = height - MARGIN.top - MARGIN.bottom
 
-  const filteredData = useMemo(() => data.map(item => {
-    const numericFields = extractNumericFields(item.fields)
-    const numericFieldsObj = numericFields.reduce((acc, field) => {
-      acc[field.fieldName] = field.fieldValue
-      return acc
-    }, {})
-    return numericFieldsObj
-  }), [data])
+  const filteredData = useMemo(() => {
+    return data
+      .map((item) => {
+        const numericFields = extractNumericFields(item.fields)
+        const numericFieldsObj = numericFields.reduce((acc, field) => {
+          acc[field.fieldName] = field.fieldValue
+          return acc
+        }, {})
+        return numericFieldsObj
+      })
+      .filter((d) => d[xAxis] !== 0 && d[yAxis] !== 0)
+      .filter((d) => !zAxis || (d[zAxis] !== null && d[zAxis] !== 0))
+  }, [data, zAxis, yAxis, xAxis])
 
   const xScale = useMemo(() => {
     return d3
@@ -70,20 +75,22 @@ function ScatterPlot({
   })
 
   return (
-    <svg 
-      width={width} 
-      height={height} 
-      className='border rounded-md border-gray'
+    <svg
+      width={width}
+      height={height}
+      className="border rounded-md border-gray"
     >
       <g transform={`translate(${MARGIN.left},${MARGIN.top})`}>
         {circles}
         <g
           transform={`translate(0,${boundsHeight})`}
-          ref={node => d3.select(node).call(xAxisCall)}
+          ref={(node) => d3.select(node).call(xAxisCall)}
         />
-        <g ref={node => d3.select(node).call(yAxisCall)} />
+        <g ref={(node) => d3.select(node).call(yAxisCall)} />
         <text
-          transform={`translate(${boundsWidth / 2},${boundsHeight + MARGIN.bottom - 20})`}
+          transform={`translate(${boundsWidth / 2},${
+            boundsHeight + MARGIN.bottom - 20
+          })`}
           textAnchor="middle"
         >
           {xAxis}
@@ -91,12 +98,22 @@ function ScatterPlot({
         <text
           transform="rotate(-90)"
           y={0 - MARGIN.left}
-          x={0 - (boundsHeight / 2)}
+          x={0 - boundsHeight / 2}
           dy="1em"
           textAnchor="middle"
         >
           {yAxis}
         </text>
+        {zAxis && (
+          <text
+            x={boundsWidth}
+            y={boundsHeight + 50}
+            textAnchor="end"
+            alignmentBaseline="ideographic"
+          >
+            {`z axis: ${zAxis}`}
+          </text>
+        )}
       </g>
     </svg>
   )

@@ -34,7 +34,10 @@ function Statistics() {
 
   const data = collection?.data
   const aggOptions = ['sum', 'avg', 'count', 'min', 'max']
-  const regionNames = extractRegionNames(collection, mapDivision)
+
+  const adjustedMapDivision = mapDivision === 'division4' ? 'division3' : mapDivision
+
+  const regionNames = extractRegionNames(collection, adjustedMapDivision)
 
   const stringOptions = useMemo(() => {
     return data ? extractStringOptions(data[0]?.fields) : []
@@ -58,7 +61,7 @@ function Statistics() {
   const [yAxis, setYAxis] = useState(fields.length > 0 ? fields[0].fieldName : '')
   const [xAxis, setXAxis] = useState(optionsArr.length > 0 ? optionsArr[0] : '')
   const [zAxis, setZAxis] = useState('')
-  const [ showOptions, setShowOptions ] = useState(true)
+  const [showOptions, setShowOptions] = useState(true)
 
   useEffect(() => {
     if (fields.length > 0) {
@@ -121,7 +124,6 @@ function Statistics() {
       1 : 1
   const graphMargin = 10
   const aspectRatio = 16 / 9
-
 
   const calculatedGraphWidth = ((checkWidth() ? containerWidth - 200 : containerWidth) - (graphMargin * (numGraphsPerRow))) / numGraphsPerRow
   const calculatedGraphHeight = calculatedGraphWidth / aspectRatio

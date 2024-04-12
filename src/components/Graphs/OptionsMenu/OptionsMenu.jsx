@@ -24,8 +24,8 @@ function OptionsMenu({ onChange, fields, options, aggOptions, changeAggregation,
   const { saveCurrentGraph } = useContext(GraphContext)
 
   const graphTypes = [
-    {name:'bar', img: '/barChart.svg'}, 
-    {name:'pie', img: '/pieChart.svg'},
+    {name: 'bar', img: '/barChart.svg'}, 
+    {name: 'pie', img: '/pieChart.svg'},
     {name: 'scatter', img: '/scatter-chart.svg'},
     {name: 'heatmap', img: '/heatMap.svg'}
   ]
@@ -82,6 +82,7 @@ function OptionsMenu({ onChange, fields, options, aggOptions, changeAggregation,
   }
   
   const displaySelect = (title, fn, arr, isNumeric = false, excludeOptions = [], currentValue) => {
+
     let filteredOptions = arr.filter(option => !excludeOptions.includes(option))
 
     if (chartType === 'scatter' && isNumeric) {
@@ -120,50 +121,68 @@ function OptionsMenu({ onChange, fields, options, aggOptions, changeAggregation,
   }
 
   return (
-    <Card className='flex flex-col h-full items-center rounded-sm'>
-      <CardHeader className="font-medium self-start">
-        Chart Data
-      </CardHeader>
-      <Label className="self-start ml-4 mt-4">
-        Chart Name:
-      </Label>
-      <Input className="w-5/6 m-3.5" value={chartName} onChange={handleNameChange}/>
+    <Card className="flex flex-col h-full items-center rounded-sm">
+      <CardHeader className="font-medium self-start">Chart Data</CardHeader>
+      <Label className="self-start ml-4 mt-4">Chart Name:</Label>
+      <Input
+        className="w-5/6 m-3.5"
+        value={chartName}
+        onChange={handleNameChange}
+      />
       <Select onValueChange={handleChange}>
         <SelectTrigger className="w-5/6">
           <SelectValue placeholder="Select chart type" />
         </SelectTrigger>
-        <SelectContent>
-          { displayChartOptions(graphTypes) }
-        </SelectContent>
+        <SelectContent>{displayChartOptions(graphTypes)}</SelectContent>
       </Select>
 
-      {chartType !== 'scatter' && chartType !== 'heatmap' && (
-        displaySelect('Aggregation:', handleAggregationChange, aggOptions)
+      {chartType !== "scatter" &&
+        chartType !== "heatmap" &&
+        displaySelect("Aggregation:", handleAggregationChange, aggOptions)}
+
+      <Label className="self-start ml-4 mt-4">Axes:</Label>
+
+      {displaySelect(
+        "X axis:",
+        handleXAxisChange,
+        options.filter(
+          (option) => option !== "Status" && option !== "Branche_(WZ)"
+        ),
+        true,
+        [selectedYAxis, selectedZAxis],
+        selectedXAxis
+      )}
+      {displaySelect(
+        "Y axis:",
+        handleYAxisChange,
+        fields,
+        true,
+        [selectedXAxis, selectedZAxis],
+        selectedYAxis
       )}
 
-      <Label className="self-start ml-4 mt-4">
-        Axes:
-      </Label>
-      { displaySelect('X axis:', handleXAxisChange, options, true, [selectedYAxis, selectedZAxis], selectedXAxis) }
-      { displaySelect('Y axis:', handleYAxisChange, fields, true, [selectedXAxis, selectedZAxis], selectedYAxis)  }
+      {chartType === "scatter" &&
+        displaySelect(
+          "Z axis:",
+          handleZAxisChange,
+          options,
+          true,
+          [selectedXAxis, selectedYAxis],
+          selectedZAxis
+        )}
+      {chartType === "heatmap" &&
+        displaySelect(
+          "Z axis:",
+          handleZAxisChange,
+          options,
+          true,
+          [selectedXAxis, selectedYAxis],
+          selectedZAxis
+        )}
 
-      {chartType === 'scatter' && (
-        displaySelect('Z axis:', handleZAxisChange, options, true, [selectedXAxis, selectedYAxis], selectedZAxis)
-      )}
-      {chartType === 'heatmap' && (
-        displaySelect('Z axis:', handleZAxisChange, options, true, [selectedXAxis, selectedYAxis], selectedZAxis)
-      )}
-
-      <div className='mt-12 w-full flex justify-around'>
-        <CustomButton 
-          text="Cancel" 
-          variant="outline"
-          fn={ hideOptions }
-        />
-        <CustomButton 
-          text='Save' 
-          fn={handleSaveGraph} 
-        />
+      <div className="mt-12 w-full flex justify-around">
+        <CustomButton text="Cancel" variant="outline" fn={hideOptions} />
+        <CustomButton text="Save" fn={handleSaveGraph} />
       </div>
     </Card>
   )
