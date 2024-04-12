@@ -1,8 +1,10 @@
 import PropTypes from 'prop-types'
-import { useMemo, useRef } from "react"
+import { useMemo, useRef, useContext } from "react"
 import * as d3 from "d3"
 
 import { checkAggregation } from '@/helpers'
+
+import { LocationContext } from '@/context/locationContext'
 
 const MARGIN_X = 150
 const MARGIN_Y = 50
@@ -20,8 +22,7 @@ function PieChart({
   yAxis
 }) {
   const ref = useRef(null)
-
-  console.log(division)
+  const { locations } = useContext(LocationContext)
 
   const adjustedDivision = division === 'division4' ? 'division3' : division
 
@@ -29,7 +30,7 @@ function PieChart({
     const sums = data.reduce((acc, cur) => {
       let name
       if (xAxis === "regions") {
-        name = cur.locationId[adjustedDivision]?.name
+        name = (locations[adjustedDivision].find(d => d._id === cur.locationId[adjustedDivision]))?.name
       } else {
         name = cur.fields
           .filter((f) => f.fieldName === xAxis)
@@ -61,7 +62,7 @@ function PieChart({
     } else {
       return Object.entries(sums).map(([name, value]) => ({ name, value }))
     }
-  }, [data, xAxis, yAxis, adjustedDivision, aggregation])
+  }, [data, xAxis, yAxis, adjustedDivision, aggregation, locations])
 
   const radius = Math.min(width - 2 * MARGIN_X, height - 2 * MARGIN_Y) / 2
 
