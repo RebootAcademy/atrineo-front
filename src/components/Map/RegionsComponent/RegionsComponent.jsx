@@ -5,6 +5,7 @@ import { useContext } from 'react'
 import { LayerContext } from '../../../context/layerContext'
 
 function RegionsComponent({ data, fieldName, color }) {
+  console.log(color)
   const { mapDivision } = useContext(LayerContext)
 
   if (!Array.isArray(data) || data.length === 0) {

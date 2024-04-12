@@ -69,7 +69,7 @@ function SavedLayerComponent() {
                 ) : (
                   <>
                     {Object.entries(layer.data).map(([key, value]) => {
-                      if (key !== "type" && key !== "color") {
+                      if (key !== "type") {
                         return (
                           <p key={key}>
                             Total {`${value}`} per {mapDivision}

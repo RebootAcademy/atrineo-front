@@ -18,14 +18,12 @@ function HeatmapLayer({ data, fieldName }) {
     }))
   }))
 
-  console.log(data)
-
   const [maxValue, minValue] = findMaxAndMinValues(adjustedData, fieldName)
 
   const determineStyle = (percentage) => {
     if (percentage < 25) return 'url(#patternDots)'
-    if (percentage < 50) return 'url(#patternStripes)'
-    if (percentage < 75) return 'url(#patternGrid)'
+    if (percentage >= 25 && percentage < 50) return 'url(#patternStripes)'
+    if (percentage >=50 && percentage < 75) return 'url(#patternGrid)'
     return 'url(#patternZigzag)'
   }
 
@@ -50,6 +48,7 @@ function HeatmapLayer({ data, fieldName }) {
     }
 
     const value = currentGroupId?.sums.find(sum => sum.fieldName === fieldName)?.total
+
     if (value !== undefined) {
       const percentage = ((value - minValue) / (maxValue - minValue)) * 100
       return {
@@ -62,6 +61,7 @@ function HeatmapLayer({ data, fieldName }) {
     }
     return defaultStyle
   }
+
 
   if (isLoading) return <div>Loading...</div>
   if (isError) return <div>Error loading data: {error.message}</div>
