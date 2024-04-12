@@ -95,6 +95,7 @@ function HeatmapPlot({
           scheme: "Blues",
           legend: true,
           zero: false,
+          label: zAxis
         },
         marks: [
           Plot.cell(

@@ -9,8 +9,7 @@ function Barplot({
   height, 
   data, 
   regions, 
-  options, 
-  division, 
+  options,
   aggregation, 
   xAxis, 
   yAxis 
@@ -24,7 +23,7 @@ function Barplot({
   const xFieldValues = createStringOptionsObject(options, data)
   xFieldValues.regions = regions
 
-  const aggregatedData = useMemo(() => calcAggregatedData(data, xAxis, yAxis, division, aggregation), [data, xAxis, yAxis, division, aggregation]) 
+  const aggregatedData = useMemo(() => calcAggregatedData(data, xAxis, yAxis, aggregation), [data, xAxis, yAxis, aggregation]) 
   
   const maxSum = useMemo(() => Math.max(...aggregatedData.map(d => d.sum)), [aggregatedData])
 
