@@ -134,7 +134,7 @@ function TableComponent({ data, hiddenColumns, searchItem='' }) {
           <TableBody>
             <List
               className='w-full'
-              height={500}
+              height={800}
               itemCount={sortedData.length}
               itemSize={35}
             >
