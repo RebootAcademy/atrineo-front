@@ -1,6 +1,7 @@
 import { useEffect, useContext, useMemo } from 'react'
 import { LayerContext } from '@/context/layerContext'
 import { CollectionContext } from '@/context/collectionContext'
+import { LocationContext } from '@/context/locationContext'
 
 import { v4 } from 'uuid'
 
@@ -12,6 +13,7 @@ import { isWithinPolygon, checkValue } from '@/helpers'
 
 function LayersManager() {
   const { collection } = useContext(CollectionContext)
+  const { locations } = useContext(LocationContext)
   const { searchPolygon, layers, setLayers } = useContext(LayerContext)
 
   useEffect(() => {
@@ -27,9 +29,9 @@ function LayersManager() {
         let valid = row.fields.every(item => 
           layer.data[item.fieldName] === undefined || checkValue(item.fieldValue, item.fieldName, layer)
         )
-
         if (layer.data.regions?.names) {
-          valid = valid && layer.data.regions.names.includes(row.locationId[layer.data.regions.division]?.name)
+          const name = locations[layer.data.regions.division].find(l => l._id === row.locationId[layer.data.regions.division])?.name
+          valid = valid && layer.data.regions.names.includes(name)
         }
         return valid
       })
