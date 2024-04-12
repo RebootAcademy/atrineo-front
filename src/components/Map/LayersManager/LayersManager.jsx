@@ -37,7 +37,7 @@ function LayersManager() {
       })
 
     return { layer, filteredData, fields }
-  }), [collection, layers, searchPolygon])
+  }), [collection, layers, searchPolygon, locations])
 
   const displayLayers = (filters, array, searchPolygon) => {
     return Object.entries(filters)
