@@ -58,7 +58,7 @@ export const extractBooleanOptions = (arr) => {
 
 export const createStringOptionsObject = (arr, data) => {
   const optionsObj = {}
-
+  console.log(arr)
   arr?.forEach(option => {
     optionsObj[option] = new Set()
   })
@@ -103,16 +103,20 @@ export const calculateRadius = (value, minValue, maxValue) => {
   return calculatedRadius
 }
 
-export const extractRegionNames = (array, division) => {
+export const extractRegionNames = (array, division, locations) => {
   if (!array || !Array.isArray(array.data)) {
     return []
   }
   const nameRegionFiltered = array.data
     .filter((item) => item.locationId[division] !== null)
     .map((item) => {
+      const locationId = item.locationId[division]
+      const locationName = locations[division].find(
+        (l) => l._id === locationId
+      )?.name
       return {
-        id: item.locationId[division]?._id,
-        name: item.locationId[division]?.name,
+        id: locationId,
+        name: locationName,
       }
     })
     
@@ -143,11 +147,11 @@ export const checkAggregation = (value, prev, agg) => {
   }
 }
 
-export const calcAggregatedData = (data, xAxis, yAxis, division, aggregation) => {
+export const calcAggregatedData = (data, xAxis, yAxis, division, aggregation, locations) => {
   const sums = data.reduce((acc, cur) => {
     let name
     if (xAxis === 'regions') {
-      name = cur.locationId[division]?.name
+      name = (locations.find(d => d._id === cur.locationId[division]))?.name
     } else {
       name = cur.fields
         .filter(f => f.fieldName === xAxis)

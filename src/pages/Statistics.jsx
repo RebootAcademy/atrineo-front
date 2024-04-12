@@ -8,6 +8,7 @@ import CustomButton from "@/components/CustomButton/CustomButton"
 import { CollectionContext } from "../context/collectionContext"
 import { LayerContext } from "../context/layerContext"
 import { UserContext } from "../context/userContext"
+import { LocationContext } from "@/context/locationContext"
 
 import { useUser } from "@/hooks/useUser"
 import { useCollectionFetch } from "@/hooks/useCollectionFetch"
@@ -24,6 +25,7 @@ function Statistics() {
   const { collection, setCollection } = useContext(CollectionContext)
   const { mapDivision } = useContext(LayerContext)
   const { user } = useContext(UserContext)
+  const { locations } = useContext(LocationContext)
 
   useUser()
   useCollectionFetch(
@@ -37,7 +39,7 @@ function Statistics() {
 
   const adjustedMapDivision = mapDivision === 'division4' ? 'division3' : mapDivision
 
-  const regionNames = extractRegionNames(collection, adjustedMapDivision)
+  const regionNames = extractRegionNames(collection, adjustedMapDivision, locations)
 
   const stringOptions = useMemo(() => {
     return data ? extractStringOptions(data[0]?.fields) : []

@@ -1,6 +1,9 @@
 import PropTypes from 'prop-types'
-import { useMemo } from 'react'
+import { useMemo, useContext } from 'react'
 import * as d3 from "d3" // we will need d3.js
+
+import { LocationContext } from '@/context/locationContext'
+import { LayerContext } from '@/context/layerContext'
 
 import { calcAggregatedData, createStringOptionsObject, formatNumber } from '@/helpers'
 
@@ -14,7 +17,9 @@ function Barplot({
   xAxis, 
   yAxis 
 }) {
-  
+  const { locations } = useContext(LocationContext)
+  const { mapDivision } = useContext(LayerContext)
+
   const MARGIN = { top: 60, right: 40, bottom: 80, left: 90 }
   const BAR_PADDING = 0.2
   const boundsWidth = width - MARGIN.right - MARGIN.left
@@ -22,8 +27,8 @@ function Barplot({
   
   const xFieldValues = createStringOptionsObject(options, data)
   xFieldValues.regions = regions
-
-  const aggregatedData = useMemo(() => calcAggregatedData(data, xAxis, yAxis, aggregation), [data, xAxis, yAxis, aggregation]) 
+  
+  const aggregatedData = useMemo(() => calcAggregatedData(data, xAxis, yAxis, mapDivision, aggregation, locations[mapDivision]), [data, xAxis, yAxis, aggregation, locations, mapDivision]) 
   
   const maxSum = useMemo(() => Math.max(...aggregatedData.map(d => d.sum)), [aggregatedData])
 

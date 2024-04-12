@@ -18,8 +18,6 @@ function HeatmapLayer({ data, fieldName }) {
     }))
   }))
 
-  console.log(data)
-
   const [maxValue, minValue] = findMaxAndMinValues(adjustedData, fieldName)
 
   const determineStyle = (percentage) => {
