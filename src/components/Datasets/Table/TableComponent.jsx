@@ -12,8 +12,6 @@ import {
 
 import { UpArrow, DownArrow } from '../../ui/Icons/Icons'
 
-import './TableComponent.css'
-
 function TableComponent({ data, hiddenColumns, searchItem='' }) {
   const fields = data && data.length > 0 ? data[0].fields : []
   const [sortField, setSortField] = useState(fields[0]?.fieldName)
@@ -80,9 +78,13 @@ function TableComponent({ data, hiddenColumns, searchItem='' }) {
       <>
         {
           index === 0 &&
-          !hiddenColumns.includes(d.fieldName) &&
           fields.map(f => {
+            const isNumeric = typeof f.fieldValue === 'number'
+            const isBool = typeof f.fieldValue === 'boolean'
+            let className = isNumeric ? 'justify-end' : 'min-w-20'
+            className = isBool ? 'text-center' : className
             return (
+              !hiddenColumns.includes(f.fieldName) &&
               <TableHead
                 key={f._id + f.fieldName}
                 className='text-white font-bold text-center bg-primary sticky top-0'
@@ -90,7 +92,7 @@ function TableComponent({ data, hiddenColumns, searchItem='' }) {
                 onClick={selectField}
               >
                 <>
-                  <div className='flex w-48'>
+                  <div className={`flex w-32 ${className}`}>
                     {sortField === f.fieldName && orderFirst ? <UpArrow /> : <DownArrow />}
                     {f.fieldName}
                   </div>
@@ -107,7 +109,7 @@ function TableComponent({ data, hiddenColumns, searchItem='' }) {
               let className = isNumeric ? 'text-right' : 'min-w-20'
               className = isBool ? 'text-center' : className
               return (
-                <TableCell key={i} className="min-w-48">
+                <TableCell key={i} className="w-32">
                   <div className={className}>
                     {displayData(f.fieldValue)}
                   </div>
