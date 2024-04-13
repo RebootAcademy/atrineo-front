@@ -58,7 +58,6 @@ export const extractBooleanOptions = (arr) => {
 
 export const createStringOptionsObject = (arr, data) => {
   const optionsObj = {}
-  console.log(arr)
   arr?.forEach(option => {
     optionsObj[option] = new Set()
   })

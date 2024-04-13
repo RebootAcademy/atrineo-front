@@ -12,6 +12,7 @@ import { UserContext } from "../context/userContext"
 
 import { useUser } from "@/hooks/useUser"
 import { useCollectionFetch } from "@/hooks/useCollectionFetch"
+import { useDivisions } from "@/hooks/useDivisions"
 
 function Dataset() {
   const { collection, setCollection } = useContext(CollectionContext)
@@ -30,6 +31,7 @@ function Dataset() {
     setCollection, 
     collection
   )
+  useDivisions()
 
   const handleSearchChange = debounce((e) => {
     setSearchItem(e.target.value)

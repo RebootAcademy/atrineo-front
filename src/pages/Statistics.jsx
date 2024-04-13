@@ -20,6 +20,7 @@ import {
   extractBooleanOptions
 } from "../helpers"
 import { useDimensions } from "@/hooks/useDimensions"
+import { useDivisions } from "@/hooks/useDivisions"
 
 function Statistics() {
   const { collection, setCollection } = useContext(CollectionContext)
@@ -33,6 +34,7 @@ function Statistics() {
     setCollection,
     collection
   )
+  useDivisions()
 
   const data = collection?.data
   const aggOptions = ['sum', 'avg', 'count', 'min', 'max']

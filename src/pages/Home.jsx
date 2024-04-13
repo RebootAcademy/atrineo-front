@@ -10,6 +10,7 @@ import LoadingSpinner from '../components/LoadingSpinner/LoadingSpinner'
 
 import { useUser } from '@/hooks/useUser'
 import { useCollectionFetch } from '@/hooks/useCollectionFetch'
+import { useDivisions } from '@/hooks/useDivisions'
 
 function Home () {
   const { example } = I18N
@@ -22,6 +23,7 @@ function Home () {
     setCollection,
     collection
   )
+  useDivisions()
 
   return (
     <>
