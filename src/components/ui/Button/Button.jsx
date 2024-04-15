@@ -13,6 +13,7 @@ const buttonVariants = cva(
       variant: {
         default: 'bg-primary text-primary-foreground hover:bg-primary/90 w-[100px]',
         large: 'bg-primary text-primary-foreground hover:bg-primary/90 w-72',
+        narrow: 'bg-primary text-primary-foreground hover:bg-primary/90 w-24 mx-2',
         destructive:
           'bg-destructive text-destructive-foreground hover:bg-destructive/90',
         outline:
