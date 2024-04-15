@@ -6,7 +6,6 @@ function SearchBar () {
   const [searchResults, setSearchResults] = useState([])
 
   const handleChange = (e) => {
-    console.log(e.target.value)
     searchQuery(e.target.value)
   }
 
@@ -17,7 +16,6 @@ function SearchBar () {
 
   const displayResults = () => {
     return searchResults.map(result => {
-      console.log(result)
       return (
         <SearchResult key={result.properties.place_id} data={result || null} />
       )

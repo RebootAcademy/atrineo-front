@@ -8,7 +8,6 @@ import { findMaxAndMinValues } from "../../../helpers"
 import PropTypes from 'prop-types'
 
 function HeatmapLayer({ data, fieldName }) {
-  console.log(fieldName)
   const { mapDivision } = useContext(LayerContext)
   const { data: mapData, isLoading, isError, error } = useGeoJsonData(mapDivision)
 
