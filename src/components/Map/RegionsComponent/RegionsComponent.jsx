@@ -4,13 +4,8 @@ import PatternManager from '../PatternManager/PatternManager'
 import { useContext } from 'react'
 import { LayerContext } from '../../../context/layerContext'
 
-function RegionsComponent({ data, fieldName, color }) {
-  console.log(color)
+function RegionsComponent({ data, fieldName }) {
   const { mapDivision } = useContext(LayerContext)
-
-  if (!Array.isArray(data) || data.length === 0) {
-    return console.log('No hay datos disponibles para mostrar')
-  }
 
   // Función para determinar el ID de geojson basado en el nivel de división actual
   const getGeojsonIdByDivision = (item) => {
@@ -64,7 +59,7 @@ function RegionsComponent({ data, fieldName, color }) {
   return (
     <>
       <HeatmapLayer data={filteredData} fieldName={fieldName} />
-      <PatternManager color={color} />
+      <PatternManager />
     </>
   )
 }

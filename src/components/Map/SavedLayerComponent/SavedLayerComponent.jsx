@@ -59,7 +59,7 @@ function SavedLayerComponent() {
                             <ColorRectangleIcon color={value.color} />
                             <p className="ml-2">{key}: </p>
                           </div>
-                          <p>{value.value}</p>
+                          <p>&gt;= {value.value}</p>
                         </div>
                       ))}
                     <div className="mb-4">
@@ -69,7 +69,7 @@ function SavedLayerComponent() {
                 ) : (
                   <>
                     {Object.entries(layer.data).map(([key, value]) => {
-                      if (key !== "type") {
+                      if (key !== "type" && key !== 'color') {
                         return (
                           <p key={key}>
                             Total {`${value}`} per {mapDivision}

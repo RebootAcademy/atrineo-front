@@ -86,7 +86,7 @@ export const findMaxAndMinValues = (arr, name) => {
 }
 
 export const calculateRadius = (value, minValue, maxValue) => {
-  const range = [1, 3000]
+  const range = [1, 5000]
   if (isNaN(value) || isNaN(minValue) || isNaN(maxValue) || minValue === maxValue) {
     return 1
   }
