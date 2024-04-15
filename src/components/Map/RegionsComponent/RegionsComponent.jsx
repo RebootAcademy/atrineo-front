@@ -5,7 +5,7 @@ import { useContext } from 'react'
 import { LayerContext } from '../../../context/layerContext'
 import { LocationContext } from '@/context/locationContext'
 
-function RegionsComponent({ data, fieldName }) {
+function RegionsComponent({ data, fieldName, color }) {
   const { mapDivision } = useContext(LayerContext)
   const { locations } = useContext(LocationContext)
 
@@ -64,8 +64,11 @@ function RegionsComponent({ data, fieldName }) {
 
   return (
     <>
-      <HeatmapLayer data={filteredData} fieldName={fieldName} />
-      <PatternManager />
+      <HeatmapLayer 
+        data={filteredData} 
+        fieldName={fieldName} 
+      />
+      <PatternManager color={color}/>
     </>
   )
 }

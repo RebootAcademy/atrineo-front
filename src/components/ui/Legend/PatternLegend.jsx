@@ -2,7 +2,6 @@ import PropTypes from 'prop-types'
 
 function PatternLegend({ layer }) {
   const {color} = layer.data
-
   console.log(layer)
 
   return (
