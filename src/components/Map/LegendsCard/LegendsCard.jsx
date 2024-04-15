@@ -4,7 +4,6 @@ import {
   CardTitle
 } from '../../ui/Card/Card'
 
-
 function LegendsCard() {
   return (
     <div className='w-full flex flex-col border-0'>

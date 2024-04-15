@@ -27,6 +27,7 @@ function DisplayFilters({ layerObj, type }) {
     const names = value.map(name => name.value)
     layerObj.current.regions = { names, division: mapDivision }
   }
+
   const handleFilterChange = (value, target) => {
     let newState = { ...layerObj.current }
 
