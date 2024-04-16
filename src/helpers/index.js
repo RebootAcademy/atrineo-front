@@ -80,7 +80,9 @@ export const findMaxAndMinValues = (arr, name) => {
   const values = arr
     .flatMap((item) => item.fields)
     .filter((field) => field.fieldName === name)
-    .map(item => item.fieldValue)
+    .map(item => parseFloat(item.fieldValue))
+    .filter(value => !isNaN(value))
+
   return [Math.max(...values), Math.min(...values)]
 }
 

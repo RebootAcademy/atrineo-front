@@ -14,9 +14,11 @@ function RegionsComponent({ data, fieldName, color }) {
   if (!Array.isArray(data) || data.length === 0) {
     return console.log('No hay datos disponibles para mostrar')
   }
+
   // Función para determinar el ID de geojson basado en el nivel de división actual
   const getGeojsonIdByDivision = (item) => {
-    const location = locations[mapDivision].find(l => l._id === item.locationId[mapDivision])
+    const location = locations[mapDivision].find(location => location._id === item.locationId[mapDivision])
+
     switch (mapDivision) {
     case 'division1':
       return location ? location.geojsonId : 'noDivision1'
@@ -30,10 +32,12 @@ function RegionsComponent({ data, fieldName, color }) {
   const groupedByGeojsonId = data.reduce((acc, item) => {
     const geojsonId = getGeojsonIdByDivision(item)
 
-    if (!acc[geojsonId]) {
-      acc[geojsonId] = []
+    if (geojsonId) {
+      if (!acc[geojsonId]) {
+        acc[geojsonId] = []
+      }
+      acc[geojsonId].push(item)
     }
-    acc[geojsonId].push(item)
     return acc
   }, {})
 

@@ -18,7 +18,7 @@ import { LayerContext } from "@/context/layerContext"
 
 function DisplayFilters({ layerObj, type }) {
   const { collection } = useContext(CollectionContext)
-  const { getNextColor, mapDivision } = useContext(LayerContext)
+  const { getNextColor, mapDivision, minValue, maxValue } = useContext(LayerContext)
 
   const [activeSwitch, setActiveSwitch] = useState(false)
 
@@ -44,7 +44,13 @@ function DisplayFilters({ layerObj, type }) {
     } else {
       const newColor = getNextColor()
       if (type === 'regions') {
-        newState = { type: 'regions', [target]: value, color: newColor }
+        newState = {
+          type: "regions",
+          [target]: value,
+          color: newColor,
+          ...(minValue !== null && { minValue: minValue }),
+          ...(maxValue !== null && { maxValue: maxValue }),
+        }
       } else if (type === 'startups') {
         newState = { type: 'startups', ...newState, [target]: { value, color: newColor }}
       }

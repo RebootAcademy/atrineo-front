@@ -40,6 +40,9 @@ function LayersManager() {
   }), [collection, layers, searchPolygon, locations])
 
   const displayLayers = (filters, array, searchPolygon) => {
+    if (!filters) {
+      return null
+    }
     return Object.entries(filters)
       .filter(([ , value]) => typeof value.value === 'number')
       .map(([key, value]) => {

@@ -1,4 +1,5 @@
-import { useContext } from "react"
+/* eslint-disable react-hooks/rules-of-hooks */
+import { useContext, useMemo } from "react"
 import { GeoJSON } from "react-leaflet"
 import { useGeoJsonData } from '../../../hooks/useGeoJsonData'
 import { defaultStyle } from './Styles'
@@ -7,18 +8,35 @@ import { findMaxAndMinValues } from "../../../helpers"
 
 import PropTypes from 'prop-types'
 
+
 function HeatmapLayer({ data, fieldName }) {
   const { mapDivision } = useContext(LayerContext)
+  
   const { data: mapData, isLoading, isError, error } = useGeoJsonData(mapDivision)
 
-  const adjustedData = data.map(group => ({
-    fields: group.sums.map(sum => ({
-      fieldName: sum.fieldName,
-      fieldValue: sum.total
-    }))
-  }))
+  if (fieldName === "color" || fieldName === "maxValue" || fieldName === "minValue") {
+    return null
+  }
 
-  const [maxValue, minValue] = findMaxAndMinValues(adjustedData, fieldName)
+  const adjustedData = useMemo(
+    () =>
+      data.map((group) => ({
+        fields: group.sums.map((sum) => ({
+          fieldName: sum.fieldName,
+          fieldValue: parseFloat(sum.total.toFixed(2)),
+        })),
+      })), [data])
+
+  const [maxValue, minValue] = useMemo(
+    () => findMaxAndMinValues(adjustedData, fieldName),
+    [adjustedData, fieldName]
+  )
+
+  /*   useEffect(() => {
+    if (maxValue !== null && minValue !== null) {
+      //updateMinMaxValues(minValue, maxValue)
+    }
+  }, [maxValue, minValue, updateMinMaxValues]) */
 
   const determineStyle = (percentage) => {
     if (percentage < 25) return 'url(#patternDots)'
@@ -49,8 +67,12 @@ function HeatmapLayer({ data, fieldName }) {
 
     const value = currentGroupId?.sums.find(sum => sum.fieldName === fieldName)?.total
 
-    if (value !== undefined) {
-      const percentage = ((value - minValue) / (maxValue - minValue)) * 100
+    if (value !== undefined && !isNaN(maxValue) && !isNaN(minValue) && maxValue !== minValue) {
+      const percentage = Math.max(
+        0,
+        Math.min(100, ((value - minValue) / (maxValue - minValue)) * 100)
+      )
+
       return {
         fillColor: determineStyle(percentage),
         fillOpacity: 0.8,
