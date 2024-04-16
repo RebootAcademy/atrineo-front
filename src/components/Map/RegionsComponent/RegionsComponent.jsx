@@ -4,8 +4,10 @@ import PatternManager from '../PatternManager/PatternManager'
 import { useContext } from 'react'
 import { LayerContext } from '../../../context/layerContext'
 import { LocationContext } from '@/context/locationContext'
+import { useDivisions } from '@/hooks/useDivisions'
 
 function RegionsComponent({ data, fieldName, color }) {
+  useDivisions()
   const { mapDivision } = useContext(LayerContext)
   const { locations } = useContext(LocationContext)
 

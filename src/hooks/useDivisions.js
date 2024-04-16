@@ -15,7 +15,6 @@ export const useDivisions = () => {
   const { setLocations } = useContext(LocationContext)
   const [initialDataLoaded, setInitialDataLoaded] = useState(false)
 
-  // Load data from cache first
   useEffect(() => {
     async function loadFromCache() {
       const countries = await locationStore.getItem("countries")
