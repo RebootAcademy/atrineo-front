@@ -25,6 +25,12 @@ function App() {
   const [layers, setLayers] = useState([])
   const [user, setUser] = useState({})
 
+  const [minMaxValues, setMinMaxValues] = useState({ minValue: null, maxValue: null })
+
+  const updateMinMaxValues = (minValue, maxValue) => {
+    setMinMaxValues({ minValue, maxValue })
+  }
+
   const [colorIndex, setColorIndex] = useState(0)
   const [color, setColor] = useState(colorPalette[colorIndex])
 
@@ -156,7 +162,9 @@ function App() {
     setSelectedNameDistrict,
     color,
     setColor,
-    getNextColor
+    getNextColor,
+    ...minMaxValues,
+    updateMinMaxValues,
   }
 
   return (

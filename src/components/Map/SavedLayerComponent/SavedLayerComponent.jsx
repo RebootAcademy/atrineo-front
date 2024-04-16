@@ -12,6 +12,7 @@ import PatternLegend from "../../ui/Legend/PatternLegend"
 function SavedLayerComponent() {
   const { layers, clearLayerById, toggleLayerVisibility, mapDivision } =
     useContext(LayerContext)
+
   return (
     <>
       {layers.map((layer) => {
@@ -59,7 +60,7 @@ function SavedLayerComponent() {
                             <ColorRectangleIcon color={value.color} />
                             <p className="ml-2">{key}: </p>
                           </div>
-                          <p>&gt;= {value.value}</p>
+                          <p className="font-bold">&gt;= {value.value}</p>
                         </div>
                       ))}
                     <div className="mb-4">
@@ -69,11 +70,25 @@ function SavedLayerComponent() {
                 ) : (
                   <>
                     {Object.entries(layer.data).map(([key, value]) => {
-                      if (key !== "type" && key !== 'color') {
+                      if (key !== "type" && key !== 'color' && key !== 'minValue' && key !== 'maxValue') {
                         return (
-                          <p key={key}>
-                            Total {`${value}`} per {mapDivision}
-                          </p>
+                          <div key={key}>
+                            <p className="mb-2">
+                              Total {`${value}`} per {mapDivision}
+                            </p>
+                            <p className="flex justify-between">
+                              Min Value:{" "}
+                              <span className="font-bold">
+                                {layer.data.minValue}
+                              </span>
+                            </p>
+                            <p className="flex justify-between">
+                              Max Value:{" "}
+                              <span className="font-bold">
+                                {layer.data.maxValue}
+                              </span>
+                            </p>
+                          </div>
                         )
                       }
                     })}
