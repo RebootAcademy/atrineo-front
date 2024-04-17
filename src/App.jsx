@@ -25,10 +25,15 @@ function App() {
   const [layers, setLayers] = useState([])
   const [user, setUser] = useState({})
 
-  const [minMaxValues, setMinMaxValues] = useState({ minValue: null, maxValue: null })
+  const [minValue, setMinValue] = useState(null)
+  const [maxValue, setMaxValue] = useState(null)
+  
+  const updateMinValue = (newValue) => {
+    setMinValue(newValue)
+  }
 
-  const updateMinMaxValues = (minValue, maxValue) => {
-    setMinMaxValues({ minValue, maxValue })
+  const updateMaxValue = (newValue) => {
+    setMaxValue(newValue)
   }
 
   const [colorIndex, setColorIndex] = useState(0)
@@ -163,8 +168,10 @@ function App() {
     color,
     setColor,
     getNextColor,
-    ...minMaxValues,
-    updateMinMaxValues,
+    minValue,
+    maxValue,
+    updateMinValue,
+    updateMaxValue
   }
 
   return (
