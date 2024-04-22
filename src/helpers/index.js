@@ -196,8 +196,11 @@ export const formatNumber = (num) => {
 
 export const checkValue = (itemValue, layerKey, layerObj) => {
   if (layerObj.data.type !== 'startups') return true
-  if (typeof layerObj.data[layerKey].value === 'number') {
-    return itemValue >= layerObj.data[layerKey].value
+  if (typeof layerObj.data[layerKey].value[0] === 'number') {
+    return (
+      itemValue >= layerObj.data[layerKey].value[0] &&
+      itemValue <= layerObj.data[layerKey].value[1]
+    )
   } else if (itemValue === "string") {
     return itemValue === layerObj.data[layerKey].value
   } else {

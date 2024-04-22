@@ -44,7 +44,7 @@ function LayersManager() {
       return null
     }
     return Object.entries(filters)
-      .filter(([ , value]) => typeof value.value === 'number')
+      .filter(([ , value]) => typeof value.value === 'object')
       .map(([key, value]) => {
         return (
           <NumericLayer

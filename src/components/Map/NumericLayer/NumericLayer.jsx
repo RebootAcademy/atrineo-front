@@ -5,7 +5,6 @@ import PropTypes from "prop-types"
 
 function NumericLayer({ field, data, color }) {
   const [maxValue, minValue] = findMaxAndMinValues(data, field)
-
   const circles = data.map((filteredItem, index) => {
     const latitude = filteredItem.fields.find((item) => item.fieldName === "latitude")?.fieldValue
     const longitude = filteredItem.fields.find((item) => item.fieldName === "longitude")?.fieldValue
