@@ -19,7 +19,8 @@ function PieChart({
   division, 
   aggregation,
   xAxis,
-  yAxis
+  yAxis,
+  name
 }) {
   const ref = useRef(null)
   const { locations } = useContext(LocationContext)
@@ -114,6 +115,9 @@ function PieChart({
       height={height}
       className='border rounded-md border-gray'
     >
+      <text x={20} y={25} style={{ fontSize: '1em'}}>
+        {name}
+      </text>
       <g
         transform={`translate(${width / 2}, ${height / 2})`}
         className='transition duration-300 opacity-100 cursor-pointer'
@@ -135,7 +139,8 @@ PieChart.propTypes = {
   division: PropTypes.string,
   aggregation: PropTypes.string,
   xAxis: PropTypes.string,
-  yAxis: PropTypes.string
+  yAxis: PropTypes.string,
+  name: PropTypes.string
 }
 
 export default PieChart

@@ -68,6 +68,7 @@ function OptionsMenu({ onChange, fields, options, aggOptions, changeAggregation,
     }
     saveCurrentGraph(graphConfigurationObj, ownProps)
     hideOptions()
+    changeChartName('')
   }
 
   const displayChartOptions = (options) => {

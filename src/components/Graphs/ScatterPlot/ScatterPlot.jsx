@@ -10,7 +10,8 @@ function ScatterPlot({
   data,
   xAxis,
   yAxis,
-  zAxis
+  zAxis,
+  name
 }) {
 
   const MARGIN = { top: 20, right: 20, bottom: 60, left: 70 }
@@ -80,6 +81,9 @@ function ScatterPlot({
       height={height}
       className="border rounded-md border-gray"
     >
+      <text x={20} y={25} style={{ fontSize: '1em' }}>
+        {name}
+      </text>
       <g transform={`translate(${MARGIN.left},${MARGIN.top})`}>
         {circles}
         <g
@@ -125,7 +129,8 @@ ScatterPlot.propTypes = {
   data: PropTypes.array,
   xAxis: PropTypes.string,
   yAxis: PropTypes.string,
-  zAxis: PropTypes.string
+  zAxis: PropTypes.string,
+  name: PropTypes.string
 }
 
 export default ScatterPlot

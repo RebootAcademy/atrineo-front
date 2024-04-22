@@ -10,7 +10,8 @@ function HeatmapPlot({
   data, 
   xAxis, 
   yAxis, 
-  zAxis, 
+  zAxis,
+  name
 }) {
 
   const containerRef = useRef()
@@ -97,6 +98,7 @@ function HeatmapPlot({
           zero: false,
           label: zAxis
         },
+        title: name,
         marks: [
           Plot.cell(
             dataForPlotting,
@@ -116,10 +118,12 @@ function HeatmapPlot({
       containerRef.current.innerHTML = ""
       containerRef.current.appendChild(plot)
     }
-  }, [filteredData, xAxis, yAxis, zAxis, height, width])
+  }, [filteredData, xAxis, yAxis, zAxis, height, width, name])
 
   return (
-    <div className='border rounded-md border-gray px-4' ref={containerRef}></div>
+    <>
+      <div className='border rounded-md border-gray px-4' ref={containerRef}></div>
+    </>
   )
 }
 
@@ -129,7 +133,8 @@ HeatmapPlot.propTypes = {
   data: PropTypes.array,
   xAxis: PropTypes.string,
   yAxis: PropTypes.string,
-  zAxis: PropTypes.string
+  zAxis: PropTypes.string,
+  name: PropTypes.string
 }
 
 

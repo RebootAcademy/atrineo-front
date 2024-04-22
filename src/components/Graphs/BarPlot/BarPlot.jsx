@@ -15,7 +15,8 @@ function Barplot({
   options,
   aggregation, 
   xAxis, 
-  yAxis 
+  yAxis,
+  name 
 }) {
   const { locations } = useContext(LocationContext)
   const { mapDivision } = useContext(LayerContext)
@@ -69,6 +70,9 @@ function Barplot({
         height={height}
         className='border rounded-md border-gray'
       >
+        <text x={20} y={25} style={{ fontSize: '1em' }}>
+          {name}
+        </text>
         {/*Legend*/ }
         <g 
           transform={`translate(${boundsWidth + MARGIN.right - boundsWidth},${MARGIN.top - 18})`}
@@ -109,7 +113,8 @@ Barplot.propTypes = {
   division: PropTypes.string,
   aggregation: PropTypes.string,
   xAxis: PropTypes.string,
-  yAxis: PropTypes.string
+  yAxis: PropTypes.string,
+  name: PropTypes.string
 }
 
 export default Barplot
