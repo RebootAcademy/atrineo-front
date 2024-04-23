@@ -60,7 +60,12 @@ function SavedLayerComponent() {
                             <ColorRectangleIcon color={value.color} />
                             <p className="ml-2">{key}: </p>
                           </div>
-                          <p className="font-bold">{value.value[0]}&lt;=x&lt;= {value.value[1]}</p>
+                          {
+                            typeof value.value === 'string' ?
+                              <p className="font-bold">{value.value}</p> :
+                              <p className="font-bold">{value.value[0]}&lt;=x&lt;= {value.value[1]}</p>
+
+                          }
                         </div>
                       ))}
                     <div className="mb-4">
