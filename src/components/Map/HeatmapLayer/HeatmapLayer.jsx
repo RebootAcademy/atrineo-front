@@ -11,7 +11,7 @@ import PropTypes from 'prop-types'
 
 function HeatmapLayer({ data, fieldName }) {
   const { mapDivision } = useContext(LayerContext)
-  
+
   const { data: mapData, isLoading, isError, error } = useGeoJsonData(mapDivision)
 
   if (fieldName === "color" || fieldName === "maxValue" || fieldName === "minValue") {
@@ -83,12 +83,11 @@ function HeatmapLayer({ data, fieldName }) {
     }
     return defaultStyle
   }
-
   if (isLoading) return <div>Loading...</div>
   if (isError) return <div>Error loading data: {error.message}</div>
   if (mapData) {
     const filteredData = { ...mapData }
-
+    
     return (
       <>
         <GeoJSON

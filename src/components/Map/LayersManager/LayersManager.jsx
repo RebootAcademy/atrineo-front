@@ -21,6 +21,8 @@ function LayersManager() {
     setLayers(storedLayers)
   }, [setLayers])
 
+  console.log(layers)
+
   const filteredLayers = useMemo(() => layers.filter(layer => layer.isVisible).map(layer => {
     const fields = Object.keys(layer.data).filter(key => key !== 'type')
     const filteredData = collection?.data

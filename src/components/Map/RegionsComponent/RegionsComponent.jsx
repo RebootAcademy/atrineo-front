@@ -8,7 +8,6 @@ import { LocationContext } from '@/context/locationContext'
 function RegionsComponent({ data, fieldName, color }) {
   const { mapDivision } = useContext(LayerContext)
   const { locations } = useContext(LocationContext)
-
   if (!Array.isArray(data) || data.length === 0) {
     return console.log('No hay datos disponibles para mostrar')
   }
