@@ -18,7 +18,7 @@ function RegionsComponent({ data, fieldName, color }) {
   const getGeojsonIdByDivision = (item) => {
     let location
     if (item.locationId[mapDivision]) {
-      console.log(item.locationId[mapDivision]._id)
+      console.log(item.locationId[mapDivision])
       location = locations[mapDivision].find(location => location._id === item.locationId[mapDivision]._id)
     }
 
