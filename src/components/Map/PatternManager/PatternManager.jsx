@@ -1,7 +1,8 @@
 import PropTypes from 'prop-types'
 
 function PatternManager({color}) {
-
+  console.log('InsidePatternManager')
+  console.log(color)
   return (
     <>
       <svg xmlns="http://www.w3.org/2000/svg" style={{ position: 'absolute', width: 0, height: 0 }} >

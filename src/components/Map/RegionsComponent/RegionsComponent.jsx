@@ -6,6 +6,7 @@ import { LayerContext } from '../../../context/layerContext'
 import { LocationContext } from '@/context/locationContext'
 
 function RegionsComponent({ data, fieldName, color }) {
+  console.log('Inside RegionsComponent')
   const { mapDivision } = useContext(LayerContext)
   const { locations } = useContext(LocationContext)
   if (!Array.isArray(data) || data.length === 0) {
