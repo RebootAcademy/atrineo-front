@@ -20,9 +20,10 @@ function RegionsComponent({ data, fieldName, color }) {
     //console.log(item.locationId[mapDivision])
     let location
     if (item.locationId[mapDivision]) {
-      location = locations[mapDivision].find(location => {location._id === item.locationId[mapDivision]._id})
+      console.log(location._id)
+      console.log(item.locationId[mapDivision]._id)
+      location = locations[mapDivision].find(location => location._id === item.locationId[mapDivision]._id)
     }
-    console.log(location)
     switch (mapDivision) {
     case 'division1':
       return location ? location.geojsonId : 'noDivision1'
