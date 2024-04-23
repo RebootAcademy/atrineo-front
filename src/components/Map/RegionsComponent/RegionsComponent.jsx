@@ -6,21 +6,17 @@ import { LayerContext } from '../../../context/layerContext'
 import { LocationContext } from '@/context/locationContext'
 
 function RegionsComponent({ data, fieldName, color }) {
-  console.log('Inside RegionsComponent')
   const { mapDivision } = useContext(LayerContext)
   const { locations } = useContext(LocationContext)
 
   if (!Array.isArray(data) || data.length === 0) {
     return console.log('No hay datos disponibles para mostrar')
   }
-  // console.log(locations)
-  // console.log(locations[mapDivision])
+
   // Función para determinar el ID de geojson basado en el nivel de división actual
   const getGeojsonIdByDivision = (item) => {
-    //console.log(item.locationId[mapDivision])
     let location
     if (item.locationId[mapDivision]) {
-      console.log(item.locationId[mapDivision]._id)
       location = locations[mapDivision].find(location => location._id === item.locationId[mapDivision]._id)
     }
     switch (mapDivision) {
