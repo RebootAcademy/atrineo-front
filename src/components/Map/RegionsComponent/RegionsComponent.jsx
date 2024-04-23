@@ -21,7 +21,7 @@ function RegionsComponent({ data, fieldName, color }) {
     let location
     if (item.locationId[mapDivision]) {
       console.log(location._id)
-      console.log(item.locationId[mapDivision]._id)
+      console.log(item.locationId[mapDivision])
       location = locations[mapDivision].find(location => location._id === item.locationId[mapDivision]._id)
     }
     switch (mapDivision) {
