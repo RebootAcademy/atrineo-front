@@ -11,7 +11,7 @@ function Barplot({
   width, 
   height, 
   data, 
-  regions, 
+  regions,
   options,
   aggregation, 
   xAxis, 
@@ -25,8 +25,9 @@ function Barplot({
   const BAR_PADDING = 0.2
   const boundsWidth = width - MARGIN.right - MARGIN.left
   const boundsHeight = height - MARGIN.top - MARGIN.bottom
-  
+
   const xFieldValues = createStringOptionsObject(options, data)
+  console.log(xFieldValues)
   xFieldValues.regions = regions
   
   const aggregatedData = useMemo(() => calcAggregatedData(data, xAxis, yAxis, mapDivision, aggregation, locations[mapDivision]), [data, xAxis, yAxis, aggregation, locations, mapDivision]) 

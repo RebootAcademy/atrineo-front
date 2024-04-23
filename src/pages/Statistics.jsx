@@ -66,7 +66,7 @@ function Statistics() {
   const [xAxis, setXAxis] = useState(optionsArr.length > 0 ? optionsArr[0] : '')
   const [zAxis, setZAxis] = useState('')
   const [showOptions, setShowOptions] = useState(true)
-
+  
   useEffect(() => {
     if (fields.length > 0) {
       setYAxis(fields[0].fieldName)
@@ -137,7 +137,7 @@ function Statistics() {
     height: calculatedGraphHeight,
     data: data,
     regions: regionNames,
-    options: optionsArr,
+    options: [...optionsArr, ...fields.map(f => f.fieldName)],
     division: mapDivision,
   }
 
@@ -175,6 +175,7 @@ function Statistics() {
                 <ChartsContainer
                   chartType={chartType}
                   fields={fields}
+                  options={optionsArr}
                   commonProps={commonProps}
                 />
               </div>

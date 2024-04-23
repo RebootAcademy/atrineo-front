@@ -25,7 +25,7 @@ function PieChart({
   const ref = useRef(null)
   const { locations } = useContext(LocationContext)
   const adjustedDivision = division === 'division4' ? 'division3' : division
-
+  
   const aggregatedData = useMemo(() => calcAggregatedData(data, xAxis, yAxis, adjustedDivision, aggregation, locations[adjustedDivision]), [data, xAxis, yAxis, aggregation, locations, adjustedDivision])
 
   const radius = Math.min(width - 2 * MARGIN_X, height - 2 * MARGIN_Y) / 2
