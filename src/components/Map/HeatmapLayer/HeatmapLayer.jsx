@@ -10,8 +10,6 @@ import PropTypes from 'prop-types'
 
 
 function HeatmapLayer({ data, fieldName }) {
-  console.log('Inside HeatMapLayer')
-  console.log(fieldName, data)
   const { mapDivision } = useContext(LayerContext)
 
   const { data: mapData, isLoading, isError, error } = useGeoJsonData(mapDivision)
@@ -87,8 +85,7 @@ function HeatmapLayer({ data, fieldName }) {
   }
   if (isLoading) return <div>Loading...</div>
   if (isError) return <div>Error loading data: {error.message}</div>
-  console.log('mapData:')
-  console.log(mapData)
+
   if (mapData) {
     const filteredData = { ...mapData }
     console.log('filteredData:')

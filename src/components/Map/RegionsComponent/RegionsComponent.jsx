@@ -9,12 +9,15 @@ function RegionsComponent({ data, fieldName, color }) {
   console.log('Inside RegionsComponent')
   const { mapDivision } = useContext(LayerContext)
   const { locations } = useContext(LocationContext)
+  console.log(locations)
   if (!Array.isArray(data) || data.length === 0) {
     return console.log('No hay datos disponibles para mostrar')
   }
-
+  console.log(locations)
+  console.log(locations[mapDivision])
   // Función para determinar el ID de geojson basado en el nivel de división actual
   const getGeojsonIdByDivision = (item) => {
+    console.log(item.locationId[mapDivision])
     const location = locations[mapDivision].find(location => location._id === item.locationId[mapDivision])
 
     switch (mapDivision) {
@@ -30,6 +33,8 @@ function RegionsComponent({ data, fieldName, color }) {
   const groupedByGeojsonId = data.reduce((acc, item) => {
     const geojsonId = getGeojsonIdByDivision(item)
 
+    console.log(geojsonId)
+
     if (geojsonId) {
       if (!acc[geojsonId]) {
         acc[geojsonId] = []
@@ -38,6 +43,8 @@ function RegionsComponent({ data, fieldName, color }) {
     }
     return acc
   }, {})
+
+  console.log(groupedByGeojsonId)
 
   const sumNumericFields = (items) => {
     const sums = items.reduce((acc, item) => {
