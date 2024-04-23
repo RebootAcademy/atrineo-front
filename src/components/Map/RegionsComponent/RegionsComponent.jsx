@@ -9,17 +9,18 @@ function RegionsComponent({ data, fieldName, color }) {
   console.log('Inside RegionsComponent')
   const { mapDivision } = useContext(LayerContext)
   const { locations } = useContext(LocationContext)
-  console.log(locations)
+
   if (!Array.isArray(data) || data.length === 0) {
     return console.log('No hay datos disponibles para mostrar')
   }
-  console.log(locations)
-  console.log(locations[mapDivision])
+  // console.log(locations)
+  // console.log(locations[mapDivision])
   // Función para determinar el ID de geojson basado en el nivel de división actual
   const getGeojsonIdByDivision = (item) => {
     //console.log(item.locationId[mapDivision])
-    const location = locations[mapDivision].find(location => location._id === item.locationId[mapDivision])
 
+    const location = locations[mapDivision].find(location => location._id === item.locationId[mapDivision])
+    console.log(location)
     switch (mapDivision) {
     case 'division1':
       return location ? location.geojsonId : 'noDivision1'

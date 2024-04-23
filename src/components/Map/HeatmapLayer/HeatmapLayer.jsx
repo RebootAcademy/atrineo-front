@@ -88,8 +88,6 @@ function HeatmapLayer({ data, fieldName }) {
 
   if (mapData) {
     const filteredData = { ...mapData }
-    console.log('filteredData:')
-    console.log(filteredData)
     return (
       <>
         <GeoJSON
