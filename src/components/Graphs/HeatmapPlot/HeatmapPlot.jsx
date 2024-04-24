@@ -13,7 +13,6 @@ function HeatmapPlot({
   zAxis,
   name
 }) {
-
   const containerRef = useRef()
 
   const filteredData = useMemo(() => data.map(item => {

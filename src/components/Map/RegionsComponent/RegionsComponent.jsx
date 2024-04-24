@@ -12,13 +12,11 @@ function RegionsComponent({ data, fieldName, color }) {
   if (!Array.isArray(data) || data.length === 0) {
     return console.log('No hay datos disponibles para mostrar')
   }
-  console.log(mapDivision)
-  console.log(locations)
+
   // Función para determinar el ID de geojson basado en el nivel de división actual
   const getGeojsonIdByDivision = (item) => {
     let location
     if (item.locationId[mapDivision]) {
-      console.log(item.locationId[mapDivision])
       location = locations[mapDivision].find(location => location._id === item.locationId[mapDivision])
     }
 

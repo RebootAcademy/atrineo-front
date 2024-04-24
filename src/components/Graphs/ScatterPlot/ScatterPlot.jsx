@@ -60,7 +60,7 @@ function ScatterPlot({
   const yAxisCall = d3.axisLeft(yScale).tickFormat(d => formatNumber(d))
 
   const circles = filteredData.map((d, i) => {
-    const radius = zScale(d[zAxis])
+    const radius = zScale ? zScale(d[zAxis]) : 5
     return (
       <circle
         key={i}
