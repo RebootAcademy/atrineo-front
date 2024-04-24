@@ -45,7 +45,7 @@ function Dataset() {
             width="100" 
             height="100" 
           /> :
-          <div className='relative h-full'>
+          <div>
             {user?.role === 'wizard' ?
               < UploadCSVComponent
                 reloadData={refetch}

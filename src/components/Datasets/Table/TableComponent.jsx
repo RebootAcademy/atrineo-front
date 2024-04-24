@@ -124,7 +124,7 @@ function TableComponent({ data, hiddenColumns, searchItem='' }) {
 
     return paginatedFilteredData.map(d => {
       return (
-        <TableRow key={d._id} className=''>
+        <TableRow key={d._id}>
           {d.fields.map((f, i) => {
             if (!hiddenColumns.includes(f.fieldName)) {
               const isNumeric = typeof f.fieldValue === 'number'
@@ -147,10 +147,10 @@ function TableComponent({ data, hiddenColumns, searchItem='' }) {
 
   return (
     <>
-      <div className={`overflow-auto mx-4`}>
+      <div className="overflow-x-auto mx-4 relative" style={{ maxHeight: '70vh' }}>
         <Table className="h-2">
           <TableHeader className="bg-primary sticky top-0">
-            <TableRow >
+            <TableRow>
               {displayTableColumns()}
             </TableRow>
           </TableHeader>
