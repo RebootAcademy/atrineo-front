@@ -81,7 +81,7 @@ function SavedLayerComponent() {
                             <p className="mb-2">
                               Total {`${value}`} per {mapDivision}
                             </p>
-                            <p className="flex justify-between">
+                            {/* <p className="flex justify-between">
                               Min Value:{" "}
                               <span className="font-bold">
                                 {layer.data.minValue}
@@ -92,7 +92,7 @@ function SavedLayerComponent() {
                               <span className="font-bold">
                                 {layer.data.maxValue}
                               </span>
-                            </p>
+                            </p> */}
                           </div>
                         )
                       }
