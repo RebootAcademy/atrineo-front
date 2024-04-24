@@ -6,7 +6,8 @@ import LoadingSpinner from '../../LoadingSpinner/LoadingSpinner'
 
 import { Button } from '@/components/ui/Button/Button'
 
-import { uploadCsv } from '../../../services/uploadData'
+import { addDataChunck } from '../../../services/uploadData'
+import { cleanDataFromCollection } from '@/services/data.service'
 
 function Csv({ dataType, reloadData }) {
   const fileInputRef = useRef(null)
@@ -19,14 +20,46 @@ function Csv({ dataType, reloadData }) {
     fileInputRef.current.click()
   }
 
+  function chunkArray(array, chunkSize) {
+    const chunks = []
+    for (let i = 0; i < array.length; i += chunkSize) {
+      chunks.push(array.slice(i, i + chunkSize))
+    }
+    return chunks
+  }
+
   const uploadDataFile = async () => {
     try {
       setShowUpdateSpinner(true)
-      const res = await uploadCsv(dataBody, dataType, fileName)
-      if (res) {
-        console.log(res)
+      const cleaned = await cleanDataFromCollection(import.meta.env.VITE_DEMO_ID)
+      if (!cleaned) {
+        console.log('Error cleaning up')
+        console.error(cleaned)
+      }
+      // const res = await uploadCsv(dataBody, dataType, fileName)
+      // if (res) {
+      //   console.log(res)
+      //   reloadData()
+      // }
+      const chunks = chunkArray(dataBody, 100)
+      const totalChunks = chunks.length
+
+      const uploadPromises = chunks.map(async (chunk, index) => {
+        const res = await addDataChunck(import.meta.env.VITE_DEMO_ID, chunk, dataType, fileName, index === 0 ? true : false)
+        const percentComplete = ((index + 1) / totalChunks) * 100
+        console.log(`${percentComplete}%`)
+        return res
+      })
+
+      // Wait for all uploads to finish
+      const results = await Promise.all(uploadPromises)
+      if (results) {
+        results.forEach((res) => {
+          console.log(res)
+        })
         reloadData()
       }
+
     } catch (error) {
       console.error(error)
     } finally {
