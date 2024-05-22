@@ -8,7 +8,7 @@ import HeatmapPlot from '../HeatmapPlot/HeatmapPlot'
 
 import PropTypes from 'prop-types'
 
-function ChartsContainer({ commonProps }) {
+function ChartsContainer({ commonProps, colTypes }) {
   const { graphs, deleteGraphById } = useContext(GraphContext)
 
   const handleDeleteGraph = (obj) => {
@@ -57,6 +57,7 @@ function ChartsContainer({ commonProps }) {
             {...obj.data.ownProps} 
             {...commonProps}
             name={obj.data.chartName}
+            colTypes={colTypes}
           />
           <button
             className="absolute top-0 right-0 z-10 p-2 pr-4 text-lg  text-black rounded"
@@ -73,6 +74,7 @@ function ChartsContainer({ commonProps }) {
             {...obj.data.ownProps} 
             {...commonProps}
             name={obj.data.chartName} 
+            colTypes={colTypes}
           />
           <button
             className="absolute top-0 right-0 z-10 p-2 pr-4 text-lg  text-black rounded"
@@ -96,7 +98,7 @@ function ChartsContainer({ commonProps }) {
 ChartsContainer.propTypes = {
   chartType: PropTypes.string.isRequired,
   commonProps: PropTypes.object,
-  fields: PropTypes.array
+  colTypes: PropTypes.object
 }
 
 export default ChartsContainer

@@ -11,18 +11,20 @@ function HeatmapPlot({
   xAxis, 
   yAxis, 
   zAxis,
-  name
+  name,
+  colTypes
 }) {
   const containerRef = useRef()
 
   const filteredData = useMemo(() => data.map(item => {
-    const numericFields = extractNumericFields(item.fields)
+    const numericFields = extractNumericFields(item.fields, colTypes)
+    console.log(numericFields)
     const numericFieldsObj = numericFields.reduce((acc, field) => {
       acc[field.fieldName] = field.fieldValue
       return acc
     }, {})
     return numericFieldsObj
-  }), [data])
+  }), [data, colTypes])
 
   /*   const xStep = 18
   const yStep = 18 */
@@ -133,7 +135,8 @@ HeatmapPlot.propTypes = {
   xAxis: PropTypes.string,
   yAxis: PropTypes.string,
   zAxis: PropTypes.string,
-  name: PropTypes.string
+  name: PropTypes.string,
+  colTypes: PropTypes.object
 }
 
 

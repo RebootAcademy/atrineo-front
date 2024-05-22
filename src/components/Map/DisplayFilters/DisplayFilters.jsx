@@ -72,7 +72,7 @@ function DisplayFilters({ layerObj, type }) {
   }
 
   const booleanFields = fields?.filter(field => field.fieldType === 'boolean')
-  const numericFields = extractNumericFields(fields)
+  const numericFields = extractNumericFields(fields, collection?.columnTypes)
   const stringOptions = extractStringOptions(fields) //Filtra las columnas que van a usarse como radio buttons
 
   // Almacena las distintas opciones posibles para cada grupo de radio buttons

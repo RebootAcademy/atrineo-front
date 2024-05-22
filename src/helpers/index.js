@@ -28,10 +28,10 @@ export const isWithinPolygon = (dataItem, searchPolygon) => {
   return booleanPointInPolygon(itemPoint, polygon([polygonCoordinates]))
 }
 
-export const extractNumericFields = (arr) => {
+export const extractNumericFields = (arr, obj) => {
   return arr?.filter(
     (field) =>
-      field.fieldType === "number" &&
+      obj[field.fieldName] === "number" &&
       field.fieldName !== "latitude" &&
       field.fieldName !== "longitude" &&
       field.fieldName !== "districtId"

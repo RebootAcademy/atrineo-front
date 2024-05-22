@@ -52,7 +52,7 @@ function Statistics() {
   }, [data])
 
   const fields = useMemo(() => {
-    return data ? extractNumericFields(data[0]?.fields) : []
+    return data ? extractNumericFields(data[0]?.fields, collection?.columnTypes) : []
   }, [data])
 
   const optionsArr = useMemo(() => {
@@ -177,6 +177,7 @@ function Statistics() {
                   fields={fields}
                   options={optionsArr}
                   commonProps={commonProps}
+                  colTypes={collection?.columnTypes}
                 />
               </div>
               {

@@ -11,7 +11,8 @@ function ScatterPlot({
   xAxis,
   yAxis,
   zAxis,
-  name
+  name,
+  colTypes
 }) {
 
   const MARGIN = { top: 20, right: 20, bottom: 60, left: 70 }
@@ -21,7 +22,7 @@ function ScatterPlot({
   const filteredData = useMemo(() => {
     return data
       .map((item) => {
-        const numericFields = extractNumericFields(item.fields)
+        const numericFields = extractNumericFields(item.fields, colTypes)
         const numericFieldsObj = numericFields.reduce((acc, field) => {
           acc[field.fieldName] = field.fieldValue
           return acc
@@ -30,7 +31,7 @@ function ScatterPlot({
       })
       .filter((d) => d[xAxis] !== 0 && d[yAxis] !== 0)
       .filter((d) => !zAxis || (d[zAxis] !== null && d[zAxis] !== 0))
-  }, [data, zAxis, yAxis, xAxis])
+  }, [data, zAxis, yAxis, xAxis, colTypes])
 
   const xScale = useMemo(() => {
     return d3
@@ -130,7 +131,8 @@ ScatterPlot.propTypes = {
   xAxis: PropTypes.string,
   yAxis: PropTypes.string,
   zAxis: PropTypes.string,
-  name: PropTypes.string
+  name: PropTypes.string,
+  colTypes: PropTypes.object
 }
 
 export default ScatterPlot
