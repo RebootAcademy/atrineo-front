@@ -53,7 +53,7 @@ function Statistics() {
 
   const fields = useMemo(() => {
     return data ? extractNumericFields(data[0]?.fields, collection?.columnTypes) : []
-  }, [data])
+  }, [data, collection])
 
   const optionsArr = useMemo(() => {
     return data ? ['regions', ...stringOptions, ...booleanOptions] : []
