@@ -13,13 +13,13 @@
 .leaflet-draw-toolbar a {
   width: 38px !important;
   height: 38px !important;
-  background-size: 360px;
-  background-position: 2px 2px !important;
+  background-size: 18px;
+  background-position: 10px 10px !important;
   background-image: url('/pen.svg');
 }
 
 .leaflet-draw-toolbar a:nth-child(2) {
-  background-size: 300px;
+  background-size: 18;
   background-position: -177px !important;
 }
 

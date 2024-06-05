@@ -5,6 +5,7 @@ import PropTypes from "prop-types"
 
 function NumericLayer({ field, data, color }) {
   const [maxValue, minValue] = findMaxAndMinValues(data, field)
+  
   const circles = data.map((filteredItem, index) => {
     const latitude = filteredItem.fields.find((item) => item.fieldName === "latitude")?.fieldValue
     const longitude = filteredItem.fields.find((item) => item.fieldName === "longitude")?.fieldValue
@@ -22,15 +23,14 @@ function NumericLayer({ field, data, color }) {
             fillOpacity: 0.1,
             stroke: true,
             color: color,
-            opacity: 0.3,
-            weight: 1,
+            opacity: 0.4,
+            weight: 1.6,
           }}
           radius={calculateRadius(value, minValue, maxValue)}
         />
       )
     }
   })
-
   return <>{circles}</>
 }
 

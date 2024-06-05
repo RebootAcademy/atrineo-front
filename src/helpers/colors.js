@@ -1,10 +1,9 @@
 export const colorPalette = [
-  '#FF7C15',
-  '#3D14FC',
-  '#17FC14',
-  '#46A745',
-  '#7D5F48',
-  '#52487D'
+  '#520120',
+  '#08403E',
+  '#706513',
+  '#B57114',
+  '#962B09'
 ]
 
 export const colorPaletteBlue = [

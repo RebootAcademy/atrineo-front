@@ -9,7 +9,7 @@ function StartupsComponent({ data }) {
       <MarkerClusterGroup
         chunkedLoading
         polygonOptions={{ weight: 0 }}
-        maxClusterRadius={50}
+        maxClusterRadius={80}
         iconCreateFunction={function (cluster) {
           return L.divIcon({
             html: `<span>${cluster.getChildCount()}</span>`,

@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import { useContext, useMemo } from "react"
+import { useContext, useMemo, useEffect } from "react"
 import { GeoJSON } from "react-leaflet"
 import { useGeoJsonData } from '../../../hooks/useGeoJsonData'
 import { defaultStyle } from './Styles'
@@ -10,8 +10,8 @@ import PropTypes from 'prop-types'
 
 
 function HeatmapLayer({ data, fieldName }) {
-  const { mapDivision } = useContext(LayerContext)
-
+  const { mapDivision, updateMinValue, updateMaxValue } = useContext(LayerContext)
+  
   const { data: mapData, isLoading, isError, error } = useGeoJsonData(mapDivision)
 
   if (fieldName === "color" || fieldName === "maxValue" || fieldName === "minValue") {
@@ -32,11 +32,14 @@ function HeatmapLayer({ data, fieldName }) {
     [adjustedData, fieldName]
   )
 
-  /*   useEffect(() => {
-    if (maxValue !== null && minValue !== null) {
-      //updateMinMaxValues(minValue, maxValue)
+  useEffect(() => {
+    if (maxValue !== null) {
+      updateMaxValue(maxValue)
     }
-  }, [maxValue, minValue, updateMinMaxValues]) */
+    if (minValue !== null) {
+      updateMinValue(minValue)
+    }
+  }, [minValue, maxValue, updateMinValue, updateMaxValue])
 
   const determineStyle = (percentage) => {
     if (percentage < 25) return 'url(#patternDots)'

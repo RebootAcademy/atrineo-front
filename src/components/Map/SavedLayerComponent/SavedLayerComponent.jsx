@@ -10,8 +10,7 @@ import CircleLegend from "../../ui/Legend/CircleLegend"
 import PatternLegend from "../../ui/Legend/PatternLegend"
 
 function SavedLayerComponent() {
-  const { layers, clearLayerById, toggleLayerVisibility, mapDivision } =
-    useContext(LayerContext)
+  const { layers, clearLayerById, toggleLayerVisibility, mapDivision } = useContext(LayerContext)
 
   return (
     <>
