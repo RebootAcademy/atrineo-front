@@ -39,7 +39,7 @@ function Statistics() {
   const data = collection?.data
   const aggOptions = ['sum', 'avg', 'count', 'min', 'max']
 
-  const adjustedMapDivision = mapDivision === 'division4' ? 'division3' : mapDivision
+  const adjustedMapDivision = mapDivision
 
   const regionNames = extractRegionNames(collection, adjustedMapDivision, locations)
 

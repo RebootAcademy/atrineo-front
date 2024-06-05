@@ -24,7 +24,7 @@ function PieChart({
 }) {
   const ref = useRef(null)
   const { locations } = useContext(LocationContext)
-  const adjustedDivision = division === 'division4' ? 'division3' : division
+  const adjustedDivision = division
   
   const aggregatedData = useMemo(() => calcAggregatedData(data, xAxis, yAxis, adjustedDivision, aggregation, locations[adjustedDivision]), [data, xAxis, yAxis, aggregation, locations, adjustedDivision])
 

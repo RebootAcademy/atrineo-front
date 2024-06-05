@@ -27,7 +27,7 @@ function Barplot({
   const boundsHeight = height - MARGIN.top - MARGIN.bottom
 
   const xFieldValues = createStringOptionsObject(options, data)
-  console.log(xFieldValues)
+
   xFieldValues.regions = regions
   
   const aggregatedData = useMemo(() => calcAggregatedData(data, xAxis, yAxis, mapDivision, aggregation, locations[mapDivision]), [data, xAxis, yAxis, aggregation, locations, mapDivision]) 
