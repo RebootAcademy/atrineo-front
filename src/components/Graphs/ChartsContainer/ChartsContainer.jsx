@@ -21,9 +21,10 @@ function ChartsContainer({ commonProps, colTypes }) {
       return (
         <div key={obj.id} className='relative inline-block'>
           <BarPlot 
-            {...obj.data.ownProps} 
+            {...obj.data.ownProps}
             {...commonProps} 
-            name={obj.data.chartName} 
+            division={obj.data.division}
+            name={obj.data.chartName}
           />
           <button 
             className="absolute top-0 right-0 z-10 p-2 pr-4 text-lg  text-black rounded"

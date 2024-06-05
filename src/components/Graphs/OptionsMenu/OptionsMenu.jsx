@@ -16,10 +16,18 @@ import CustomButton from '@/components/CustomButton/CustomButton'
 import PropTypes from 'prop-types'
 import { GraphContext } from '@/context/graphContext'
 
-function OptionsMenu({ onChange, fields, options, aggOptions, changeAggregation, changeXAxis, changeYAxis, changeZAxis, chartType, chartName, changeChartName, ownProps, toggleDisplay }) {
+function OptionsMenu({ onChange, fields, options, aggOptions, changeAggregation, changeXAxis, changeYAxis, changeZAxis, chartType, chartName, changeChartName, ownProps, toggleDisplay, division, changeDivision }) {
   const [selectedXAxis, setSelectedXAxis] = useState('')
   const [selectedYAxis, setSelectedYAxis] = useState('')
   const [selectedZAxis, setSelectedZAxis] = useState('')
+  
+
+  const divisionOptions = [
+    { value: 'division1', label: 'Division 1' },
+    { value: 'division2', label: 'Division 2' },
+    { value: 'division3', label: 'Division 3' },
+    { value: 'division4', label: 'Division 4' }
+  ]
 
   const { saveCurrentGraph } = useContext(GraphContext)
 
@@ -64,7 +72,8 @@ function OptionsMenu({ onChange, fields, options, aggOptions, changeAggregation,
       chartName,
       chartType,
       selectedXAxis,
-      selectedYAxis
+      selectedYAxis,
+      division
     }
     saveCurrentGraph(graphConfigurationObj, ownProps)
     hideOptions()
@@ -77,6 +86,16 @@ function OptionsMenu({ onChange, fields, options, aggOptions, changeAggregation,
         <div className='flex'>
           <img src={option.img} className='mr-2' />
           { option.name }
+        </div>
+      </SelectItem>
+    )
+  }
+
+  const displayDivisions = (options) => {
+    return options.map((option, i) =>
+      <SelectItem key={i} value={option.value}>
+        <div className='flex'>
+          {option.label}
         </div>
       </SelectItem>
     )
@@ -162,6 +181,20 @@ function OptionsMenu({ onChange, fields, options, aggOptions, changeAggregation,
         selectedYAxis
       )}
 
+      {
+        (selectedXAxis === 'regions' ||
+        selectedYAxis === 'regions') &&
+        <>
+          <Label className="self-start ml-4 mt-4">Division:</Label>
+          <Select onValueChange={changeDivision} value={division}>
+            <SelectTrigger className="w-5/6">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>{displayDivisions(divisionOptions)}</SelectContent>
+          </Select>
+        </>
+      }
+
       {chartType === "scatter" &&
         displaySelect(
           "Z axis:",
@@ -194,6 +227,7 @@ OptionsMenu.propTypes = {
   fields: PropTypes.array,
   options: PropTypes.array,
   division: PropTypes.string,
+  changeDivision: PropTypes.func,
   aggOptions: PropTypes.array,
   changeAggregation: PropTypes.func,
   changeXAxis: PropTypes.func,

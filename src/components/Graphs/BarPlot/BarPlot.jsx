@@ -3,23 +3,33 @@ import { useMemo, useContext } from 'react'
 import * as d3 from "d3" // we will need d3.js
 
 import { LocationContext } from '@/context/locationContext'
-import { LayerContext } from '@/context/layerContext'
+import { CollectionContext } from '@/context/collectionContext'
+// import { LayerContext } from '@/context/layerContext'
 
-import { calcAggregatedData, createStringOptionsObject, formatNumber } from '@/helpers'
+import { 
+  calcAggregatedData, 
+  createStringOptionsObject, 
+  formatNumber, 
+  extractRegionNames 
+} from '@/helpers'
 
 function Barplot({
   width,
   height,
   data,
-  regions,
   options,
   aggregation,
   xAxis,
   yAxis,
-  name
+  name,
+  division
 }) {
   const { locations } = useContext(LocationContext)
-  const { mapDivision } = useContext(LayerContext)
+  const { collection } = useContext(CollectionContext)
+  const regions = extractRegionNames(collection, division, locations)
+  //const regions = locations[division].map(l => l.name)
+  //const { mapDivision } = useContext(LayerContext)
+  const mapDivision = division
 
   const MARGIN = { top: 60, right: 40, bottom: 80, left: 90 }
   const BAR_PADDING = 0.2
@@ -32,12 +42,13 @@ function Barplot({
 
   const aggregatedData = useMemo(() => {
     const result = calcAggregatedData(data, xAxis, yAxis, mapDivision, aggregation, locations[mapDivision])
-    console.log(result)
+
     return regions.map(region => result.find(d => d.name === region) || { name: region, sum: 0 })
   }, [data, xAxis, yAxis, aggregation, locations, mapDivision, regions])
 
   const maxSum = useMemo(() => Math.max(...aggregatedData.map(d => d.sum)), [aggregatedData])
-  console.log(maxSum)
+
+  console.log(aggregatedData)
 
   const xScale = useMemo(() => {
     if (yAxis === 'regions') {
