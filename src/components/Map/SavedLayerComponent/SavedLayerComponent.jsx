@@ -59,7 +59,12 @@ function SavedLayerComponent() {
                             <ColorRectangleIcon color={value.color} />
                             <p className="ml-2">{key}: </p>
                           </div>
-                          <p className="font-bold">&gt;= {value.value}</p>
+                          {
+                            typeof value.value === 'string' ?
+                              <p className="font-bold">{value.value}</p> :
+                              <p className="font-bold">{value.value[0]}&lt;=x&lt;= {value.value[1]}</p>
+
+                          }
                         </div>
                       ))}
                     <div className="mb-4">
@@ -75,7 +80,7 @@ function SavedLayerComponent() {
                             <p className="mb-2">
                               Total {`${value}`} per {mapDivision}
                             </p>
-                            <p className="flex justify-between">
+                            {/* <p className="flex justify-between">
                               Min Value:{" "}
                               <span className="font-bold">
                                 {layer.data.minValue}
@@ -86,7 +91,7 @@ function SavedLayerComponent() {
                               <span className="font-bold">
                                 {layer.data.maxValue}
                               </span>
-                            </p>
+                            </p> */}
                           </div>
                         )
                       }

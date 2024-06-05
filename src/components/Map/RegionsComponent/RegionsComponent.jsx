@@ -15,7 +15,10 @@ function RegionsComponent({ data, fieldName, color }) {
 
   // Función para determinar el ID de geojson basado en el nivel de división actual
   const getGeojsonIdByDivision = (item) => {
-    const location = locations[mapDivision].find(location => location._id === item.locationId[mapDivision])
+    let location
+    if (item.locationId[mapDivision]) {
+      location = locations[mapDivision].find(location => location._id === item.locationId[mapDivision])
+    }
 
     switch (mapDivision) {
     case 'division1':

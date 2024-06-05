@@ -10,19 +10,21 @@ function HeatmapPlot({
   data, 
   xAxis, 
   yAxis, 
-  zAxis, 
+  zAxis,
+  name,
+  colTypes
 }) {
-
   const containerRef = useRef()
 
   const filteredData = useMemo(() => data.map(item => {
-    const numericFields = extractNumericFields(item.fields)
+    const numericFields = extractNumericFields(item.fields, colTypes)
+    console.log(numericFields)
     const numericFieldsObj = numericFields.reduce((acc, field) => {
       acc[field.fieldName] = field.fieldValue
       return acc
     }, {})
     return numericFieldsObj
-  }), [data])
+  }), [data, colTypes])
 
   /*   const xStep = 18
   const yStep = 18 */
@@ -97,6 +99,7 @@ function HeatmapPlot({
           zero: false,
           label: zAxis
         },
+        title: name,
         marks: [
           Plot.cell(
             dataForPlotting,
@@ -116,10 +119,12 @@ function HeatmapPlot({
       containerRef.current.innerHTML = ""
       containerRef.current.appendChild(plot)
     }
-  }, [filteredData, xAxis, yAxis, zAxis, height, width])
+  }, [filteredData, xAxis, yAxis, zAxis, height, width, name])
 
   return (
-    <div className='border rounded-md border-gray px-4' ref={containerRef}></div>
+    <>
+      <div className='border rounded-md border-gray px-4' ref={containerRef}></div>
+    </>
   )
 }
 
@@ -129,7 +134,9 @@ HeatmapPlot.propTypes = {
   data: PropTypes.array,
   xAxis: PropTypes.string,
   yAxis: PropTypes.string,
-  zAxis: PropTypes.string
+  zAxis: PropTypes.string,
+  name: PropTypes.string,
+  colTypes: PropTypes.object
 }
 
 

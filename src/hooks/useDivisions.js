@@ -12,10 +12,9 @@ import { getAllDivision4 } from "@/services/division4Service"
 import { locationStore } from "@/utils/localforage"
 
 export const useDivisions = () => {
-  const { setLocations } = useContext(LocationContext)
+  const { locations, setLocations } = useContext(LocationContext)
   const [initialDataLoaded, setInitialDataLoaded] = useState(false)
 
-  // Load data from cache first
   useEffect(() => {
     async function loadFromCache() {
       const countries = await locationStore.getItem("countries")
@@ -52,7 +51,8 @@ export const useDivisions = () => {
       setLocations((prev) => ({ ...prev, countries: countries.result }))
       storeData('countries', countries.result)
     },
-    enabled: initialDataLoaded
+    enabled: initialDataLoaded &&
+    !locations.countries
   })
 
   const division1Query = useQuery("division1", getAllDivision1, {
@@ -60,7 +60,8 @@ export const useDivisions = () => {
       setLocations((prev) => ({ ...prev, division1: division1.result }))
       storeData("division1", division1.result)
     },
-    enabled: initialDataLoaded,
+    enabled: initialDataLoaded &&
+    !locations.division1,
   })
 
   const division2Query = useQuery("division2", getAllDivision2, {
@@ -68,7 +69,8 @@ export const useDivisions = () => {
       setLocations((prev) => ({ ...prev, division2: division2.result }))
       storeData("division2", division2.result)
     },
-    enabled: initialDataLoaded,
+    enabled: initialDataLoaded &&
+    !locations.division2,
   })
   
   const division3Query = useQuery("division3", getAllDivision3, {
@@ -76,7 +78,8 @@ export const useDivisions = () => {
       setLocations((prev) => ({ ...prev, division3: division3.result }))
       storeData("division3", division3.result)
     },
-    enabled: initialDataLoaded,
+    enabled: initialDataLoaded &&
+    !locations.division3,
   })
 
   const division4Query = useQuery("division4", getAllDivision4, {
@@ -84,7 +87,8 @@ export const useDivisions = () => {
       setLocations((prev) => ({ ...prev, division4: division4.result }))
       storeData("division4", division4.result)
     },
-    enabled: initialDataLoaded,
+    enabled: initialDataLoaded &&
+    !locations.division4,
   })
 
   return {

@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react"
+import { useContext, useEffect, useState } from "react"
 import { GeoJSON } from 'react-leaflet'
 import { useGeoJsonData } from '../../../hooks/useGeoJsonData'
 import { LayerContext } from "../../../context/layerContext"
@@ -14,9 +14,15 @@ const style = {
 
 function ContourLayer() {
   const { mapDivision, isLoading, isError, error } = useContext(LayerContext)
-  const { data } = useGeoJsonData(mapDivision)
-  
+  const [ adjustedDivision, setAdjustedDivision ] = useState(mapDivision)
+  const { data } = useGeoJsonData(adjustedDivision)
+
   useEffect(() => {
+    if (mapDivision === 'division4') {
+      setAdjustedDivision('division3')
+    } else {
+      setAdjustedDivision(mapDivision)
+    }
   }, [mapDivision])  
   
   if (isLoading) return <div>Loading...</div>
@@ -25,7 +31,7 @@ function ContourLayer() {
     return (
       <section>
         <GeoJSON
-          key={mapDivision}
+          key={adjustedDivision}
           data={data}
           style={style}
         />

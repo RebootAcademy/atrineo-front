@@ -68,6 +68,7 @@ function OptionsMenu({ onChange, fields, options, aggOptions, changeAggregation,
     }
     saveCurrentGraph(graphConfigurationObj, ownProps)
     hideOptions()
+    changeChartName('')
   }
 
   const displayChartOptions = (options) => {
@@ -135,7 +136,6 @@ function OptionsMenu({ onChange, fields, options, aggOptions, changeAggregation,
         </SelectTrigger>
         <SelectContent>{displayChartOptions(graphTypes)}</SelectContent>
       </Select>
-
       {chartType !== "scatter" &&
         chartType !== "heatmap" &&
         displaySelect("Aggregation:", handleAggregationChange, aggOptions)}
@@ -145,9 +145,10 @@ function OptionsMenu({ onChange, fields, options, aggOptions, changeAggregation,
       {displaySelect(
         "X axis:",
         handleXAxisChange,
-        options.filter(
-          (option) => option !== "Status" && option !== "Branche_(WZ)"
-        ),
+        // options.filter(
+        //   (option) => option !== "Status" && option !== "Branche_(WZ)"
+        // ),
+        [...options, ...fields],
         true,
         [selectedYAxis, selectedZAxis],
         selectedXAxis
@@ -155,7 +156,7 @@ function OptionsMenu({ onChange, fields, options, aggOptions, changeAggregation,
       {displaySelect(
         "Y axis:",
         handleYAxisChange,
-        fields,
+        [...options, ...fields],
         true,
         [selectedXAxis, selectedZAxis],
         selectedYAxis

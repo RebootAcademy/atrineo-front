@@ -86,12 +86,11 @@ function HeatmapLayer({ data, fieldName }) {
     }
     return defaultStyle
   }
-
   if (isLoading) return <div>Loading...</div>
   if (isError) return <div>Error loading data: {error.message}</div>
+
   if (mapData) {
     const filteredData = { ...mapData }
-
     return (
       <>
         <GeoJSON

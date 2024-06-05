@@ -10,7 +10,9 @@ function ScatterPlot({
   data,
   xAxis,
   yAxis,
-  zAxis
+  zAxis,
+  name,
+  colTypes
 }) {
 
   const MARGIN = { top: 20, right: 20, bottom: 60, left: 70 }
@@ -20,7 +22,7 @@ function ScatterPlot({
   const filteredData = useMemo(() => {
     return data
       .map((item) => {
-        const numericFields = extractNumericFields(item.fields)
+        const numericFields = extractNumericFields(item.fields, colTypes)
         const numericFieldsObj = numericFields.reduce((acc, field) => {
           acc[field.fieldName] = field.fieldValue
           return acc
@@ -29,7 +31,7 @@ function ScatterPlot({
       })
       .filter((d) => d[xAxis] !== 0 && d[yAxis] !== 0)
       .filter((d) => !zAxis || (d[zAxis] !== null && d[zAxis] !== 0))
-  }, [data, zAxis, yAxis, xAxis])
+  }, [data, zAxis, yAxis, xAxis, colTypes])
 
   const xScale = useMemo(() => {
     return d3
@@ -59,7 +61,7 @@ function ScatterPlot({
   const yAxisCall = d3.axisLeft(yScale).tickFormat(d => formatNumber(d))
 
   const circles = filteredData.map((d, i) => {
-    const radius = zScale(d[zAxis])
+    const radius = zScale ? zScale(d[zAxis]) : 5
     return (
       <circle
         key={i}
@@ -80,6 +82,9 @@ function ScatterPlot({
       height={height}
       className="border rounded-md border-gray"
     >
+      <text x={20} y={25} style={{ fontSize: '1em' }}>
+        {name}
+      </text>
       <g transform={`translate(${MARGIN.left},${MARGIN.top})`}>
         {circles}
         <g
@@ -125,7 +130,9 @@ ScatterPlot.propTypes = {
   data: PropTypes.array,
   xAxis: PropTypes.string,
   yAxis: PropTypes.string,
-  zAxis: PropTypes.string
+  zAxis: PropTypes.string,
+  name: PropTypes.string,
+  colTypes: PropTypes.object
 }
 
 export default ScatterPlot

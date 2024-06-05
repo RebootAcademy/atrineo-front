@@ -49,6 +49,19 @@ export const getAllCollections = async () => {
   }
 }
 
+export const checkCollectionVersion = async () => {
+  try {
+    const { data } = await api.get(`collection/${import.meta.env.VITE_DEMO_ID}/version`, {
+      headers: {
+        token: localStorage.getItem("token"),
+      },
+    })
+    return data.result
+  } catch (error) {
+    console.error(error)
+  }
+}
+
 export const updateCollection = async (id, latitude, longitude) => {
   try {
     const { data } = await api.patch(`collection/${id}`, {

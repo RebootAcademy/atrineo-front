@@ -39,7 +39,7 @@ function Statistics() {
   const data = collection?.data
   const aggOptions = ['sum', 'avg', 'count', 'min', 'max']
 
-  const adjustedMapDivision = mapDivision === 'division4' ? 'division3' : mapDivision
+  const adjustedMapDivision = mapDivision
 
   const regionNames = extractRegionNames(collection, adjustedMapDivision, locations)
 
@@ -52,8 +52,8 @@ function Statistics() {
   }, [data])
 
   const fields = useMemo(() => {
-    return data ? extractNumericFields(data[0]?.fields) : []
-  }, [data])
+    return data ? extractNumericFields(data[0]?.fields, collection?.columnTypes) : []
+  }, [data, collection])
 
   const optionsArr = useMemo(() => {
     return data ? ['regions', ...stringOptions, ...booleanOptions] : []
@@ -66,7 +66,7 @@ function Statistics() {
   const [xAxis, setXAxis] = useState(optionsArr.length > 0 ? optionsArr[0] : '')
   const [zAxis, setZAxis] = useState('')
   const [showOptions, setShowOptions] = useState(true)
-
+  
   useEffect(() => {
     if (fields.length > 0) {
       setYAxis(fields[0].fieldName)
@@ -137,7 +137,7 @@ function Statistics() {
     height: calculatedGraphHeight,
     data: data,
     regions: regionNames,
-    options: optionsArr,
+    options: [...optionsArr, ...fields.map(f => f.fieldName)],
     division: mapDivision,
   }
 
@@ -175,7 +175,9 @@ function Statistics() {
                 <ChartsContainer
                   chartType={chartType}
                   fields={fields}
+                  options={optionsArr}
                   commonProps={commonProps}
+                  colTypes={collection?.columnTypes}
                 />
               </div>
               {

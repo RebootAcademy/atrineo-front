@@ -20,6 +20,27 @@ export const uploadCsv = async (data, type, name) => {
   }
 }
 
+export const addDataChunck = async (id, data, type, name, isFirst) => {
+  try {
+    const payload = {
+      body: data,
+      collectionType: type,
+      name,
+      isFirst
+    }
+
+    const res = await api.post(`/data/chunk/${id}`, payload, {
+      headers: {
+        token: localStorage.getItem("token"),
+      },
+    })
+    return res
+  } catch (error) {
+    console.error(error)
+    throw new Error("Cannot send data")
+  }
+}
+
 export const uploadGeojson = async (data, type) => {
   try {
     const res = await api.post(

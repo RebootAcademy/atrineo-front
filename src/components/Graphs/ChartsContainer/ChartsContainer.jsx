@@ -8,7 +8,7 @@ import HeatmapPlot from '../HeatmapPlot/HeatmapPlot'
 
 import PropTypes from 'prop-types'
 
-function ChartsContainer({ commonProps }) {
+function ChartsContainer({ commonProps, colTypes }) {
   const { graphs, deleteGraphById } = useContext(GraphContext)
 
   const handleDeleteGraph = (obj) => {
@@ -20,7 +20,11 @@ function ChartsContainer({ commonProps }) {
     case ('bar'):
       return (
         <div key={obj.id} className='relative inline-block'>
-          <BarPlot {...obj.data.ownProps} {...commonProps} />
+          <BarPlot 
+            {...obj.data.ownProps} 
+            {...commonProps} 
+            name={obj.data.chartName} 
+          />
           <button 
             className="absolute top-0 right-0 z-10 p-2 pr-4 text-lg  text-black rounded"
             onClick={() => handleDeleteGraph(obj)}
@@ -32,7 +36,12 @@ function ChartsContainer({ commonProps }) {
     case ('pie'):
       return (
         <div key={obj.id} className='relative inline-block'>
-          <PieChart {...obj.data.ownProps} {...commonProps} fields={obj.data.fields} />
+          <PieChart 
+            {...obj.data.ownProps} 
+            {...commonProps} 
+            fields={obj.data.fields} 
+            name={obj.data.chartName} 
+          />
           <button
             className="absolute top-0 right-0 z-10 p-2 pr-4 text-lg  text-black rounded"
             onClick={() => handleDeleteGraph(obj)}
@@ -44,7 +53,12 @@ function ChartsContainer({ commonProps }) {
     case ('scatter'):
       return (
         <div key={obj.id} className='relative inline-block'>
-          <ScatterPlot {...obj.data.ownProps} {...commonProps} />
+          <ScatterPlot 
+            {...obj.data.ownProps} 
+            {...commonProps}
+            name={obj.data.chartName}
+            colTypes={colTypes}
+          />
           <button
             className="absolute top-0 right-0 z-10 p-2 pr-4 text-lg  text-black rounded"
             onClick={() => handleDeleteGraph(obj)}
@@ -56,7 +70,12 @@ function ChartsContainer({ commonProps }) {
     case ('heatmap'):
       return (
         <div key={obj.id} className='relative inline-block'>
-          <HeatmapPlot {...obj.data.ownProps} {...commonProps} />
+          <HeatmapPlot 
+            {...obj.data.ownProps} 
+            {...commonProps}
+            name={obj.data.chartName} 
+            colTypes={colTypes}
+          />
           <button
             className="absolute top-0 right-0 z-10 p-2 pr-4 text-lg  text-black rounded"
             onClick={() => handleDeleteGraph(obj)}
@@ -79,7 +98,7 @@ function ChartsContainer({ commonProps }) {
 ChartsContainer.propTypes = {
   chartType: PropTypes.string.isRequired,
   commonProps: PropTypes.object,
-  fields: PropTypes.array
+  colTypes: PropTypes.object
 }
 
 export default ChartsContainer

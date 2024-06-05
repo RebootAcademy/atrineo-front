@@ -28,10 +28,10 @@ export const isWithinPolygon = (dataItem, searchPolygon) => {
   return booleanPointInPolygon(itemPoint, polygon([polygonCoordinates]))
 }
 
-export const extractNumericFields = (arr) => {
+export const extractNumericFields = (arr, obj) => {
   return arr?.filter(
     (field) =>
-      field.fieldType === "number" &&
+      obj[field.fieldName] === "number" &&
       field.fieldName !== "latitude" &&
       field.fieldName !== "longitude" &&
       field.fieldName !== "districtId"
@@ -148,35 +148,73 @@ export const checkAggregation = (value, prev, agg) => {
   }
 }
 
-export const calcAggregatedData = (data, xAxis, yAxis, division, aggregation, locations) => {
+export const calcAggregatedData = (
+  data,
+  xAxis,
+  yAxis,
+  division,
+  aggregation,
+  locations
+) => {
   const sums = data.reduce((acc, cur) => {
     let name
-    if (xAxis === 'regions') {
-      name = (locations.find(d => d._id === cur.locationId[division]))?.name
+
+    if (xAxis === "regions" || yAxis === "regions") {
+      name = locations.find((d) => d._id === cur.locationId[division])?.name
     } else {
       name = cur.fields
-        .filter(f => f.fieldName === xAxis)
-        .map(f => f.fieldValue)
-    }
-    if (!name) return acc
-    if (!acc[name]) {
-      acc[name] = aggregation === 'min' ? Infinity : (aggregation === 'avg' ? { count: 0, sum: 0 } : 0)
+        .filter((f) => f.fieldName === xAxis)
+        .map((f) => f.fieldValue)
+      name = name.length > 0 ? name[0] : null
     }
 
-    const filteredValues = cur.fields.filter(d => d.fieldName === yAxis)
-    if (filteredValues.length > 0) {
-      const value = filteredValues[0]
-      acc[name] = checkAggregation(value, acc[name], aggregation)
+    if (!name) return acc
+
+    if (!acc[name]) {
+      if (aggregation === "avg") {
+        acc[name] = { count: 0, sum: 0 }
+      } else if (aggregation === "min") {
+        acc[name] = Infinity
+      } else if (aggregation === "max") {
+        acc[name] = -Infinity
+      } else {
+        acc[name] = 0
+      }
     }
+
+    const fieldValue = cur.fields.find(
+      (d) => d.fieldName === (xAxis === "regions" ? yAxis : xAxis)
+    )
+    if (fieldValue) {
+      const value = parseFloat(fieldValue.fieldValue)
+      if (aggregation === "avg") {
+        acc[name].count += 1
+        acc[name].sum += value
+      } else if (aggregation === "sum") {
+        acc[name] += value
+      } else if (aggregation === "min") {
+        acc[name] = Math.min(acc[name], value)
+      } else if (aggregation === "max") {
+        acc[name] = Math.max(acc[name], value)
+      } else if (aggregation === "count") {
+        acc[name] += 1
+      }
+    }
+
     return acc
   }, {})
 
-  if (aggregation === 'avg') {
-    return Object.entries(sums).map(([name, info]) => ({ name, sum: info.sum / info.count }))
+  // Calculate the final aggregated values
+  if (aggregation === "avg") {
+    return Object.entries(sums).map(([name, info]) => ({
+      name,
+      sum: info.sum / info.count,
+    }))
   } else {
     return Object.entries(sums).map(([name, sum]) => ({ name, sum }))
   }
 }
+
 
 export const formatNumber = (num) => {
   if (num === null || isNaN(num)) {
@@ -196,8 +234,11 @@ export const formatNumber = (num) => {
 
 export const checkValue = (itemValue, layerKey, layerObj) => {
   if (layerObj.data.type !== 'startups') return true
-  if (typeof layerObj.data[layerKey].value === 'number') {
-    return itemValue >= layerObj.data[layerKey].value
+  if (typeof layerObj.data[layerKey].value[0] === 'number') {
+    return (
+      itemValue >= layerObj.data[layerKey].value[0] &&
+      itemValue <= layerObj.data[layerKey].value[1]
+    )
   } else if (itemValue === "string") {
     return itemValue === layerObj.data[layerKey].value
   } else {
