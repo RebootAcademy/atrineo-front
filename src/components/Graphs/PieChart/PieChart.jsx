@@ -10,8 +10,6 @@ const MARGIN_X = 150
 const MARGIN_Y = 50
 const INFLEXION_PADDING = 20
 
-const colors = ["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56"]
-
 function PieChart({ 
   width, 
   height, 
@@ -27,15 +25,16 @@ function PieChart({
   const adjustedDivision = division
   
   const aggregatedData = useMemo(() => calcAggregatedData(data, xAxis, yAxis, adjustedDivision, aggregation, locations[adjustedDivision]), [data, xAxis, yAxis, aggregation, locations, adjustedDivision])
-
+  
   const radius = Math.min(width - 2 * MARGIN_X, height - 2 * MARGIN_Y) / 2
-
+  
   const pie = useMemo(() => {
     const pieGenerator = d3.pie().value((d) => d.sum)
     return pieGenerator(aggregatedData)
   }, [aggregatedData])
-
+  
   const arcPathGenerator = d3.arc()
+  const colorScale = d3.scaleSequential(d3.interpolateRainbow).domain([0, aggregatedData.length])
 
   const shapes = pie.map((grp, i) => {
     const sliceInfo = {
@@ -62,7 +61,6 @@ function PieChart({
     const textAnchor = isRightLabel ? "start" : "end"
     const label = grp.data.name + " (" + grp.value.toLocaleString() + ")"
 
-
     return (
       <g
         key={i}
@@ -78,7 +76,7 @@ function PieChart({
           }
         }}
       >
-        <path d={slicePath} fill={colors[i]} />
+        <path d={slicePath} fill={colorScale(i)} />
         <circle cx={centroid[0]} cy={centroid[1]} r={2} />
         <line
           x1={centroid[0]}
@@ -101,7 +99,7 @@ function PieChart({
           y={inflexionPoint[1]}
           textAnchor={textAnchor}
           dominantBaseline="middle"
-          fontSize={14}
+          fontSize={8}
         >
           {label}
         </text>
