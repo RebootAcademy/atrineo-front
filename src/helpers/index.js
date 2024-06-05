@@ -87,20 +87,27 @@ export const findMaxAndMinValues = (arr, name) => {
 }
 
 export const calculateRadius = (value, minValue, maxValue) => {
-  const range = [1, 5000]
   if (isNaN(value) || isNaN(minValue) || isNaN(maxValue) || minValue === maxValue) {
-    return 1
+    return null
   }
-  if (minValue > maxValue) {
-    return 1
+  if (minValue > maxValue) { 
+    return null
   }
+  
+  const percentage = (value - minValue) / (maxValue - minValue)
+
+  const outputMin = 1
+  const outputMax = 300
+
   const sqrtScale = d3.scaleSqrt()
-    .domain([minValue, maxValue])
-    .range(range)
-  const calculatedRadius = sqrtScale(value)
+    .domain([0, 1])
+    .range([outputMin, outputMax])
+
+  const calculatedRadius = sqrtScale(percentage)
+
   if (isNaN(calculatedRadius)) {
-    return 1
-  } 
+    return null
+  }
   return calculatedRadius
 }
 

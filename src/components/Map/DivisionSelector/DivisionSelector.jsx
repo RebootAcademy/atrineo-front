@@ -13,7 +13,7 @@ function DivisionSelector() {
   const { mapDivision, setMapDivision } = useContext(LayerContext)
 
   const options = [
-    { value: 'country', label: 'Country' },
+    /*     { value: 'country', label: 'Country' }, */ // Country option disabled
     { value: 'division1', label: 'Division 1' },
     { value: 'division2', label: 'Division 2' },
     { value: 'division3', label: 'Division 3' },
