@@ -156,7 +156,7 @@ function OptionsMenu({ onChange, fields, options, aggOptions, changeAggregation,
       {displaySelect(
         "Y axis:",
         handleYAxisChange,
-        fields,
+        [...options, ...fields],
         true,
         [selectedXAxis, selectedZAxis],
         selectedYAxis
