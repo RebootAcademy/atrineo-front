@@ -27,8 +27,6 @@ function Barplot({
   const { locations } = useContext(LocationContext)
   const { collection } = useContext(CollectionContext)
   const regions = extractRegionNames(collection, division, locations)
-  //const regions = locations[division].map(l => l.name)
-  //const { mapDivision } = useContext(LayerContext)
   const mapDivision = division
 
   const MARGIN = { top: 60, right: 40, bottom: 80, left: 90 }

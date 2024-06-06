@@ -41,7 +41,8 @@ function ChartsContainer({ commonProps, colTypes }) {
             {...obj.data.ownProps} 
             {...commonProps} 
             fields={obj.data.fields} 
-            name={obj.data.chartName} 
+            name={obj.data.chartName}
+            division={obj.data.division}
           />
           <button
             className="absolute top-0 right-0 z-10 p-2 pr-4 text-lg  text-black rounded"
