@@ -21,7 +21,7 @@ function Barplot({
   const { locations } = useContext(LocationContext)
   const { mapDivision } = useContext(LayerContext)
 
-  const MARGIN = { top: 60, right: 40, bottom: 80, left: 90 }
+  const MARGIN = { top: 10, right: 40, bottom: 80, left: 90 }
   const BAR_PADDING = 0.2
   const boundsWidth = width - MARGIN.right - MARGIN.left
   const boundsHeight = height - MARGIN.top - MARGIN.bottom
@@ -32,12 +32,10 @@ function Barplot({
 
   const aggregatedData = useMemo(() => {
     const result = calcAggregatedData(data, xAxis, yAxis, mapDivision, aggregation, locations[mapDivision])
-    console.log(result)
     return regions.map(region => result.find(d => d.name === region) || { name: region, sum: 0 })
   }, [data, xAxis, yAxis, aggregation, locations, mapDivision, regions])
 
   const maxSum = useMemo(() => Math.max(...aggregatedData.map(d => d.sum)), [aggregatedData])
-  console.log(maxSum)
 
   const xScale = useMemo(() => {
     if (yAxis === 'regions') {
@@ -98,43 +96,32 @@ function Barplot({
   ), [xScale, yScale, aggregatedData, boundsHeight, yAxis])
 
   return (
-    <>
-      <svg
-        width={width}
-        height={height}
-        className='border rounded-md border-gray'
-      >
-        <text x={20} y={25} style={{ fontSize: '1em' }}>
-          {name}
+    <svg
+      width={width}
+      height={height}
+      className='border rounded-sm border-gray'
+    >
+      <text x={20} y={25} style={{ fontSize: '1em' }}>{name}</text>
+      {/*Legend*/}
+      <g transform={`translate(${boundsWidth + (MARGIN.right - 16) - boundsWidth}, ${MARGIN.top + 12})`}>
+        <text x={0} y={20} style={{ fontSize: '0.8em', fontWeight: 'bold' }}>
+          Y: { yAxis }
         </text>
-        {/*Legend*/}
+        <text x={0} y={5} style={{ fontSize: '0.8em', fontWeight: 'bold' }}>
+          X: { xAxis }
+        </text>
+      </g>
+      <g transform={`translate(${MARGIN.left}, ${MARGIN.top + 50})`}>
+        {bars}
+        {/* Render X Axis */}
         <g
-          transform={`translate(${boundsWidth + MARGIN.right - boundsWidth},${MARGIN.top - 18})`}
-        >
-          <g transform={`translate(0,0)`}>
-            <rect width={15} height={15} fill={'var(--primary)'} />
-            <text x={15 + 5} y={17 - 5} style={{ fontSize: '0.8em', fontWeight: 'bold' }}>
-              {yAxis === 'regions' ? xAxis : yAxis}
-            </text>
-          </g>
-        </g>
-        <g transform={`translate(${MARGIN.left},${MARGIN.top + 44})`}>
-          {bars}
-          {/* Render X Axis */}
-          <g
-            transform={yAxis === 'regions' ? `translate(0,${boundsHeight})` : `translate(0,${boundsHeight})`} // Corrected line
-            ref={node => d3.select(node).call(xAxisInfo)}
-            className="x-axis"
-          />
-          {/* Render Y Axis */}
-          <g
-            transform={`translate(0,0)`} // Corrected line
-            ref={node => d3.select(node).call(yAxisInfo)}
-            className="y-axis"
-          />
-        </g>
-      </svg>
-    </>
+          transform={yAxis === 'districtNames' ? `translate(0,${boundsHeight})` : `translate(0,${boundsHeight})`}
+          ref={node => d3.select(node).call(xAxisInfo)}
+        />
+        {/* Render Y Axis */}
+        <g ref={node => d3.select(node).call(yAxisInfo)} />
+      </g>
+    </svg>
   )
 }
 

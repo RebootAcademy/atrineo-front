@@ -107,7 +107,7 @@ function OptionsMenu({ onChange, fields, options, aggOptions, changeAggregation,
             <SelectContent key={`select-content-${title}`}>
               {filteredOptions.map((option, i) => (
                 <SelectItem key={i} value={option}>
-                  {option}
+                  { option === 'regions' ? 'districtNames' : option }
                 </SelectItem>
               ))}
             </SelectContent>
