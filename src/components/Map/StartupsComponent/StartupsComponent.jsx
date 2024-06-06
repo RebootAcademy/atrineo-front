@@ -13,7 +13,7 @@ function StartupsComponent({ data }) {
         iconCreateFunction={function (cluster) {
           return L.divIcon({
             html: `<span>${cluster.getChildCount()}</span>`,
-            className: 'rounded-full text-white text-sm font-bold text-center bg-radial-custom',
+            className: 'rounded-full text-white text-xs font-semibold text-center bg-radial-custom py-3',
             iconSize: L.point(40, 40, true)
           })
         }}

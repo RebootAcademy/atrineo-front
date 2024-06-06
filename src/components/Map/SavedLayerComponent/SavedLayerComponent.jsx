@@ -10,10 +10,24 @@ import CircleLegend from "../../ui/Legend/CircleLegend"
 import PatternLegend from "../../ui/Legend/PatternLegend"
 
 function SavedLayerComponent() {
-  const { layers, clearLayerById, toggleLayerVisibility, mapDivision } = useContext(LayerContext)
+  const { layers, clearLayerById, toggleLayerVisibility, mapDivision, showStartups, setShowStartups } = useContext(LayerContext)
+
+  const hasStartupsLayer = layers.some(layer => layer.data.type === 'startups')
 
   return (
     <>
+      {hasStartupsLayer && (
+        <div className="ml-5 mb-2">
+          <label className="flex items-center">
+            <input 
+              type="checkbox"
+              checked={showStartups}
+              onChange={() => setShowStartups(prev => !prev)}
+            />
+            <span className="ml-2">Show Startups</span>
+          </label>
+        </div>
+      )}
       {layers.map((layer) => {
         return (
           <div
@@ -54,17 +68,15 @@ function SavedLayerComponent() {
                     {Object.entries(layer.data)
                       .filter(([key]) => key !== "type")
                       .map(([key, value]) => (
-                        <div key={key} className="flex justify-between">
+                        <div key={key} className="flex flex-col justify-between">
                           <div className="flex mt-1">
                             <ColorRectangleIcon color={value.color} />
                             <p className="ml-2">{key}: </p>
                           </div>
-                          {
-                            typeof value.value === 'string' ?
-                              <p className="font-bold">{value.value}</p> :
-                              <p className="font-bold">{value.value[0]}&lt;=x&lt;= {value.value[1]}</p>
-
-                          }
+                          <div>
+                            <p>Min value: {value.value[0]} </p>
+                            <p>Max value: {value.value[1]} </p>
+                          </div>
                         </div>
                       ))}
                     <div className="mb-4">

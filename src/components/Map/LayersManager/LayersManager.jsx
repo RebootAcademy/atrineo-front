@@ -14,7 +14,7 @@ import { isWithinPolygon, checkValue } from '@/helpers'
 function LayersManager() {
   const { collection } = useContext(CollectionContext)
   const { locations } = useContext(LocationContext)
-  const { searchPolygon, layers, setLayers } = useContext(LayerContext)
+  const { searchPolygon, layers, setLayers, showStartups } = useContext(LayerContext)
 
   useEffect(() => {
     const storedLayers = JSON.parse(window.localStorage.getItem('layers')) || []
@@ -65,7 +65,7 @@ function LayersManager() {
         return fields.map(field => {
           return (
             <div key={v4()}>
-              {layer.data.type === 'startups' && (
+              {layer.data.type === 'startups' && showStartups && (
                 <StartupsComponent 
                   data={filteredData} 
                   color={layer.data.color}
