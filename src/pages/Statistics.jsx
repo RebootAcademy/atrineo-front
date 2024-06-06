@@ -6,15 +6,15 @@ import ChartsContainer from "@/components/Graphs/ChartsContainer/ChartsContainer
 import CustomButton from "@/components/CustomButton/CustomButton"
 
 import { CollectionContext } from "../context/collectionContext"
-import { LayerContext } from "../context/layerContext"
+//import { LayerContext } from "../context/layerContext"
 import { UserContext } from "../context/userContext"
-import { LocationContext } from "@/context/locationContext"
+//import { LocationContext } from "@/context/locationContext"
 
 import { useUser } from "@/hooks/useUser"
 import { useCollectionFetch } from "@/hooks/useCollectionFetch"
 
 import {
-  extractRegionNames,
+  //extractRegionNames,
   extractNumericFields,
   extractStringOptions,
   extractBooleanOptions
@@ -24,9 +24,9 @@ import { useDivisions } from "@/hooks/useDivisions"
 
 function Statistics() {
   const { collection, setCollection } = useContext(CollectionContext)
-  const { mapDivision } = useContext(LayerContext)
+  //const { mapDivision } = useContext(LayerContext)
   const { user } = useContext(UserContext)
-  const { locations } = useContext(LocationContext)
+  //const { locations } = useContext(LocationContext)
 
   useUser()
   useCollectionFetch(
@@ -38,10 +38,6 @@ function Statistics() {
 
   const data = collection?.data
   const aggOptions = ['sum', 'avg', 'count', 'min', 'max']
-
-  const adjustedMapDivision = mapDivision
-
-  const regionNames = extractRegionNames(collection, adjustedMapDivision, locations)
 
   const stringOptions = useMemo(() => {
     return data ? extractStringOptions(data[0]?.fields) : []
@@ -65,8 +61,9 @@ function Statistics() {
   const [yAxis, setYAxis] = useState(fields.length > 0 ? fields[0].fieldName : '')
   const [xAxis, setXAxis] = useState(optionsArr.length > 0 ? optionsArr[0] : '')
   const [zAxis, setZAxis] = useState('')
+  const [division, setDivision] = useState('division3')
   const [showOptions, setShowOptions] = useState(true)
-  
+
   useEffect(() => {
     if (fields.length > 0) {
       setYAxis(fields[0].fieldName)
@@ -104,6 +101,10 @@ function Statistics() {
     setZAxis(name)
   }
 
+  const changeDivision = (name) => {
+    setDivision(name)
+  }
+
   const containerRef = useRef(null)
   const { width: containerWidth } = useDimensions(containerRef)
 
@@ -136,9 +137,8 @@ function Statistics() {
     width: calculatedGraphWidth,
     height: calculatedGraphHeight,
     data: data,
-    regions: regionNames,
-    options: [...optionsArr, ...fields.map(f => f.fieldName)],
-    division: mapDivision,
+    //regions: regionNames,
+    options: [...optionsArr, ...fields.map(f => f.fieldName)]
   }
 
   const ownProps = {
@@ -197,6 +197,8 @@ function Statistics() {
                     changeYAxis={changeYAxis}
                     changeZAxis={changeZAxis}
                     toggleDisplay={setShowOptions}
+                    division={division}
+                    changeDivision={changeDivision}
                   />
                 </aside>
               }

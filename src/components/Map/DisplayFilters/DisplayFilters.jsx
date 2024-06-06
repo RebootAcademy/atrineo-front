@@ -20,8 +20,6 @@ function DisplayFilters({ layerObj, type }) {
   const { collection } = useContext(CollectionContext)
   const { getNextColor, mapDivision, minValue, maxValue } = useContext(LayerContext)
 
-  console.log(minValue, maxValue)
-
   const [activeSwitch, setActiveSwitch] = useState(false)
 
   const handleRegionChange = (value) => {

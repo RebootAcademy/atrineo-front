@@ -15,6 +15,7 @@ import { Checkbox } from "@/components/ui/Checkbox/Checkbox"
 
 function ColumnsModal({ columnNames, hiddenColumns, setHiddenColumns }) {
   const [isOpen, setIsOpen] = useState(false)
+  const [selectAll, setSelectAll] = useState(true)
   const [pendingHiddenColumns, setPendingColumns] = useState([...hiddenColumns])
   const initialHiddenColumns = useRef([...hiddenColumns])
   const cardRef = useRef(null)
@@ -55,6 +56,16 @@ function ColumnsModal({ columnNames, hiddenColumns, setHiddenColumns }) {
     setIsOpen(false)
   }
 
+  const selectAllFields = () => {
+    setSelectAll(true)
+    setPendingColumns(()=> [])
+  }
+  
+  const unSelectAll = () => {
+    setSelectAll(false)
+    setPendingColumns(() => [...columnNames])
+  }
+
   return (
     <>
       <div className="text-center flex justify-between">
@@ -83,6 +94,26 @@ function ColumnsModal({ columnNames, hiddenColumns, setHiddenColumns }) {
               </CardHeader>
               <CardContent>
                 <div className="grid grid-cols-1 md:grid-cols-2">
+                  <div className="flex items-center">
+                    <Checkbox
+                      className="mr-2"
+                      checked={selectAll}
+                      onCheckedChange={selectAllFields}
+                    />
+                    <strong>
+                      Select All
+                    </strong>
+                  </div>
+                  <div className="flex items-center">
+                    <Checkbox
+                      className="mr-2"
+                      checked={!selectAll}
+                      onCheckedChange={unSelectAll}
+                    />
+                    <strong>
+                      Unselect All
+                    </strong>
+                  </div>
                   {columnNames?.map((columnName, index) => (
                     <div key={index} className="flex items-center">
                       <Checkbox

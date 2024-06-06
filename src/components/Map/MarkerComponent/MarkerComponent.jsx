@@ -3,7 +3,7 @@ import { Icon } from 'leaflet'
 import PropTypes from 'prop-types'
 import PopupComponent from '../PopupComponent/PopupComponent'
 
-function MarkerComponent ({ coords, onClick, name }) {
+function MarkerComponent ({ coords, onClick, item }) {
   const lat = parseFloat(coords?.latitude)
   const lng = parseFloat(coords?.longitude)
 
@@ -16,7 +16,7 @@ function MarkerComponent ({ coords, onClick, name }) {
   return (
     <Marker position={[lat, lng]} icon={icon}>
       <PopupComponent
-        name={name}
+        array={item}
         data={coords}
         eventHandlers={{ click: onClick }}
       />
@@ -25,7 +25,7 @@ function MarkerComponent ({ coords, onClick, name }) {
 }
 
 MarkerComponent.propTypes = {
-  name: PropTypes.string,
+  item: PropTypes.array,
   coords: PropTypes.object,
   onClick: PropTypes.func
 }

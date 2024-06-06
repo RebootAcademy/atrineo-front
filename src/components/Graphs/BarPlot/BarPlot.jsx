@@ -3,23 +3,31 @@ import { useMemo, useContext } from 'react'
 import * as d3 from "d3"
 
 import { LocationContext } from '@/context/locationContext'
-import { LayerContext } from '@/context/layerContext'
+import { CollectionContext } from '@/context/collectionContext'
+// import { LayerContext } from '@/context/layerContext'
 
-import { calcAggregatedData, createStringOptionsObject, formatNumber } from '@/helpers'
+import { 
+  calcAggregatedData, 
+  createStringOptionsObject, 
+  formatNumber, 
+  extractRegionNames 
+} from '@/helpers'
 
 function Barplot({
   width,
   height,
   data,
-  regions,
   options,
   aggregation,
   xAxis,
   yAxis,
-  name
+  name,
+  division
 }) {
   const { locations } = useContext(LocationContext)
-  const { mapDivision } = useContext(LayerContext)
+  const { collection } = useContext(CollectionContext)
+  const regions = extractRegionNames(collection, division, locations)
+  const mapDivision = division
 
   const MARGIN = { top: 40, right: 40, bottom: xAxis === 'regions' ? 180 : 80, left: 90 }
   const BAR_PADDING = 0.2
