@@ -67,6 +67,13 @@ function OptionsMenu({ onChange, fields, options, aggOptions, changeAggregation,
     changeChartName(e.target.value)
   }
 
+  const resetFields = () => {
+    handleXAxisChange('')
+    handleYAxisChange('')
+    handleZAxisChange('')
+    changeChartName('')
+  }
+
   const handleSaveGraph = () => {
     const graphConfigurationObj = {
       chartName,
@@ -77,7 +84,7 @@ function OptionsMenu({ onChange, fields, options, aggOptions, changeAggregation,
     }
     saveCurrentGraph(graphConfigurationObj, ownProps)
     hideOptions()
-    changeChartName('')
+    resetFields()
   }
 
   const displayChartOptions = (options) => {
