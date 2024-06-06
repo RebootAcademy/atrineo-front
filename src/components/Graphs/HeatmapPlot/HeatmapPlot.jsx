@@ -75,9 +75,9 @@ function HeatmapPlot({
 
       const plot = Plot.plot({
         width: width,
-        height: height,
+        height: height - 60,
         marginLeft: 80,
-        marginBottom: 60,
+        marginBottom: 40,
         padding: 0,
         y: {
           label: yAxis,
@@ -120,7 +120,13 @@ function HeatmapPlot({
     }
   }, [filteredData, xAxis, yAxis, zAxis, height, width, name])
 
-  return <div className='border rounded-md border-gray px-4 py-4' ref={containerRef}></div>
+  return (
+    <div 
+      className='border rounded-md border-gray p-4'
+      ref={containerRef}
+      style={{ width: `${width}px`, height: `${height}px` }}
+    ></div>
+  )
 }
 
 HeatmapPlot.propTypes = {
