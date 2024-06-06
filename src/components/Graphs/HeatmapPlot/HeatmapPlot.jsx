@@ -26,9 +26,6 @@ function HeatmapPlot({
     return numericFieldsObj
   }), [data, colTypes])
 
-  /*   const xStep = 18
-  const yStep = 18 */
-
   useEffect(() => {
     if (filteredData) {
       const validData = filteredData.filter((d) => d[zAxis] !== null && d[zAxis] !== 0)
@@ -41,10 +38,11 @@ function HeatmapPlot({
         Math.min(...validData.map((d) => d[yAxis]))
 
       // Ajustar xStep e yStep basado en el rango
-      const xStep = Math.ceil(xRange / 50) // Ajusta este divisor según sea necesario
-      const yStep = Math.ceil(yRange / 50) // Ajusta este divisor según sea necesario
+      const xStep = Math.ceil(xRange / 200) // Ajusta este divisor según sea necesario
+      const yStep = Math.ceil(yRange / 200) // Ajusta este divisor según sea necesario
 
       const groupedData = {}
+
       validData.forEach((d) => {
         const xGroup = Math.floor(d[xAxis] / xStep) * xStep
         const yGroup = Math.floor(d[yAxis] / yStep) * yStep
@@ -78,7 +76,7 @@ function HeatmapPlot({
       const plot = Plot.plot({
         width: width,
         height: height,
-        marginLeft: 60,
+        marginLeft: 80,
         marginBottom: 60,
         padding: 0,
         y: {
@@ -97,7 +95,8 @@ function HeatmapPlot({
           scheme: "Blues",
           legend: true,
           zero: false,
-          label: zAxis
+          label: zAxis,
+          tickFormat: formatNumber,
         },
         title: name,
         marks: [
@@ -121,11 +120,7 @@ function HeatmapPlot({
     }
   }, [filteredData, xAxis, yAxis, zAxis, height, width, name])
 
-  return (
-    <>
-      <div className='border rounded-md border-gray px-4' ref={containerRef}></div>
-    </>
-  )
+  return <div className='border rounded-md border-gray px-4 py-4' ref={containerRef}></div>
 }
 
 HeatmapPlot.propTypes = {
