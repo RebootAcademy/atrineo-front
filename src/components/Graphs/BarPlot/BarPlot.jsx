@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import { useMemo, useContext } from 'react'
-import * as d3 from "d3" // we will need d3.js
+import * as d3 from "d3"
 
 import { LocationContext } from '@/context/locationContext'
 import { LayerContext } from '@/context/layerContext'
@@ -21,7 +21,7 @@ function Barplot({
   const { locations } = useContext(LocationContext)
   const { mapDivision } = useContext(LayerContext)
 
-  const MARGIN = { top: 10, right: 40, bottom: 80, left: 90 }
+  const MARGIN = { top: 40, right: 40, bottom: xAxis === 'regions' ? 180 : 80, left: 90 }
   const BAR_PADDING = 0.2
   const boundsWidth = width - MARGIN.right - MARGIN.left
   const boundsHeight = height - MARGIN.top - MARGIN.bottom
@@ -103,7 +103,7 @@ function Barplot({
     >
       <text x={20} y={25} style={{ fontSize: '1em' }}>{name}</text>
       {/*Legend*/}
-      <g transform={`translate(${boundsWidth + (MARGIN.right - 16) - boundsWidth}, ${MARGIN.top + 12})`}>
+      <g transform={`translate(${boundsWidth + (MARGIN.right - 16) - boundsWidth}, ${MARGIN.top - 10})`}>
         <text x={0} y={20} style={{ fontSize: '0.8em', fontWeight: 'bold' }}>
           Y: { yAxis }
         </text>
@@ -115,8 +115,17 @@ function Barplot({
         {bars}
         {/* Render X Axis */}
         <g
-          transform={yAxis === 'districtNames' ? `translate(0,${boundsHeight})` : `translate(0,${boundsHeight})`}
-          ref={node => d3.select(node).call(xAxisInfo)}
+          transform={`translate(0, ${boundsHeight})`}
+          ref={node => {
+            const axis = d3.select(node).call(xAxisInfo)
+            if (xAxis === 'regions') {
+              axis.selectAll('text')
+                .style("text-anchor", "end")
+                .attr("dx", "-0.8em")
+                .attr("dy", "0.15em")
+                .attr("transform", "rotate(-65)")
+            }
+          }}
         />
         {/* Render Y Axis */}
         <g ref={node => d3.select(node).call(yAxisInfo)} />
