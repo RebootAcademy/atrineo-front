@@ -6,6 +6,7 @@ import { LayerContext } from '../../../context/layerContext'
 import { LocationContext } from '@/context/locationContext'
 
 function RegionsComponent({ data, fieldName, color }) {
+  // console.log(data)
   const { mapDivision } = useContext(LayerContext)
   const { locations } = useContext(LocationContext)
 
@@ -25,14 +26,15 @@ function RegionsComponent({ data, fieldName, color }) {
       return location ? location.geojsonId : 'noDivision1'
     case 'division2':
       return location ? location.geojsonId : 'noDivision2'
-    default: // 'division3' o cualquier otro caso
+    case 'division3':
       return location ? location.geojsonId : 'noDivision3'
+    default: // 'division3' o cualquier otro caso
+      return location ? location.geojsonId : 'noDivision4'
     }
   }
 
   const groupedByGeojsonId = data.reduce((acc, item) => {
     const geojsonId = getGeojsonIdByDivision(item)
-
     if (geojsonId) {
       if (!acc[geojsonId]) {
         acc[geojsonId] = []
@@ -59,6 +61,7 @@ function RegionsComponent({ data, fieldName, color }) {
     }, {})
     return sums
   }
+
 
   const filteredData = Object.entries(groupedByGeojsonId).map(([geojsonId, items]) => {
     const sums = sumNumericFields(items)

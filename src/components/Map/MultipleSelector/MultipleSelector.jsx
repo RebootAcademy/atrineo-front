@@ -12,7 +12,6 @@ function MultipleSelectorComponent({ onValueChange }) {
   const { collection } = useContext(CollectionContext)
   const { locations } = useContext(LocationContext)
   const [active, setActive] = useState(false)
-  
 
   const onDistrictNameChange = (districts) => {
     onValueChange(districts)

@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import { useContext, useMemo, useEffect } from "react"
+import { useContext, useMemo, useEffect, useState } from "react"
 import { GeoJSON } from "react-leaflet"
 import { useGeoJsonData } from '../../../hooks/useGeoJsonData'
 import { defaultStyle } from './Styles'
@@ -11,12 +11,23 @@ import PropTypes from 'prop-types'
 
 function HeatmapLayer({ data, fieldName }) {
   const { mapDivision, updateMinValue, updateMaxValue } = useContext(LayerContext)
-  
   const { data: mapData, isLoading, isError, error } = useGeoJsonData(mapDivision)
+  const [division4Data, setDivision4Data] = useState({})
 
   if (fieldName === "color" || fieldName === "maxValue" || fieldName === "minValue") {
     return null
   }
+
+  useEffect(() => {
+    const getData = async () => {
+      const response = await fetch('/public/geoJson/division4.geojson')
+      const result = await response.json()
+      setDivision4Data(result)
+    }
+    if (mapDivision === 'division4') {
+      getData()
+    }
+  }, [mapDivision])
 
   const adjustedData = useMemo(
     () =>
@@ -50,12 +61,15 @@ function HeatmapLayer({ data, fieldName }) {
 
   const setStyle = (feature) => {
     let divisionIdProperty
+
     if (mapDivision === 'division3') {
       divisionIdProperty = 'ID_3'
     } else if (mapDivision === 'division2') {
       divisionIdProperty = 'ID_2'
     } else if (mapDivision === 'division1') {
       divisionIdProperty = 'ID_1'
+    } else if (mapDivision === 'division4') {
+      divisionIdProperty = 'id'
     } else {
       divisionIdProperty = 'ID' // Asumiendo que hay un ID genérico si no es una división específica
     }
@@ -64,6 +78,10 @@ function HeatmapLayer({ data, fieldName }) {
     if (divisionIdProperty === 'ID_1') {
       //En los division1 la estructura del objeto es distinta. Además, su id es un número menor que el que tiene en la Base de Datos
       currentGroupId = data.find(d => d.geojsonId === (feature.id + 1).toString())
+    } else if (divisionIdProperty === 'id') {
+      currentGroupId = data.find(d => {
+        return d.geojsonId === (feature.properties.postcode).toString()
+      })
     } else {
       currentGroupId = data.find(d => d.geojsonId === feature.properties[divisionIdProperty]?.toString())
     }
@@ -89,8 +107,11 @@ function HeatmapLayer({ data, fieldName }) {
   if (isLoading) return <div>Loading...</div>
   if (isError) return <div>Error loading data: {error.message}</div>
 
-  if (mapData) {
-    const filteredData = { ...mapData }
+  if (
+    (mapData && mapDivision !== 'division4') ||
+    (mapDivision === 'division4' && Object.keys(division4Data).length !== 0)
+  ) {
+    const filteredData = mapDivision === 'division4' ? {...division4Data} : {...mapData}
     return (
       <>
         <GeoJSON
