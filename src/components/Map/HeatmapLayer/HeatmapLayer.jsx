@@ -68,7 +68,6 @@ function HeatmapLayer({ data, fieldName }) {
   }
 
   const setStyle = (feature) => {
-    console.log(feature)
     let divisionIdProperty
 
     if (mapDivision === 'division3') {
@@ -82,13 +81,15 @@ function HeatmapLayer({ data, fieldName }) {
     } else {
       divisionIdProperty = 'ID' // Asumiendo que hay un ID genérico si no es una división específica
     }
-
+    console.log(mapDivision)
+    console.log(divisionIdProperty)
     let currentGroupId
     if (divisionIdProperty === 'ID_1') {
       //En los division1 la estructura del objeto es distinta. Además, su id es un número menor que el que tiene en la Base de Datos
       currentGroupId = data.find(d => d.geojsonId === (feature.id + 1).toString())
     } else if (divisionIdProperty === 'id') {
       currentGroupId = data.find(d => {
+        console.log(d)
         return d.geojsonId === (feature.properties.postcode).toString()
       })
     } else {
