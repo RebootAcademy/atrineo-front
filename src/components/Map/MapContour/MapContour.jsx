@@ -31,7 +31,6 @@ function ContourLayer() {
     }
   }, [mapDivision])
 
-
   // if (mapDivision === 'division4') {
   //   console.log(division4Data)
   // } else {

@@ -32,9 +32,10 @@ function RegionsComponent({ data, fieldName, color }) {
       return location ? location.geojsonId : 'noDivision4'
     }
   }
-
+  
   const groupedByGeojsonId = data.reduce((acc, item) => {
     const geojsonId = getGeojsonIdByDivision(item)
+    console.log(geojsonId)
     if (geojsonId) {
       if (!acc[geojsonId]) {
         acc[geojsonId] = []
@@ -43,7 +44,7 @@ function RegionsComponent({ data, fieldName, color }) {
     }
     return acc
   }, {})
-
+  console.log(groupedByGeojsonId)
   const sumNumericFields = (items) => {
     const sums = items.reduce((acc, item) => {
       item.fields.forEach(field => {
@@ -61,6 +62,8 @@ function RegionsComponent({ data, fieldName, color }) {
     }, {})
     return sums
   }
+
+  console.log(sumNumericFields)
 
 
   // const filteredData = Object.entries(groupedByGeojsonId)
