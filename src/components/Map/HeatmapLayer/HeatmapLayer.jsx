@@ -17,7 +17,7 @@ function HeatmapLayer({ data, fieldName }) {
   if (fieldName === "color" || fieldName === "maxValue" || fieldName === "minValue") {
     return null
   }
-
+  console.log(division4Data)
   useEffect(() => {
     const getData = async () => {
       try {
@@ -26,7 +26,6 @@ function HeatmapLayer({ data, fieldName }) {
           throw new Error('Network response was not ok')
         }
         const result = await response.json()
-        console.log(result)
         setDivision4Data(result)
       } catch (error) {
         console.error("Error fetching GeoJSON data:", error)
