@@ -7,7 +7,7 @@ import { getAllCountries } from "@/services/countryService"
 import { getAllDivision1 } from "@/services/division2Service"
 import { getAllDivision2 } from "@/services/division1Service"
 import { getAllDivision3 } from "@/services/division3Service"
-import { getAllDivision4 } from "@/services/division4Service"
+//import { getAllDivision4 } from "@/services/division4Service"
 
 import { locationStore } from "@/utils/localforage"
 
@@ -21,7 +21,7 @@ export const useDivisions = () => {
       const division1 = await locationStore.getItem("division1")
       const division2 = await locationStore.getItem("division2")
       const division3 = await locationStore.getItem("division3")
-      const division4 = await locationStore.getItem("division4")
+      //const division4 = await locationStore.getItem("division4")
 
       setLocations((prev) => ({
         ...prev,
@@ -29,7 +29,7 @@ export const useDivisions = () => {
         division1: division1 || prev.division1,
         division2: division2 || prev.division2,
         division3: division3 || prev.division3,
-        division4: division4 || prev.division4,
+        //division4: division4 || prev.division4,
       }))
 
       setInitialDataLoaded(true) // Indicates cache loading is done
@@ -82,14 +82,14 @@ export const useDivisions = () => {
     !locations.division3,
   })
 
-  const division4Query = useQuery("division4", getAllDivision4, {
+  /*   const division4Query = useQuery("division4", getAllDivision4, {
     onSuccess: (division4) => {
       setLocations((prev) => ({ ...prev, division4: division4.result }))
       storeData("division4", division4.result)
     },
     enabled: initialDataLoaded &&
     !locations.division4,
-  })
+  }) */
 
   return {
     data: {
@@ -97,7 +97,7 @@ export const useDivisions = () => {
       division1: division1Query.data,
       division2: division2Query.data,
       division3: division3Query.data,
-      division4: division4Query.data,
+      //division4: division4Query.data,
     },
   }
 }

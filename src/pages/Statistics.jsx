@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState, useMemo, useRef } from "react"
+import { useContext, useEffect, useState, useMemo } from "react"
 
 import OptionsMenu from "../components/Graphs/OptionsMenu/OptionsMenu"
 import LoadingSpinner from "../components/LoadingSpinner/LoadingSpinner"
@@ -6,35 +6,29 @@ import ChartsContainer from "@/components/Graphs/ChartsContainer/ChartsContainer
 import CustomButton from "@/components/CustomButton/CustomButton"
 
 import { CollectionContext } from "../context/collectionContext"
-//import { LayerContext } from "../context/layerContext"
 import { UserContext } from "../context/userContext"
-//import { LocationContext } from "@/context/locationContext"
 
 import { useUser } from "@/hooks/useUser"
+import { useDivisions } from "@/hooks/useDivisions"
 import { useCollectionFetch } from "@/hooks/useCollectionFetch"
 
 import {
-  //extractRegionNames,
   extractNumericFields,
   extractStringOptions,
   extractBooleanOptions
 } from "../helpers"
-import { useDimensions } from "@/hooks/useDimensions"
-import { useDivisions } from "@/hooks/useDivisions"
 
 function Statistics() {
   const { collection, setCollection } = useContext(CollectionContext)
-  //const { mapDivision } = useContext(LayerContext)
   const { user } = useContext(UserContext)
-  //const { locations } = useContext(LocationContext)
 
   useUser()
+  useDivisions()
   useCollectionFetch(
     user,
     setCollection,
     collection
   )
-  useDivisions()
 
   const data = collection?.data
   const aggOptions = ['sum', 'avg', 'count', 'min', 'max']
@@ -76,7 +70,6 @@ function Statistics() {
     }
   }, [optionsArr])
 
-
   const changeChartName = (name) => {
     setChartName(name)
   }
@@ -105,39 +98,14 @@ function Statistics() {
     setDivision(name)
   }
 
-  const containerRef = useRef(null)
-  const { width: containerWidth } = useDimensions(containerRef)
-
-  const localInfo = localStorage.graphs
-  let localArr = []
-
-  if (localInfo) localArr = JSON.parse(localInfo)
-  
-  const countGraphs = () => {
-    return localArr?.length > 1
-  }
-
-  const checkWidth = () => {
-    return containerWidth > 500
-  }
-
-  //For devices less than 500px wide, show one chart per row.
-  // For bigger devices, check how many charts have to be displayed
-  // If there is only one chart, take the whole screen
-  const numGraphsPerRow = checkWidth() ?
-    countGraphs() ? 2 : 
-      1 : 1
-  const graphMargin = 10
   const aspectRatio = 16 / 9
-
-  const calculatedGraphWidth = ((checkWidth() ? containerWidth - 200 : containerWidth) - (graphMargin * (numGraphsPerRow))) / numGraphsPerRow
-  const calculatedGraphHeight = calculatedGraphWidth / aspectRatio
+  const fixedGraphWidth = 600
+  const fiedgraphHeight = fixedGraphWidth / aspectRatio
 
   const commonProps = {
-    width: calculatedGraphWidth,
-    height: calculatedGraphHeight,
+    width: fixedGraphWidth,
+    height: fiedgraphHeight,
     data: data,
-    //regions: regionNames,
     options: [...optionsArr, ...fields.map(f => f.fieldName)]
   }
 
@@ -164,14 +132,14 @@ function Statistics() {
             <div className="mb-4">
               {
                 !showOptions &&
-                <CustomButton 
-                  text="NEW CHART +"
-                  fn={displayOptions}
-                />
+                  <CustomButton 
+                    text="NEW CHART"
+                    fn={displayOptions}
+                  />
               }
             </div>
             <div className="flex w-full h-full">
-              <div className="flex-grow flex flex-wrap justify-center items-center gap-12" ref={containerRef}>
+              <div className="flex-grow flex flex-wrap justify-center items-center gap-12" >
                 <ChartsContainer
                   chartType={chartType}
                   fields={fields}

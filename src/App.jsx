@@ -27,6 +27,8 @@ function App() {
 
   const [minValue, setMinValue] = useState(null)
   const [maxValue, setMaxValue] = useState(null)
+
+  const [showStartups, setShowStartups] = useState(true)
   
   const updateMinValue = (newValue) => {
     setMinValue(newValue)
@@ -171,7 +173,9 @@ function App() {
     minValue,
     maxValue,
     updateMinValue,
-    updateMaxValue
+    updateMaxValue,
+    showStartups,
+    setShowStartups
   }
 
   return (

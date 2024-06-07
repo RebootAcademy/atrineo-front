@@ -27,7 +27,7 @@ function ChartsContainer({ commonProps, colTypes }) {
             name={obj.data.chartName}
           />
           <button 
-            className="absolute top-0 right-0 z-10 p-2 pr-4 text-lg  text-black rounded"
+            className="absolute top-0 right-0 z-10 p-2 pr-4 text-lg text-black rounded"
             onClick={() => handleDeleteGraph(obj)}
           >
             x
@@ -45,7 +45,7 @@ function ChartsContainer({ commonProps, colTypes }) {
             division={obj.data.division}
           />
           <button
-            className="absolute top-0 right-0 z-10 p-2 pr-4 text-lg  text-black rounded"
+            className="absolute top-0 right-0 z-10 p-2 pr-4 text-lg text-black rounded"
             onClick={() => handleDeleteGraph(obj)}
           >
             x
@@ -62,7 +62,7 @@ function ChartsContainer({ commonProps, colTypes }) {
             colTypes={colTypes}
           />
           <button
-            className="absolute top-0 right-0 z-10 p-2 pr-4 text-lg  text-black rounded"
+            className="absolute top-0 right-0 z-10 p-2 pr-4 text-lg text-black rounded"
             onClick={() => handleDeleteGraph(obj)}
           >
             x
@@ -79,7 +79,7 @@ function ChartsContainer({ commonProps, colTypes }) {
             colTypes={colTypes}
           />
           <button
-            className="absolute top-0 right-0 z-10 p-2 pr-4 text-lg  text-black rounded"
+            className="absolute top-0 right-0 z-10 p-2 pr-4 text-lg text-black rounded"
             onClick={() => handleDeleteGraph(obj)}
           >
             x
