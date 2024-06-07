@@ -17,12 +17,11 @@ function RegionsComponent({ data, fieldName, color }) {
 
   // Función para determinar el ID de geojson basado en el nivel de división actual
   const getGeojsonIdByDivision = (item) => {
-    console.log(item)
     let location
     if (item.locationId[mapDivision]) {
       location = locations[mapDivision].find(location => location._id === item.locationId[mapDivision])
     }
-    console.log(location)
+
     switch (mapDivision) {
     case 'division1':
       return location ? location.geojsonId : 'noDivision1'
@@ -37,7 +36,7 @@ function RegionsComponent({ data, fieldName, color }) {
   
   const groupedByGeojsonId = data.reduce((acc, item) => {
     const geojsonId = getGeojsonIdByDivision(item)
-    console.log(geojsonId)
+
     if (geojsonId) {
       if (!acc[geojsonId]) {
         acc[geojsonId] = []
@@ -46,7 +45,7 @@ function RegionsComponent({ data, fieldName, color }) {
     }
     return acc
   }, {})
-  console.log(groupedByGeojsonId)
+
   const sumNumericFields = (items) => {
     const sums = items.reduce((acc, item) => {
       item.fields.forEach(field => {
@@ -64,9 +63,6 @@ function RegionsComponent({ data, fieldName, color }) {
     }, {})
     return sums
   }
-
-  console.log(sumNumericFields)
-
 
   // const filteredData = Object.entries(groupedByGeojsonId)
   //   .map(([geojsonId, items]) => {
