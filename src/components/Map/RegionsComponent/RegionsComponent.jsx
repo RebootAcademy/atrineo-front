@@ -87,7 +87,7 @@ function RegionsComponent({ data, fieldName, color }) {
     <>
       <HeatmapLayer 
         data={filteredData} 
-        fieldName={fieldName} 
+        fieldName={fieldName}
       />
       <PatternManager color={color}/>
     </>
