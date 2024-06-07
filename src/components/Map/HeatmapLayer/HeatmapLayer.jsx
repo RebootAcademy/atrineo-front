@@ -20,17 +20,29 @@ function HeatmapLayer({ data, fieldName }) {
 
   useEffect(() => {
     const getData = async () => {
-      const response = await fetch('/geoJson/division4.geojson')
-      const result = await response.json()
-      setDivision4Data(result)
+      try {
+        const response = await fetch('/geoJson/division4.geojson')
+        if (!response.ok) {
+          throw new Error('Network response was not ok')
+        }
+        const result = await response.json()
+        setDivision4Data(result)
+      } catch (error) {
+        console.error("Error fetching GeoJSON data:", error)
+      }
     }
+
     if (mapDivision === 'division4') {
       getData()
     }
   }, [mapDivision])
 
+  useEffect(() => {
+    console.log('Fetched division4Data:', division4Data);
+  }, [division4Data])
+
   console.log('geoJson')
-  console.log(division4Data)
+  console.log(division4Data) //empty object
 
   const adjustedData = useMemo(
     () =>
