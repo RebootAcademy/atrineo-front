@@ -63,15 +63,25 @@ function RegionsComponent({ data, fieldName, color }) {
   }
 
 
-  const filteredData = Object.entries(groupedByGeojsonId).map(([geojsonId, items]) => {
-    const sums = sumNumericFields(items)
-    const detailedSums = Object.entries(sums).map(([fieldName, total]) => ({
-      fieldName,
-      total
-    }))
-    return { geojsonId, sums: detailedSums }
-  })
+  // const filteredData = Object.entries(groupedByGeojsonId)
+  //   .map(([geojsonId, items]) => {
+  //     const sums = sumNumericFields(items)
+  //     return sums
+  //     // const detailedSums = Object.entries(sums)
+  //     //   .filter(([fieldName, total]) => total > 0
+  //     // return { geojsonId, sums: detailedSums }
+  //   })
+  //   .filter(d => console.log(d))
 
+  const filteredData = Object.entries(groupedByGeojsonId)
+    .map(([geojsonId, items]) => {
+      const sums = sumNumericFields(items)     
+      const detailedSums = Object.entries(sums)
+        .filter(([fieldName, total]) => total > 0)
+        .map(([fieldName, total]) => ({ fieldName, total }))     
+      return { geojsonId, sums: detailedSums } 
+    })
+  
   return (
     <>
       <HeatmapLayer 

@@ -32,11 +32,11 @@ function ContourLayer() {
   }, [mapDivision])
 
 
-  if (mapDivision === 'division4') {
-    console.log(division4Data)
-  } else {
-    console.log(data)
-  }
+  // if (mapDivision === 'division4') {
+  //   console.log(division4Data)
+  // } else {
+  //   console.log(data)
+  // }
   
   if (isLoading) return <div>Loading...</div>
   if (isError) return <div>Error: {error.message}</div>
