@@ -48,7 +48,13 @@ function Csv({ dataType, reloadData }) {
       const totalChunks = chunks.length
       let counter = 1
       const uploadPromises = chunks.map(async (chunk, index) => {
-        const res = await addDataChunck(import.meta.env.VITE_DEMO_ID, chunk, dataType, fileName, index === 0 ? true : false)
+        const res = await addDataChunck(
+          import.meta.env.VITE_DEMO_ID,
+          chunk,
+          dataType,
+          fileName,
+          index === 0 ? true : false
+        )
         const percentComplete = (counter / totalChunks) * 100
         counter++
         setLoadPercentage(percentComplete.toFixed(2))

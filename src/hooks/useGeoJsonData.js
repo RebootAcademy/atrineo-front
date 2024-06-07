@@ -5,7 +5,7 @@ const urls = {
   country: import.meta.env.VITE_APP_COUNTRY_URL,
   division1: import.meta.env.VITE_APP_DIVISION1_URL,
   division2: import.meta.env.VITE_APP_DIVISION2_URL,
-  division3: import.meta.env.VITE_APP_DIVISION3_URL,
+  division3: import.meta.env.VITE_APP_DIVISION3_URL
 }
 
 // Función para realizar la solicitud HTTP
