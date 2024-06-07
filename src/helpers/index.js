@@ -112,6 +112,8 @@ export const calculateRadius = (value, minValue, maxValue) => {
 }
 
 export const extractRegionNames = (array, division, locations) => {
+  console.log(division)
+  console.log(locations)
   if (!array || !Array.isArray(array.data)) {
     return []
   }
