@@ -77,6 +77,7 @@ function RegionsComponent({ data, fieldName, color }) {
     .map(([geojsonId, items]) => {
       const sums = sumNumericFields(items)     
       const detailedSums = Object.entries(sums)
+        // eslint-disable-next-line no-unused-vars
         .filter(([fieldName, total]) => total > 0)
         .map(([fieldName, total]) => ({ fieldName, total }))     
       return { geojsonId, sums: detailedSums } 
