@@ -6,7 +6,6 @@ import { LayerContext } from '../../../context/layerContext'
 import { LocationContext } from '@/context/locationContext'
 
 function RegionsComponent({ data, fieldName, color }) {
-  // console.log(data)
   const { mapDivision } = useContext(LayerContext)
   const { locations } = useContext(LocationContext)
 
@@ -20,7 +19,7 @@ function RegionsComponent({ data, fieldName, color }) {
     if (item.locationId[mapDivision]) {
       location = locations[mapDivision].find(location => location._id === item.locationId[mapDivision])
     }
-    console.log(location)
+
     switch (mapDivision) {
     case 'division1':
       return location ? location.geojsonId : 'noDivision1'
@@ -28,14 +27,13 @@ function RegionsComponent({ data, fieldName, color }) {
       return location ? location.geojsonId : 'noDivision2'
     case 'division3':
       return location ? location.geojsonId : 'noDivision3'
-    default: // 'division3' o cualquier otro caso
+    default: // 'division4' o cualquier otro caso
       return location ? location.geojsonId : 'noDivision4'
     }
   }
   
   const groupedByGeojsonId = data.reduce((acc, item) => {
     const geojsonId = getGeojsonIdByDivision(item)
-
     if (geojsonId) {
       if (!acc[geojsonId]) {
         acc[geojsonId] = []

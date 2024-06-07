@@ -93,8 +93,7 @@ function HeatmapLayer({ data, fieldName }) {
     } else {
       currentGroupId = data.find(d => d.geojsonId === feature.properties[divisionIdProperty]?.toString())
     }
-    // console.log('Current group Id')
-    // console.log(currentGroupId)
+
     const value = currentGroupId?.sums.find(sum => sum.fieldName === fieldName)?.total
 
     if (value !== undefined && !isNaN(maxValue) && !isNaN(minValue) && maxValue !== minValue) {

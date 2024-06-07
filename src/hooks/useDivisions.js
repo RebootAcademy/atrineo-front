@@ -87,8 +87,8 @@ export const useDivisions = () => {
       setLocations((prev) => ({ ...prev, division4: division4.result }))
       storeData("division4", division4.result)
     },
-    enabled: initialDataLoaded &&
-    !locations.division4,
+    enabled: initialDataLoaded /*&&
+    !locations.division4,*/
   })
 
   return {
