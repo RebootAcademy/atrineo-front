@@ -20,7 +20,7 @@ function HeatmapLayer({ data, fieldName }) {
 
   useEffect(() => {
     const getData = async () => {
-      const response = await fetch('/public/geoJson/division4.geojson')
+      const response = await fetch('/geoJson/division4.geojson')
       const result = await response.json()
       setDivision4Data(result)
     }
