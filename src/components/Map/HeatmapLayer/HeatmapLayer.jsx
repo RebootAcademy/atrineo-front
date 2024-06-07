@@ -68,6 +68,7 @@ function HeatmapLayer({ data, fieldName }) {
   }
 
   const setStyle = (feature) => {
+    console.log(feature)
     let divisionIdProperty
 
     if (mapDivision === 'division3') {
