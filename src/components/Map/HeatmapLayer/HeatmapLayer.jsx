@@ -88,7 +88,6 @@ function HeatmapLayer({ data, fieldName }) {
       currentGroupId = data.find(d => d.geojsonId === (feature.id + 1).toString())
     } else if (divisionIdProperty === 'id') {
       currentGroupId = data.find(d => {
-        console.log(d)
         return d.geojsonId === (feature.properties.postcode).toString()
       })
     } else {
