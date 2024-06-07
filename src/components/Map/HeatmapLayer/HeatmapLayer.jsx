@@ -26,7 +26,7 @@ function HeatmapLayer({ data, fieldName }) {
           throw new Error('Network response was not ok')
         }
         const result = await response.json()
-        setDivision4Data(result)
+        setDivision4Data(result.features)
       } catch (error) {
         console.error("Error fetching GeoJSON data:", error)
       }
