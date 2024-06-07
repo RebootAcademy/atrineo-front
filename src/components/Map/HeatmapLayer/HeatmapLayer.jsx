@@ -26,6 +26,7 @@ function HeatmapLayer({ data, fieldName }) {
           throw new Error('Network response was not ok')
         }
         const result = await response.json()
+        console.log(result)
         setDivision4Data(result)
       } catch (error) {
         console.error("Error fetching GeoJSON data:", error)
@@ -36,13 +37,6 @@ function HeatmapLayer({ data, fieldName }) {
       getData()
     }
   }, [mapDivision])
-
-  useEffect(() => {
-    console.log('Fetched division4Data:', division4Data);
-  }, [division4Data])
-
-  console.log('geoJson')
-  console.log(division4Data) //empty object
 
   const adjustedData = useMemo(
     () =>
@@ -100,8 +94,8 @@ function HeatmapLayer({ data, fieldName }) {
     } else {
       currentGroupId = data.find(d => d.geojsonId === feature.properties[divisionIdProperty]?.toString())
     }
-    console.log('Current group Id')
-    console.log(currentGroupId)
+    // console.log('Current group Id')
+    // console.log(currentGroupId)
     const value = currentGroupId?.sums.find(sum => sum.fieldName === fieldName)?.total
 
     if (value !== undefined && !isNaN(maxValue) && !isNaN(minValue) && maxValue !== minValue) {
