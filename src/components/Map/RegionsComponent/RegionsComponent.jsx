@@ -9,7 +9,6 @@ function RegionsComponent({ data, fieldName, color }) {
   // console.log(data)
   const { mapDivision } = useContext(LayerContext)
   const { locations } = useContext(LocationContext)
-  console.log(locations)
 
   if (!Array.isArray(data) || data.length === 0) {
     return console.log('No hay datos disponibles para mostrar')
@@ -21,7 +20,7 @@ function RegionsComponent({ data, fieldName, color }) {
     if (item.locationId[mapDivision]) {
       location = locations[mapDivision].find(location => location._id === item.locationId[mapDivision])
     }
-
+    console.log(location)
     switch (mapDivision) {
     case 'division1':
       return location ? location.geojsonId : 'noDivision1'
