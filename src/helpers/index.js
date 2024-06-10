@@ -155,6 +155,14 @@ export const checkAggregation = (value, prev, agg) => {
   }
 }
 
+const checkNull = (value) => {
+  if (value === null) {
+    return 0
+  } else {
+    return value
+  }
+}
+
 export const calcAggregatedData = (
   data,
   xAxis,
@@ -193,7 +201,9 @@ export const calcAggregatedData = (
       (d) => d.fieldName === (xAxis === "regions" ? yAxis : xAxis)
     )
     if (fieldValue) {
-      const value = parseFloat(fieldValue.fieldValue)
+      
+      const value = parseFloat(checkNull(fieldValue.fieldValue))
+      console.log(value)
       if (aggregation === "avg") {
         acc[name].count += 1
         acc[name].sum += value
