@@ -2,7 +2,6 @@ import { Popup } from 'react-leaflet'
 import PropTypes from 'prop-types'
 
 function PopupComponent ({ array }) {
-  console.log(array)
   const displayData = (data) => {
     return data.map((d, i) => {
       return (

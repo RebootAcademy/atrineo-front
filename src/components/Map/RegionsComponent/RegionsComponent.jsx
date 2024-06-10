@@ -16,10 +16,13 @@ function RegionsComponent({ data, fieldName, color }) {
   // Función para determinar el ID de geojson basado en el nivel de división actual
   const getGeojsonIdByDivision = (item) => {
     let location
+    let id
     if (item.locationId[mapDivision]) {
       location = locations[mapDivision].find(location => location._id === item.locationId[mapDivision])
     }
-
+    if (mapDivision === 'division4') {
+      [id] = item.fields.filter(f => f.fieldName === 'districtId')
+    }
     switch (mapDivision) {
     case 'division1':
       return location ? location.geojsonId : 'noDivision1'
@@ -28,12 +31,14 @@ function RegionsComponent({ data, fieldName, color }) {
     case 'division3':
       return location ? location.geojsonId : 'noDivision3'
     default: // 'division4' o cualquier otro caso
-      return location ? location.geojsonId : 'noDivision4'
+      return location ? id.fieldValue : 'noDivision4'
     }
   }
   
   const groupedByGeojsonId = data.reduce((acc, item) => {
+    const test = item.fields[0].fieldValue
     const geojsonId = getGeojsonIdByDivision(item)
+    if (test === "psm-personal.de") console.log(geojsonId)
     if (geojsonId) {
       if (!acc[geojsonId]) {
         acc[geojsonId] = []
@@ -42,6 +47,8 @@ function RegionsComponent({ data, fieldName, color }) {
     }
     return acc
   }, {})
+
+  console.log(groupedByGeojsonId)
 
   const sumNumericFields = (items) => {
     const sums = items.reduce((acc, item) => {
@@ -76,11 +83,11 @@ function RegionsComponent({ data, fieldName, color }) {
       const sums = sumNumericFields(items)     
       const detailedSums = Object.entries(sums)
         // eslint-disable-next-line no-unused-vars
-        .filter(([fieldName, total]) => total > 0)
+        .filter(([fieldName, total]) => total >= 0)
         .map(([fieldName, total]) => ({ fieldName, total }))     
       return { geojsonId, sums: detailedSums } 
     })
-  
+
   return (
     <>
       <HeatmapLayer 

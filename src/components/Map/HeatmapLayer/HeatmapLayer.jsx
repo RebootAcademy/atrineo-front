@@ -10,14 +10,28 @@ import PropTypes from 'prop-types'
 
 
 function HeatmapLayer({ data, fieldName }) {
-  const { mapDivision, updateMinValue, updateMaxValue } = useContext(LayerContext)
-  const { data: mapData, isLoading, isError, error } = useGeoJsonData(mapDivision)
+  // console.log(data)
+  const { 
+    mapDivision, 
+    updateMinValue, 
+    updateMaxValue 
+  } = useContext(LayerContext)
+  const { 
+    data: mapData, 
+    isLoading, 
+    isError, 
+    error 
+  } = useGeoJsonData(mapDivision)
   const [division4Data, setDivision4Data] = useState({})
 
-  if (fieldName === "color" || fieldName === "maxValue" || fieldName === "minValue") {
+  if (
+    fieldName === "color" || 
+    fieldName === "maxValue" || 
+    fieldName === "minValue"
+  ) {
     return null
   }
-  console.log(division4Data)
+
   useEffect(() => {
     const getData = async () => {
       try {
@@ -44,7 +58,11 @@ function HeatmapLayer({ data, fieldName }) {
           fieldName: sum.fieldName,
           fieldValue: parseFloat(sum.total.toFixed(2)),
         })),
-      })), [data])
+      })), 
+    [data]
+  )
+
+  // console.log(adjustedData)
 
   const [maxValue, minValue] = useMemo(
     () => findMaxAndMinValues(adjustedData, fieldName),
@@ -90,6 +108,7 @@ function HeatmapLayer({ data, fieldName }) {
       currentGroupId = data.find(d => {
         return d.geojsonId === (feature.properties.postcode).toString()
       })
+      // console.log(currentGroupId)
     } else {
       currentGroupId = data.find(d => d.geojsonId === feature.properties[divisionIdProperty]?.toString())
     }
