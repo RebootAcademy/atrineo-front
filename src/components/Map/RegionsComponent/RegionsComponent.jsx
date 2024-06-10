@@ -36,9 +36,9 @@ function RegionsComponent({ data, fieldName, color }) {
   }
   
   const groupedByGeojsonId = data.reduce((acc, item) => {
-    const test = item.fields[0].fieldValue
+    // const test = item.fields[0].fieldValue
     const geojsonId = getGeojsonIdByDivision(item)
-    if (test === "psm-personal.de") console.log(geojsonId)
+    // if (test === "psm-personal.de") console.log(geojsonId)
     if (geojsonId) {
       if (!acc[geojsonId]) {
         acc[geojsonId] = []
@@ -48,7 +48,7 @@ function RegionsComponent({ data, fieldName, color }) {
     return acc
   }, {})
 
-  console.log(groupedByGeojsonId)
+  // console.log(groupedByGeojsonId)
 
   const sumNumericFields = (items) => {
     const sums = items.reduce((acc, item) => {
