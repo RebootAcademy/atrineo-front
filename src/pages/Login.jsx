@@ -71,6 +71,7 @@ function Login() {
         console.log('Login request timed out. Retrying...')
         onLogin() // Retry login
       } else {
+        setLoading(false)
         setErrorMessage(true)
         console.error('Credenciales incorrectas:', error)
       }
