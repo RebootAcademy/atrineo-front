@@ -18,7 +18,6 @@ function HeatmapPlot({
 
   const filteredData = useMemo(() => data.map(item => {
     const numericFields = extractNumericFields(item.fields, colTypes)
-    console.log(numericFields)
     const numericFieldsObj = numericFields.reduce((acc, field) => {
       acc[field.fieldName] = field.fieldValue
       return acc
@@ -38,14 +37,14 @@ function HeatmapPlot({
         Math.min(...validData.map((d) => d[yAxis]))
 
       // Ajustar xStep e yStep basado en el rango
-      const xStep = Math.ceil(xRange / 200) // Ajusta este divisor según sea necesario
-      const yStep = Math.ceil(yRange / 200) // Ajusta este divisor según sea necesario
+      const xStep = xRange / 100
+      const yStep = yRange / 10
 
       const groupedData = {}
 
       validData.forEach((d) => {
-        const xGroup = Math.floor(d[xAxis] / xStep) * xStep
-        const yGroup = Math.floor(d[yAxis] / yStep) * yStep
+        const xGroup = parseFloat((Math.floor(d[xAxis] / xStep) * xStep).toFixed(2))
+        const yGroup = parseFloat((Math.floor(d[yAxis] / yStep) * yStep).toFixed(2))
         const key = `${xGroup}-${yGroup}`
 
         if (!groupedData[key]) {
