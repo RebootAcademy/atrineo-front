@@ -37,7 +37,7 @@ function HeatmapPlot({
         Math.min(...validData.map((d) => d[yAxis]))
 
       // Ajustar xStep e yStep basado en el rango
-      const xStep = xRange / 200
+      const xStep = xRange / 100
       const yStep = yRange / 10
 
       const groupedData = {}
